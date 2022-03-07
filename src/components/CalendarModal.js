@@ -6,12 +6,15 @@ import Fade from "@mui/material/Fade";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import "react-datetime/css/react-datetime.css";
 import TextField from "@mui/material/TextField";
 import DesktopTimePicker from "@mui/lab/DesktopTimePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { ko } from "date-fns/esm/locale";
 import Grid from "../elements/Grid";
+import Datetime from "react-datetime";
+import { startCase } from "lodash";
 
 const style = {
   position: "absolute",
@@ -28,7 +31,13 @@ const style = {
 
 export default function TransitionsModal(props) {
   const { open, handleClose, todoEvent, setTodoEvent } = props;
-  const { id, title, start, end, time } = todoEvent;
+  const { id, title, start, end } = todoEvent;
+  const startDate = new Date(todoEvent.start);
+  React.useEffect(() => {
+    console.log(start);
+
+    return () => {};
+  }, [start]);
 
   if (id === undefined) {
     return (
@@ -58,25 +67,26 @@ export default function TransitionsModal(props) {
                   locale={ko}
                   selected={start}
                   onChange={(date) =>
-                    setTodoEvent({ ...todoEvent, start: date })
+                    setTodoEvent({ ...todoEvent, start: date.toUTCString() })
                   }
                 />
               </Grid>
-
               <Grid margin_bottom="10px">
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DesktopTimePicker
-                    label="운동 시작시간"
-                    value={time}
-                    onChange={(newValue) => {
-                      console.log(newValue);
-                      setTodoEvent({ ...todoEvent, time: newValue });
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
+                <TextField
+                  id="time"
+                  // label="Alarm clock"
+                  type="time"
+                  defaultValue="00:00"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    step: 300, // 5 min
+                  }}
+                  sx={{ width: 150 }}
+                  onChange={(e) => console.log(e.currentTarget.value)}
+                />
               </Grid>
-
               <Grid margin_bottom="10px">
                 <label>운동 종료일</label>
                 <DatePicker
@@ -128,7 +138,7 @@ export default function TransitionsModal(props) {
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopTimePicker
                   label="운동 시작시간"
-                  value={time}
+                  // value={}
                   onChange={(newValue) => {
                     setTodoEvent({ ...todoEvent, time: newValue });
                   }}

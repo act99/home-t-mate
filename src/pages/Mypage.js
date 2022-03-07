@@ -26,7 +26,6 @@ const Mypage = (props) => {
     title: "",
     start: new Date(),
     end: new Date(),
-    time: new Date(),
   });
 
   const [open, setOpen] = React.useState(false);
@@ -36,16 +35,14 @@ const Mypage = (props) => {
         title: "",
         start: new Date(),
         end: new Date(),
-        time: new Date(),
       });
     } else {
-      const time = new Date(`${e.event.start}T${e.event.time}`);
+      console.log(e.event.time);
       setTodoEvent({
         id: e.event.id,
         title: e.event.title,
         start: e.event.start,
         end: e.event.end,
-        time: time,
       });
     }
     setOpen(true);
@@ -56,7 +53,6 @@ const Mypage = (props) => {
       title: "",
       start: new Date(),
       end: new Date(),
-      time: new Date(),
     });
     setOpen(false);
   };
@@ -152,7 +148,7 @@ const Mypage = (props) => {
           <TabPanel value="1" sx={{ p: "0px" }}>
             <Grid margin="auto" position="relative">
               <FullCalendar
-                height="600px"
+                height="800px"
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
                 dayMaxEvents={true} //일정 많아지면 +버튼 생성
