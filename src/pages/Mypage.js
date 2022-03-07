@@ -17,108 +17,61 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import styled from "@emotion/styled";
+import { useSelector } from "react-redux";
 
-const events = [
-  {
-    id: 1,
-    title: "event 1",
-    start: "2022-03-17T13:00:00",
-    end: "2022-03-20T13:00:00",
-  },
-  {
-    id: 2,
-    title: "event 2",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 3,
-    title: "event 3",
-    start: "2022-03-17T13:00:00",
-    end: "2022-03-20T13:00:00",
-  },
-  {
-    id: 4,
-    title: "event 4",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 5,
-    title: "event 5",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 6,
-    title: "event 6",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 7,
-    title: "event 7",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 8,
-    title: "event 8",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 9,
-    title: "event 9",
-    start: "2022-03-27T13:00:00",
-    end: "2022-03-30",
-  },
-];
-
-function FullCalendarApp(props) {
-  // const dateClickHandler = (e) => {
-  //     console.log(e)
-
-  //     const date = events.filter((item) => item.start.includes(e.dateStr))
-  //     console.log(date)
-  //     const title = []
-  //     const startTime = [];  //time.push(item.split("T")[1])
-  //     const endTime = []
-  //     const totalData = {}
-  //     date.map((item, index) => {
-  //         title.push(item.title)
-  //         startTime.push(item.start.split("T")[1])
-  //         endTime.push(item.end.split("T")[1])
-  //     })
-  //     console.log(title,startTime, endTime)
-
-  // }
+const Mypage = (props) => {
+  const todoList = useSelector((state) => state.todoReducer.list);
+  console.log(todoList);
   const [todoEvent, setTodoEvent] = React.useState({
-    id: 0,
     title: "",
-    start: "",
-    end: "",
+    start: new Date(),
+    end: new Date(),
+    time: new Date(),
   });
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = (e) => {
     if (e.event === undefined || null) {
-      setTodoEvent({});
+      setTodoEvent({
+        title: "",
+        start: new Date(),
+        end: new Date(),
+        time: new Date(),
+      });
     } else {
+      const time = new Date(`${e.event.start}T${e.event.time}`);
       setTodoEvent({
         id: e.event.id,
         title: e.event.title,
         start: e.event.start,
         end: e.event.end,
+        time: time,
       });
     }
     setOpen(true);
   };
 
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setTodoEvent({
+      title: "",
+      start: new Date(),
+      end: new Date(),
+      time: new Date(),
+    });
+    setOpen(false);
+  };
   const [TabValue, setTabValue] = React.useState("1");
   const TabhandleChange = (event, newValue) => {
     setTabValue(newValue);
+  };
+  const dateClickHandler = (e) => {
+    console.log(e.dateStr);
+    const date = `${e.dateStr}T01:00:00`;
+    setTodoEvent({
+      ...todoEvent,
+      start: new Date(date),
+    });
+    setOpen(true);
   };
 
   return (
@@ -215,16 +168,16 @@ function FullCalendarApp(props) {
                 //   },
                 // }}
 
-                events={events}
+                events={todoList}
                 // editable="true" //드래그로 일정 변경 가능
-                // dateClick={dateClickHandler}
-                // eventClick={(e) => console.log(e.event.title)}
+                dateClick={dateClickHandler}
                 eventClick={handleOpen}
                 locale="ko" //한국어변경
               />
 
               <Write onClick={handleOpen}></Write>
               <CalendarModal
+                setTodoEvent={setTodoEvent}
                 open={open}
                 handleClose={handleClose}
                 todoEvent={todoEvent}
@@ -236,7 +189,7 @@ function FullCalendarApp(props) {
       </Box>
     </Grid>
   );
-}
+};
 
 const Write = styled.div`
   width: 55px;
@@ -250,4 +203,4 @@ const Write = styled.div`
   z-index: 1;
 `;
 
-export default FullCalendarApp;
+export default Mypage;

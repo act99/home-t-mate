@@ -4,7 +4,9 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import chatReducer from "./modules/chatReducer";
 import roomReducer from "./modules/roomReducer";
+import todoReducer from "./modules/todoReducer";
 import userReducer from "./modules/userReducer";
+import postReducer from "./modules/postReducer";
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
   roomReducer: roomReducer,
   userReducer: userReducer,
   chatReducer: chatReducer,
+  todoReducer: todoReducer,
+  postReducer: postReducer,
 });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];

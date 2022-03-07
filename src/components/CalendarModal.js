@@ -27,13 +27,8 @@ const style = {
 };
 
 export default function TransitionsModal(props) {
-  const { open, handleClose, todoEvent } = props;
-  const { id, title, start, end } = todoEvent;
-
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
-  const [value, setValue] = React.useState(new Date());
+  const { open, handleClose, todoEvent, setTodoEvent } = props;
+  const { id, title, start, end, time } = todoEvent;
 
   if (id === undefined) {
     return (
@@ -61,8 +56,10 @@ export default function TransitionsModal(props) {
                 <label>운동 시작일</label>
                 <DatePicker
                   locale={ko}
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
+                  selected={start}
+                  onChange={(date) =>
+                    setTodoEvent({ ...todoEvent, start: date })
+                  }
                 />
               </Grid>
 
@@ -70,9 +67,10 @@ export default function TransitionsModal(props) {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DesktopTimePicker
                     label="운동 시작시간"
-                    value={value}
+                    value={time}
                     onChange={(newValue) => {
-                      setValue(newValue);
+                      console.log(newValue);
+                      setTodoEvent({ ...todoEvent, time: newValue });
                     }}
                     renderInput={(params) => <TextField {...params} />}
                   />
@@ -83,8 +81,8 @@ export default function TransitionsModal(props) {
                 <label>운동 종료일</label>
                 <DatePicker
                   locale={ko}
-                  selected={endDate}
-                  onChange={(date) => setEndDate(date)}
+                  selected={end}
+                  onChange={(date) => setTodoEvent({ ...todoEvent, end: date })}
                 />
               </Grid>
 
@@ -121,8 +119,8 @@ export default function TransitionsModal(props) {
               <label>운동 시작일</label>
               <DatePicker
                 locale={ko}
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                selected={start}
+                onChange={(date) => setTodoEvent({ ...todoEvent, start: date })}
               />
             </Grid>
 
@@ -130,9 +128,9 @@ export default function TransitionsModal(props) {
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopTimePicker
                   label="운동 시작시간"
-                  value={value}
+                  value={time}
                   onChange={(newValue) => {
-                    setValue(newValue);
+                    setTodoEvent({ ...todoEvent, time: newValue });
                   }}
                   renderInput={(params) => <TextField {...params} />}
                 />
@@ -143,8 +141,8 @@ export default function TransitionsModal(props) {
               <label>운동 종료일</label>
               <DatePicker
                 locale={ko}
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
+                selected={end}
+                onChange={(date) => setTodoEvent({ ...todoEvent, end: date })}
               />
             </Grid>
 

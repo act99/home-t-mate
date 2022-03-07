@@ -17,6 +17,8 @@ import useStyle from "../styles/chattingStyle";
 import { actionCreators as chatActions } from "../redux/modules/chatReducer";
 import { sendingMessage } from "../shared/SocketFunc";
 import url from "../shared/url";
+import "../App.css";
+
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 
