@@ -14,6 +14,7 @@ import NavBar from "./components/NavBar";
 import NotFound from "./pages/NotFound";
 import Container from "@mui/material/Container";
 import Mypage from "./pages/Mypage";
+import Story from "./pages/Story";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,8 @@ const App = () => {
             <Route path="/rooms" exact component={Rooms} />
             <Route path="/rooms/:roomId" exact component={ChattingRoom} />
             <Route path="*" exact component={NotFound} />
+            
+            <Route path="/story" exact component={Story}/>
           </Switch>
         </ConnectedRouter>
       </Container>
