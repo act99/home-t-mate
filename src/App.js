@@ -19,6 +19,8 @@ import styled from "@emotion/styled";
 const App = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
+    console.log(window.location.href);
+    console.log(window.location.host);
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
@@ -26,8 +28,14 @@ const App = () => {
 
   return (
     <>
-      <NavBar />
-
+      {/* 배포 전 */}
+      {window.location.href === `http://${window.location.host}/test` ? null : (
+        <NavBar />
+      )}
+      {/* 배포 후 */}
+      {/* {window.location.href === `https://${window.location.host}/test` ? null : (
+        <NavBar />
+      )} */}
       <ConnectedRouter history={history}>
         <Switch>
           <WrapWide>
