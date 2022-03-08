@@ -67,6 +67,9 @@ export default function TransitionsModal(props) {
     );
     handleClose();
   };
+  const deleteClickHandler = () => {
+    dispatch(todoActions.deleteTodo(events.id));
+  };
   React.useEffect(() => {
     if (events.title !== undefined) {
       setChangeTitle(events.title);
@@ -82,6 +85,10 @@ export default function TransitionsModal(props) {
             moment(events.start).format().split("T")[1].split("+")[0].length - 3
           )
       );
+    } else {
+      if (events.start !== undefined) {
+        setChangeStart(new Date(events.start));
+      }
     }
     return () => {};
   }, [events]);
@@ -213,6 +220,7 @@ export default function TransitionsModal(props) {
             </Grid>
 
             <button onClick={editClickHandler}>수정하기</button>
+            <button onClick={deleteClickHandler}>삭제하기</button>
           </Box>
         </Fade>
       </Modal>

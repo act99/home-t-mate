@@ -44,7 +44,10 @@ const Mypage = (props) => {
     setTabValue(newValue);
   };
   const dateClickHandler = (e) => {
-    console.log(e.dateStr);
+    setEvents({
+      start: e.dateStr,
+    });
+    setOpen(true);
   };
   React.useEffect(() => {
     return () => {};
