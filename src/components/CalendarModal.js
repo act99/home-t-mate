@@ -33,8 +33,13 @@ export default function TransitionsModal(props) {
   const [changeStart, setChangeStart] = React.useState(new Date());
   const [changeEnd, setChangeEnd] = React.useState(new Date());
   const [changeTitle, setChangeTitle] = React.useState("");
-  const [changeTime, setChangeTime] = React.useState("");
+  const [changeTime, setChangeTime] = React.useState("00:00");
   const addClickHandler = () => {
+    console.log(
+      moment(changeStart).format().split("T")[0] + "T" + changeTime + ":00",
+      moment(changeEnd).format().split("T")[0] + "T" + changeTime + ":00",
+      changeTime
+    );
     dispatch(
       todoActions.addTodo({
         id: 5,
@@ -42,10 +47,11 @@ export default function TransitionsModal(props) {
         start:
           moment(changeStart).format().split("T")[0] + "T" + changeTime + ":00",
         end:
-          moment(changeEnd).format().split("+")[0] + "T" + changeTime + ":00",
+          moment(changeEnd).format().split("T")[0] + "T" + changeTime + ":00",
         time: changeTime,
       })
     );
+    handleClose();
   };
   const editClickHandler = () => {
     dispatch(
@@ -55,10 +61,11 @@ export default function TransitionsModal(props) {
         start:
           moment(changeStart).format().split("T")[0] + "T" + changeTime + ":00",
         end:
-          moment(changeEnd).format().split("+")[0] + "T" + changeTime + ":00",
+          moment(changeEnd).format().split("T")[0] + "T" + changeTime + ":00",
         time: changeTime,
       })
     );
+    handleClose();
   };
   React.useEffect(() => {
     if (events.title !== undefined) {
@@ -76,7 +83,6 @@ export default function TransitionsModal(props) {
           )
       );
     }
-
     return () => {};
   }, [events]);
 
@@ -120,7 +126,7 @@ export default function TransitionsModal(props) {
                   id="time"
                   // label="Alarm clock"
                   type="time"
-                  defaultValue="00:00"
+                  defaultValue={changeTime}
                   InputLabelProps={{
                     shrink: true,
                   }}

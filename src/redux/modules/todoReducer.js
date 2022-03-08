@@ -9,8 +9,8 @@ const DELETE_TODO = "DELETE_TODO";
 
 const setTodo = createAction(SET_TODO, (todo_list) => ({ todo_list }));
 const addTodo = createAction(ADD_TODO, (todo) => ({ todo }));
-const deleteTodo = createAction(EDIT_TODO, (todo_id) => ({ todo_id }));
-const editTodo = createAction(DELETE_TODO, (todo_id, todo) => ({
+const deleteTodo = createAction(DELETE_TODO, (todo_id) => ({ todo_id }));
+const editTodo = createAction(EDIT_TODO, (todo_id, todo) => ({
   todo_id,
   todo,
 }));
@@ -130,8 +130,9 @@ export default handleActions(
     [EDIT_TODO]: (state, action) =>
       produce(state, (draft) => {
         let index = draft.list.findIndex(
-          (p) => p.id === action.payload.todo_id
+          (p) => p.id * 1 === action.payload.todo_id * 1
         );
+        console.log(index);
         draft.list[index] = { ...draft.list[index], ...action.payload.todo };
       }),
     [DELETE_TODO]: (state, action) =>

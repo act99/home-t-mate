@@ -46,6 +46,9 @@ const Mypage = (props) => {
   const dateClickHandler = (e) => {
     console.log(e.dateStr);
   };
+  React.useEffect(() => {
+    return () => {};
+  }, [todoList]);
 
   return (
     <Grid width="1200px" margin="auto">
