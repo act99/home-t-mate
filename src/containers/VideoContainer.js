@@ -5,7 +5,7 @@ import axios from "axios";
 import UserVideoComponent from "../components/UserVideoComponent";
 import "../App.css";
 import styled from "@emotion/styled";
-const OPENVIDU_SERVER_URL = "https://goonzu.shop:8443/";
+const OPENVIDU_SERVER_URL = "https://goonzu.shop:8443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
