@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import Container from "@mui/material/Container";
 import Mypage from "./pages/Mypage";
 import VideoContainer from "./containers/VideoContainer";
+import styled from "@emotion/styled";
 const App = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -26,23 +27,48 @@ const App = () => {
   return (
     <>
       <NavBar />
-      <Container maxWidth="xl">
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/mypage" exact component={Mypage} />
-            <Route path="/user/kakao/callback/" exact component={KakaoOauth} />
-            {/* 채팅방 입장 */}
-            <Route path="/rooms" exact component={Rooms} />
-            <Route path="/rooms/:roomId" exact component={ChattingRoom} />
+
+      <ConnectedRouter history={history}>
+        <Switch>
+          <WrapWide>
             <Route path="/test" exact component={VideoContainer} />
-            <Route path="*" exact component={NotFound} />
-          </Switch>
-        </ConnectedRouter>
-      </Container>
+            <WrapMedium>
+              <Route path="/" exact component={Home} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/mypage" exact component={Mypage} />
+              <Route
+                path="/user/kakao/callback/"
+                exact
+                component={KakaoOauth}
+              />
+              {/* 채팅방 입장 */}
+              <Route path="/rooms" exact component={Rooms} />
+              <Route path="/rooms/:roomId" exact component={ChattingRoom} />
+              {/* <Route path="*" exact component={NotFound} /> */}
+            </WrapMedium>
+          </WrapWide>
+        </Switch>
+      </ConnectedRouter>
     </>
   );
 };
+
+const WrapMedium = styled.div`
+  margin: auto;
+  width: 1200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const WrapWide = styled.div`
+  margin: auto;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default App;

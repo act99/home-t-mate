@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import React, { Component } from "react";
 
 export default class OpenViduVideoComponent extends Component {
@@ -19,6 +20,13 @@ export default class OpenViduVideoComponent extends Component {
   }
 
   render() {
-    return <video autoPlay={true} ref={this.videoRef} />;
+    return <Video autoPlay={true} ref={this.videoRef} />;
   }
 }
+
+const Video = styled.video`
+  position: relative;
+  float: left;
+  cursor: pointer;
+  /* border-radius: 50px; */
+`;

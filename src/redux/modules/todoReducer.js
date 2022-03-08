@@ -153,6 +153,7 @@ const actionCreators = {
   deleteTodoDB,
   addTodo,
   editTodo,
+  deleteTodo,
 };
 
 export { actionCreators };
