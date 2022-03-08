@@ -21,39 +21,22 @@ import { useSelector } from "react-redux";
 
 const Mypage = (props) => {
   const todoList = useSelector((state) => state.todoReducer.list);
-  console.log(todoList);
-  const [todoEvent, setTodoEvent] = React.useState({
-    title: "",
-    start: new Date(),
-    end: new Date(),
-  });
-
   const [open, setOpen] = React.useState(false);
-  const handleOpen = (e) => {
-    if (e.event === undefined || null) {
-      setTodoEvent({
-        title: "",
-        start: new Date(),
-        end: new Date(),
-      });
-    } else {
-      console.log(e.event.time);
-      setTodoEvent({
-        id: e.event.id,
-        title: e.event.title,
-        start: e.event.start,
-        end: e.event.end,
-      });
-    }
+  // ** event 를 클릭했을 때
+  const [events, setEvents] = React.useState({});
+  const eventClickHandler = (e) => {
+    setEvents({
+      id: e.event.id,
+      title: e.event.title,
+      start: e.event.start,
+      end: e.event.end,
+      time: e.event.time,
+    });
+    console.log(e.event.title);
     setOpen(true);
   };
-
   const handleClose = () => {
-    setTodoEvent({
-      title: "",
-      start: new Date(),
-      end: new Date(),
-    });
+    setEvents({});
     setOpen(false);
   };
   const [TabValue, setTabValue] = React.useState("1");
@@ -62,12 +45,6 @@ const Mypage = (props) => {
   };
   const dateClickHandler = (e) => {
     console.log(e.dateStr);
-    const date = `${e.dateStr}T01:00:00`;
-    setTodoEvent({
-      ...todoEvent,
-      start: new Date(date),
-    });
-    setOpen(true);
   };
 
   return (
@@ -157,26 +134,17 @@ const Mypage = (props) => {
                   center: "title",
                   left: "dayGridMonth,timeGridWeek,timeGridDay",
                 }}
-                // customButtons={{
-                //   new: {
-                //     text: 'new',
-                //     onclick: () => console.log('new event'),
-                //   },
-                // }}
-
                 events={todoList}
-                // editable="true" //드래그로 일정 변경 가능
                 dateClick={dateClickHandler}
-                eventClick={handleOpen}
+                eventClick={eventClickHandler}
                 locale="ko" //한국어변경
               />
 
-              <Write onClick={handleOpen}></Write>
+              <Write onClick={() => setOpen(true)}></Write>
               <CalendarModal
-                setTodoEvent={setTodoEvent}
+                events={events}
                 open={open}
                 handleClose={handleClose}
-                todoEvent={todoEvent}
               ></CalendarModal>
             </Grid>
           </TabPanel>

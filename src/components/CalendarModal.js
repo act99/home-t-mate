@@ -1,21 +1,17 @@
-import * as React from "react";
+import React from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import DatePicker from "react-datepicker";
-import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datetime/css/react-datetime.css";
 import TextField from "@mui/material/TextField";
-import DesktopTimePicker from "@mui/lab/DesktopTimePicker";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { ko } from "date-fns/esm/locale";
 import Grid from "../elements/Grid";
-import Datetime from "react-datetime";
-import { startCase } from "lodash";
-
+import moment from "moment";
+import { useDispatch } from "react-redux";
+import { actionCreators as todoActions } from "../redux/modules/todoReducer";
 const style = {
   position: "absolute",
   top: "50%",
@@ -30,16 +26,61 @@ const style = {
 };
 
 export default function TransitionsModal(props) {
-  const { open, handleClose, todoEvent, setTodoEvent } = props;
-  const { id, title, start, end } = todoEvent;
-  const startDate = new Date(todoEvent.start);
+  const dispatch = useDispatch();
+  const { open, handleClose, events } = props;
+  console.log(events.id);
+  // ** 달력 세팅
+  const [changeStart, setChangeStart] = React.useState(new Date());
+  const [changeEnd, setChangeEnd] = React.useState(new Date());
+  const [changeTitle, setChangeTitle] = React.useState("");
+  const [changeTime, setChangeTime] = React.useState("");
+  const addClickHandler = () => {
+    dispatch(
+      todoActions.addTodo({
+        id: 5,
+        title: changeTitle,
+        start:
+          moment(changeStart).format().split("T")[0] + "T" + changeTime + ":00",
+        end:
+          moment(changeEnd).format().split("+")[0] + "T" + changeTime + ":00",
+        time: changeTime,
+      })
+    );
+  };
+  const editClickHandler = () => {
+    dispatch(
+      todoActions.editTodo(events.id, {
+        id: events.id,
+        title: changeTitle,
+        start:
+          moment(changeStart).format().split("T")[0] + "T" + changeTime + ":00",
+        end:
+          moment(changeEnd).format().split("+")[0] + "T" + changeTime + ":00",
+        time: changeTime,
+      })
+    );
+  };
   React.useEffect(() => {
-    console.log(start);
+    if (events.title !== undefined) {
+      setChangeTitle(events.title);
+      setChangeStart(new Date(events.start));
+      setChangeEnd(new Date(events.end));
+      setChangeTime(
+        moment(events.start)
+          .format()
+          .split("T")[1]
+          .split("+")[0]
+          .slice(
+            0,
+            moment(events.start).format().split("T")[1].split("+")[0].length - 3
+          )
+      );
+    }
 
     return () => {};
-  }, [start]);
+  }, [events]);
 
-  if (id === undefined) {
+  if (events.title === undefined) {
     return (
       <div>
         <Modal
@@ -58,17 +99,20 @@ export default function TransitionsModal(props) {
               <Grid margin_bottom="10px">
                 <label>할일</label>
                 <br></br>
-                <input required type="text" placeholder="오늘의 운동 목표는?" />
+                <input
+                  required
+                  type="text"
+                  placeholder="오늘의 운동 목표는?"
+                  value={changeTitle}
+                  onChange={(e) => setChangeTitle(e.target.value)}
+                />
               </Grid>
-
               <Grid margin_bottom="10px">
                 <label>운동 시작일</label>
                 <DatePicker
                   locale={ko}
-                  selected={start}
-                  onChange={(date) =>
-                    setTodoEvent({ ...todoEvent, start: date.toUTCString() })
-                  }
+                  selected={changeStart}
+                  onChange={(date) => setChangeStart(date)}
                 />
               </Grid>
               <Grid margin_bottom="10px">
@@ -84,19 +128,18 @@ export default function TransitionsModal(props) {
                     step: 300, // 5 min
                   }}
                   sx={{ width: 150 }}
-                  onChange={(e) => console.log(e.currentTarget.value)}
+                  onChange={(e) => setChangeTime(e.currentTarget.value)}
                 />
               </Grid>
               <Grid margin_bottom="10px">
                 <label>운동 종료일</label>
                 <DatePicker
                   locale={ko}
-                  selected={end}
-                  onChange={(date) => setTodoEvent({ ...todoEvent, end: date })}
+                  selected={changeEnd}
+                  onChange={(date) => setChangeEnd(date)}
                 />
               </Grid>
-
-              <button>추가하기</button>
+              <button onClick={addClickHandler}>추가하기</button>
             </Box>
           </Fade>
         </Modal>
@@ -122,41 +165,48 @@ export default function TransitionsModal(props) {
             <Grid margin_bottom="10px">
               <label>할일</label>
               <br></br>
-              <input required type="text" placeholder="오늘의 운동 목표는?" />
+              <input
+                required
+                type="text"
+                placeholder="오늘의 운동 목표는?"
+                value={changeTitle}
+                onChange={(e) => setChangeTitle(e.target.value)}
+              />
             </Grid>
 
             <Grid margin_bottom="10px">
               <label>운동 시작일</label>
               <DatePicker
                 locale={ko}
-                selected={start}
-                onChange={(date) => setTodoEvent({ ...todoEvent, start: date })}
+                selected={changeStart}
+                onChange={(date) => setChangeStart(date)}
               />
             </Grid>
-
             <Grid margin_bottom="10px">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DesktopTimePicker
-                  label="운동 시작시간"
-                  // value={}
-                  onChange={(newValue) => {
-                    setTodoEvent({ ...todoEvent, time: newValue });
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
+              <TextField
+                id="time"
+                type="time"
+                defaultValue={changeTime}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 300,
+                }}
+                sx={{ width: 150 }}
+                onChange={(e) => setChangeTime(e.currentTarget.value)}
+              />
             </Grid>
-
             <Grid margin_bottom="10px">
               <label>운동 종료일</label>
               <DatePicker
                 locale={ko}
-                selected={end}
-                onChange={(date) => setTodoEvent({ ...todoEvent, end: date })}
+                selected={changeEnd}
+                onChange={(date) => setChangeEnd(date)}
               />
             </Grid>
 
-            <button>수정하기</button>
+            <button onClick={editClickHandler}>수정하기</button>
           </Box>
         </Fade>
       </Modal>
