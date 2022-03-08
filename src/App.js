@@ -14,7 +14,7 @@ import NavBar from "./components/NavBar";
 import NotFound from "./pages/NotFound";
 import Container from "@mui/material/Container";
 import Mypage from "./pages/Mypage";
-
+import VideoContainer from "./containers/VideoContainer";
 const App = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -36,6 +36,7 @@ const App = () => {
             {/* 채팅방 입장 */}
             <Route path="/rooms" exact component={Rooms} />
             <Route path="/rooms/:roomId" exact component={ChattingRoom} />
+            <Route path="/test" exact component={VideoContainer} />
             <Route path="*" exact component={NotFound} />
           </Switch>
         </ConnectedRouter>
