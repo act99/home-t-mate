@@ -5,8 +5,10 @@ import axios from "axios";
 import UserVideoComponent from "../components/UserVideoComponent";
 import "../App.css";
 import styled from "@emotion/styled";
-const OPENVIDU_SERVER_URL = "https://goonzu.shop:8080";
+import YoutubeVideo from "../components/YoutubeVideo";
+import ChatNav from "../components/ChatNav";
 // const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+const OPENVIDU_SERVER_URL = "https://goonzu.shop:8443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
@@ -187,7 +189,7 @@ class VideoContainer extends Component {
     const myUserName = this.state.myUserName;
 
     return (
-      <div className="container">
+      <BodyWrap className="container">
         {this.state.session === undefined ? (
           <div id="join">
             <div id="img-div">
@@ -236,6 +238,7 @@ class VideoContainer extends Component {
 
         {this.state.session !== undefined ? (
           <Wrap id="session">
+            <ChatNav />
             <div id="session-header">
               <h1 id="session-title">{mySessionId}</h1>
               <input
@@ -246,14 +249,16 @@ class VideoContainer extends Component {
                 value="Leave session"
               />
             </div>
-            {/* 여기다가 유튜브 스티리밍 넣으면 됨 */}
-            {/* {this.state.mainStreamManager !== undefined ? (
+
+            {this.state.mainStreamManager !== undefined ? (
               <div id="main-video" className="col-md-6">
                 <UserVideoComponent
                   streamManager={this.state.mainStreamManager}
                 />
               </div>
-            ) : null} */}
+            ) : null}
+            {/* 여기다가 유튜브 스티리밍 넣으면 됨 */}
+            {/* <YoutubeVideo /> */}
             <VideoContainerWrap id="video-container" className="col-md-6">
               {this.state.publisher !== undefined ? (
                 <div
@@ -277,7 +282,7 @@ class VideoContainer extends Component {
             </VideoContainerWrap>
           </Wrap>
         ) : null}
-      </div>
+      </BodyWrap>
     );
   }
 
@@ -370,9 +375,17 @@ class VideoContainer extends Component {
   }
 }
 
+const BodyWrap = styled.div`
+  width: 100%;
+`;
+
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+`;
+
+const MainVideoContainer = styled.div`
   width: 100%;
 `;
 

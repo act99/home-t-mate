@@ -18,6 +18,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
+import "../styles/fullcalendar.css";
 
 const Mypage = (props) => {
   const todoList = useSelector((state) => state.todoReducer.list);
@@ -145,8 +146,7 @@ const Mypage = (props) => {
                 eventClick={eventClickHandler}
                 locale="ko" //한국어변경
               />
-
-              <Write onClick={() => setOpen(true)}></Write>
+              {/* <Write onClick={() => setOpen(true)}></Write> */}
               <CalendarModal
                 events={events}
                 open={open}
