@@ -1,23 +1,45 @@
-import React from "react";
+import styled from "@emotion/styled";
+import React, { Component } from "react";
 import OpenViduVideoComponent from "./OpenViduVideoComponent";
+import "./UserVideo.css";
 
-const UserVideoComponent = (props) => {
-  const getNicknameTag = () => {
-    // ** 유저 닉네임 태그 가져오기
-    return JSON.parse(props.streamManager.stream.connection.data).clientData;
-  };
-  return (
-    <div>
-      {this.props.streamManager !== undefined ? (
-        <div className="streamcomponent">
-          <OpenViduVideoComponent streamManager={props.streamManager} />
-          <div>
-            <p>{getNicknameTag()}</p>
-          </div>
-        </div>
-      ) : null}
-    </div>
-  );
-};
+export default class UserVideoComponent extends Component {
+  getNicknameTag() {
+    // Gets the nickName of the user
+    return JSON.parse(this.props.streamManager.stream.connection.data)
+      .clientData;
+  }
 
-export default UserVideoComponent;
+  render() {
+    return (
+      <WrapVideo>
+        {this.props.streamManager !== undefined ? (
+          <StreamComponent className="streamcomponent">
+            <OpenViduVideoComponent streamManager={this.props.streamManager} />
+            <Nickname>{this.getNicknameTag()}</Nickname>
+          </StreamComponent>
+        ) : null}
+      </WrapVideo>
+    );
+  }
+}
+
+const WrapVideo = styled.div`
+  width: 100%;
+`;
+
+const StreamComponent = styled.div`
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  margin: 0px 10px;
+`;
+
+const Nickname = styled.div`
+  text-align: center;
+  position: absolute;
+  width: auto;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+`;

@@ -3,8 +3,9 @@ import { OpenVidu } from "openvidu-browser";
 import { Component } from "@fullcalendar/core";
 import axios from "axios";
 import UserVideoComponent from "../components/UserVideoComponent";
-
-const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+import "../App.css";
+import styled from "@emotion/styled";
+const OPENVIDU_SERVER_URL = "https://goonzu.shop:4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
@@ -233,7 +234,7 @@ class VideoContainer extends Component {
         ) : null}
 
         {this.state.session !== undefined ? (
-          <div id="session">
+          <Wrap id="session">
             <div id="session-header">
               <h1 id="session-title">{mySessionId}</h1>
               <input
@@ -244,7 +245,7 @@ class VideoContainer extends Component {
                 value="Leave session"
               />
             </div>
-
+            {/* 여기다가 유튜브 스티리밍 넣으면 됨 */}
             {this.state.mainStreamManager !== undefined ? (
               <div id="main-video" className="col-md-6">
                 <UserVideoComponent
@@ -252,7 +253,7 @@ class VideoContainer extends Component {
                 />
               </div>
             ) : null}
-            <div id="video-container" className="col-md-6">
+            <VideoContainerWrap id="video-container" className="col-md-6">
               {this.state.publisher !== undefined ? (
                 <div
                   className="stream-container col-md-6 col-xs-6"
@@ -272,8 +273,8 @@ class VideoContainer extends Component {
                   <UserVideoComponent streamManager={sub} />
                 </div>
               ))}
-            </div>
-          </div>
+            </VideoContainerWrap>
+          </Wrap>
         ) : null}
       </div>
     );
@@ -367,5 +368,31 @@ class VideoContainer extends Component {
     });
   }
 }
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const VideoContainerWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-height: 300px;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  background-color: "red";
+  /* height: 100px; */
+  img: {
+    position: relative;
+    float: left;
+    width: 100%;
+    cursor: pointer;
+    object-fit: cover;
+    height: 180px;
+  }
+`;
 
 export default VideoContainer;
