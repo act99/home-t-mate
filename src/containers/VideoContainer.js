@@ -5,8 +5,10 @@ import axios from "axios";
 import UserVideoComponent from "../components/UserVideoComponent";
 import "../App.css";
 import styled from "@emotion/styled";
-const OPENVIDU_SERVER_URL = "https://goonzu.shop:8080";
-// const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+import YoutubeVideo from "../components/YoutubeVideo";
+
+const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+// const OPENVIDU_SERVER_URL = "https://goonzu.shop:8080";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
@@ -254,6 +256,7 @@ class VideoContainer extends Component {
                 />
               </div>
             ) : null} */}
+            <YoutubeVideo />
             <VideoContainerWrap id="video-container" className="col-md-6">
               {this.state.publisher !== undefined ? (
                 <div
