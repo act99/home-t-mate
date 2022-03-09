@@ -12,14 +12,16 @@ export default class UserVideoComponent extends Component {
 
   render() {
     return (
-      <WrapVideo>
+      <div>
         {this.props.streamManager !== undefined ? (
-          <StreamComponent className="streamcomponent">
+          <StreamComponent>
             <OpenViduVideoComponent streamManager={this.props.streamManager} />
-            <Nickname>{this.getNicknameTag()}</Nickname>
+            <Nickname>
+              <p>{this.getNicknameTag()}</p>
+            </Nickname>
           </StreamComponent>
         ) : null}
-      </WrapVideo>
+      </div>
     );
   }
 }
@@ -29,10 +31,11 @@ const WrapVideo = styled.div`
 `;
 
 const StreamComponent = styled.div`
-  width: 300px;
+  /* width: 300px; */
+  height: 540px;
   display: flex;
   flex-direction: row;
-  margin: 0px 10px;
+  /* margin: 0px 10px; */
 `;
 
 const Nickname = styled.div`

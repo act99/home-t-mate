@@ -7,8 +7,14 @@ import "../App.css";
 import styled from "@emotion/styled";
 import YoutubeVideo from "../components/YoutubeVideo";
 import ChatNav from "../components/ChatNav";
-// const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
-const OPENVIDU_SERVER_URL = "https://goonzu.shop:8443";
+import {
+  BodyWrap,
+  MainVideo,
+  MainVideoWrap,
+  VideoList,
+} from "./VideoContainer/VideoConEle";
+const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+// const OPENVIDU_SERVER_URL = "https://goonzu.shop:8443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
@@ -237,50 +243,44 @@ class VideoContainer extends Component {
         ) : null}
 
         {this.state.session !== undefined ? (
-          <Wrap id="session">
-            <ChatNav />
-            <div id="session-header">
-              <h1 id="session-title">{mySessionId}</h1>
-              <input
-                className="btn btn-large btn-danger"
-                type="button"
-                id="buttonLeaveSession"
-                onClick={this.leaveSession}
-                value="Leave session"
-              />
-            </div>
-
+          <div id="session">
+            <ChatNav
+              leaveSession={this.leaveSession}
+              mySessionId={mySessionId}
+            />
             {this.state.mainStreamManager !== undefined ? (
-              <div id="main-video" className="col-md-6">
-                <UserVideoComponent
-                  streamManager={this.state.mainStreamManager}
-                />
-              </div>
+              <MainVideoWrap>
+                <MainVideo id="main-video" className="col-md-6">
+                  <UserVideoComponent
+                    streamManager={this.state.mainStreamManager}
+                  />
+                </MainVideo>
+              </MainVideoWrap>
             ) : null}
-            {/* 여기다가 유튜브 스티리밍 넣으면 됨 */}
-            {/* <YoutubeVideo /> */}
-            <VideoContainerWrap id="video-container" className="col-md-6">
-              {this.state.publisher !== undefined ? (
-                <div
-                  className="stream-container col-md-6 col-xs-6"
-                  onClick={() =>
-                    this.handleMainVideoStream(this.state.publisher)
-                  }
-                >
-                  <UserVideoComponent streamManager={this.state.publisher} />
-                </div>
-              ) : null}
-              {this.state.subscribers.map((sub, i) => (
-                <div
-                  key={i}
-                  className="stream-container col-md-6 col-xs-6"
-                  onClick={() => this.handleMainVideoStream(sub)}
-                >
-                  <UserVideoComponent streamManager={sub} />
-                </div>
-              ))}
-            </VideoContainerWrap>
-          </Wrap>
+            <div id="video-container">
+              <VideoList>
+                {this.state.publisher !== undefined ? (
+                  <div
+                    className="stream-container col-md-6 col-xs-6"
+                    onClick={() =>
+                      this.handleMainVideoStream(this.state.publisher)
+                    }
+                  >
+                    <UserVideoComponent streamManager={this.state.publisher} />
+                  </div>
+                ) : null}
+                {this.state.subscribers.map((sub, i) => (
+                  <div
+                    key={i}
+                    className="stream-container col-md-6 col-xs-6"
+                    onClick={() => this.handleMainVideoStream(sub)}
+                  >
+                    <UserVideoComponent streamManager={sub} />
+                  </div>
+                ))}
+              </VideoList>
+            </div>
+          </div>
         ) : null}
       </BodyWrap>
     );
@@ -374,39 +374,5 @@ class VideoContainer extends Component {
     });
   }
 }
-
-const BodyWrap = styled.div`
-  width: 100%;
-`;
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const MainVideoContainer = styled.div`
-  width: 100%;
-`;
-
-const VideoContainerWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-height: 300px;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-  background-color: "red";
-  /* height: 100px; */
-  img: {
-    position: relative;
-    float: left;
-    width: 100%;
-    cursor: pointer;
-    object-fit: cover;
-    height: 180px;
-  }
-`;
 
 export default VideoContainer;
