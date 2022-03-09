@@ -206,7 +206,6 @@ const GridBox = styled.div`
   border-bottom-right-radius: ${(props) => props.B_bottom_right_radius};
   border-top-left-radius: ${(props) => props.B_top_left_radius};
   border-top-right-radius: ${(props) => props.B_top_right_radius};
-
   //background
   background-color: ${(props) => props.BG_c};
   box-sizing: ${(props) => props.box_sizing};
