@@ -1,11 +1,13 @@
 import React from "react";
+import StoryCard from "../components/StoryCard";
 
-const Story = () => {
+function Story() {
   return (
-    <div>
-      <h1>Hi</h1>
-    </div>
+    <React.Fragment>
+      {/* map으로 storycard생성예정 */}
+      <StoryCard />
+    </React.Fragment>
   );
-};
+}
 
 export default Story;

@@ -84,14 +84,11 @@ Button.defaultProps = {
 const Btn = styled.button`
   border: ${(props) => props.border};
   border-radius: ${(props) => props.B_radius};
-
   background-color: ${(props) => props.BG_color};
   box-shadow: ${(props) => props.box_shadow};
-
   font-size: ${(props) => props.font_size};
   font-weight: ${(props) => props.font_weight};
   color: ${(props) => props.font_color};
-
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   margin: ${(props) => props.margin};
