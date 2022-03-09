@@ -21,7 +21,7 @@ const ChatNav = (props) => {
 
 const NavWrap = styled.div`
   width: 100%;
-  height: 7vh;
+  height: 6vh;
   background-color: black;
   margin: 0px;
 `;
@@ -30,11 +30,6 @@ const NavHeader = styled.div`
   margin-bottom: 20px;
   h1 {
     display: inline-block;
-    color: white;
-  }
-  input {
-    float: right;
-    margin-top: 20px;
   }
 `;
 
