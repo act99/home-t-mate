@@ -16,6 +16,8 @@ import Container from "@mui/material/Container";
 import Mypage from "./pages/Mypage";
 import VideoContainer from "./containers/VideoContainer";
 import styled from "@emotion/styled";
+import Story from "./pages/Story";
+
 const App = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -49,6 +51,7 @@ const App = () => {
                 exact
                 component={KakaoOauth}
               />
+              <Route path="/story" exact component={Story} />
               {/* 채팅방 입장 */}
               <Route path="/rooms" exact component={Rooms} />
               <Route path="/rooms/:roomId" exact component={ChattingRoom} />
