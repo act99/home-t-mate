@@ -1,37 +1,17 @@
-//import Library
 import React from "react"
-
-
-//import Actions
-
-
-//import elements
-
-//import Icon
-
-
-// impot Component
-
-
-//import axios
-
-
-
-import NavBar from "../components/NavBar";
 import StoryCard from "../components/StoryCard";
 
 
-function Main(props) {
+function Story() {
 
     return (
-    <>
-        <NavBar/>
+        <React.Fragment>
         {/* map으로 storycard생성예정 */}
-        <StoryCard/>
-    </>    
+            <StoryCard/>
+        </React.Fragment>
     );
 
 }
 
 
-export default Main;
+export default Story;

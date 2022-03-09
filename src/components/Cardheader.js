@@ -8,7 +8,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 //import elements
-import Image from "../elements/Image";
+import { Image } from "../elements" 
 
 function Cardheader(props) {
     
@@ -23,16 +23,16 @@ function Cardheader(props) {
             />
           }
 
-        titleTypographyProps={{
-          fontWeight: 600,
-        }}
-          title="yejin" 
-
-            action={
+          action={
             <IconButton aria-label="settings">
               <MoreVertIcon />
             </IconButton>
           }
+
+        titleTypographyProps={{
+          fontWeight: 600,
+        }}
+          title="yejin" 
 
         />
 

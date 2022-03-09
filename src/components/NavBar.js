@@ -12,7 +12,6 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 const NavBar = () => {
   const dispatch = useDispatch();
   const handleNavigate = (target) => {
@@ -24,25 +23,22 @@ const NavBar = () => {
     history.go(0);
   };
   const user = useSelector((state) => state.userReducer.user);
-
   const [value, setValue] = React.useState("1");
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const theme = createTheme({
     palette: {
       primary: {
-        light: "#757ce8",
-        main: "#3f50b5",
+        light: "#757CE8",
+        main: "#3F50B5",
         dark: "#002884",
         contrastText: "#fff",
       },
       secondary: {
-        light: "#ff7961",
-        main: "#f44336",
-        dark: "#ba000d",
+        light: "#FF7961",
+        main: "#F44336",
+        dark: "#BA000D",
         contrastText: "#000",
       },
     },
@@ -68,26 +64,25 @@ const NavBar = () => {
                   <TabList
                     // sx={{ color: "white" }}
                     // textColor="white"
-
                     indicatorColor="secondary"
                     // indicatorColor="white"
                     onChange={handleChange}
                     aria-label="lab API tabs example"
                   >
                     <Tab
-                      style={{ color: "#ffffff" }}
+                      style={{ color: "#FFFFFF" }}
                       label="홈"
                       value="1"
                       onClick={() => history.push("/")}
                     />
                     <Tab
-                      style={{ color: "#ffffff" }}
+                      style={{ color: "#FFFFFF" }}
                       label="스토리"
                       value="2"
                       onClick={() => history.push("/story")}
                     />
                     <Tab
-                      style={{ color: "#ffffff" }}
+                      style={{ color: "#FFFFFF" }}
                       label="LIVE NOW"
                       value="3"
                       onClick={() => history.push("/rooms")}
@@ -95,7 +90,6 @@ const NavBar = () => {
                   </TabList>
                 </Box>
               </TabContext>
-
               {/* {pages.map((page) => (
               <Button
                 key={page[1]}
@@ -108,7 +102,6 @@ const NavBar = () => {
               </Button>
             ))} */}
             </Box>
-
             {user.is_login === false ? (
               <Button color="inherit" onClick={() => handleNavigate("/login")}>
                 로그인

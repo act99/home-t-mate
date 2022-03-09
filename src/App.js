@@ -37,9 +37,8 @@ const App = () => {
             {/* 채팅방 입장 */}
             <Route path="/rooms" exact component={Rooms} />
             <Route path="/rooms/:roomId" exact component={ChattingRoom} />
-            <Route path="*" exact component={NotFound} />
-            
             <Route path="/story" exact component={Story}/>
+            <Route path="*" exact component={NotFound} /> 
           </Switch>
         </ConnectedRouter>
       </Container>
