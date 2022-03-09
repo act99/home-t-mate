@@ -1,34 +1,14 @@
 //import Library
 import React from "react"
-import styled from "styled-components";
-import {useDispatch, useSelector} from "react-redux";
-import { useNavigate } from "react-router-dom";
-import MainCard from "../components/MainCard";
 
-import {CardHeader,Avatar,IconButton} from '@mui/material';
+import {CardHeader,IconButton} from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { red } from '@mui/material/colors';
-
-
 
 //import Actions
 
 
 //import elements
-import { Button, Grid, Input, Image, Text } from "../elements" 
-
-//import Icon
-
-
-// impot Component
-import Header from "../components/Header";
-//import Actions
-
-
-//import axios
-import instance from "../shared/Request";
-import { BsFolder } from "react-icons/bs";
-
+import Image from "../elements/Image";
 
 function Cardheader(props) {
     
@@ -48,6 +28,12 @@ function Cardheader(props) {
         }}
           title="yejin" 
 
+            action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+
         />
 
         // <Text width="auto" padding_left="16px">yejin</Text>
@@ -59,8 +45,3 @@ function Cardheader(props) {
 
 export default Cardheader;
 
-        //   action={
-        //     <IconButton aria-label="settings">
-        //       <MoreVertIcon />
-        //     </IconButton>
-        //   }

@@ -1,8 +1,10 @@
+//react-responsive-carousel 라이브러리 사용
+
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Carousel } from "react-responsive-carousel";
-import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Grid } from "../elements";
+// import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
+import Grid from "../elements/Grid";
 
 
 
