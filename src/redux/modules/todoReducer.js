@@ -9,23 +9,48 @@ const DELETE_TODO = "DELETE_TODO";
 
 const setTodo = createAction(SET_TODO, (todo_list) => ({ todo_list }));
 const addTodo = createAction(ADD_TODO, (todo) => ({ todo }));
-const deleteTodo = createAction(EDIT_TODO, (todo_id) => ({ todo_id }));
-const editTodo = createAction(DELETE_TODO, (todo_id, todo) => ({
+const deleteTodo = createAction(DELETE_TODO, (todo_id) => ({ todo_id }));
+const editTodo = createAction(EDIT_TODO, (todo_id, todo) => ({
   todo_id,
   todo,
 }));
 
 const initialTodo = {
   id: 0,
-  title: "sdfasdf",
-  startAt: "YYYY-MM-DD ",
-  endAt: "YYYY-MM-DD",
-  time: "hh:mm:ss",
+  title: "할일1",
+  start: "2022-03-17T13:00:00",
+  end: "2022-03-20T15:00:00",
+  time: "13:00",
   completed: false,
 };
 
 const initialState = {
-  list: [{ ...initialTodo }],
+  list: [
+    {
+      id: 0,
+      title: "할일1",
+      start: `2022-03-17T13:00:00`,
+      end: "2022-03-20T15:00:00",
+      time: "13:00",
+      completed: false,
+    },
+    {
+      id: 1,
+      title: "할일2",
+      start: "2022-03-17T15:00:00",
+      time: "15:00",
+      end: "2022-03-22T15:00:00",
+      completed: false,
+    },
+    {
+      id: 2,
+      title: "할일3",
+      start: "2022-03-17T17:00:00",
+      time: "17:00",
+      end: "2022-03-20T15:00:00",
+      completed: false,
+    },
+  ],
 };
 
 const getTodoDB = () => {
@@ -74,8 +99,8 @@ const addTodoDB = (contents) => {
     ...initialTodo,
     id: contents.id,
     title: contents.title,
-    startAt: contents.startAt,
-    endAt: contents.endAt,
+    start: contents.startAt,
+    end: contents.endAt,
     time: contents.time,
     completed: false,
   };
@@ -105,8 +130,9 @@ export default handleActions(
     [EDIT_TODO]: (state, action) =>
       produce(state, (draft) => {
         let index = draft.list.findIndex(
-          (p) => p.id === action.payload.todo_id
+          (p) => p.id * 1 === action.payload.todo_id * 1
         );
+        console.log(index);
         draft.list[index] = { ...draft.list[index], ...action.payload.todo };
       }),
     [DELETE_TODO]: (state, action) =>
@@ -125,6 +151,9 @@ const actionCreators = {
   getTodoDB,
   editTodoDB,
   deleteTodoDB,
+  addTodo,
+  editTodo,
+  deleteTodo,
 };
 
 export { actionCreators };
