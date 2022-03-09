@@ -30,6 +30,18 @@ const NavBar = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const routeUrl = useSelector((state) => state.router.location.pathname);
+  React.useEffect(() => {
+    if (routeUrl === "/") {
+      setValue("1");
+    } else if (routeUrl.includes("/story")) {
+      setValue("2");
+    } else if (routeUrl.includes("/rooms")) {
+      setValue("3");
+    } else {
+      setValue("1");
+    }
+  }, [routeUrl]);
 
   const theme = createTheme({
     palette: {

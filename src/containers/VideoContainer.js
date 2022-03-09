@@ -7,8 +7,15 @@ import "../App.css";
 import styled from "@emotion/styled";
 import YoutubeVideo from "../components/YoutubeVideo";
 import ChatNav from "../components/ChatNav";
-// const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
-const OPENVIDU_SERVER_URL = "https://goonzu.shop:8443";
+import {
+  BodyWrap,
+  MainVideo,
+  MainVideoWrap,
+  VideoList,
+  VideoListWrap,
+} from "./VideoContainer/VideoConEle";
+const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+// const OPENVIDU_SERVER_URL = "https://goonzu.shop:8443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
@@ -76,11 +83,11 @@ class VideoContainer extends Component {
   }
 
   joinSession() {
-    // --- 1) Get an OpenVidu object ---
+    // ** setState 와 동시에 async 로 함수 호출
 
     this.OV = new OpenVidu();
 
-    // --- 2) Init a session ---
+    // ** session 초기화
 
     this.setState(
       {
@@ -88,64 +95,48 @@ class VideoContainer extends Component {
       },
       () => {
         var mySession = this.state.session;
+        // ** 새로운 구독자 추가
 
-        // --- 3) Specify the actions when events take place in the session ---
-
-        // On every new Stream received...
         mySession.on("streamCreated", (event) => {
-          // Subscribe to the Stream to receive it. Second parameter is undefined
-          // so OpenVidu doesn't create an HTML video by its own
           var subscriber = mySession.subscribe(event.stream, undefined);
           var subscribers = this.state.subscribers;
           subscribers.push(subscriber);
-
-          // Update the state with the new subscribers
           this.setState({
             subscribers: subscribers,
           });
         });
 
-        // On every Stream destroyed...
+        // ** 구독자 삭제
         mySession.on("streamDestroyed", (event) => {
-          // Remove the stream from 'subscribers' array
           this.deleteSubscriber(event.stream.streamManager);
         });
-
-        // On every asynchronous exception...
         mySession.on("exception", (exception) => {
           console.warn(exception);
         });
-
-        // --- 4) Connect to the session with a valid user token ---
-
-        // 'getToken' method is simulating what your server-side should do.
-        // 'token' parameter should be retrieved and returned by your own backend
+        // ** 토큰 가져오는 과정에서 session 과 token 이 생성되며 return  된다.
+        // ** 그 후, 가져온 세션과 토큰을 이용해 WebScoket과 통신을 시도하며, sdp 정보를 보내준다.
         this.getToken().then((token) => {
-          // First param is the token got from OpenVidu Server. Second param can be retrieved by every user on event
-          // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
+          // ** 첫 번째 param은 OV Server 에서 오는 토큰 값이며, 두 번째 param은 모든 유저가 "streamCreated"를 통해
+          // ** 받는 정보들이다. 그리고 이것은 유저 닉네임으로 DOM 에 추가된다.
           mySession
             .connect(token, { clientData: this.state.myUserName })
             .then(() => {
-              // --- 5) Get your own camera stream ---
-
-              // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
-              // element: we will manage it on our own) and with the desired properties
+              // ** 본인의 카메라 stream (sdp 정보 등과 함께) 을 가져온다.
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
                 publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                resolution: "640x480", // The resolution of your video
+                resolution: "640x480", // The resolution of your video "640x480"
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
               });
 
-              // --- 6) Publish your stream ---
-
+              // ** 본인의 정보를 publishing 한다.
               mySession.publish(publisher);
-
-              // Set the main video in the page to display our webcam and store our Publisher
+              // ** 첫 번째 메인 카메라를 본인의 웹캠으로 설정시키는 것
+              // ** 추후에 방장으로 바꾸면 됨.
               this.setState({
                 mainStreamManager: publisher,
                 publisher: publisher,
@@ -164,15 +155,10 @@ class VideoContainer extends Component {
   }
 
   leaveSession() {
-    // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-
     const mySession = this.state.session;
-
     if (mySession) {
       mySession.disconnect();
     }
-
-    // Empty all properties...
     this.OV = null;
     this.setState({
       session: undefined,
@@ -237,50 +223,44 @@ class VideoContainer extends Component {
         ) : null}
 
         {this.state.session !== undefined ? (
-          <Wrap id="session">
-            <ChatNav />
-            <div id="session-header">
-              <h1 id="session-title">{mySessionId}</h1>
-              <input
-                className="btn btn-large btn-danger"
-                type="button"
-                id="buttonLeaveSession"
-                onClick={this.leaveSession}
-                value="Leave session"
-              />
-            </div>
-
+          <div id="session">
+            <ChatNav
+              leaveSession={this.leaveSession}
+              mySessionId={mySessionId}
+            />
             {this.state.mainStreamManager !== undefined ? (
-              <div id="main-video" className="col-md-6">
-                <UserVideoComponent
-                  streamManager={this.state.mainStreamManager}
-                />
-              </div>
+              <MainVideoWrap>
+                <MainVideo id="main-video" className="col-md-6">
+                  <UserVideoComponent
+                    streamManager={this.state.mainStreamManager}
+                  />
+                </MainVideo>
+              </MainVideoWrap>
             ) : null}
-            {/* 여기다가 유튜브 스티리밍 넣으면 됨 */}
-            {/* <YoutubeVideo /> */}
-            <VideoContainerWrap id="video-container" className="col-md-6">
-              {this.state.publisher !== undefined ? (
-                <div
-                  className="stream-container col-md-6 col-xs-6"
-                  onClick={() =>
-                    this.handleMainVideoStream(this.state.publisher)
-                  }
-                >
-                  <UserVideoComponent streamManager={this.state.publisher} />
-                </div>
-              ) : null}
-              {this.state.subscribers.map((sub, i) => (
-                <div
-                  key={i}
-                  className="stream-container col-md-6 col-xs-6"
-                  onClick={() => this.handleMainVideoStream(sub)}
-                >
-                  <UserVideoComponent streamManager={sub} />
-                </div>
-              ))}
-            </VideoContainerWrap>
-          </Wrap>
+            <VideoListWrap id="video-container">
+              <VideoList>
+                {this.state.publisher !== undefined ? (
+                  <div
+                    // className="stream-container col-md-6 col-xs-6"
+                    onClick={() =>
+                      this.handleMainVideoStream(this.state.publisher)
+                    }
+                  >
+                    <UserVideoComponent streamManager={this.state.publisher} />
+                  </div>
+                ) : null}
+                {this.state.subscribers.map((sub, i) => (
+                  <div
+                    key={i}
+                    // className="stream-container col-md-6 col-xs-6"
+                    onClick={() => this.handleMainVideoStream(sub)}
+                  >
+                    <UserVideoComponent streamManager={sub} />
+                  </div>
+                ))}
+              </VideoList>
+            </VideoListWrap>
+          </div>
         ) : null}
       </BodyWrap>
     );
@@ -374,39 +354,5 @@ class VideoContainer extends Component {
     });
   }
 }
-
-const BodyWrap = styled.div`
-  width: 100%;
-`;
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const MainVideoContainer = styled.div`
-  width: 100%;
-`;
-
-const VideoContainerWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-height: 300px;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-  background-color: "red";
-  /* height: 100px; */
-  img: {
-    position: relative;
-    float: left;
-    width: 100%;
-    cursor: pointer;
-    object-fit: cover;
-    height: 180px;
-  }
-`;
 
 export default VideoContainer;
