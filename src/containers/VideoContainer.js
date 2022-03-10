@@ -12,8 +12,8 @@ import {
   VideoList,
   VideoListWrap,
 } from "./VideoContainer/VideoConEle";
-const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
-// const OPENVIDU_SERVER_URL = "https://goonzu.shop:5443";
+// const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+const OPENVIDU_SERVER_URL = "http://goonzu.shop:5443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
