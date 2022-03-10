@@ -1,40 +1,52 @@
-import styled from "@emotion/styled";
-import React from "react";
-
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { IconButton, Typography } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 const ChatNav = (props) => {
-  const { mySessionId, leaveSession } = props;
+  const { mySessionId, leaveSession, chatNum } = props;
+  const handleOut = () => {
+    console.log("out");
+    leaveSession();
+  };
+  const theme = createTheme({
+    palette: {
+      primary: {
+        light: "#757ce8",
+        main: "#3f50b5",
+        dark: "#002884",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#ff7961",
+        main: "#f44336",
+        dark: "#ba000d",
+        contrastText: "#000",
+      },
+    },
+  });
   return (
-    <NavWrap>
-      <NavHeader id="session-header">
-        <h1 id="session-title">{mySessionId}</h1>
-        <input
-          className="btn btn-large btn-danger"
-          type="button"
-          id="buttonLeaveSession"
-          onClick={leaveSession}
-          value="Leave session"
-        />
-      </NavHeader>
-    </NavWrap>
+    <ThemeProvider theme={theme}>
+      <AppBar position="static" sx={{ backgroundColor: "black" }}>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Typography variant="h6">{mySessionId}</Typography>
+            <PersonOutlineIcon sx={{ ml: 2 }} />
+            <Typography>( {chatNum} / 5 )</Typography>
+            <Box
+              sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+            ></Box>
+            <IconButton color="inherit" onClick={handleOut}>
+              <LogoutIcon sx={{ fontSize: 35 }} />
+            </IconButton>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </ThemeProvider>
   );
 };
-
-const NavWrap = styled.div`
-  width: 100%;
-  height: 6vh;
-  background-color: black;
-  margin: 0px;
-`;
-
-const NavHeader = styled.div`
-  margin-bottom: 20px;
-  h1 {
-    display: inline-block;
-  }
-`;
-
-const RoomName = styled.h1`
-  color: white;
-  font-size: 20px;
-`;
 export default ChatNav;

@@ -14,8 +14,8 @@ import {
   VideoList,
   VideoListWrap,
 } from "./VideoContainer/VideoConEle";
-const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
-// const OPENVIDU_SERVER_URL = "https://goonzu.shop:8443";
+// const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+const OPENVIDU_SERVER_URL = "https://goonzu.shop:5443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
@@ -227,16 +227,8 @@ class VideoContainer extends Component {
             <ChatNav
               leaveSession={this.leaveSession}
               mySessionId={mySessionId}
+              chatNum={this.state.subscribers.length}
             />
-            {this.state.mainStreamManager !== undefined ? (
-              <MainVideoWrap>
-                <MainVideo id="main-video" className="col-md-6">
-                  <UserVideoComponent
-                    streamManager={this.state.mainStreamManager}
-                  />
-                </MainVideo>
-              </MainVideoWrap>
-            ) : null}
             <VideoListWrap id="video-container">
               <VideoList>
                 {this.state.publisher !== undefined ? (
@@ -260,6 +252,15 @@ class VideoContainer extends Component {
                 ))}
               </VideoList>
             </VideoListWrap>
+            {this.state.mainStreamManager !== undefined ? (
+              <MainVideoWrap>
+                <MainVideo id="main-video" className="col-md-6">
+                  <UserVideoComponent
+                    streamManager={this.state.mainStreamManager}
+                  />
+                </MainVideo>
+              </MainVideoWrap>
+            ) : null}
           </div>
         ) : null}
       </BodyWrap>

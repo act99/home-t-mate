@@ -29,4 +29,6 @@ const Nickname = styled.div`
   width: auto;
   background-color: rgba(0, 0, 0, 0.5);
   font-weight: bold;
+  p {
+  }
 `;
