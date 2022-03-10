@@ -20,6 +20,7 @@ import Story from "./pages/Story";
 import Test from "./pages/Test";
 import YoutubeVideo from "./components/YoutubeVideo";
 import VideoChatRoom from "./pages/VideoChatRoom";
+import EnterRoom from "./containers/EnterRoom";
 const App = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -62,6 +63,7 @@ const App = () => {
               <Route path="/rooms" exact component={Rooms} />
               <Route path="/rooms/:roomId" exact component={ChattingRoom} />
               <Route path="/youtube" exact component={YoutubeVideo} />
+              <Route path="/enterroom" exact component={EnterRoom} />
               {/* <Route path="*" exact component={NotFound} /> */}
             </WrapMedium>
           </WrapWide>
