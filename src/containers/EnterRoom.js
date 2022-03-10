@@ -6,14 +6,13 @@ import "../App.css";
 import ChatNav from "../components/ChatNav";
 import {
   BodyWrap,
-  MainVideo,
-  MainVideoWrap,
   VideoList,
   VideoListWrap,
   YoutubeAndSetting,
 } from "./VideoContainer/VideoConEle";
 import YoutubeVideo from "../components/YoutubeVideo";
 import ChatRoomSetting from "../components/ChatRoomSetting";
+import WebRTCContainer from "./WebRTCContainer";
 const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
 // const OPENVIDU_SERVER_URL = "https://hanghae99.shop:5443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -223,55 +222,10 @@ class VideoContainer extends Component {
         ) : null}
 
         {this.state.session !== undefined ? (
-          <div id="session">
-            <ChatNav
-              leaveSession={this.leaveSession}
-              mySessionId={mySessionId}
-              chatNum={this.state.subscribers.length}
-            />
-            {/* 여기를 한대로 묶자. */}
-            <YoutubeAndSetting>
-              <YoutubeVideo />
-              <ChatRoomSetting />
-            </YoutubeAndSetting>
-            <VideoListWrap id="video-container">
-              <VideoList>
-                {this.state.publisher !== undefined ? (
-                  <div
-                    // className="stream-container col-md-6 col-xs-6"
-                    onClick={() =>
-                      this.handleMainVideoStream(this.state.publisher)
-                    }
-                  >
-                    <UserVideoComponent streamManager={this.state.publisher} />
-                  </div>
-                ) : null}
-                {this.state.subscribers.map((sub, i) => (
-                  <div
-                    key={i}
-                    // className="stream-container col-md-6 col-xs-6"
-                    onClick={() => this.handleMainVideoStream(sub)}
-                  >
-                    <UserVideoComponent streamManager={sub} />
-                  </div>
-                ))}
-              </VideoList>
-            </VideoListWrap>
-            {/* 메인화면 삭제시킴 */}
-            {/* {this.state.mainStreamManager !== undefined ? (
-              <MainVideoWrap>
-                <MainVideo id="main-video" className="col-md-6">
-                  <UserVideoComponent
-                    streamManager={this.state.mainStreamManager}
-                  />
-                </MainVideo>
-              </MainVideoWrap>
-            ) : null} */}
-            {/* 메인화면 삭제시킴 */}
-            {/* 여기를 한대로 묶자. */}
-            {/* 여기를 세팅창으로 잡자 */}
-            {/* 여기를 세팅창으로 잡자 */}
-          </div>
+          <WebRTCContainer
+            publisher={this.state.publisher}
+            subscribers={this.state.subscribers}
+          />
         ) : null}
       </BodyWrap>
     );

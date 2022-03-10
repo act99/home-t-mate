@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { IconButton, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { height } from "@mui/system";
 const ChatNav = (props) => {
   const { mySessionId, leaveSession, chatNum } = props;
   const handleOut = () => {

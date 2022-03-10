@@ -7,6 +7,7 @@ import roomReducer from "./modules/roomReducer";
 import todoReducer from "./modules/todoReducer";
 import userReducer from "./modules/userReducer";
 import postReducer from "./modules/postReducer";
+import webrtcReducer from "./modules/webrtcReducer";
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   chatReducer: chatReducer,
   todoReducer: todoReducer,
   postReducer: postReducer,
+  webrtcReducer: webrtcReducer,
 });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
