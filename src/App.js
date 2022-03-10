@@ -17,7 +17,7 @@ import Mypage from "./pages/Mypage";
 import VideoContainer from "./containers/VideoContainer";
 import styled from "@emotion/styled";
 import Story from "./pages/Story";
-
+import Test from "./pages/Test";
 const App = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -42,6 +42,7 @@ const App = () => {
         <Switch>
           <WrapWide>
             <Route path="/test" exact component={VideoContainer} />
+            <Route path="/test2" exact component={Test} />
             <WrapMedium>
               <Route path="/" exact component={Home} />
               <Route path="/login" exact component={Login} />
@@ -55,6 +56,7 @@ const App = () => {
               {/* 채팅방 입장 */}
               <Route path="/rooms" exact component={Rooms} />
               <Route path="/rooms/:roomId" exact component={ChattingRoom} />
+
               {/* <Route path="*" exact component={NotFound} /> */}
             </WrapMedium>
           </WrapWide>

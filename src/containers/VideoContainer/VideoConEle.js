@@ -27,6 +27,7 @@ const MainVideo = styled.div`
   }
   video {
     cursor: initial;
+    height: auto;
   }
 `;
 
@@ -48,7 +49,7 @@ const VideoListWrap = styled.div`
     height: 180px;
   }
   p {
-    position: absolute;
+    /* position: absolute;
     top: 50%;
     left: 50%;
     z-index: 1;
@@ -57,7 +58,7 @@ const VideoListWrap = styled.div`
     padding-left: 5px;
     color: #777777;
     font-weight: bold;
-    border-bottom-right-radius: 4px;
+    border-bottom-right-radius: 4px; */
   }
 `;
 
@@ -69,7 +70,7 @@ const VideoList = styled.div`
     position: relative;
     float: left;
     cursor: pointer;
-    height: 15vw;
+    height: 300px;
   }
 `;
 
