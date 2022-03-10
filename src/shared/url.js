@@ -4,7 +4,7 @@
 // const WEB_SOCKET = "http://15.165.42.20:8080/ws-stomp";
 // ** 배포
 const BASE_URL = "https://goonzu.shop";
-const REDIRECT_URI = "https://develop.d1vuiyyszq8cy0.amplifyapp.com/";
+const REDIRECT_URI = "https://act99.shop";
 const WEB_SOCKET = "https://goonzu.shop/wss-stomp";
 
 const url = {

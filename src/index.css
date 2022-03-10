@@ -165,28 +165,6 @@ a:hover .demo-logo {
 #join-dialog input.btn {
   margin-top: 15px;
 }
-/* 
-#video-container video {
-  position: relative;
-  float: left;
-  cursor: pointer;
-  height: 300px;
-} */
-
-/* #video-container p {
-  display: inline-block;
-  background: #f8f8f8;
-  padding-right: 5px;
-  padding-left: 5px;
-  color: #777777;
-  font-weight: bold;
-  border-bottom-right-radius: 4px;
-} */
-
-/*video {
-	width: 100%;
-	height: auto;
-}*/
 
 #session img {
   width: 100%;
