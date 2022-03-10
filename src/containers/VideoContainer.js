@@ -11,10 +11,12 @@ import {
   MainVideoWrap,
   VideoList,
   VideoListWrap,
+  YoutubeAndSetting,
 } from "./VideoContainer/VideoConEle";
 import YoutubeVideo from "../components/YoutubeVideo";
-// const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
-const OPENVIDU_SERVER_URL = "https://goonzu.shop:5443";
+import ChatRoomSetting from "../components/ChatRoomSetting";
+const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+// const OPENVIDU_SERVER_URL = "https://goonzu.shop:5443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
@@ -228,7 +230,11 @@ class VideoContainer extends Component {
               mySessionId={mySessionId}
               chatNum={this.state.subscribers.length}
             />
-            <YoutubeVideo />
+            {/* 여기를 한대로 묶자. */}
+            <YoutubeAndSetting>
+              <YoutubeVideo />
+              <ChatRoomSetting />
+            </YoutubeAndSetting>
             <VideoListWrap id="video-container">
               <VideoList>
                 {this.state.publisher !== undefined ? (
@@ -252,7 +258,8 @@ class VideoContainer extends Component {
                 ))}
               </VideoList>
             </VideoListWrap>
-            {this.state.mainStreamManager !== undefined ? (
+            {/* 메인화면 삭제시킴 */}
+            {/* {this.state.mainStreamManager !== undefined ? (
               <MainVideoWrap>
                 <MainVideo id="main-video" className="col-md-6">
                   <UserVideoComponent
@@ -260,7 +267,11 @@ class VideoContainer extends Component {
                   />
                 </MainVideo>
               </MainVideoWrap>
-            ) : null}
+            ) : null} */}
+            {/* 메인화면 삭제시킴 */}
+            {/* 여기를 한대로 묶자. */}
+            {/* 여기를 세팅창으로 잡자 */}
+            {/* 여기를 세팅창으로 잡자 */}
           </div>
         ) : null}
       </BodyWrap>

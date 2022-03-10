@@ -18,6 +18,8 @@ import VideoContainer from "./containers/VideoContainer";
 import styled from "@emotion/styled";
 import Story from "./pages/Story";
 import Test from "./pages/Test";
+import YoutubeVideo from "./components/YoutubeVideo";
+
 const App = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -56,6 +58,7 @@ const App = () => {
               {/* 채팅방 입장 */}
               <Route path="/rooms" exact component={Rooms} />
               <Route path="/rooms/:roomId" exact component={ChattingRoom} />
+              <Route path="/youtube" exact component={YoutubeVideo} />
 
               {/* <Route path="*" exact component={NotFound} /> */}
             </WrapMedium>

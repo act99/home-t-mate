@@ -8,7 +8,7 @@ const BodyWrap = styled.div`
 const MainVideoWrap = styled.div`
   display: flex;
   justify-content: center;
-  width: 80%;
+  width: 70%;
 `;
 
 const MainVideo = styled.div`
@@ -68,8 +68,15 @@ const VideoList = styled.div`
     position: relative;
     float: left;
     cursor: pointer;
-    height: 200px;
+    height: auto;
+    max-height: 320px;
+    margin-left: 4px;
   }
+`;
+
+const YoutubeAndSetting = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export {
@@ -79,4 +86,5 @@ export {
   VideoList,
   MainVideoWrap,
   VideoListWrap,
+  YoutubeAndSetting,
 };
