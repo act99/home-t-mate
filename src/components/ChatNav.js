@@ -36,7 +36,7 @@ const ChatNav = (props) => {
           <Toolbar disableGutters>
             <Typography variant="h6">{mySessionId}</Typography>
             <PersonOutlineIcon sx={{ ml: 2 }} />
-            <Typography>( {chatNum} / 5 )</Typography>
+            <Typography>( {chatNum + 1} / 5 )</Typography>
             <Box
               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
             ></Box>
