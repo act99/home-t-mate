@@ -13,7 +13,7 @@ import {
   VideoListWrap,
 } from "./VideoContainer/VideoConEle";
 // const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
-const OPENVIDU_SERVER_URL = "http://goonzu.shop:5443";
+const OPENVIDU_SERVER_URL = "https://goonzu.shop:4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
@@ -125,7 +125,7 @@ class VideoContainer extends Component {
                 videoSource: undefined, // The source of video. If undefined default webcam
                 publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                resolution: "1280x720", // The resolution of your video "640x480"
+                resolution: "640x480", // The resolution of your video "640x480", "1280x720"
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
