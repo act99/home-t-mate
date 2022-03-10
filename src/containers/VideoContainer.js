@@ -15,7 +15,7 @@ import {
 import YoutubeVideo from "../components/YoutubeVideo";
 import ChatRoomSetting from "../components/ChatRoomSetting";
 // const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
-const OPENVIDU_SERVER_URL = "https://hanghae99.shop:5443";
+const OPENVIDU_SERVER_URL = "https://hanghae99.shop:8443";
 // const OPENVIDU_SERVER_URL = "https://www.act99.shop"
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
