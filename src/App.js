@@ -19,7 +19,7 @@ import styled from "@emotion/styled";
 import Story from "./pages/Story";
 import Test from "./pages/Test";
 import YoutubeVideo from "./components/YoutubeVideo";
-
+import VideoChatRoom from "./pages/VideoChatRoom";
 const App = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -33,7 +33,8 @@ const App = () => {
   return (
     <>
       {/* 배포 전 */}
-      {window.location.href === `http://${window.location.host}/test` ? null : (
+      {window.location.href ===
+      `http://${window.location.host}/chatroom` ? null : (
         <NavBar />
       )}
       {/* 배포 후 */}
@@ -45,6 +46,8 @@ const App = () => {
           <WrapWide>
             <Route path="/test" exact component={VideoContainer} />
             <Route path="/test2" exact component={Test} />
+            <Route path="/chatroom" exact component={VideoChatRoom} />
+
             <WrapMedium>
               <Route path="/" exact component={Home} />
               <Route path="/login" exact component={Login} />
@@ -59,7 +62,6 @@ const App = () => {
               <Route path="/rooms" exact component={Rooms} />
               <Route path="/rooms/:roomId" exact component={ChattingRoom} />
               <Route path="/youtube" exact component={YoutubeVideo} />
-
               {/* <Route path="*" exact component={NotFound} /> */}
             </WrapMedium>
           </WrapWide>

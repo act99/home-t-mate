@@ -7,9 +7,11 @@ const YoutubeVideo = () => {
   const size = useWindowSize();
   console.log(size);
   const youtubeRef = React.useRef();
+  const fixedWidth = `${size.width / 1.8}`;
+  const fixedHeight = `${((size.width / 1.8) * 9) / 16}`;
   const opts = {
-    width: `${size.width / 2}`,
-    height: `${((size.width / 2) * 9) / 16}`,
+    width: fixedWidth,
+    height: fixedHeight,
 
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
@@ -73,27 +75,37 @@ const YoutubeVideo = () => {
           ref={youtubeRef}
           onPlay={handlePlay}
           onPause={handlePause}
-          onStateChange={() => console.log("상태변화 감지 필요없음")}
+          onStateChange={(e) => console.log("상태변화 감지 필요없음", e)}
           onEnd={handleEnd}
         />
       ) : (
-        <form onSubmit={handleUrlSubmit}>
-          <input
-            type="text"
-            onChange={handleUrlChange}
-            required
-            placeholder="유튜브 Url"
-          />
-          <button type="submit">유튜브 url 제출</button>
-        </form>
+        <Empty width={fixedWidth} height={fixedWidth}>
+          텅 비었습니다.
+        </Empty>
       )}
+      <form onSubmit={handleUrlSubmit}>
+        <input
+          type="text"
+          onChange={handleUrlChange}
+          required
+          placeholder="유튜브 Url"
+        />
+        <button type="submit">유튜브 url 제출</button>
+      </form>
     </Wrap>
   );
 };
 
+const Empty = styled.div`
+  width: ${(props) => props.width + "px"};
+  height: ${(props) => props.height + "px"};
+`;
+
 const Wrap = styled.div`
-  margin-top: 4px;
-  margin-left: 4px;
+  display: flex;
+  flex-direction: row;
+  /* margin-top: 4px;
+  margin-left: 4px; */
   /* width: 80vw;
   height: 45vw; */
 `;
