@@ -279,10 +279,11 @@ class VideoContainer extends Component {
    *   3) The Connection.token must be consumed in Session.connect() method
    */
 
-  getToken() {
-    return this.createSession(this.state.mySessionId).then((sessionId) =>
-      this.createToken(sessionId)
+  async getToken() {
+    const gogo = await this.createSession(this.state.mySessionId).then(
+      (sessionId) => this.createToken(sessionId)
     );
+    return gogo;
   }
   // /openvidu/api/sessions
   createSession(sessionId) {
