@@ -14,16 +14,14 @@ const MainVideoWrap = styled.div`
 const MainVideo = styled.div`
   height: auto;
   p {
-    /* position: absolute; */
-    display: inline-block;
+    /* display: inline-block;
     background: #f8f8f8;
     padding-right: 5px;
     padding-left: 5px;
-    /* left: 800px; */
     font-size: 22px;
     color: #777777;
     font-weight: bold;
-    border-bottom-right-radius: 4px;
+    border-bottom-right-radius: 4px; */
   }
   video {
     cursor: initial;

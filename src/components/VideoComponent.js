@@ -8,6 +8,8 @@ const VideoComponent = (props) => {
       props.streamManager.addVideoElement(videoRef.current);
     }
     console.log(videoRef.current.style);
+    // videoRef.current.style.height = "270px";
+    // videoRef.current.style.width = "480px";
     return () => {};
   }, [props]);
 
@@ -39,7 +41,7 @@ const VideoWrap = styled.div`
     }
     div {
       width: 20%;
-      height: 15px;
+      height: 50px;
       position: absolute;
       top: 50%;
       left: 40%;

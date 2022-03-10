@@ -24,11 +24,12 @@ const UserVideoComponent = (props) => {
 export default UserVideoComponent;
 
 const Nickname = styled.div`
-  text-align: center;
-  position: absolute;
-  width: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-  font-weight: bold;
   p {
+    text-align: center;
+    position: absolute;
+    width: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    color: white;
   }
 `;
