@@ -56,9 +56,6 @@ export default function LikeComment(props) {
           </Grid>
         </div>
       </Modal>
-      <Text padding_left="16px" F_weight="bold">
-        좋아요0개
-      </Text>
     </>
   );
 }
