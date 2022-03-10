@@ -25,7 +25,7 @@ const MainVideo = styled.div`
   }
   video {
     cursor: initial;
-    height: auto;
+    height: 650px;
   }
 `;
 
@@ -68,7 +68,7 @@ const VideoList = styled.div`
     position: relative;
     float: left;
     cursor: pointer;
-    height: 300px;
+    height: 200px;
   }
 `;
 

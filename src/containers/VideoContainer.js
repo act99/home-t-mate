@@ -12,8 +12,9 @@ import {
   VideoList,
   VideoListWrap,
 } from "./VideoContainer/VideoConEle";
+import YoutubeVideo from "../components/YoutubeVideo";
 // const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
-const OPENVIDU_SERVER_URL = "https://goonzu.shop:4443";
+const OPENVIDU_SERVER_URL = "https://goonzu.shop:5443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {
@@ -227,6 +228,7 @@ class VideoContainer extends Component {
               mySessionId={mySessionId}
               chatNum={this.state.subscribers.length}
             />
+            <YoutubeVideo />
             <VideoListWrap id="video-container">
               <VideoList>
                 {this.state.publisher !== undefined ? (
