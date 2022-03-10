@@ -145,19 +145,6 @@ a:hover .demo-logo {
   text-align: center;
 }
 
-#img-div {
-  text-align: center;
-  position: absolute;
-  top: 19%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#img-div img {
-  height: 15%;
-  width: 42.5%;
-}
-
 #join-dialog label {
   color: #0088aa;
 }

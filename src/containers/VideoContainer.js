@@ -175,50 +175,42 @@ class VideoContainer extends Component {
     const myUserName = this.state.myUserName;
 
     return (
-      <BodyWrap className="container">
+      <div className="container">
         {this.state.session === undefined ? (
           <div id="join">
-            <div id="img-div">
-              <img
-                src="resources/images/openvidu_grey_bg_transp_cropped.png"
-                alt="OpenVidu logo"
-              />
-            </div>
-            <div id="join-dialog" className="jumbotron vertical-center">
-              <h1> Join a video session </h1>
-              <form className="form-group" onSubmit={this.joinSession}>
-                <p>
-                  <label>Participant: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="userName"
-                    value={myUserName}
-                    onChange={this.handleChangeUserName}
-                    required
-                  />
-                </p>
-                <p>
-                  <label> Session: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="sessionId"
-                    value={mySessionId}
-                    onChange={this.handleChangeSessionId}
-                    required
-                  />
-                </p>
-                <p className="text-center">
-                  <input
-                    className="btn btn-lg btn-success"
-                    name="commit"
-                    type="submit"
-                    value="JOIN"
-                  />
-                </p>
-              </form>
-            </div>
+            <h1> Join a video session </h1>
+            <form className="form-group" onSubmit={this.joinSession}>
+              <p>
+                <label>Participant: </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="userName"
+                  value={myUserName}
+                  onChange={this.handleChangeUserName}
+                  required
+                />
+              </p>
+              <p>
+                <label> Session: </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="sessionId"
+                  value={mySessionId}
+                  onChange={this.handleChangeSessionId}
+                  required
+                />
+              </p>
+              <p className="text-center">
+                <input
+                  className="btn btn-lg btn-success"
+                  name="commit"
+                  type="submit"
+                  value="JOIN"
+                />
+              </p>
+            </form>
           </div>
         ) : null}
 
@@ -273,7 +265,7 @@ class VideoContainer extends Component {
             {/* 여기를 세팅창으로 잡자 */}
           </div>
         ) : null}
-      </BodyWrap>
+      </div>
     );
   }
 
