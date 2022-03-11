@@ -13,12 +13,19 @@ import React from "react";
 import { useSelector } from "react-redux";
 import useStyle from "../styles/chattingStyle";
 import SendIcon from "@mui/icons-material/Send";
+import { useLocation } from "react-router-dom";
 
 const ChatContainer = () => {
   const classes = useStyle.makeChattingStyle();
   const chattingList = useSelector((state) => state.chatReducer.list);
   const user = useSelector((state) => state.userReducer.user);
   const nickname = user.nickname;
+
+  const location = useLocation();
+  const locationState = location.state;
+  const roomName = locationState.roomName;
+  const roomId = locationState.roomId;
+  console.log(roomName, roomId);
 
   // ** 메시지 핸들러
   const [sendMessage, setSendMessage] = React.useState({

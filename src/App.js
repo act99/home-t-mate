@@ -58,7 +58,7 @@ const App = () => {
               <Route path="/story" exact component={Story} />
               {/* 채팅방 입장 */}
               <Route path="/livenow" exact component={LiveNow} />
-              <Route path="/livenow/:roomId" exact component={ChattingRoom} />
+              <Route path="/livenow/:roomId" exact component={VideoChatRoom} />
               {/* <Route path="*" exact component={NotFound} /> */}
             </WrapMedium>
           </WrapWide>
