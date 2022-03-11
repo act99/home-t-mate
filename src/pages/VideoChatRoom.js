@@ -1,7 +1,5 @@
 import styled from "@emotion/styled";
-import { Box, Grid, Paper } from "@mui/material";
 import React from "react";
-import ChatNav from "../components/ChatNav";
 import ChatContainer from "../containers/ChatContainer";
 import YoutubeVideo from "../components/YoutubeVideo";
 import useWindowSize from "../hooks/useWindowSize";
@@ -13,7 +11,6 @@ const VideoChatRoom = () => {
   return (
     <>
       <Wrap>
-        <ChatNav />
         <ContentsWrap>
           <VideoGroupWrap>
             <YoutubeVideo />

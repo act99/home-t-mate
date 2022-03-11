@@ -1,17 +1,8 @@
 import React, { Component } from "react";
 import { OpenVidu } from "openvidu-browser";
 import axios from "axios";
-import UserVideoComponent from "../components/UserVideoComponent";
 import "../App.css";
-import ChatNav from "../components/ChatNav";
-import {
-  BodyWrap,
-  VideoList,
-  VideoListWrap,
-  YoutubeAndSetting,
-} from "./VideoContainer/VideoConEle";
-import YoutubeVideo from "../components/YoutubeVideo";
-import ChatRoomSetting from "../components/ChatRoomSetting";
+import { BodyWrap } from "./VideoContainer/VideoConEle";
 import WebRTCContainer from "./WebRTCContainer";
 const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
 // const OPENVIDU_SERVER_URL = "https://hanghae99.shop:5443";

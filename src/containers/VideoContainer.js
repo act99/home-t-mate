@@ -3,11 +3,7 @@ import { OpenVidu } from "openvidu-browser";
 import axios from "axios";
 import UserVideoComponent from "../components/UserVideoComponent";
 import "../App.css";
-import ChatNav from "../components/ChatNav";
 import {
-  BodyWrap,
-  MainVideo,
-  MainVideoWrap,
   VideoList,
   VideoListWrap,
   YoutubeAndSetting,
@@ -216,11 +212,11 @@ class VideoContainer extends Component {
 
         {this.state.session !== undefined ? (
           <div id="session">
-            <ChatNav
+            {/* <ChatNav
               leaveSession={this.leaveSession}
               mySessionId={mySessionId}
               chatNum={this.state.subscribers.length}
-            />
+            /> */}
             {/* 여기를 한대로 묶자. */}
             <YoutubeAndSetting>
               <YoutubeVideo />

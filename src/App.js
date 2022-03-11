@@ -6,22 +6,22 @@ import { history } from "./redux/store";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import KakaoOauth from "./components/KakaoOauth";
-import Rooms from "./pages/Rooms";
+import LiveNow from "./pages/LiveNow";
 import ChattingRoom from "./pages/ChattingRoom";
 import { actionCreators as userActions } from "./redux/modules/userReducer";
 import { useDispatch } from "react-redux";
 import NavBar from "./components/NavBar";
 import NotFound from "./pages/NotFound";
-import Container from "@mui/material/Container";
 import Mypage from "./pages/Mypage";
 import VideoContainer from "./containers/VideoContainer";
 import styled from "@emotion/styled";
 import Story from "./pages/Story";
 import Test from "./pages/Test";
-import YoutubeVideo from "./components/YoutubeVideo";
 import VideoChatRoom from "./pages/VideoChatRoom";
-import EnterRoom from "./containers/EnterRoom";
+import CheckVideo from "./pages/CheckVideo";
 const App = () => {
+  // const params = useParams();
+  // console.log(params);
   const dispatch = useDispatch();
   React.useEffect(() => {
     console.log(window.location.href);
@@ -34,10 +34,7 @@ const App = () => {
   return (
     <>
       {/* 배포 전 */}
-      {window.location.href ===
-      `http://${window.location.host}/chatroom` ? null : (
-        <NavBar />
-      )}
+      <NavBar />
       {/* 배포 후 */}
       {/* {window.location.href === `https://${window.location.host}/test` ? null : (
         <NavBar />
@@ -48,7 +45,7 @@ const App = () => {
             <Route path="/test" exact component={VideoContainer} />
             <Route path="/test2" exact component={Test} />
             <Route path="/chatroom" exact component={VideoChatRoom} />
-
+            <Route path="/checkvideo" exact component={CheckVideo} />
             <WrapMedium>
               <Route path="/" exact component={Home} />
               <Route path="/login" exact component={Login} />
@@ -60,8 +57,8 @@ const App = () => {
               />
               <Route path="/story" exact component={Story} />
               {/* 채팅방 입장 */}
-              <Route path="/rooms" exact component={Rooms} />
-              <Route path="/rooms/:roomId" exact component={ChattingRoom} />
+              <Route path="/livenow" exact component={LiveNow} />
+              <Route path="/livenow/:roomId" exact component={ChattingRoom} />
               {/* <Route path="*" exact component={NotFound} /> */}
             </WrapMedium>
           </WrapWide>
