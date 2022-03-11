@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 const BodyWrap = styled.div`
-  width: 100vw;
+  width: 100%;
 `;
 
 // ** 메인 비디오
@@ -35,7 +35,7 @@ const StreamContainer = styled.div`
 
 // ** 비디오 리스트 Wrap
 const VideoListWrap = styled.div`
-  width: 80%;
+  width: 100%;
   height: auto;
   /* height: 200px; */
   img {
@@ -69,7 +69,7 @@ const VideoList = styled.div`
     float: left;
     cursor: pointer;
     height: auto;
-    max-height: 320px;
+    max-height: 225px;
     margin-left: 4px;
   }
 `;

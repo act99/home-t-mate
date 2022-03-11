@@ -177,12 +177,6 @@ class VideoContainer extends Component {
       <BodyWrap className="container">
         {this.state.session === undefined ? (
           <div id="join">
-            <div id="img-div">
-              <img
-                src="resources/images/openvidu_grey_bg_transp_cropped.png"
-                alt="OpenVidu logo"
-              />
-            </div>
             <div id="join-dialog" className="jumbotron vertical-center">
               <h1> Join a video session </h1>
               <form className="form-group" onSubmit={this.joinSession}>

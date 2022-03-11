@@ -161,14 +161,14 @@ a:hover .demo-logo {
   vertical-align: baseline;
 }
 
-#session #video-container img {
+/* #session #video-container img {
   position: relative;
   float: left;
   width: 50%;
   cursor: pointer;
   object-fit: cover;
   height: 180px;
-}
+} */
 
 /* xs ans md screen resolutions*/
 

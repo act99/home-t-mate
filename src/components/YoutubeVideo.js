@@ -7,8 +7,9 @@ const YoutubeVideo = () => {
   const size = useWindowSize();
   console.log(size);
   const youtubeRef = React.useRef();
-  const fixedWidth = `${size.width / 1.8}`;
-  const fixedHeight = `${((size.width / 1.8) * 9) / 16}`;
+  const fixedWidth = `${size.width / 1.7}`;
+  const fixedHeight = `${((size.width / 1.7) * 9) / 16}`;
+
   const opts = {
     width: fixedWidth,
     height: fixedHeight,
@@ -61,6 +62,7 @@ const YoutubeVideo = () => {
       setYoutubeId(youtube_parser(urlIntput));
       setIsYoutube(true);
     }
+    setUrlIntput("");
   };
 
   React.useEffect(() => {}, [youtubeId]);
@@ -79,7 +81,7 @@ const YoutubeVideo = () => {
           onEnd={handleEnd}
         />
       ) : (
-        <Empty width={fixedWidth} height={fixedWidth}>
+        <Empty width={fixedWidth} height={fixedHeight}>
           텅 비었습니다.
         </Empty>
       )}
