@@ -9,14 +9,6 @@ function Img(props) {
   // console.log(props.img)
 
   return (
-    //이미지 슬라이더 디폴트값 코드
-    // <Carousel showThumbs={false} infiniteLoop={true}>
-    //   <div style={{ height: "200px", color: "#fff" }}>this is slide 1</div>
-    //   <div style={{ height: "200px", color: "#fff" }}>this is slide 2</div>
-    //   <div style={{ height: "200px", color: "#fff" }}>this is slide 3</div>
-    // </Carousel>
-
-    /////////원래 적용하려고했던 복붙코드
     <Carousel
       showThumbs={false}
       infiniteLoop={true}

@@ -42,7 +42,6 @@ export default function CommentContents(props) {
             align="justify"
             margin-top="10px"
           >
-            1일전
           </Typography>
         </Grid>
       </Grid>

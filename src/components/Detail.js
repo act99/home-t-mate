@@ -7,6 +7,7 @@ import CommentContents from "./CommentContents";
 import Grid from "../elements/Grid";
 import Img from "./Img";
 import CommentBox from "./CommentBox";
+// import CardText from "./CardText";
 
 const style = {
   position: "absolute",
@@ -32,27 +33,20 @@ export default function Detail(props) {
         </div>
 
         <Grid width="400px">
-          <Cardheader>
-            <span>ㅁㄴㅇㄹ</span>
-          </Cardheader>
-          <hr></hr>
 
-          <CommentContents />
+        <Cardheader>
+            
+        </Cardheader>
+
+        <Typography variant="body2" color="black" align="justify" marginLeft={"16px"} >
+          css...🔥🔥🔥🔥 안녕 말을 길게 쳐보자 말을 길게
+          쳐보자말을 길게 쳐보자말을 길게 쳐보자말을 길게 쳐보자말을 길게
+          쳐보자말을 길게 쳐보자말을 길게 쳐보자
+        </Typography>
 
           <Grid position="absolute" bottom="0px" width="400px">
             <hr></hr>
             <LikeComment modal={false} />
-            <Grid margin_top="10px" margin_left="16px">
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                align="justify"
-                margin-top="10px"
-              >
-                1일전
-              </Typography>
-            </Grid>
-            <hr></hr>
             <CommentBox />
           </Grid>
         </Grid>
