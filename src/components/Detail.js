@@ -7,7 +7,7 @@ import CommentContents from "./CommentContents";
 import Grid from "../elements/Grid";
 import Img from "./Img";
 import CommentBox from "./CommentBox";
-import CardText from "./CardText";
+// import CardText from "./CardText";
 
 const style = {
   position: "absolute",
