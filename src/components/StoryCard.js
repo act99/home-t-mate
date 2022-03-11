@@ -12,8 +12,6 @@ import "../App.css";
 
 import { Typography } from "@mui/material";
 import Text from "../elements/Text";
-import styled from "styled-components";
-
 
 export default function MainCard(props) {
   // let navigate = useNavigate();
@@ -31,7 +29,7 @@ export default function MainCard(props) {
 
         <LikeComment modal={true} />
 
-        <CardContent sx={{p:0, pl: "16px"}}>
+        <CardContent sx={{ p: 0, pl: "16px" }}>
           <Typography variant="body2" color="black" align="justify">
             <strong>yejin</strong> css...🔥🔥🔥🔥 안녕 말을 길게 쳐보자 말을
             길게 쳐보자 말을 길게 쳐보자 말을 길게 쳐보자 말을 길게 쳐보자 말을
@@ -39,12 +37,13 @@ export default function MainCard(props) {
           </Typography>
         </CardContent>
 
-        <Text margin_left="16px" margin_top="28px">이주석님 외 8명이 이 스토리를 좋아해요</Text>
-        <Text margin_left="16px" margin_bottom="8px">홍길동님 외 20개의 댓글</Text>
-
+        <Text margin_left="16px" margin_top="28px">
+          이주석님 외 8명이 이 스토리를 좋아해요
+        </Text>
+        <Text margin_left="16px" margin_bottom="8px">
+          홍길동님 외 20개의 댓글
+        </Text>
       </Card>
-
-      
     </div>
   );
 }
