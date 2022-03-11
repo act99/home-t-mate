@@ -8,16 +8,15 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 import MicIcon from "@mui/icons-material/Mic";
 
 const CheckVideo = () => {
-  // const [playing, setPlaying] = React.useState(undefined);
   const [video, setVideo] = React.useState(true);
-  const [audio, setAudio] = React.useState(false);
+  const [audio, setAudio] = React.useState(true);
   const videoRef = React.useRef(null);
 
   const getWebcam = (callback) => {
     try {
       const constraints = {
         video: true,
-        audio: false,
+        audio: true,
       };
       navigator.mediaDevices.getUserMedia(constraints).then(callback);
     } catch (err) {
@@ -30,13 +29,24 @@ const CheckVideo = () => {
     getWebcam((stream) => {
       videoRef.current.srcObject = stream;
     });
-    return () => {};
-  }, []);
+    return () => {
+      killVideo();
+    };
+  }, [audio]);
+
+  // ** 페이지에서 나갈 시 비디오 죽이기
+  const killVideo = () => {
+    const s = videoRef.current.srcObject;
+    s.getTracks().forEach((track) => {
+      track.stop();
+    });
+  };
 
   const videoOnOff = () => {
     if (video) {
       const s = videoRef.current.srcObject;
       s.getTracks().forEach((track) => {
+        console.log(track);
         track.stop();
       });
     } else {
@@ -47,13 +57,6 @@ const CheckVideo = () => {
     setVideo(!video);
   };
   const audioOnOff = () => {
-    if (audio) {
-      const video = videoRef.current;
-      video.muted = false;
-    } else {
-      const video = videoRef.current;
-      video.muted = true;
-    }
     setAudio(!audio);
   };
 
@@ -64,7 +67,7 @@ const CheckVideo = () => {
           <Box
             sx={{
               bgcolor: "#cfe8fc",
-              height: "60vh",
+              height: "70vh",
               borderRadius: "20px",
               textAlign: "center",
               p: 5,
@@ -73,21 +76,26 @@ const CheckVideo = () => {
             <Text>
               홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인 해 주세요.
             </Text>
-            <video ref={videoRef} autoPlay style={Styles.Video} />
+            <video
+              ref={videoRef}
+              autoPlay
+              style={Styles.Video}
+              muted={!audio}
+            />
 
             <ButtonGroup disableElevation variant="contained">
               <IconButton onClick={videoOnOff}>
                 {video ? (
-                  <VideocamIcon sx={{ fontSize: "50px", color: "black" }} />
+                  <VideocamIcon sx={{ fontSize: "40px", color: "black" }} />
                 ) : (
-                  <VideocamOffIcon sx={{ fontSize: "50px", color: "black" }} />
+                  <VideocamOffIcon sx={{ fontSize: "40px", color: "black" }} />
                 )}
               </IconButton>
               <IconButton onClick={audioOnOff}>
                 {audio ? (
-                  <MicIcon sx={{ fontSize: "50px", color: "black" }} />
+                  <MicIcon sx={{ fontSize: "40px", color: "black" }} />
                 ) : (
-                  <MicOffIcon sx={{ fontSize: "50px", color: "black" }} />
+                  <MicOffIcon sx={{ fontSize: "40px", color: "black" }} />
                 )}
               </IconButton>
             </ButtonGroup>
@@ -118,6 +126,7 @@ const Wrap = styled.div`
 const Text = styled.h3`
   font-size: large;
   color: black;
+  margin-bottom: 10px;
 `;
 
 export default CheckVideo;
