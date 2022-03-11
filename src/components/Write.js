@@ -4,12 +4,12 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import ImageIcon from '@mui/icons-material/Image';
-import styled from "styled-components";
+import ImageIcon from "@mui/icons-material/Image";
 import Img from "../components/Img";
-import CheckIcon from '@mui/icons-material/Check';
-import Avatar from '@mui/material/Avatar';
+import CheckIcon from "@mui/icons-material/Check";
+import Avatar from "@mui/material/Avatar";
 import { history } from "../redux/store";
+import styled from "@emotion/styled";
 
 function Write(props) {
   const { open, handleClose } = props;
@@ -19,18 +19,14 @@ function Write(props) {
   const [fileSelected, setFileSelected] = React.useState(false);
   const [preview, setPreview] = React.useState([]);
   const [tempFile, setTempFile] = React.useState([]);
-    
-  
+
   let tempData = [];
   const formData = new FormData();
-
 
   const selectFile = (e) => {
     const file = fileInput.current.files[0];
     const files = fileInput.current.files;
     setTempFile([...tempFile, files]);
-
-
 
     for (let i = 0; i < files.length; i++) {
       formData.append("postImg", files[i]);
@@ -102,7 +98,9 @@ function Write(props) {
                       border="0px"
                       BG_color="white"
                       width="30px"
-                      _onClick={() => {history.goBack();}}
+                      _onClick={() => {
+                        history.goBack();
+                      }}
                     >
                       <CheckIcon />
                     </Button>
@@ -139,9 +137,7 @@ function Write(props) {
                         src=""
                         sx={{ margin: "20px", width: 50, height: 50 }}
                       />
-                      <Text>
-                        유저닉네임
-                      </Text>
+                      <Text>유저닉네임</Text>
                     </Grid>
                     <TextArea ref={contents} rows="10" wrap="hard"></TextArea>
                   </Grid>
@@ -198,7 +194,7 @@ function Write(props) {
                   B_bottom_right_radius="15px"
                   BG_c="white"
                 >
-                  <ImageIcon/>
+                  <ImageIcon />
                   <Text margin="20px" F_size="22px">
                     버튼을 눌러 사진을 추가하세요
                   </Text>
@@ -246,14 +242,14 @@ const style = {
 };
 
 const TextArea = styled.textarea`
-    width : 90%;
-    height : 300px;
-    border : 0px;
-    font-size : 16px;
-    line-height : 24px;
-    &:focus-visible{
-        outline-color : white;
-    }
+  width: 90%;
+  height: 300px;
+  border: 0px;
+  font-size: 16px;
+  line-height: 24px;
+  &:focus-visible {
+    outline-color: white;
+  }
 `;
 
 export default Write;

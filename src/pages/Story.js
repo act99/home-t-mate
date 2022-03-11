@@ -3,12 +3,11 @@
 import React from "react";
 import StoryCard from "../components/StoryCard";
 import Grid from "../elements/Grid";
-import styled from "styled-components";
 import { positions } from "@mui/system";
 import Write from "../components/Write";
+import styled from "@emotion/styled";
 
 function Story() {
-  
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
 
