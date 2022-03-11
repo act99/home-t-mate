@@ -8,6 +8,7 @@ import todoReducer from "./modules/todoReducer";
 import userReducer from "./modules/userReducer";
 import postReducer from "./modules/postReducer";
 import webrtcReducer from "./modules/webrtcReducer";
+import videoReducer from "./modules/videoReducer";
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   todoReducer: todoReducer,
   postReducer: postReducer,
   webrtcReducer: webrtcReducer,
+  videoReducer: videoReducer,
 });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];

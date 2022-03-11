@@ -29,6 +29,13 @@ const Home = () => {
       >
         마이페이지
       </button>
+      <button
+        onClick={() => {
+          history.push("/chatroom");
+        }}
+      >
+        채팅방 이동
+      </button>
     </div>
   );
 };
