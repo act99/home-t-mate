@@ -1,5 +1,6 @@
 export const sendingMessage = (ws, setSendMessage, sendMessage, token) => {
   // setSendMessage({ ...sendMessage, type: "TALK" });
+  console.log(sendMessage);
   ws.send(
     `/pub/chat/message`,
     { Authorization: token },
@@ -8,7 +9,8 @@ export const sendingMessage = (ws, setSendMessage, sendMessage, token) => {
   );
 };
 
-export const sendYoutubeUrl = (ws, url, token, urlIntput) => {
+export const sendYoutubeUrl = (ws, token, urlIntput) => {
+  console.log(urlIntput);
   ws.send(
     `/pub/chat/message`,
     { Authorization: token },

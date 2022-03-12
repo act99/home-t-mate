@@ -74,7 +74,7 @@ const YoutubeVideo = (props) => {
     if (youtube_parser(urlIntput.message) === false) {
       alert("옳바른 주소를 입력해주세요");
     } else {
-      sendYoutubeUrl(ws, urlIntput, token, urlIntput);
+      sendYoutubeUrl(ws, token, urlIntput);
       setUrlIntput({ ...urlIntput, message: "" });
     }
   };
@@ -88,6 +88,8 @@ const YoutubeVideo = (props) => {
     sendYoutubeOff(ws, token, youtubeOff);
     console.log("pause");
   };
+
+  // ** 유튜브 on Off controller
   React.useEffect(() => {
     if (url !== "") {
       setIsYoutube(true);

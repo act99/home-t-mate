@@ -64,9 +64,9 @@ const VideoChatRoom = () => {
                 console.log(recv.message, "유튜브 url");
                 dispatch(youtubeActions.youtubeUrl(recv.message));
               } else if (recv.type === "YOUTUBEON") {
-                dispatch(youtubeActions.youtubeOn(recv.message));
+                dispatch(youtubeActions.youtubeOn(true));
               } else if (recv.type === "YOUTUBEPAUSE") {
-                dispatch(youtubeActions.youtubeOn(recv.message));
+                dispatch(youtubeActions.youtubeOn(false));
               }
             },
             { Authorization: token }

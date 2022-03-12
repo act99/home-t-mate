@@ -31,7 +31,18 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["videoReducer"],
+  // whitelist: ["videoReducer"],
+  blacklist: [
+    "youtubeReducer",
+    "videoReducer",
+    "webrtcReducer",
+    "postReducer",
+    "todoReducer",
+    "chatReducer",
+    "userReducer",
+    "roomReducer",
+    "router",
+  ],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const middlewares = [thunk.withExtraArgument({ history: history })];

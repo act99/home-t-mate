@@ -50,7 +50,7 @@ const ChatContainer = (props) => {
     chattingRef.current.scrollIntoView({ behavior: "smooth" });
     setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
     return () => {};
-  }, []);
+  }, [roomId, sendMessage.sender]);
 
   return (
     <Wrap>
