@@ -6,7 +6,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import EnterRoom from "../containers/EnterRoom";
 import { useDispatch, useSelector } from "react-redux";
 import useStyle from "../styles/chattingStyle";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import SockJS from "sockjs-client";
 import url from "../shared/url";
 import Stomp from "stompjs";
@@ -15,6 +15,7 @@ import { actionCreators as youtubeActions } from "../redux/modules/youtubeReduce
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 const VideoChatRoom = () => {
+  const history = useHistory();
   const size = useWindowSize();
   const width = size.width;
   const height = size.height;
@@ -63,9 +64,9 @@ const VideoChatRoom = () => {
                 console.log(recv.message, "유튜브 url");
                 dispatch(youtubeActions.youtubeUrl(recv.message));
               } else if (recv.type === "YOUTUBEON") {
-                dispatch(chatActions.getChat(recv.message));
+                dispatch(youtubeActions.youtubeOn(true));
               } else if (recv.type === "YOUTUBEPAUSE") {
-                dispatch(chatActions.getChat(recv.message));
+                dispatch(youtubeActions.youtubeOn(false));
               }
             },
             { Authorization: token }
