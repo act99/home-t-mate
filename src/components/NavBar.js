@@ -79,7 +79,7 @@ const NavBar = (props) => {
   if (pathname.includes("checkvideo")) {
     return <div> </div>;
   }
-  if (pathname.includes("chatroom")) {
+  if (pathname.includes("livenow/")) {
     return (
       <ThemeProvider theme={theme}>
         <AppBar position="static" sx={{ backgroundColor: "black" }}>

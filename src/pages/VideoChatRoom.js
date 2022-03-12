@@ -92,6 +92,7 @@ const VideoChatRoom = () => {
     created();
     return () => {
       disconnected();
+      history.replace("/");
     };
   }, []);
 
