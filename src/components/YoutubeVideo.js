@@ -1,9 +1,22 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { useSelector } from "react-redux";
 import YouTube from "react-youtube";
 import useWindowSize from "../hooks/useWindowSize";
+import { sendYoutubeUrl } from "../shared/SocketFunc";
 
-const YoutubeVideo = () => {
+const YoutubeVideo = (props) => {
+  // ** props 가져오기
+  const { ws, token, roomId } = props;
+
+  // ** 회원정보
+  const user = useSelector((state) => state.userReducer.user);
+
+  // ** 유튜브 redux state
+  const youtubeRedux = useSelector((state) => state.youtubeReducer.youtube);
+  const { on, pause, url } = youtubeRedux;
+
+  // ** 윈도우 사이즈 규격
   const size = useWindowSize();
   console.log(size);
   const youtubeRef = React.useRef();
@@ -46,26 +59,42 @@ const YoutubeVideo = () => {
     var match = url.match(regExp);
     return match && match[1].length === 11 ? match[1] : false;
   }
-  // 유튜브 url 이 id 로 바뀌 때 state
+  // ** 유튜브 url 이 id 로 바뀌 때 state
   const [youtubeId, setYoutubeId] = React.useState("");
-  // 유튜브 url input
-  const [urlIntput, setUrlIntput] = React.useState("");
+  // ** 유튜브 url input
+  const [urlIntput, setUrlIntput] = React.useState({
+    type: "YOUTUBEURL",
+    roomId: "",
+    sender: "",
+    message: "",
+  });
   const handleUrlChange = (e) => {
-    setUrlIntput(e.target.value);
+    setUrlIntput({ ...urlIntput, message: e.target.value });
   };
   const handleUrlSubmit = (e) => {
     e.preventDefault();
     // https://www.youtube.com/watch?v=I2EHKVCsKKk
-    if (youtube_parser(urlIntput) === false) {
+    if (youtube_parser(urlIntput.message) === false) {
       alert("옳바른 주소를 입력해주세요");
     } else {
-      setYoutubeId(youtube_parser(urlIntput));
       setIsYoutube(true);
+      sendYoutubeUrl(ws, urlIntput, token, urlIntput);
+      setUrlIntput({ ...urlIntput, message: "" });
     }
-    setUrlIntput("");
   };
 
-  React.useEffect(() => {}, [youtubeId]);
+  React.useEffect(() => {
+    if (url !== "") {
+      setYoutubeId(youtube_parser(url));
+    }
+    setUrlIntput({
+      ...urlIntput,
+      roomId: roomId,
+      sender: user.nickname,
+      type: "YOUTUBEURL",
+    });
+    console.log(youtubeRef.current);
+  }, [youtubeId, on, pause, url]);
 
   return (
     <Wrap>

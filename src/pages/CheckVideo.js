@@ -1,17 +1,28 @@
 import styled from "@emotion/styled";
-import { ButtonGroup, Container, IconButton } from "@mui/material";
+import { Button, ButtonGroup, Container, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import MicIcon from "@mui/icons-material/Mic";
-
+import { useLocation } from "react-router-dom";
+import { history } from "../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as videoActions } from "../redux/modules/videoReducer";
 const CheckVideo = () => {
-  const [video, setVideo] = React.useState(true);
-  const [audio, setAudio] = React.useState(true);
-  const videoRef = React.useRef(null);
+  const dispatch = useDispatch();
+  const videoReducer = useSelector((state) => state.videoReducer.video);
 
+  // ** roomID, roomName 가져오기
+  const location = useLocation();
+  const roomId = location.state.roomId;
+  const roomName = location.state.roomName;
+  // ** 비디오 세팅
+  const [video, setVideo] = React.useState(videoReducer.video);
+  const [audio, setAudio] = React.useState(videoReducer.audio);
+  const [loading, setLoading] = React.useState(true);
+  const videoRef = React.useRef(null);
   const getWebcam = (callback) => {
     try {
       const constraints = {
@@ -25,22 +36,29 @@ const CheckVideo = () => {
     }
   };
 
-  React.useEffect(() => {
-    getWebcam((stream) => {
-      videoRef.current.srcObject = stream;
+  const handleEnter = () => {
+    history.push({
+      pathname: `/livenow/${roomId}`,
+      state: { roomId: roomId, roomName: roomName },
     });
-    return () => {
-      killVideo();
-    };
-  }, [audio]);
-
-  // ** 페이지에서 나갈 시 비디오 죽이기
-  const killVideo = () => {
-    const s = videoRef.current.srcObject;
-    s.getTracks().forEach((track) => {
-      track.stop();
-    });
+    dispatch(videoActions.setVideo({ video: video, audio: audio }));
   };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      if (video === true) {
+        getWebcam((stream) => {
+          videoRef.current.srcObject = stream;
+        });
+      }
+      setLoading(false);
+    }, 1000);
+
+    return () => {
+      // ** 페이지에서 나갈 시 비디오 죽이기
+      history.go(0);
+    };
+  }, []);
 
   const videoOnOff = () => {
     if (video) {
@@ -60,6 +78,13 @@ const CheckVideo = () => {
     setAudio(!audio);
   };
 
+  if (loading) {
+    return (
+      <div>
+        <h3>로딩중입니다.</h3>
+      </div>
+    );
+  }
   return (
     <>
       <Wrap>
@@ -73,17 +98,22 @@ const CheckVideo = () => {
               p: 5,
             }}
           >
-            <Text>
-              홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인 해 주세요.
-            </Text>
+            <VideoWrap>
+              <Text>
+                홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인 해 주세요.
+              </Text>
+            </VideoWrap>
             <video
               ref={videoRef}
               autoPlay
               style={Styles.Video}
               muted={!audio}
             />
-
-            <ButtonGroup disableElevation variant="contained">
+            <ButtonGroup
+              disableElevation
+              variant="contained"
+              sx={{ height: "100px" }}
+            >
               <IconButton onClick={videoOnOff}>
                 {video ? (
                   <VideocamIcon sx={{ fontSize: "40px", color: "black" }} />
@@ -99,6 +129,15 @@ const CheckVideo = () => {
                 )}
               </IconButton>
             </ButtonGroup>
+            <ButtonWrap>
+              <Button
+                variant="contained"
+                sx={{ height: 50, width: 200 }}
+                onClick={handleEnter}
+              >
+                입장하기
+              </Button>
+            </ButtonWrap>
           </Box>
         </Container>
       </Wrap>
@@ -127,6 +166,15 @@ const Text = styled.h3`
   font-size: large;
   color: black;
   margin-bottom: 10px;
+`;
+
+const VideoWrap = styled.div`
+  width: auto;
+  height: 50px;
+`;
+
+const ButtonWrap = styled.div`
+  height: 120px;
 `;
 
 export default CheckVideo;

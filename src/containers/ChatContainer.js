@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import {
-  Container,
   Divider,
-  Fab,
   Grid,
+  IconButton,
   List,
   ListItem,
   ListItemText,
@@ -13,10 +12,24 @@ import React from "react";
 import { useSelector } from "react-redux";
 import useStyle from "../styles/chattingStyle";
 import SendIcon from "@mui/icons-material/Send";
+import { useLocation } from "react-router-dom";
+import { sendingMessage } from "../shared/SocketFunc";
+const tokenCheck = document.cookie;
+const token = tokenCheck.split("=")[1];
 
-const ChatContainer = () => {
+const ChatContainer = (props) => {
+  const { chattingRef, ws } = props;
   const classes = useStyle.makeChattingStyle();
   const chattingList = useSelector((state) => state.chatReducer.list);
+
+  // ** params 로 받은 roomId 와 roomName
+  const location = useLocation();
+  const locationState = location.state;
+  const roomName = locationState.roomName;
+  const roomId = locationState.roomId;
+  console.log(roomName, roomId);
+
+  // ** user 정보
   const user = useSelector((state) => state.userReducer.user);
   const nickname = user.nickname;
 
@@ -27,14 +40,15 @@ const ChatContainer = () => {
     sender: "",
     message: "",
   });
+
+  // ** input값 핸들러
   const sendingMessageHandler = (event) => {
     setSendMessage({ ...sendMessage, message: event.target.value });
   };
-  // ** 스크롤 핸들러
-  const chattingRef = React.useRef();
 
   React.useEffect(() => {
     chattingRef.current.scrollIntoView({ behavior: "smooth" });
+    setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
     return () => {};
   }, []);
 
@@ -86,16 +100,13 @@ const ChatContainer = () => {
           />
         </Grid>
         <Grid item xs={1} align="right">
-          <Fab
-            color="primary"
-            aria-label="add"
+          <IconButton
             onClick={() => {
-              console.log("메시지 보내기");
-              // sendingMessage(ws, setSendMessage, sendMessage, token);
+              sendingMessage(ws, setSendMessage, sendMessage, token);
             }}
           >
             <SendIcon />
-          </Fab>
+          </IconButton>
         </Grid>
       </Grid>
     </Wrap>
