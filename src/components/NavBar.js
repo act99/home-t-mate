@@ -16,14 +16,19 @@ import { IconButton, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import CreateRoomModal from "../containers/CreateRoomModal";
-
+import useWindowSize from "../hooks/useWindowSize";
 const NavBar = (props) => {
+  // ** leaveSession 가져오기 위해
+  const leaveSession = useSelector(
+    (state) => state.sessionReducer.leaveSession
+  );
   // ** 채팅방 이동 시 네비게이션 바 변경
-  const { mySessionId, leaveSession, chatNum } = props;
+  const { mySessionId, chatNum } = props;
   const pathname = window.location.pathname;
   console.log(pathname);
   const handleOut = () => {
     console.log("out");
+    history.replace("/");
     leaveSession();
   };
   // ** 채팅방 이동 시 네비게이션 바 변경 끝
@@ -32,6 +37,11 @@ const NavBar = (props) => {
   const handleNavigate = (target) => {
     history.push(target);
   };
+  // ** 윈도우 사이즈 핸들러
+  const size = useWindowSize();
+  const width = size.width;
+  const height = size.height;
+
   const logout = () => {
     dispatch(userActions.logout());
     history.replace("/");
@@ -58,7 +68,7 @@ const NavBar = (props) => {
     } else {
       setValue("1");
     }
-  }, [routeUrl, pathname]);
+  }, [routeUrl, pathname, leaveSession]);
 
   const theme = createTheme({
     palette: {
@@ -82,7 +92,14 @@ const NavBar = (props) => {
   if (pathname.includes("livenow/")) {
     return (
       <ThemeProvider theme={theme}>
-        <AppBar position="static" sx={{ backgroundColor: "black" }}>
+        <AppBar
+          position="static"
+          sx={{
+            backgroundColor: "black",
+            width: `${width}px`,
+            height: `${height * 0.065}px`,
+          }}
+        >
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Typography variant="h6">{mySessionId}</Typography>

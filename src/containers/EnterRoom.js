@@ -211,6 +211,7 @@ class VideoContainer extends Component {
           <WebRTCContainer
             publisher={this.state.publisher}
             subscribers={this.state.subscribers}
+            leaveSession={this.leaveSession}
           />
         ) : null}
       </BodyWrap>

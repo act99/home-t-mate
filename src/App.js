@@ -13,10 +13,8 @@ import { useDispatch } from "react-redux";
 import NavBar from "./components/NavBar";
 import NotFound from "./pages/NotFound";
 import Mypage from "./pages/Mypage";
-import VideoContainer from "./containers/VideoContainer";
 import styled from "@emotion/styled";
 import Story from "./pages/Story";
-import Test from "./pages/Test";
 import VideoChatRoom from "./pages/VideoChatRoom";
 import CheckVideo from "./pages/CheckVideo";
 const App = () => {
@@ -42,9 +40,6 @@ const App = () => {
       <ConnectedRouter history={history}>
         <Switch>
           <WrapWide>
-            <Route path="/test" exact component={VideoContainer} />
-            <Route path="/test2" exact component={Test} />
-            <Route path="/chatroom" exact component={VideoChatRoom} />
             <Route path="/checkvideo" exact component={CheckVideo} />
             <WrapMedium>
               <Route path="/" exact component={Home} />
