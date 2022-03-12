@@ -9,11 +9,26 @@ export const sendingMessage = (ws, setSendMessage, sendMessage, token) => {
 };
 
 export const sendYoutubeUrl = (ws, url, token, urlIntput) => {
-  console.log(urlIntput);
   ws.send(
     `/pub/chat/message`,
     { Authorization: token },
     JSON.stringify({ ...urlIntput })
+  );
+};
+
+export const sendYoutubeOn = (ws, token, youtubeOn) => {
+  ws.send(
+    `/pub/chat/message`,
+    { Authorization: token },
+    JSON.stringify({ ...youtubeOn })
+  );
+};
+
+export const sendYoutubeOff = (ws, token, youtubeOff) => {
+  ws.send(
+    `/pub/chat/message`,
+    { Authorization: token },
+    JSON.stringify({ ...youtubeOff })
   );
 };
 

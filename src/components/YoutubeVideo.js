@@ -3,9 +3,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import YouTube from "react-youtube";
 import useWindowSize from "../hooks/useWindowSize";
-import { sendYoutubeUrl } from "../shared/SocketFunc";
+import {
+  sendYoutubeOff,
+  sendYoutubeOn,
+  sendYoutubeUrl,
+} from "../shared/SocketFunc";
+import ReactPlayer from "react-player";
 
 const YoutubeVideo = (props) => {
+  // ** history
   // ** props 가져오기
   const { ws, token, roomId } = props;
 
@@ -18,41 +24,10 @@ const YoutubeVideo = (props) => {
 
   // ** 윈도우 사이즈 규격
   const size = useWindowSize();
-  console.log(size);
-  const youtubeRef = React.useRef();
   const fixedWidth = `${size.width / 1.7}`;
   const fixedHeight = `${((size.width / 1.7) * 9) / 16}`;
 
-  const opts = {
-    width: fixedWidth,
-    height: fixedHeight,
-
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
-    },
-  };
-  // ** 유튜브 켜졌는지 꺼졌는지
-  const [isYoutube, setIsYoutube] = React.useState(false);
-  // ** 유튜브 상태관리
-  const _onReady = (e) => {
-    e.target.pauseVideo();
-  };
-  const handlePlay = (e) => {
-    console.log(e);
-    console.log("유튜브 재생");
-  };
-  const handlePause = (e) => {
-    console.log(e);
-    console.log("유튜브 일시정지");
-  };
-  const handleEnd = (e) => {
-    console.log(e);
-    console.log("유튜브 종료");
-    setIsYoutube(false);
-  };
-  // ** 유튜브 url 설정
-  // 유튜브 url to id
+  // ** 유튜브 url 여부 확인
   function youtube_parser(url) {
     var regExp =
       /^https?:\/\/(?:www\.youtube(?:-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*)?vi?=|vi?=|\?(?:.*)?vi?=)([^#?\n<>"']*)/i;
@@ -60,7 +35,7 @@ const YoutubeVideo = (props) => {
     return match && match[1].length === 11 ? match[1] : false;
   }
   // ** 유튜브 url 이 id 로 바뀌 때 state
-  const [youtubeId, setYoutubeId] = React.useState("");
+
   // ** 유튜브 url input
   const [urlIntput, setUrlIntput] = React.useState({
     type: "YOUTUBEURL",
@@ -68,24 +43,56 @@ const YoutubeVideo = (props) => {
     sender: "",
     message: "",
   });
+
+  // ** 유튜브 on
+  const [youtubeOn, setYoutubeOn] = React.useState({
+    type: "YOUTUBEON",
+    roomId: "",
+    sender: "",
+    message: true,
+  });
+
+  // ** 유튜브 off
+  const [youtubeOff, setYoutubeOff] = React.useState({
+    type: "YOUTUBEPAUSE",
+    roomId: "",
+    sender: "",
+    message: false,
+  });
+
+  // ** 유튜브 켜졌는지 꺼졌는지
+  const [isYoutube, setIsYoutube] = React.useState(false);
+  // ** 유튜브 상태관리
+
+  // ** url change 핸들러
   const handleUrlChange = (e) => {
     setUrlIntput({ ...urlIntput, message: e.target.value });
   };
+  // ** 유튜브 url websocket
   const handleUrlSubmit = (e) => {
     e.preventDefault();
-    // https://www.youtube.com/watch?v=I2EHKVCsKKk
     if (youtube_parser(urlIntput.message) === false) {
       alert("옳바른 주소를 입력해주세요");
     } else {
-      setIsYoutube(true);
       sendYoutubeUrl(ws, urlIntput, token, urlIntput);
       setUrlIntput({ ...urlIntput, message: "" });
     }
   };
-
+  // ** 유튜브 play websocket
+  const handlePlay = () => {
+    sendYoutubeOn(ws, token, youtubeOn);
+    console.log("play");
+  };
+  // ** 유튜브 pause websocket
+  const handlePause = () => {
+    sendYoutubeOff(ws, token, youtubeOff);
+    console.log("pause");
+  };
   React.useEffect(() => {
     if (url !== "") {
-      setYoutubeId(youtube_parser(url));
+      setIsYoutube(true);
+    } else {
+      setIsYoutube(false);
     }
     setUrlIntput({
       ...urlIntput,
@@ -93,27 +100,39 @@ const YoutubeVideo = (props) => {
       sender: user.nickname,
       type: "YOUTUBEURL",
     });
-    console.log(youtubeRef.current);
-  }, [youtubeId, on, pause, url]);
+    setYoutubeOn({
+      ...youtubeOn,
+      roomId: roomId,
+      sender: user.nickname,
+      type: "YOUTUBEON",
+    });
+    setYoutubeOff({
+      ...youtubeOff,
+      roomId: roomId,
+      sender: user.nickname,
+      type: "YOUTUBEPAUSE",
+    });
+    return () => {};
+  }, [on, url]);
 
   return (
     <Wrap>
       {isYoutube ? (
-        <YouTube
-          videoId={youtubeId}
-          opts={opts}
-          onReady={_onReady}
-          ref={youtubeRef}
+        <ReactPlayer
+          url={url}
+          controls
+          width={fixedWidth + "px"}
+          height={fixedHeight + "px"}
+          playing={on}
           onPlay={handlePlay}
           onPause={handlePause}
-          onStateChange={(e) => console.log("상태변화 감지 필요없음", e)}
-          onEnd={handleEnd}
         />
       ) : (
         <Empty width={fixedWidth} height={fixedHeight}>
           텅 비었습니다.
         </Empty>
       )}
+
       <form onSubmit={handleUrlSubmit}>
         <input
           type="text"
