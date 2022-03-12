@@ -5,8 +5,10 @@ import UserVideoComponent from "../components/UserVideoComponent";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 import { actionCreators as sessionAcions } from "../redux/modules/sessionReducer";
+
 const WebRTCContainer = (props) => {
-  const { publisher, subscribers, leaveSession } = props;
+  const { publisher, subscribers, leaveSession, session } = props;
+  console.log(subscribers);
   const dispatch = useDispatch();
   // ** leaveSession 전달용
   React.useEffect(() => {

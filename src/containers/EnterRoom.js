@@ -212,6 +212,7 @@ class VideoContainer extends Component {
             publisher={this.state.publisher}
             subscribers={this.state.subscribers}
             leaveSession={this.leaveSession}
+            session={this.state.session}
           />
         ) : null}
       </BodyWrap>

@@ -1,5 +1,10 @@
 import styled from "@emotion/styled";
 import React from "react";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import VideocamOffIcon from "@mui/icons-material/VideocamOff";
+import MicOffIcon from "@mui/icons-material/MicOff";
+import MicIcon from "@mui/icons-material/Mic";
+import { ButtonGroup, IconButton } from "@mui/material";
 
 const VideoComponent = (props) => {
   const videoRef = React.useRef();
@@ -16,7 +21,16 @@ const VideoComponent = (props) => {
   return (
     <>
       <VideoWrap>
-        <div></div>
+        <div>
+          <ButtonGroup sx={{ mt: 15 }}>
+            <IconButton>
+              <VideocamIcon sx={{ fontSize: 30, color: "white" }} />
+            </IconButton>
+            <IconButton>
+              <MicIcon sx={{ fontSize: 30, color: "white" }} />
+            </IconButton>
+          </ButtonGroup>
+        </div>
         <video autoPlay={true} ref={videoRef} />
       </VideoWrap>
     </>
@@ -32,7 +46,8 @@ const VideoWrap = styled.div`
     transition: 0.5s;
   }
   div {
-    display: "none";
+    display: none !important;
+    transition: 0.5s;
   }
   :hover {
     video {
@@ -40,15 +55,17 @@ const VideoWrap = styled.div`
       filter: brightness(40%);
     }
     div {
-      width: 20%;
+      display: flex !important;
+      width: 2.5vw;
       height: 50px;
       position: absolute;
       top: 50%;
-      left: 40%;
+      left: 3.4vw;
       z-index: 1;
-
+      flex-direction: row;
+      justify-content: center;
       /* flex-direction: "row"; */
-      background-color: green;
+      /* background-color: green; */
     }
   }
 `;
