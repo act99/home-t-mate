@@ -30,6 +30,7 @@ class VideoContainer extends Component {
   }
 
   componentDidMount() {
+    this.joinSession();
     window.addEventListener("beforeunload", this.onbeforeunload);
   }
 

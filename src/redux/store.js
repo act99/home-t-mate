@@ -12,6 +12,7 @@ import videoReducer from "./modules/videoReducer";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
+import youtubeReducer from "./modules/youtubeReducer";
 
 export const history = createBrowserHistory();
 
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   postReducer: postReducer,
   webrtcReducer: webrtcReducer,
   videoReducer: videoReducer,
+  youtubeReducer: youtubeReducer,
 });
 
 const persistConfig = {
