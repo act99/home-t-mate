@@ -17,15 +17,15 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
 
 const initialPost = {
   id: 0,
-  imgUrl: [
-    "https://www.clien.net/service/api/ori/imgView?imgUrl=https://cdn.clien.net/web/api/file/F01/12166446/1f22b4d87114c3.jpg&subject=%25EC%259C%2588%25ED%2584%25B0%2520(%25EC%2597%2590%25EC%258A%25A4%25ED%258C%258C)",
-    "https://i.ytimg.com/vi/q_c5eSn4i7c/maxresdefault.jpg",
+  postImg: [
+    "https://img.allurekorea.com/allure/2021/03/style_60586b3a9c105-916x1200.jpg",
+    "https://pds.joins.com/news/component/htmlphoto_mmdata/202103/20/e92d9c8a-3518-4201-b2d9-ade6e3ea3c1d.jpg",
   ],
   title: "타이틀",
-  contents: "본문",
+  content: "본문",
   username: "pootter@naver.com",
   nickname: "pootter",
-  userImgUrl:
+  userImg:
     "http://img.marieclairekorea.com/2017/01/mck_586f4006b4e9f-375x375.jpg",
   createdAt: "2021-08-21 08:11:11",
   modifiedAt: "2021-08-21 08:11:11",
@@ -40,9 +40,12 @@ const getPostDB = () => {
     apis
       .getPost()
       .then((res) => {
-        dispatch(setPost(res.data));
+        dispatch(setPost(res.data.data.postList));
+        console.log(res);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+      window.alert("게시글 불러오기 실패!");
+    });
   };
 };
 
@@ -76,31 +79,44 @@ const deletePostDB = (postId) => {
   };
 };
 
-const addPostDB = (contents) => {
-  let postContent = {
-    ...initialPost,
-    id: contents.id,
-    imgUrl: contents.imgUrl,
-    title: contents.title,
-    contents: contents.contents,
-    username: contents.username,
-    nickname: contents.nickname,
-    userImgUrl: contents.userImgUrl,
-    createdAt: contents.createdAt,
-    modifiedAt: contents.modifiedAt,
-  };
-  return function (dispatch, getState, { history }) {
-    apis
-      .addPost(postContent)
-      .then((res) => {
-        dispatch(addPost(postContent));
-        history.replace("/");
-      })
-      .catch((error) => {
-        alert("저장에 실패했습니다. 네트워크 상태를 확인해주세요.");
-      });
-  };
-};
+const addPostDB=(contents) =>{
+  return async function (dispatch,getState){
+
+    apis.addPost(contents)
+    .then((res) => {
+      window.alert("게시물 작성 성공!")
+      window.location.reload();
+    }).catch((error)=>{
+      window.alert("게시물 작성 실패!")
+    })
+  }
+}
+
+// const addPostDB = (contents) => {
+//   let postContent = {
+//     ...initialPost,
+//     id: contents.id,
+//     imgUrl: contents.imgUrl,
+//     title: contents.title,
+//     contents: contents.contents,
+//     username: contents.username,
+//     nickname: contents.nickname,
+//     userImgUrl: contents.userImgUrl,
+//     createdAt: contents.createdAt,
+//     modifiedAt: contents.modifiedAt,
+//   };
+//   return function (dispatch, getState, { history }) {
+//     apis
+//       .addPost(postContent)
+//       .then((res) => {
+//         dispatch(addPost(postContent));
+//         history.replace("/");
+//       })
+//       .catch((error) => {
+//         alert("저장에 실패했습니다. 네트워크 상태를 확인해주세요.");
+//       });
+//   };
+// };
 
 export default handleActions(
   {

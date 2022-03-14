@@ -13,6 +13,8 @@ import "../App.css";
 import { Typography } from "@mui/material";
 import Text from "../elements/Text";
 
+import {useDispatch, useSelector} from "react-redux";
+
 export default function MainCard(props) {
   // let navigate = useNavigate();
 
@@ -20,20 +22,22 @@ export default function MainCard(props) {
   // const handleOpen = () => setOpen(true);
   // const handleClose = () => setOpen(false);
 
+  const _user = useSelector(state=>state.userReducer);
+  console.log('user확인용', _user);
+
   return (
     <div className="mainbox">
       <Card sx={{ maxWidth: 620, margin: "auto" }}>
-        <Cardheader />
+        <Cardheader id={props.id} username={props.nickname} userImg={props.userImg}  />
 
-        <Img setHeight={"600px"} />
+        <Img postImg={props.postImg} size="600px" />
 
-        <LikeComment modal={true} />
+        <LikeComment id={props.id} modal={true} />
 
         <CardContent sx={{ p: 0, pl: "16px" }}>
           <Typography variant="body2" color="black" align="justify">
-            <strong>yejin</strong> css...🔥🔥🔥🔥 안녕 말을 길게 쳐보자 말을
-            길게 쳐보자 말을 길게 쳐보자 말을 길게 쳐보자 말을 길게 쳐보자 말을
-            길게 쳐보자 말을 길게 쳐보자 말을 길게 쳐보자 말을 길게 쳐보자
+            <strong>{props.nickname}</strong>
+            {props.content}
           </Typography>
         </CardContent>
 

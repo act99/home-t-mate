@@ -23,6 +23,7 @@ import Detail from "./Detail";
 
 export default function LikeComment(props) {
   console.log(props);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     return props.modal ? setOpen(true) : setOpen(false);
@@ -30,6 +31,7 @@ export default function LikeComment(props) {
   const handleClose = () => setOpen(false);
   return (
     <>
+    {/* 좋아요버튼 */}
       <IconButton
         sx={{ pl: 2, pb: 2 }}
         aria-label="add to favorites"
@@ -37,9 +39,13 @@ export default function LikeComment(props) {
       >
         <FavoriteBorderIcon />
       </IconButton>
+
+      {/* 댓글버튼 => 상세페이지로 이동 */}
       <IconButton sx={{ pb: 2 }} aria-label="chat" onClick={handleOpen}>
         <BsChat size="22" border="3px" />
       </IconButton>
+
+      {/* 상세페이지 modal */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -47,7 +53,7 @@ export default function LikeComment(props) {
         aria-describedby="modal-modal-description"
       >
         <div>
-          <Detail />
+          <Detail id={props.id} />
           <Grid position="absolute" right="0">
             <CloseIcon
               sx={{ color: "white", fontSize: 40 }}
