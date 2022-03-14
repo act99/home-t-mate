@@ -8,6 +8,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 //import elements
 import { Image } from "../elements";
+{/* <Cardheader id={props.id} username={props.nickname} userImg={props.userImg}  /> */}
 
 function Cardheader(props) {
   return (
@@ -16,7 +17,7 @@ function Cardheader(props) {
       avatar={
         <Image
           shape="circle"
-          src="https://3.bp.blogspot.com/-x4gLW4b7sB4/XHE3SYQbIpI/AAAAAAAA4nM/SFGGsj7HgyELAWCFQfanqqQwwBJfg30YACLcBGAs/s1600/01.jpg"
+          src={props.userImg}
           size="35"
           margin="0"
         />
@@ -29,7 +30,7 @@ function Cardheader(props) {
       titleTypographyProps={{
         fontWeight: 600,
       }}
-      title="yejin"
+      title={props.username}
     />
 
     // <Text width="auto" padding_left="16px">yejin</Text>

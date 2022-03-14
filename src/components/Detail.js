@@ -8,6 +8,7 @@ import Grid from "../elements/Grid";
 import Img from "./Img";
 import CommentBox from "./CommentBox";
 // import CardText from "./CardText";
+import {useDispatch, useSelector} from "react-redux";
 
 const style = {
   position: "absolute",
@@ -25,24 +26,29 @@ const style = {
 };
 
 export default function Detail(props) {
+  // id={props.id}
+
+  const _post = useSelector(state=>state.postReducer);
+  const thisPost = _post.list.reduce((x,v,i)=> v.id===props.id?v:x,"");
+  console.log('postReducer확인용',_post);
+  console.log('thispost확인용', thisPost);
+
   return (
     <div>
       <Box sx={style}>
         <div style={{ width: "800px", height: "450px" }}>
-          <Img img="true" setHeight={"740px"} />
+          <Img postImg={thisPost.imgUrl} size="740px" />
         </div>
 
         <Grid width="400px">
-
-        <Cardheader>
-            
-        </Cardheader>
+        {/* id={props.id} username={props.nickname} userImg={props.userImgUrl} */}
+        <Cardheader id={thisPost.id} username={thisPost.nickname} userImg={thisPost.userImg}/>
 
         <Typography variant="body2" color="black" align="justify" marginLeft={"16px"} >
-          css...🔥🔥🔥🔥 안녕 말을 길게 쳐보자 말을 길게
-          쳐보자말을 길게 쳐보자말을 길게 쳐보자말을 길게 쳐보자말을 길게
-          쳐보자말을 길게 쳐보자말을 길게 쳐보자
+          {thisPost.content}
         </Typography>
+
+        {/* 댓글 구현예정 */}
 
           <Grid position="absolute" bottom="0px" width="400px">
             <hr></hr>

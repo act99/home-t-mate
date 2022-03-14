@@ -10,9 +10,14 @@ import CheckIcon from "@mui/icons-material/Check";
 import Avatar from "@mui/material/Avatar";
 import { history } from "../redux/store";
 import styled from "@emotion/styled";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/postReducer";
 
 function Write(props) {
+  const dispatch = useDispatch();
+
   const { open, handleClose } = props;
+
   const fileInput = React.useRef();
   const contents = React.useRef();
 
@@ -20,16 +25,21 @@ function Write(props) {
   const [preview, setPreview] = React.useState([]);
   const [tempFile, setTempFile] = React.useState([]);
 
+  const _user = useSelector((state) => state.userReducer);
+  console.log('_user확인용', _user);
+
   let tempData = [];
   const formData = new FormData();
 
   const selectFile = (e) => {
-    const file = fileInput.current.files[0];
+    console.log('e',e);
     const files = fileInput.current.files;
+
+
     setTempFile([...tempFile, files]);
 
     for (let i = 0; i < files.length; i++) {
-      formData.append("postImg", files[i]);
+      formData.append("imgUrl", files[i]);
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.addEventListener("load", function () {
@@ -37,10 +47,46 @@ function Write(props) {
         if (tempData.length === files.length) {
           setPreview([...preview, ...tempData]);
           setFileSelected(true);
-          console.log(formData);
+          console.log("formdata", formData);
+          // console.log("fileinput", fileInput); //current: null
+
+          // console.log("filescurrent = fileInput.current",filescurrent);// <input type="file" multiple="" style="display: none;"></input>
+
+          // console.log("files = fileInput.current.files;", files);
+          /*FileList {0: File, 1: File, length: 2}
+          0: File {name: 'maxresdefault.jpg', lastModified: 1643269878752, lastModifiedDate: Thu Jan 27 2022 16:51:18 GMT+0900 (한국 표준시), webkitRelativePath: '', size: 85294, …}
+          1: File {name: '7ae844bf2c880c0d6bc4818020f242fd.jpg', lastModified: 1642166898501, lastModifiedDate: Fri Jan 14 2022 22:28:18 GMT+0900 (한국 표준시), webkitRelativePath: '', size: 40941, …}
+          length: 2
+          [[Prototype]]: FileList*/
+
+          
         }
       });
     }
+  };
+
+  const addPost = () => {
+    const postData = new FormData();
+    for (let i = 0; i < tempFile[0].length; i++) {
+      postData.append("imgUrl", tempFile[0][i]);
+      console.log(tempFile[0][i]);
+    }
+    postData.append("postContents", contents.current.value);
+    // console.log('contents',contents);
+    /*
+    {current: textarea.css-u3azhh}
+      current: textarea.css-u3azhh
+      value: "안녕하세요라고 입력했을경우 안녕하세요라고 value값에 뜸"
+      __reactEvents$46et5833op: Set(1) {'invalid__bubble'}
+      __reactFiber$46et5833op: FiberNode {tag: 5, key: null, elementType: 'textarea', type: 'textarea', stateNode: textarea.css-u3azhh, …}
+      __reactProps$46et5833op: {rows: '10', wrap: 'hard', className: 'css-u3azhh'}
+      _valueTracker: {getValue: ƒ, setValue: ƒ, stopTracking: ƒ}
+      _wrapperState: {initialValue: ''}
+      */
+    // postData.append("postImgCount", preview.length);
+    // postData.append("postTag", []);
+
+    dispatch(postActions.addPostDB(postData));
   };
 
   return (
@@ -56,6 +102,7 @@ function Write(props) {
           timeout: 500,
         }}
       >
+
         <Fade in={open}>
           <Box sx={style}>
             {fileSelected ? (
@@ -98,9 +145,7 @@ function Write(props) {
                       border="0px"
                       BG_color="white"
                       width="30px"
-                      _onClick={() => {
-                        history.goBack();
-                      }}
+                      _onClick={addPost}
                     >
                       <CheckIcon />
                     </Button>
@@ -122,7 +167,7 @@ function Write(props) {
                   BG_c="white"
                 >
                   <Img
-                    imgURL={preview}
+                    postImg={preview}
                     size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
                   ></Img>
                   <Grid is_flex flex_direction="column" width="100%">
@@ -134,10 +179,10 @@ function Write(props) {
                     >
                       <Avatar
                         alt="Remy Sharp"
-                        src=""
+                        src={_user.user.userImg ? _user.user.userImg : ""}
                         sx={{ margin: "20px", width: 50, height: 50 }}
                       />
-                      <Text>유저닉네임</Text>
+                      <Text>{_user.user.nickname ? _user.user.nickname : ""}</Text>
                     </Grid>
                     <TextArea ref={contents} rows="10" wrap="hard"></TextArea>
                   </Grid>

@@ -6,21 +6,26 @@ import Grid from "../elements/Grid";
 import { positions } from "@mui/system";
 import Write from "../components/Write";
 import styled from "@emotion/styled";
+import { useSelector } from "react-redux";
 
 function Story() {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-
+  const _post = useSelector(state=>state.postReducer);
+  console.log('post확인용', _post);
+  
   return (
     <React.Fragment>
-      {/* map으로 storycard생성예정 */}
       <Grid margin_top="120px" />
-      <Grid margin_bottom="8px">
-        <StoryCard />
 
-        <WriteButton onClick={() => setOpen(true)}></WriteButton>
-        <Write open={open} handleClose={handleClose}></Write>
-      </Grid>
+      {_post.list.map((v,i)=>(
+        <Grid key={i} margin_bottom="8px">
+          <StoryCard key={i} {...v} />
+        </Grid>
+      ))}
+
+      <WriteButton onClick={() => setOpen(true)}></WriteButton>
+      <Write open={open} handleClose={handleClose}></Write>
     </React.Fragment>
   );
 }
