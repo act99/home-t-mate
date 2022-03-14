@@ -30,6 +30,7 @@ class VideoContainer extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     this.joinSession();
     window.addEventListener("beforeunload", this.onbeforeunload);
   }
@@ -82,6 +83,8 @@ class VideoContainer extends Component {
 
     this.setState(
       {
+        mySessionId: `Session${this.props.roomId}`,
+        myUserName: `${this.props.nickname}`,
         session: this.OV.initSession(),
       },
       () => {

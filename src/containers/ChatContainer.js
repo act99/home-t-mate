@@ -46,7 +46,7 @@ const ChatContainer = (props) => {
   const [sendMessage, setSendMessage] = React.useState({
     type: "TALK",
     roomId: "",
-    sender: "",
+    sender: nickname,
     message: "",
   });
 
@@ -63,8 +63,9 @@ const ChatContainer = (props) => {
   };
 
   React.useEffect(() => {
-    chattingRef.current.scrollIntoView({ behavior: "smooth" });
     setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
+    chattingRef.current.scrollIntoView({ behavior: "smooth" });
+
     return () => {};
   }, [roomId, sendMessage.sender]);
 
@@ -195,8 +196,9 @@ const ChatContainer = (props) => {
       <Grid container style={{ padding: "10px" }}>
         <Grid item xs={11}>
           <TextField
+            autoComplete="off"
             onKeyDown={onEnterPress}
-            id="outlined-basic-email"
+            // id="outlined-basic-email"
             label="메시지..."
             fullWidth
             value={sendMessage.message}
