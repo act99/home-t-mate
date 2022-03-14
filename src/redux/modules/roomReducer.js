@@ -15,7 +15,7 @@ const initialState = {
 };
 
 const initialRoom = {
-  roomId: 0,
+  roomId: "",
   name: "",
   userCount: 0,
   user: "",

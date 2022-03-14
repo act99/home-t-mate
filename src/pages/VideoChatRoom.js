@@ -13,6 +13,7 @@ import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chatReducer";
 import { actionCreators as youtubeActions } from "../redux/modules/youtubeReducer";
 import { apis } from "../shared/api";
+
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 const VideoChatRoom = () => {
@@ -93,21 +94,21 @@ const VideoChatRoom = () => {
 
   React.useEffect(() => {
     created();
-    apis
-      .joinRoom(roomId)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => {});
+    // apis
+    //   .joinRoom(roomId)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((error) => {});
 
     return () => {
       disconnected();
       history.replace("/");
       console.log("연결종료", roomId);
-      apis
-        .leaveRoom(roomId)
-        .then((res) => {})
-        .catch((error) => console.log(error));
+      // apis
+      //   .leaveRoom(roomId)
+      //   .then((res) => {})
+      //   .catch((error) => console.log(error));
     };
   }, []);
 

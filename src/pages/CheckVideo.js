@@ -70,37 +70,19 @@ const CheckVideo = () => {
       }
       setLoading(false);
     }, 1000);
-    apis
-      .joinRoom(roomId)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => setFullPeople(true));
-
-    // ** 원본
     // apis
     //   .joinRoom(roomId)
     //   .then((res) => {
-    //     setTimeout(() => {
-    //       if (video === true) {
-    //         getWebcam((stream) => {
-    //           videoRef.current.srcObject = stream;
-    //         });
-    //       }
-    //       setLoading(false);
-    //     }, 1000);
+    //     console.log(res.data);
     //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     setFullPeople(true);
-    //   });
+    //   .catch((error) => setFullPeople(true));
 
     return () => {
       console.log("연결종료", roomId);
-      apis
-        .leaveRoom(roomId)
-        .then((res) => {})
-        .catch((error) => console.log(error));
+      // apis
+      //   .leaveRoom(roomId)
+      //   .then((res) => {})
+      //   .catch((error) => console.log(error));
       // ** 페이지에서 나갈 시 비디오 죽이기
       history.go(0);
     };
