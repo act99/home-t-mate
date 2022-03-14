@@ -16,14 +16,20 @@ import { IconButton, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import CreateRoomModal from "../containers/CreateRoomModal";
-
+import useWindowSize from "../hooks/useWindowSize";
+import Logo from "../assets/logo500300.png";
 const NavBar = (props) => {
+  // ** leaveSession 가져오기 위해
+  const leaveSession = useSelector(
+    (state) => state.sessionReducer.leaveSession
+  );
   // ** 채팅방 이동 시 네비게이션 바 변경
-  const { mySessionId, leaveSession, chatNum } = props;
+  const { mySessionId, chatNum } = props;
   const pathname = window.location.pathname;
   console.log(pathname);
   const handleOut = () => {
     console.log("out");
+    history.replace("/");
     leaveSession();
   };
   // ** 채팅방 이동 시 네비게이션 바 변경 끝
@@ -32,6 +38,11 @@ const NavBar = (props) => {
   const handleNavigate = (target) => {
     history.push(target);
   };
+  // ** 윈도우 사이즈 핸들러
+  const size = useWindowSize();
+  const width = size.width;
+  const height = size.height;
+
   const logout = () => {
     dispatch(userActions.logout());
     history.replace("/");
@@ -58,7 +69,7 @@ const NavBar = (props) => {
     } else {
       setValue("1");
     }
-  }, [routeUrl, pathname]);
+  }, [routeUrl, pathname, leaveSession]);
 
   const theme = createTheme({
     palette: {
@@ -82,7 +93,14 @@ const NavBar = (props) => {
   if (pathname.includes("livenow/")) {
     return (
       <ThemeProvider theme={theme}>
-        <AppBar position="static" sx={{ backgroundColor: "black" }}>
+        <AppBar
+          position="static"
+          sx={{
+            backgroundColor: "black",
+            width: `${width}px`,
+            height: `${height * 0.065}px`,
+          }}
+        >
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Typography variant="h6">{mySessionId}</Typography>
@@ -102,10 +120,16 @@ const NavBar = (props) => {
   }
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="static" sx={{ backgroundColor: "black" }}>
+      <AppBar position="static" sx={{ backgroundColor: "white" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Button
+            <img
+              src={Logo}
+              height="50px"
+              onClick={() => history.push("/")}
+              style={{ cursor: "pointer", marginRight: 30 }}
+            />
+            {/* <Button
               onClick={() => history.push("/")}
               sx={{
                 mr: 2,
@@ -114,29 +138,29 @@ const NavBar = (props) => {
               }}
             >
               Logo
-            </Button>
+            </Button> */}
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Box sx={{}}>
                   <TabList
                     indicatorColor="secondary"
                     onChange={handleChange}
                     aria-label="lab API tabs example"
                   >
                     <Tab
-                      style={{ color: "#ffffff" }}
+                      style={{ color: "#000000", fontWeight: "bold" }}
                       label="홈"
                       value="1"
                       onClick={() => history.push("/")}
                     />
                     <Tab
-                      style={{ color: "#ffffff" }}
+                      style={{ color: "#000000", fontWeight: "bold" }}
                       label="스토리"
                       value="2"
                       onClick={() => history.push("/story")}
                     />
                     <Tab
-                      style={{ color: "#ffffff" }}
+                      style={{ color: "#000000", fontWeight: "bold" }}
                       label="LIVE NOW"
                       value="3"
                       onClick={() => history.push("/livenow")}
@@ -146,7 +170,11 @@ const NavBar = (props) => {
               </TabContext>
             </Box>
             {user.is_login === false ? (
-              <Button color="inherit" onClick={() => handleNavigate("/login")}>
+              <Button
+                color="inherit"
+                onClick={() => handleNavigate("/login")}
+                sx={{ color: "#000000", fontWeight: "bold" }}
+              >
                 로그인
               </Button>
             ) : (
@@ -164,7 +192,11 @@ const NavBar = (props) => {
                   createRoomOpen={createRoomOpen}
                   setCreateRoomOpen={setCreateRoomOpen}
                 />
-                <Button color="inherit" onClick={logout}>
+                <Button
+                  color="inherit"
+                  onClick={logout}
+                  sx={{ color: "#000000", fontWeight: "bold" }}
+                >
                   로그아웃
                 </Button>
               </>

@@ -29,10 +29,16 @@ const CreateRoomModal = (props) => {
     let contents = {
       title: data.get("title"),
       password: data.get("password"),
-      contents: data.get("content"),
+      content: data.get("content"),
     };
     // ** 임시로 방 제목만으로
-    dispatch(roomCreators.createRoomDB(data.get("title")));
+    dispatch(
+      roomCreators.createRoomDB(
+        data.get("title"),
+        data.get("password"),
+        data.get("content")
+      )
+    );
     console.log(contents);
   };
   return (

@@ -13,6 +13,7 @@ import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
 import youtubeReducer from "./modules/youtubeReducer";
+import sessionReducer from "./modules/sessionReducer";
 
 export const history = createBrowserHistory();
 
@@ -26,12 +27,13 @@ const rootReducer = combineReducers({
   webrtcReducer: webrtcReducer,
   videoReducer: videoReducer,
   youtubeReducer: youtubeReducer,
+  sessionReducer: sessionReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  // whitelist: ["videoReducer"],
+  whitelist: ["userReducer"],
   blacklist: [
     "youtubeReducer",
     "videoReducer",
@@ -39,9 +41,10 @@ const persistConfig = {
     "postReducer",
     "todoReducer",
     "chatReducer",
-    "userReducer",
+    // "userReducer",
     "roomReducer",
     "router",
+    "sessionReducer",
   ],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

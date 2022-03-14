@@ -15,8 +15,9 @@ const makeChattingStyle = makeStyles({
     borderRight: "1px solid #e0e0e0",
   },
   messageArea: {
-    height: "80vh",
+    height: "45vh",
     overflowY: "auto",
+    backgroundColor: "white",
   },
 });
 

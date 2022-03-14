@@ -1,10 +1,13 @@
 import styled from "@emotion/styled";
 import {
+  Avatar,
+  ButtonGroup,
   Divider,
   Grid,
   IconButton,
   List,
   ListItem,
+  ListItemAvatar,
   ListItemText,
   TextField,
 } from "@mui/material";
@@ -14,6 +17,12 @@ import useStyle from "../styles/chattingStyle";
 import SendIcon from "@mui/icons-material/Send";
 import { useLocation } from "react-router-dom";
 import { sendingMessage } from "../shared/SocketFunc";
+
+import VideocamIcon from "@mui/icons-material/Videocam";
+import VideocamOffIcon from "@mui/icons-material/VideocamOff";
+import MicOffIcon from "@mui/icons-material/MicOff";
+import MicIcon from "@mui/icons-material/Mic";
+
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 
@@ -37,7 +46,7 @@ const ChatContainer = (props) => {
   const [sendMessage, setSendMessage] = React.useState({
     type: "TALK",
     roomId: "",
-    sender: "",
+    sender: nickname,
     message: "",
   });
 
@@ -46,14 +55,108 @@ const ChatContainer = (props) => {
     setSendMessage({ ...sendMessage, message: event.target.value });
   };
 
+  // ** 엔터 시 채팅 제출
+  const onEnterPress = (e) => {
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      return sendingMessage(ws, setSendMessage, sendMessage, token);
+    }
+  };
+
   React.useEffect(() => {
-    chattingRef.current.scrollIntoView({ behavior: "smooth" });
     setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
+    chattingRef.current.scrollIntoView({ behavior: "smooth" });
+
     return () => {};
   }, [roomId, sendMessage.sender]);
 
   return (
     <Wrap>
+      <MemberTitle>
+        <h3>지금 나와 함께 홈트하는 친구들</h3>
+        <Divider />
+      </MemberTitle>
+      <List
+        sx={{
+          width: "100%",
+          overflow: "auto",
+          bgcolor: "background.paper",
+          height: "25vh",
+        }}
+      >
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar
+              alt="Remy Sharp"
+              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
+            />
+          </ListItemAvatar>
+          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
+          <ButtonGroup size="large" aria-label="large button group">
+            <IconButton>
+              <VideocamIcon />
+            </IconButton>
+            <IconButton>
+              <MicIcon />
+            </IconButton>
+          </ButtonGroup>
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar
+              alt="Remy Sharp"
+              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
+            />
+          </ListItemAvatar>
+          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
+          <ButtonGroup size="large" aria-label="large button group">
+            <IconButton>
+              <VideocamIcon />
+            </IconButton>
+            <IconButton>
+              <MicIcon />
+            </IconButton>
+          </ButtonGroup>
+        </ListItem>
+      </List>
+      {/* <MemberWrap>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyItems: "flex-start",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            alignContent: "flex-start",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <Avatar
+              sx={{ my: "auto", width: "4vh", height: "4vh", ml: 1 }}
+              alt="Remy Sharp"
+              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
+            />
+            <Typography
+              variant="h6"
+              gutterBottom
+              component="div"
+              sx={{ my: "auto", mx: 1, fontSize: "2vh" }}
+            >
+              아이유
+            </Typography>
+          </Box>
+        </Box>
+      </MemberWrap> */}
+      <ChatTitle>
+        <h3>친구들과 채팅타임</h3>
+      </ChatTitle>
+      <Divider />
       <List className={classes.messageArea}>
         {chattingList.map((item, index) =>
           item.sender === nickname ? (
@@ -75,6 +178,7 @@ const ChatContainer = (props) => {
               <Grid container>
                 <Grid item xs={12}>
                   <ListItemText
+                    sx={{ wordBreak: "break-all" }}
                     align="left"
                     primary={item.message}
                   ></ListItemText>
@@ -89,23 +193,25 @@ const ChatContainer = (props) => {
         <div ref={chattingRef} />
       </List>
       <Divider />
-      <Grid container style={{ padding: "20px" }}>
+      <Grid container style={{ padding: "10px" }}>
         <Grid item xs={11}>
           <TextField
-            id="outlined-basic-email"
-            label="Type Something"
+            autoComplete="off"
+            onKeyDown={onEnterPress}
+            // id="outlined-basic-email"
+            label="메시지..."
             fullWidth
             value={sendMessage.message}
             onChange={sendingMessageHandler}
           />
         </Grid>
-        <Grid item xs={1} align="right">
+        <Grid item xs={1} align="right" sx={{ display: "flex" }}>
           <IconButton
             onClick={() => {
               sendingMessage(ws, setSendMessage, sendMessage, token);
             }}
           >
-            <SendIcon />
+            <SendIcon sx={{ fontSize: 30 }} />
           </IconButton>
         </Grid>
       </Grid>
@@ -117,6 +223,41 @@ const Wrap = styled.div`
   width: 20vw;
   height: 93vh;
   background-color: aliceblue;
+`;
+
+const MemberTitle = styled.div`
+  width: 100%;
+  height: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: aquamarine;
+  h3 {
+    font-size: medium;
+    margin-left: 1vw;
+  }
+`;
+
+const MemberWrap = styled.div`
+  width: 100%;
+  height: 28vh;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const ChatTitle = styled.div`
+  width: 100%;
+  height: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: aquamarine;
+  h3 {
+    font-size: medium;
+    margin-left: 1vw;
+  }
 `;
 
 export default ChatContainer;

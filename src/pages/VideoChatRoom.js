@@ -12,9 +12,12 @@ import url from "../shared/url";
 import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chatReducer";
 import { actionCreators as youtubeActions } from "../redux/modules/youtubeReducer";
+import { apis } from "../shared/api";
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 const VideoChatRoom = () => {
+  const user = useSelector((state) => state.userReducer.user);
+  const nickname = user.nickname;
   const history = useHistory();
   const size = useWindowSize();
   const width = size.width;
@@ -90,9 +93,21 @@ const VideoChatRoom = () => {
 
   React.useEffect(() => {
     created();
+    apis
+      .joinRoom(roomId)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {});
+
     return () => {
       disconnected();
       history.replace("/");
+      console.log("연결종료", roomId);
+      apis
+        .leaveRoom(roomId)
+        .then((res) => {})
+        .catch((error) => console.log(error));
     };
   }, []);
 
@@ -102,7 +117,7 @@ const VideoChatRoom = () => {
         <ContentsWrap>
           <VideoGroupWrap>
             <YoutubeVideo ws={ws} token={token} roomId={roomId} />
-            <EnterRoom />
+            <EnterRoom roomId={roomId} nickname={nickname} />
           </VideoGroupWrap>
           <ChatContainer chattingRef={chattingRef} ws={ws} />
         </ContentsWrap>
