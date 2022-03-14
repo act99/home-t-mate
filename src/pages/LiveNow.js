@@ -32,6 +32,7 @@ const LiveNow = () => {
     roomName: "",
     content: "",
     member: 0,
+    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
   });
   const cardOpenHandler = (roomId, roomName, content) => {
     setClickCard(true);
