@@ -9,7 +9,7 @@ import KakaoOauth from "./components/KakaoOauth";
 import LiveNow from "./pages/LiveNow";
 import ChattingRoom from "./pages/ChattingRoom";
 import { actionCreators as userActions } from "./redux/modules/userReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
 import NotFound from "./pages/NotFound";
 import Mypage from "./pages/Mypage";
@@ -17,14 +17,16 @@ import styled from "@emotion/styled";
 import Story from "./pages/Story";
 import VideoChatRoom from "./pages/VideoChatRoom";
 import CheckVideo from "./pages/CheckVideo";
+
 const App = () => {
   // const params = useParams();
   // console.log(params);
+  const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   React.useEffect(() => {
     console.log(window.location.href);
     console.log(window.location.host);
-    if (document.cookie) {
+    if (document.cookie && user.token !== null) {
       dispatch(userActions.userinfoDB());
     }
   }, []);

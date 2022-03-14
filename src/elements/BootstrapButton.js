@@ -42,6 +42,6 @@ export const CreateRoomButton = styled(Button)({
     fontWeight: "bold",
   },
   "&:focus": {
-    boxShadow: "0 0 0 0.2rem rgba(0,125,5,.5)",
+    // boxShadow: "0 0 0 0.2rem rgba(0,125,5,.5)",
   },
 });

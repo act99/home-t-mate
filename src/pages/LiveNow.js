@@ -2,12 +2,19 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/roomReducer";
 import { useHistory } from "react-router-dom";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import ListSubheader from "@mui/material/ListSubheader";
-import IconButton from "@mui/material/IconButton";
-import InfoIcon from "@mui/icons-material/Info";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import {
+  Avatar,
+  Card,
+  CardContent,
+  CardMedia,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
+import styled from "@emotion/styled";
+import { AiOutlineLock } from "react-icons/ai";
+import RoomCardModal from "../containers/RoomCardModal";
 
 const LiveNow = () => {
   const dispatch = useDispatch();
@@ -16,139 +23,139 @@ const LiveNow = () => {
   const roomList = useSelector((state) => state.roomReducer.room_list);
   const dummyImage =
     "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e";
+
+  // ** 모달 생성
+  const [clickCard, setClickCard] = React.useState(false);
+  // ** 모달 props 전달
+  const [modalData, setModalData] = React.useState({
+    roomId: 0,
+    roomName: "",
+    content: "",
+    member: 0,
+    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+  });
+  const cardOpenHandler = (roomId, roomName, content) => {
+    setClickCard(true);
+    setModalData({
+      ...modalData,
+      roomId: roomId,
+      roomName: roomName,
+      content: content,
+    });
+  };
   React.useEffect(() => {
     dispatch(roomCreators.getRoomDB());
   }, []);
   return (
     <>
-      <ImageList sx={{ width: "100%", height: "100%" }} cols={4}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img} sx={{ mx: 3 }}>
-            <img
-              src={`${item.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-            />
-            <ImageListItemBar
-              title={item.title}
-              subtitle={<span>by: {item.author}</span>}
-              position="below"
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
-
-      <div>
-        <h3>Rooms</h3>
-        <ul>
-          {roomList.map((item, index) => (
-            <li
-              key={item.roomId + index}
-              onClick={() => {
-                history.push({
-                  pathname: `/checkvideo`,
-                  state: { roomId: item.roomId, roomName: item.name },
-                });
-              }}
-            >
-              {item.name}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <ImageList sx={{ width: "100%", height: "100%" }} cols={3}>
-        {/* <ImageListItem key="Subheader" cols={3}>
-          <ListSubheader component="div">December</ListSubheader>
-        </ImageListItem> */}
-        {roomList.map((item) => (
-          <ImageListItem key={item.img}>
-            <img
-              src={`${dummyImage}?w=248&fit=crop&auto=format`}
-              srcSet={`${dummyImage}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.name}
-              loading="lazy"
-            />
-            <ImageListItemBar
-              title={item.name}
-              subtitle={item.content}
-              actionIcon={
-                <IconButton
-                  sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                  aria-label={`info about ${item.name}`}
+      <Container sx={{ py: 8, width: "100%" }}>
+        <Typography
+          component="h1"
+          variant="h4"
+          sx={{ fontWeight: "bold", ml: 1, mb: 6, mt: 1 }}
+        >
+          🔥 Live Now 🔥
+        </Typography>
+        <Grid container spacing={7}>
+          {roomList.map((item) => (
+            <Grid item key={item.roomId + item.name} xs={12} sm={6} md={3}>
+              <Card
+                onClick={() => {
+                  cardOpenHandler(item.roomId, item.name, item.content);
+                }}
+                sx={{
+                  height: "352px",
+                  display: "flex",
+                  flexDirection: "column",
+                  cursor: "pointer",
+                  borderRadius: "20px",
+                }}
+              >
+                <CardMedia
+                  sx={{ maxHeight: "50%", minHeight: "214.86px" }}
+                  component="img"
+                  image={dummyImage}
+                  alt="random"
+                />
+                <CardContent
+                  sx={{ flexGrow: 1, minHeight: "186px", paddingLeft: 0.5 }}
                 >
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    component="div"
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: 18,
+                      paddingTop: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AiOutlineLock
+                      style={{
+                        marginRight: "5px",
+                        marginLeft: "5px",
+                      }}
+                    />
+                    {item.name.length > 10
+                      ? item.name.slice(0, 10) + "..."
+                      : item.name}
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: 12, paddingTop: 1, paddingBottom: 1 }}
+                  ></Typography>
+                  <CardBottom>
+                    <Nickname>
+                      <Avatar
+                        sx={{ width: 30, height: 30, mr: 1 }}
+                        alt="Remy Sharp"
+                        src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
+                      />
+                      by rlrl
+                    </Nickname>
+                    <MemberNum>
+                      <PersonOutlineIcon />
+                      (4/5)
+                    </MemberNum>
+                  </CardBottom>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+      <RoomCardModal
+        clickCard={clickCard}
+        setClickCard={setClickCard}
+        data={modalData}
+      />
     </>
   );
 };
 
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-    author: "@bkristastucchio",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-    author: "@rollelflex_graphy726",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-    author: "@helloimnik",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-    author: "@nolanissac",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-    author: "@hjrc33",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-    author: "@arwinneil",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-    author: "@tjdragotta",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-    author: "@katie_wasserman",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-    author: "@silverdalex",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-    author: "@shelleypauls",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-    author: "@peterlaster",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-    author: "@southside_customs",
-  },
-];
+const CardBottom = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 35px;
+  font-size: 14px;
+  line-height: 24px;
+`;
+
+const Nickname = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  font-size: md;
+`;
+
+const MemberNum = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: md;
+`;
 
 export default LiveNow;
