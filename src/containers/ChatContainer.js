@@ -41,12 +41,13 @@ const ChatContainer = (props) => {
   // ** user 정보
   const user = useSelector((state) => state.userReducer.user);
   const nickname = user.nickname;
+  const username = user.username;
 
   // ** 메시지 핸들러
   const [sendMessage, setSendMessage] = React.useState({
     type: "TALK",
     roomId: "",
-    sender: nickname,
+    sender: username,
     message: "",
   });
 
@@ -62,12 +63,16 @@ const ChatContainer = (props) => {
     }
   };
 
-  React.useEffect(() => {
-    setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
-    chattingRef.current.scrollIntoView({ behavior: "smooth" });
+  React.useEffect(
+    () => {
+      setSendMessage({ ...sendMessage, roomId: roomId, sender: username });
+      chattingRef.current.scrollIntoView({ behavior: "smooth" });
+      return () => {};
+    },
+    []
 
-    return () => {};
-  }, [roomId, sendMessage.sender]);
+    // [roomId, sendMessage.sender]
+  );
 
   return (
     <Wrap>

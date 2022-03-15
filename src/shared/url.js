@@ -7,6 +7,12 @@ const WEB_SOCKET = "http://15.165.42.20:8080/ws-stomp";
 // const REDIRECT_URI = "https://act99.shop";
 // const WEB_SOCKET = "https://hanghae99.shop/ws-stomp";
 
+// ** 강욱님 url
+
+// const BASE_URL = "http://3.38.252.235:8080";
+// const REDIRECT_URI = "http://localhost:3000/user/kakao/callback";
+// const WEB_SOCKET = "http://3.38.252.235:8080/ws-stomp";
+
 const url = {
   BASE_URL,
   REDIRECT_URI,

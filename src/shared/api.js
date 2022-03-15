@@ -24,13 +24,16 @@ export const apis = {
   getUserInfo: () => api.post(`/chat/user`),
   // ** 영상채팅
   getRooms: () => api.get(`/chat/rooms`),
-  createRooms: (name, password, content) =>
+  createRooms: (name, password, content, roomImg) =>
     api.post(`/chat/room`, {
       name: name,
       content: content,
       password: password,
+      workOut: false,
+      roomImg: roomImg,
     }),
-  joinRoom: (roomId) => api.get(`/chat/room/join/${roomId}`),
+  enterRoom: (roomId, password) =>
+    api.post(`/chat/room/enter/${roomId}`, { password: password }),
   leaveRoom: (roomId) => api.get(`/chat/room/quit/${roomId}`),
   // ** 포스트
   getPost: () => api.get(`/api/posts`),

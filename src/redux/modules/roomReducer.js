@@ -34,17 +34,18 @@ const getRoomDB = () => {
 };
 
 // ** 방 생성
-const createRoomDB = (name, password, content) => {
+const createRoomDB = (name, password, content, roomImg) => {
   return function (dispatch, getState, { history }) {
     apis
-      .createRooms(name, password, content)
+      .createRooms(name, password, content, roomImg)
       .then((res) =>
         dispatch(
           createRoom({
             roomId: res.data.roomId,
             name: res.data.name,
-            password: res.data.password,
             content: res.data.content,
+            workOut: res.data.workOut,
+            roomImg: res.data.roomImg,
             // userCount: res.data.userCount,
             // user: res.data.user,
           })

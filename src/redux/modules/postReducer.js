@@ -1,6 +1,8 @@
 import produce from "immer";
+import { result } from "lodash";
 import { createAction, handleActions } from "redux-actions";
 import { apis } from "../../shared/api";
+import { imageApis } from "../../shared/formApi";
 
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
@@ -44,8 +46,8 @@ const getPostDB = () => {
         console.log(res);
       })
       .catch((error) => {
-      window.alert("게시글 불러오기 실패!");
-    });
+        window.alert("게시글 불러오기 실패!");
+      });
   };
 };
 
@@ -79,18 +81,39 @@ const deletePostDB = (postId) => {
   };
 };
 
-const addPostDB=(contents) =>{
-  return async function (dispatch,getState){
+const addPostDB = (content, imgForm) => {
+  console.log(imgForm);
+  return async function (dispatch, getState) {
+    imageApis
+      .postImage(imgForm)
+      .then((res) => {
+        console.log(res);
+        const postContent = {
+          content: content,
+          postImg: [...res.data.file],
+        };
+        console.log(postContent);
+        apis
+          .addPost(postContent)
+          .then((res1) => {
+            dispatch(getPostDB());
+          })
+          .catch((error1) => console.log("포스트 에러", error1));
+      })
+      .catch((error) => console.log("이미지 업로드 에러", error));
 
-    apis.addPost(contents)
-    .then((res) => {
-      window.alert("게시물 작성 성공!")
-      window.location.reload();
-    }).catch((error)=>{
-      window.alert("게시물 작성 실패!")
-    })
-  }
-}
+    // console.log(content);
+    // apis
+    //   .addPost(content)
+    //   .then((res) => {
+    //     window.alert("게시물 작성 성공!");
+    //     window.location.reload();
+    //   })
+    //   .catch((error) => {
+    //     window.alert("게시물 작성 실패!");
+    //   });
+  };
+};
 
 // const addPostDB = (contents) => {
 //   let postContent = {

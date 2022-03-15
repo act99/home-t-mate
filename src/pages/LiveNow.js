@@ -21,8 +21,6 @@ const LiveNow = () => {
   const history = useHistory();
   // ** 방 생성 버튼
   const roomList = useSelector((state) => state.roomReducer.room_list);
-  const dummyImage =
-    "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e";
 
   // ** 모달 생성
   const [clickCard, setClickCard] = React.useState(false);
@@ -32,15 +30,16 @@ const LiveNow = () => {
     roomName: "",
     content: "",
     member: 0,
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+    roomImg: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
   });
-  const cardOpenHandler = (roomId, roomName, content) => {
+  const cardOpenHandler = (roomId, roomName, content, roomImg) => {
     setClickCard(true);
     setModalData({
       ...modalData,
       roomId: roomId,
       roomName: roomName,
       content: content,
+      roomImg: roomImg,
     });
   };
   React.useEffect(() => {
@@ -61,7 +60,12 @@ const LiveNow = () => {
             <Grid item key={item.roomId + item.name} xs={12} sm={6} md={3}>
               <Card
                 onClick={() => {
-                  cardOpenHandler(item.roomId, item.name, item.content);
+                  cardOpenHandler(
+                    item.roomId,
+                    item.name,
+                    item.content,
+                    item.roomImg
+                  );
                 }}
                 sx={{
                   height: "352px",
@@ -74,7 +78,7 @@ const LiveNow = () => {
                 <CardMedia
                   sx={{ maxHeight: "50%", minHeight: "214.86px" }}
                   component="img"
-                  image={dummyImage}
+                  image={item.roomImg}
                   alt="random"
                 />
                 <CardContent

@@ -11,11 +11,10 @@ import { history } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as videoActions } from "../redux/modules/videoReducer";
 import LinearProgress from "@mui/material/LinearProgress";
-import LoadingImage from "../assets/loading_image.png";
 import useWindowSize from "../hooks/useWindowSize";
 import { apis } from "../shared/api";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
+import FullErrorContainer from "../containers/FullErrorContainer";
+import LoadingImage from "../assets/loading_image.png";
 
 const CheckVideo = () => {
   const dispatch = useDispatch();
@@ -86,7 +85,7 @@ const CheckVideo = () => {
       // ** 페이지에서 나갈 시 비디오 죽이기
       history.go(0);
     };
-  }, [video]);
+  }, []);
 
   const videoOnOff = () => {
     if (video) {
@@ -107,46 +106,7 @@ const CheckVideo = () => {
   };
 
   if (fullPeople) {
-    return (
-      <>
-        <WrapError>
-          <Alert
-            severity="error"
-            sx={{
-              width: 400,
-              height: 600,
-              display: "flex",
-              flexDirection: "column",
-              justifyItems: "center",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <AlertTitle sx={{ mx: "auto", textAlign: "center" }}>
-              <h3>방 인원 초과</h3>
-            </AlertTitle>
-            <img src={LoadingImage} width="300px" />
-
-            <h3>방 인원이 꽉 차 입장하실 수 없습니다.</h3>
-            <Button
-              sx={{
-                display: "block",
-                mx: "auto",
-                width: "200px",
-                border: "solid 2px",
-              }}
-              variant="outlined"
-              color="error"
-              onClick={() => {
-                history.replace("/");
-              }}
-            >
-              <strong>돌아가기</strong>
-            </Button>
-          </Alert>
-        </WrapError>
-      </>
-    );
+    return <FullErrorContainer />;
   }
   if (loading) {
     return (
@@ -159,62 +119,121 @@ const CheckVideo = () => {
   }
   return (
     <>
-      <Container maxWidth="lg">
-        <Box
-          sx={{
-            bgcolor: "#cfe8fc",
-            height: "100vh",
-            width: "50vw",
-            margin: "auto",
-          }}
-        >
-          <ContentWrap>
+      <Wrap>
+        <MainWrap height={height}>
+          <VideoTitle>
             <h3>
-              홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인 해 주세요.
+              홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인해주세요.
             </h3>
+          </VideoTitle>
+          <VideoWrap>
             <video
               ref={videoRef}
               autoPlay
               style={Styles.Video}
               muted={!audio}
             />
-            <ButtonGroup
-              disableElevation
-              variant="contained"
-              sx={{ height: "100px", mx: "auto" }}
-            >
-              <IconButton onClick={videoOnOff}>
-                {video ? (
-                  <VideocamIcon sx={{ fontSize: "40px", color: "black" }} />
-                ) : (
-                  <VideocamOffIcon sx={{ fontSize: "40px", color: "black" }} />
-                )}
-              </IconButton>
-              <IconButton onClick={audioOnOff}>
-                {audio ? (
-                  <MicIcon sx={{ fontSize: "40px", color: "black" }} />
-                ) : (
-                  <MicOffIcon sx={{ fontSize: "40px", color: "black" }} />
-                )}
-              </IconButton>
-            </ButtonGroup>
+            <div>
+              <ButtonGroup
+                disableElevation
+                variant="contained"
+                sx={{
+                  height: "100px",
+                }}
+              >
+                <IconButton onClick={videoOnOff}>
+                  {video ? (
+                    <VideocamIcon sx={{ fontSize: "40px", color: "black" }} />
+                  ) : (
+                    <VideocamOffIcon sx={{ fontSize: "40px", color: "red" }} />
+                  )}
+                </IconButton>
+                <IconButton onClick={audioOnOff}>
+                  {audio ? (
+                    <MicIcon sx={{ fontSize: "40px", color: "black" }} />
+                  ) : (
+                    <MicOffIcon sx={{ fontSize: "40px", color: "red" }} />
+                  )}
+                </IconButton>
+              </ButtonGroup>
+            </div>
+          </VideoWrap>
+          <EnterButton>
             <Button
-              variant="contained"
-              sx={{ height: 50, width: 300, mx: "auto" }}
+              variant="outlined"
+              sx={{ height: 50, width: 300, display: "block", my: "auto" }}
               onClick={handleEnter}
             >
               입장하기
             </Button>
-          </ContentWrap>
-        </Box>
-      </Container>
+          </EnterButton>
+        </MainWrap>
+      </Wrap>
     </>
   );
 };
 
+const MainWrap = styled.div`
+  width: 100%;
+  height: ${(props) => props.height * 0.8}px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+`;
+
+const VideoTitle = styled.div`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  background-color: white;
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+`;
+
+const VideoWrap = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  background-color: white;
+  video {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+  }
+  div {
+    width: 100%;
+    max-width: 1000px;
+    height: 100px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-items: center;
+  }
+`;
+
+const EnterButton = styled.div`
+  width: 100%;
+  max-width: 1000px;
+  height: 100px;
+  background-color: white;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+`;
+
 const Styles = {
   Video: {
-    background: "rgba(245, 240, 215, 0.5)",
+    background: "rgba(245, 240, 215, 0.3)",
   },
   None: { display: "none" },
 };
@@ -226,42 +245,14 @@ const Wrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f0effd;
-`;
-
-const ContentWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  justify-content: center;
-  text-align: center;
-  h3 {
-    font-size: large;
-    color: black;
-    margin-bottom: 30px;
-  }
+  /* background-color: #ffffff; */
+  background-color: white;
 `;
 
 const Text = styled.h3`
   font-size: large;
   color: black;
   margin-bottom: 10px;
-`;
-
-const WrapError = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const WrapErrorMessage = styled.div`
-  margin: auto;
-  width: auto;
-  height: auto;
 `;
 
 export default CheckVideo;

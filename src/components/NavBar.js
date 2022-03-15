@@ -69,7 +69,7 @@ const NavBar = (props) => {
     } else {
       setValue("1");
     }
-  }, [routeUrl, pathname, leaveSession]);
+  }, [routeUrl, pathname]);
 
   const theme = createTheme({
     palette: {
