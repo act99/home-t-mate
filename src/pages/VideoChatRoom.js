@@ -13,6 +13,7 @@ import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chatReducer";
 import { actionCreators as youtubeActions } from "../redux/modules/youtubeReducer";
 import { apis } from "../shared/api";
+import ChatNav from "../containers/ChatNav";
 
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
@@ -32,7 +33,7 @@ const VideoChatRoom = () => {
   // ** params 로 받은 roomId 와 roomName
   const location = useLocation();
   const locationState = location.state;
-  const { roomName, roomId, video, audio } = locationState;
+  const { roomName, roomId, video, audio, password } = locationState;
 
   console.log(roomName, roomId, video, audio);
 
@@ -95,47 +96,71 @@ const VideoChatRoom = () => {
   };
 
   React.useEffect(() => {
-    created();
+    apis.enterRoom(roomId, password).then((res) => {
+      created();
+    });
+    // created();
     return () => {
-      disconnected();
-      history.replace("/");
+      // disconnected();
+      // history.replace("/");
+      apis
+        .leaveRoom(roomId)
+        .then((res) => {
+          disconnected();
+          history.replace("/");
+        })
+        .catch((error) => console.log(error));
     };
   }, []);
+
+  if (width <= 600) {
+    <TabletWrap></TabletWrap>;
+  }
 
   return (
     <>
       <Wrap>
-        <ContentsWrap>
-          <VideoGroupWrap>
+        <ChatNav />
+        <WrapContents>
+          <YoutubeWrap>
             <YoutubeVideo ws={ws} token={token} roomId={roomId} />
-            <EnterRoom
-              roomId={roomId}
-              nickname={nickname}
-              video={video}
-              audio={audio}
-            />
-          </VideoGroupWrap>
+          </YoutubeWrap>
+          <EnterRoom
+            roomId={roomId}
+            nickname={nickname}
+            video={video}
+            audio={audio}
+          />
           <ChatContainer chattingRef={chattingRef} ws={ws} />
-        </ContentsWrap>
+        </WrapContents>
       </Wrap>
     </>
   );
 };
 
 const Wrap = styled.div`
-  width: 100vw;
-  height: 93vh;
+  width: 1920px;
+  height: 969px;
+  background-color: aliceblue;
 `;
 
-const VideoGroupWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 79.6vw;
-`;
-
-const ContentsWrap = styled.div`
+const WrapContents = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const TabletWrap = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-color: beige;
+  flex-direction: column;
+`;
+
+const YoutubeWrap = styled.div`
+  width: 1280px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 export default VideoChatRoom;

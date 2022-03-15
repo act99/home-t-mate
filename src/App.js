@@ -22,10 +22,13 @@ const App = () => {
   const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    if (document.cookie) {
+    if (user.is_login === false) {
       dispatch(userActions.userinfoDB());
     }
-  }, [dispatch]);
+    // if (document.cookie) {
+    //   dispatch(userActions.userinfoDB());
+    // }
+  }, [user.is_login]);
 
   return (
     <>
@@ -39,6 +42,11 @@ const App = () => {
         <Switch>
           <WrapWide>
             <Route path="/checkvideo" exact component={CheckVideo} />
+            <Route
+              path="/livenow/chat/:roomId"
+              exact
+              component={VideoChatRoom}
+            />
             <WrapMedium>
               <Route path="/" exact component={Home} />
               <Route path="/login" exact component={Login} />
@@ -51,7 +59,7 @@ const App = () => {
               <Route path="/story" exact component={Story} />
               {/* 채팅방 입장 */}
               <Route path="/livenow" exact component={LiveNow} />
-              <Route path="/livenow/:roomId" exact component={VideoChatRoom} />
+
               {/* <Route path="*" exact component={NotFound} /> */}
             </WrapMedium>
           </WrapWide>

@@ -8,29 +8,15 @@ const UserVideoComponent = (props) => {
     JSON.parse(props.streamManager.stream.connection.data).clientData;
 
   return (
-    <div>
+    <>
       {props.streamManager !== undefined ? (
-        <>
-          <VideoComponent streamManager={props.streamManager} />
-          <Nickname>
-            <p>{getNicknameTag()}</p>
-          </Nickname>
-        </>
+        <VideoComponent
+          streamManager={props.streamManager}
+          nickname={getNicknameTag()}
+        />
       ) : null}
-    </div>
+    </>
   );
 };
 
 export default UserVideoComponent;
-
-const Nickname = styled.div`
-  p {
-    text-align: center;
-    position: absolute;
-    width: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    font-weight: bold;
-    color: white;
-    margin: 1%;
-  }
-`;

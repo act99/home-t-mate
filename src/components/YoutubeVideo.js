@@ -123,8 +123,8 @@ const YoutubeVideo = (props) => {
         <ReactPlayer
           url={url}
           controls
-          width={fixedWidth + "px"}
-          height={fixedHeight + "px"}
+          width={"1280px"}
+          height={"720px"}
           playing={on}
           onPlay={handlePlay}
           onPause={handlePause}
@@ -134,28 +134,45 @@ const YoutubeVideo = (props) => {
           텅 비었습니다.
         </Empty>
       )}
-
-      <form onSubmit={handleUrlSubmit}>
-        <input
-          type="text"
-          onChange={handleUrlChange}
-          required
-          placeholder="유튜브 Url"
-        />
-        <button type="submit">유튜브 url 제출</button>
-      </form>
+      <FormStyle>
+        <form onSubmit={handleUrlSubmit}>
+          <UrlInput
+            type="text"
+            onChange={handleUrlChange}
+            required
+            placeholder="유튜브 Url"
+          />
+          <button type="submit">유튜브 url 제출</button>
+        </form>
+      </FormStyle>
     </Wrap>
   );
 };
 
 const Empty = styled.div`
-  width: ${(props) => props.width + "px"};
-  height: ${(props) => props.height + "px"};
+  width: 1280px;
+  height: 720px;
+  background-color: black;
+`;
+
+const FormStyle = styled.div`
+  width: 1280px;
+  height: 180px;
+  background-color: brown;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+`;
+
+const UrlInput = styled.input`
+  width: 500px;
+  height: 30px;
 `;
 
 const Wrap = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   /* margin-top: 4px;
   margin-left: 4px; */
   /* width: 80vw;

@@ -24,6 +24,7 @@ const CheckVideo = () => {
   const location = useLocation();
   const roomId = location.state.roomId;
   const roomName = location.state.roomName;
+  const password = location.state.password;
   // ** 비디오 세팅
   const [video, setVideo] = React.useState(videoReducer.video);
   const [audio, setAudio] = React.useState(videoReducer.audio);
@@ -53,8 +54,14 @@ const CheckVideo = () => {
 
   const handleEnter = () => {
     history.replace({
-      pathname: `/livenow/${roomId}`,
-      state: { roomId: roomId, roomName: roomName, video: video, audio: audio },
+      pathname: `/livenow/chat/${roomId}`,
+      state: {
+        roomId: roomId,
+        roomName: roomName,
+        video: video,
+        audio: audio,
+        password: password,
+      },
     });
     // dispatch(videoActions.setVideo({ video: video, audio: audio }));
   };
@@ -78,10 +85,10 @@ const CheckVideo = () => {
 
     return () => {
       console.log("연결종료", roomId);
-      // apis
-      //   .leaveRoom(roomId)
-      //   .then((res) => {})
-      //   .catch((error) => console.log(error));
+      apis
+        .leaveRoom(roomId)
+        .then((res) => {})
+        .catch((error) => console.log(error));
       // ** 페이지에서 나갈 시 비디오 죽이기
       history.go(0);
     };
