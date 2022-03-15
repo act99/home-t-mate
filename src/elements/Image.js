@@ -17,7 +17,14 @@ const Image = (props) => {
   //flex category
   const { flex } = props;
 
-  const { border_radius } = props;
+  //Border category
+  const {
+    border_radius,
+    B_bottom_left_radius,
+    B_bottom_right_radius,
+    B_top_left_radius,
+    B_top_right_radius,
+  } = props;
 
   const styles = {
     src,
@@ -28,6 +35,10 @@ const Image = (props) => {
     box_shadow,
     flex,
     border_radius,
+    B_bottom_left_radius,
+    B_bottom_right_radius,
+    B_top_left_radius,
+    B_top_right_radius,
   };
   if (shape === "imageBG") {
     return <ImageBG onClick={_onClick} {...styles}></ImageBG>;
@@ -56,6 +67,10 @@ Image.defaultProps = {
   margin: null,
   flex: null,
   border_radius: null,
+  B_bottom_left_radius: false,
+  B_bottom_right_radius: false,
+  B_top_left_radius: false,
+  B_top_right_radius: false,
 };
 
 const ImageDefault = styled.div`
@@ -67,6 +82,10 @@ const ImageDefault = styled.div`
   background-position: center;
   z-index: 1;
   border-radius: ${(props) => props.border_radius};
+  border-bottom-left-radius: ${(props) => props.B_bottom_left_radius};
+  border-bottom-right-radius: ${(props) => props.B_bottom_right_radius};
+  border-top-left-radius: ${(props) => props.B_top_left_radius};
+  border-top-right-radius: ${(props) => props.B_top_right_radius};
   flex: ${(props) => props.flex};
 `;
 
