@@ -77,6 +77,8 @@ const VideoChatRoom = () => {
           );
         },
         (error) => {
+          alert("방 인원이 꽉 찼습니다.");
+          history.replace("/");
           console.log("서버연결 실패", error);
         }
       );
@@ -104,7 +106,6 @@ const VideoChatRoom = () => {
     return () => {
       disconnected();
       history.replace("/");
-      console.log("연결종료", roomId);
       // apis
       //   .leaveRoom(roomId)
       //   .then((res) => {})

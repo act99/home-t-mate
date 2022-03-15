@@ -41,7 +41,6 @@ const persistConfig = {
     "postReducer",
     "todoReducer",
     "chatReducer",
-    // "userReducer",
     "roomReducer",
     "router",
     "sessionReducer",

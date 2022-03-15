@@ -54,23 +54,11 @@ function Write(props) {
   const addPost = () => {
     const imgForm = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {
-      imgForm.append("postImg", tempFile[0][i]);
+      imgForm.append("file", tempFile[0][i]);
       console.log(tempFile[0][i]);
       console.log(imgForm);
     }
-    const userImage =
-      _user.userImg === undefined
-        ? "https://t1.daumcdn.net/cfile/tistory/214D86345702231338"
-        : _user.userImg;
-    const content = {
-      content: contents.current.value,
-      username: _user.username,
-      nickname: _user.nickname,
-      userImg: userImage,
-      createdAt: "",
-      modifiedAt: "",
-    };
-    console.log(imgForm);
+    const content = contents.current.value;
     dispatch(postActions.addPostDB(content, imgForm));
   };
 

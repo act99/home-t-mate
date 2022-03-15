@@ -24,19 +24,7 @@ export const initialState = {
     is_login: false,
     token: null,
   },
-
-  // userId: null,
-  // token: null,
-  // userInfo: null, // user정보 - id, username, email, profile
-  // isValidEmailMultiple: false, // email 중복체크 결과
-  // loginError: null, // 로그인시 서버에러
-  // authNumber: "", // 비밀번호 찾기시 인증번호
-  // is_login: false, // 로그인 상태
 };
-
-// middleware actions
-// reducer
-// draft = state의 복제품 (불변성 유지)
 
 const userinfoDB = () => {
   return function (dispatch, getState, { history }) {
@@ -54,9 +42,7 @@ const kakaoLoginDB = (code) => {
     await apis
       .kakaoLogin(code)
       .then((res) => {
-        dispatch(login({ ...res.data }));
         setCookie("token", res.headers.authorization);
-        localStorage.setItem("userId", res.data);
         history.replace("/");
         history.go(0);
       })
@@ -68,6 +54,7 @@ export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload);
         draft.user = {
           ageRange: action.payload.user.ageRange,
           career: action.payload.user.career,

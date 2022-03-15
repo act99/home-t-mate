@@ -19,17 +19,13 @@ import VideoChatRoom from "./pages/VideoChatRoom";
 import CheckVideo from "./pages/CheckVideo";
 
 const App = () => {
-  // const params = useParams();
-  // console.log(params);
   const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    console.log(window.location.href);
-    console.log(window.location.host);
-    if (document.cookie && user.token !== null) {
+    if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

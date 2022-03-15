@@ -89,12 +89,15 @@ const addPostDB = (content, imgForm) => {
       .then((res) => {
         console.log(res);
         const postContent = {
-          ...content,
+          content: content,
           postImg: [...res.data.file],
         };
+        console.log(postContent);
         apis
           .addPost(postContent)
-          .then((res1) => {})
+          .then((res1) => {
+            dispatch(getPostDB());
+          })
           .catch((error1) => console.log("포스트 에러", error1));
       })
       .catch((error) => console.log("이미지 업로드 에러", error));
