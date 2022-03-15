@@ -77,13 +77,15 @@ function Write(props) {
       >
         <Fade in={open}>
           <Box sx={style}>
-            {fileSelected ? (
+
+            { _user.is_login ?
+            fileSelected ? (
               <Grid>
                 <Grid
                   B_bottom="1px solid #dbdbdb"
                   is_flex
-                  min_width="648px"
-                  max_width="min(calc(100vw - 72px),1151px)"
+                  // min_width="648px"
+                  // max_width="min(calc(100vw - 72px),1151px)"
                   width="1151px"
                   justify_content="space-between"
                   height="42px"
@@ -165,8 +167,8 @@ function Write(props) {
                 <Grid
                   B_bottom="1px solid #dbdbdb"
                   is_flex
-                  min_width="348px"
-                  max_width="min(calc(100vw - 372px),855px)"
+                  // min_width="348px"
+                  // max_width="min(calc(100vw - 372px),855px)"
                   width="751px"
                   justify_content="space-between"
                   height="42px"
@@ -201,10 +203,10 @@ function Write(props) {
                   flex_direction="column"
                   justify_content="center"
                   align_items="center"
-                  min_width="348px"
-                  min_height="348px"
-                  max_width="min(calc(100vw - 372px),855px)"
-                  max_height="min(calc(100vw - 372px),855px)"
+                  // min_width="348px"
+                  // min_height="348px"
+                  // max_width="min(calc(100vw - 372px),855px)"
+                  // max_height="min(calc(100vw - 372px),855px)"
                   width="751px"
                   height="calc(100vmin - 219px)"
                   B_bottom_left_radius="15px"
@@ -217,6 +219,7 @@ function Write(props) {
                   </Text>
                   <Button
                     _onClick={() => {
+
                       fileInput.current.click();
                     }}
                     font_weight="600"
@@ -238,6 +241,13 @@ function Write(props) {
                   />
                 </Grid>
               </Grid>
+            ) : (
+              <Grid width="420px" height="220px">
+                <Text F_size="24px">홈트메이트를 즐기기 위해 로그인이 필요해요</Text>
+                <Text F_size="16px">로그인 후 더 재미있게 놀아볼까요?</Text>
+                <Button>취소하기</Button>
+                <Button>로그인하기</Button>
+              </Grid>
             )}
           </Box>
         </Fade>
@@ -251,11 +261,12 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "1200px",
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
   zIndex: 13000,
+  padding : 0,
+  border: '0px solid #000',
 };
 
 const TextArea = styled.textarea`

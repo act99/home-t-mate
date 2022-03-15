@@ -1,7 +1,6 @@
 import * as React from "react";
-// import { styled } from '@mui/material/styles';
-import Card from "@mui/material/Card";
-// import style from "styled-components";
+import { makeStyles } from "@mui/styles";
+
 
 import Cardheader from "../components/Cardheader";
 import LikeComment from "./LikeComment";
@@ -10,27 +9,26 @@ import CardContent from "@mui/material/CardContent";
 
 import "../App.css";
 
-import { Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import Text from "../elements/Text";
 
 import {useDispatch, useSelector} from "react-redux";
+import { color } from "@mui/system";
+// import  style  from "@mui/styles";
 
 export default function MainCard(props) {
-  // let navigate = useNavigate();
-
-  // const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
 
   const _user = useSelector(state=>state.userReducer);
   console.log('user확인용', _user);
+  const classes = storyCard();
 
   return (
     <div className="mainbox">
-      <Card sx={{ maxWidth: 620, margin: "auto" }}>
-        <Cardheader id={props.id} username={props.nickname} userImg={props.userImg}  />
+      <Card sx={{ maxWidth: 620, height:900, margin: "auto" }} className={classes.root}>
+        
+        <Cardheader id={props.id} username={props.nickname} userImg={props.userImg}/>
 
-        <Img postImg={props.postImg} size="600px" />
+        <Img postImg={props.postImg} size="620px" />
 
         <LikeComment id={props.id} modal={true} />
 
@@ -51,3 +49,11 @@ export default function MainCard(props) {
     </div>
   );
 }
+
+const storyCard = makeStyles({
+  root: {
+      borderRadius: 20,
+      boxShadow: '2px 5px 12px 6px rgba(240, 240, 240);',
+  },
+
+});

@@ -9,16 +9,18 @@ import Img from "./Img";
 import CommentBox from "./CommentBox";
 // import CardText from "./CardText";
 import {useDispatch, useSelector} from "react-redux";
+import { borderRadius } from "@mui/system";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 1200,
-  height: 740,
+  width: 1345,
+  height: 800,
   bgcolor: "background.paper",
   border: "none",
+  borderRadius: "20px",
   boxShadow: 24,
   p: 4,
   display: "flex",
@@ -36,11 +38,11 @@ export default function Detail(props) {
   return (
     <div>
       <Box sx={style}>
-        <div style={{ width: "800px", height: "450px" }}>
-          <Img postImg={thisPost.imgUrl} size="740px" />
+        <div style={{width:"800px"}}>
+          <Img postImg={thisPost.postImg} size="800px" border="20px"/>
         </div>
 
-        <Grid width="400px">
+        <Grid width="545px">
         {/* id={props.id} username={props.nickname} userImg={props.userImgUrl} */}
         <Cardheader id={thisPost.id} username={thisPost.nickname} userImg={thisPost.userImg}/>
 
@@ -50,7 +52,7 @@ export default function Detail(props) {
 
         {/* 댓글 구현예정 */}
 
-          <Grid position="absolute" bottom="0px" width="400px">
+          <Grid position="absolute" bottom="0px" width="545px">
             <hr></hr>
             <LikeComment modal={false} />
             <CommentBox />
