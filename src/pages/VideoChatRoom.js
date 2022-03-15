@@ -96,20 +96,9 @@ const VideoChatRoom = () => {
 
   React.useEffect(() => {
     created();
-    // apis
-    //   .joinRoom(roomId)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((error) => {});
-
     return () => {
       disconnected();
       history.replace("/");
-      // apis
-      //   .leaveRoom(roomId)
-      //   .then((res) => {})
-      //   .catch((error) => console.log(error));
     };
   }, []);
 
