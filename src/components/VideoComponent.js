@@ -42,6 +42,7 @@ const VideoWrap = styled.div`
   /* height: ${(props) => console.log(props)}; */
   position: relative;
   justify-content: center;
+  margin: 16px 4px;
   video {
     transition: 0.5s;
   }

@@ -32,9 +32,9 @@ const VideoChatRoom = () => {
   // ** params 로 받은 roomId 와 roomName
   const location = useLocation();
   const locationState = location.state;
-  const roomName = locationState.roomName;
-  const roomId = locationState.roomId;
-  console.log(roomName, roomId);
+  const { roomName, roomId, video, audio } = locationState;
+
+  console.log(roomName, roomId, video, audio);
 
   // ** SockJS 설정
   let options = {
@@ -77,8 +77,8 @@ const VideoChatRoom = () => {
           );
         },
         (error) => {
-          alert("방 인원이 꽉 찼습니다.");
-          history.replace("/");
+          // alert("방 인원이 꽉 찼습니다.");
+          // history.replace("/");
           console.log("서버연결 실패", error);
         }
       );
@@ -96,20 +96,9 @@ const VideoChatRoom = () => {
 
   React.useEffect(() => {
     created();
-    // apis
-    //   .joinRoom(roomId)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((error) => {});
-
     return () => {
       disconnected();
       history.replace("/");
-      // apis
-      //   .leaveRoom(roomId)
-      //   .then((res) => {})
-      //   .catch((error) => console.log(error));
     };
   }, []);
 
@@ -119,7 +108,12 @@ const VideoChatRoom = () => {
         <ContentsWrap>
           <VideoGroupWrap>
             <YoutubeVideo ws={ws} token={token} roomId={roomId} />
-            <EnterRoom roomId={roomId} nickname={nickname} />
+            <EnterRoom
+              roomId={roomId}
+              nickname={nickname}
+              video={video}
+              audio={audio}
+            />
           </VideoGroupWrap>
           <ChatContainer chattingRef={chattingRef} ws={ws} />
         </ContentsWrap>

@@ -31,5 +31,6 @@ const Nickname = styled.div`
     background-color: rgba(0, 0, 0, 0.5);
     font-weight: bold;
     color: white;
+    margin: 1%;
   }
 `;

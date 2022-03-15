@@ -54,9 +54,9 @@ const CheckVideo = () => {
   const handleEnter = () => {
     history.replace({
       pathname: `/livenow/${roomId}`,
-      state: { roomId: roomId, roomName: roomName },
+      state: { roomId: roomId, roomName: roomName, video: video, audio: audio },
     });
-    dispatch(videoActions.setVideo({ video: video, audio: audio }));
+    // dispatch(videoActions.setVideo({ video: video, audio: audio }));
   };
 
   React.useEffect(() => {
