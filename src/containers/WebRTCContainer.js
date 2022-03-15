@@ -7,13 +7,13 @@ import { useDispatch } from "react-redux";
 import { actionCreators as sessionAcions } from "../redux/modules/sessionReducer";
 
 const WebRTCContainer = (props) => {
-  const { publisher, subscribers, leaveSession, session } = props;
+  const { publisher, subscribers, leaveSession, session, OV } = props;
   console.log(subscribers);
   const dispatch = useDispatch();
+  // ** windowSize
   // ** leaveSession 전달용
   React.useEffect(() => {
     dispatch(sessionAcions.leaveSessionFunc(leaveSession));
-
     return () => {};
   }, []);
 
@@ -56,19 +56,24 @@ const WebRTCContainer = (props) => {
 
 const SessionWrap = styled.div`
   width: 100%;
-  height: auto;
+  height: 100%;
 `;
 
 const FiveVideoList = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  justify-items: center;
   margin-top: 50px;
+  width: 100%;
+  height: 100%;
+
   video {
     position: relative;
     float: left;
     cursor: pointer;
     height: auto;
-    min-height: 230px;
+    min-height: 250px;
     margin-left: 4px;
   }
 `;

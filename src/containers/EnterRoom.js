@@ -13,6 +13,7 @@ class VideoContainer extends Component {
     super(props);
 
     this.state = {
+      OV: undefined,
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       session: undefined,
@@ -83,6 +84,7 @@ class VideoContainer extends Component {
 
     this.setState(
       {
+        OV: this.OV,
         mySessionId: `Session${this.props.roomId}`,
         myUserName: `${this.props.nickname}`,
         session: this.OV.initSession(),
@@ -119,8 +121,8 @@ class VideoContainer extends Component {
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
-                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: true, // Whether you want to start publishing with your video enabled or not
+                publishAudio: this.props.audio, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: this.props.video, // Whether you want to start publishing with your video enabled or not
                 resolution: "640x480", // The resolution of your video "640x480", "1280x720"
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
@@ -216,6 +218,7 @@ class VideoContainer extends Component {
             subscribers={this.state.subscribers}
             leaveSession={this.leaveSession}
             session={this.state.session}
+            OV={this.state.OV}
           />
         ) : null}
       </BodyWrap>

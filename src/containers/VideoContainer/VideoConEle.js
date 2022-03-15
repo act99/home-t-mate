@@ -37,6 +37,11 @@ const StreamContainer = styled.div`
 const VideoListWrap = styled.div`
   width: 100%;
   height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  min-height: 260px;
   /* height: 200px; */
   img {
     position: relative;
@@ -64,13 +69,14 @@ const VideoListWrap = styled.div`
 const VideoList = styled.div`
   display: flex;
   flex-direction: row;
+
   video {
+    border-radius: 20px;
     position: relative;
     float: left;
     cursor: pointer;
     height: auto;
     max-height: 225px;
-    margin-left: 4px;
   }
 `;
 

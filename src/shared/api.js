@@ -32,6 +32,8 @@ export const apis = {
       workOut: false,
       roomImg: roomImg,
     }),
+  workOutRoom: (roomId, workOut) =>
+    api.put(`/chat/room/workout/${roomId}`, { workOut: workOut }),
   enterRoom: (roomId, password) =>
     api.post(`/chat/room/enter/${roomId}`, { password: password }),
   leaveRoom: (roomId) => api.get(`/chat/room/quit/${roomId}`),
