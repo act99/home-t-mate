@@ -4,12 +4,10 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Image, Grid } from "../elements";
-{
-  /* <Img postImg={props.imgUrl} setHeight={"600px"} /> */
-}
+
 function Img(props) {
   console.log("write props확인용", props);
-  if (props.postImg) {
+  if (props.postsImg) {
     return (
       <Carousel
         showThumbs={false}
@@ -17,7 +15,7 @@ function Img(props) {
         height={props.size}
         width={props.size}
       >
-        {props.postImg.map((item, i) => (
+        {props.postsImg.map((item, i) => (
           <Grid key={i}>
             <Image
               src={item}

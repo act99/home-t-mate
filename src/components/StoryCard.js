@@ -21,6 +21,8 @@ export default function MainCard(props) {
   const _user = useSelector(state=>state.userReducer);
   console.log('user확인용', _user);
   const classes = storyCard();
+  const _post = useSelector(state=>state.postReducer);
+  console.log('post확인용', _post);
 
   return (
     <div className="mainbox">
@@ -28,7 +30,7 @@ export default function MainCard(props) {
         
         <Cardheader id={props.id} username={props.nickname} userImg={props.userImg}/>
 
-        <Img postImg={props.postImg} size="620px" />
+        <Img postsImg={props.postsImg} size="620px" />
 
         <LikeComment id={props.id} modal={true} />
 

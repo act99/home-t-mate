@@ -39,7 +39,7 @@ export default function Detail(props) {
     <div>
       <Box sx={style}>
         <div style={{width:"800px"}}>
-          <Img postImg={thisPost.postImg} size="800px" border="20px"/>
+          <Img postsImg={thisPost.postsImg} size="800px" border="20px"/>
         </div>
 
         <Grid width="545px">

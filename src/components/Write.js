@@ -37,7 +37,7 @@ function Write(props) {
     setTempFile([...tempFile, files]);
 
     for (let i = 0; i < files.length; i++) {
-      formData.append("imgUrl", files[i]);
+      formData.append("imageUrl", files[i]);
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.addEventListener("load", function () {
@@ -143,7 +143,7 @@ function Write(props) {
                   BG_c="white"
                 >
                   <Img
-                    postImg={preview}
+                    postsImg={preview}
                     size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
                   ></Img>
                   <Grid is_flex flex_direction="column" width="100%">
