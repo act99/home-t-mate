@@ -54,7 +54,7 @@ function Write(props) {
   const addPost = () => {
     const postData = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {
-      postData.append("imgUrl", tempFile[0][i]);
+      postData.append("imageUrl", tempFile[0][i]);
       console.log(tempFile[0][i]);
       console.log(postData);
     }

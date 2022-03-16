@@ -89,18 +89,6 @@ const addPostDB = (postData) => {
       .addPost(postData)
       .then((res) => {
         alert("게시물 작성 성공!");
-        // window.location.reload();
-
-        // console.log(content);
-        // apis
-        //   .addPost(content)
-        //   .then((res) => {
-        //     window.alert("게시물 작성 성공!");
-        //     window.location.reload();
-        //   })
-        //   .catch((error) => {
-        //     window.alert("게시물 작성 실패!");
-        //   });
       })
       .catch((error) => {
         alert("게시물 작성 실패!");
@@ -133,6 +121,9 @@ const addPostDB = (postData) => {
 //       });
 //   };
 // };
+
+
+//액션에 필요한 추가 데이터는 payload라는 이름을 사용함
 
 export default handleActions(
   {
