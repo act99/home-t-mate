@@ -65,7 +65,8 @@ const ChatContainer = (props) => {
 
   React.useEffect(
     () => {
-      setSendMessage({ ...sendMessage, roomId: roomId, sender: username });
+      console.log(nickname);
+      setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
       // chattingRef.current.scrollIntoView({ behavior: "smooth" });
       return () => {};
     },
@@ -78,14 +79,14 @@ const ChatContainer = (props) => {
     <Wrap>
       <MemberTitle>
         <h3>지금 나와 함께 홈트하는 친구들</h3>
-        <Divider />
       </MemberTitle>
+      <Divider />
       <List
         sx={{
           width: "100%",
           overflow: "auto",
           bgcolor: "background.paper",
-          height: "25vh",
+          height: "150px",
         }}
       >
         <ListItem>
@@ -190,18 +191,18 @@ const ChatContainer = (props) => {
 };
 
 const Wrap = styled.div`
-  width: 320px;
-  height: 800px;
-  background-color: aliceblue;
+  width: 335px;
+  height: 100%;
+  background-color: #ffffff;
 `;
 
 const MemberTitle = styled.div`
-  width: 320px;
+  width: 335px;
   height: 52px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: aquamarine;
+  background-color: #f9f9f9;
   h3 {
     font-size: medium;
     margin-left: 1vw;
@@ -223,7 +224,7 @@ const ChatTitle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: aquamarine;
+  background-color: #f9f9f9;
   h3 {
     font-size: medium;
     margin-left: 1vw;

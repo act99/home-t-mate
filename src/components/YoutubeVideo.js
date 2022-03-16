@@ -131,10 +131,16 @@ const YoutubeVideo = (props) => {
         />
       ) : (
         <Empty width={fixedWidth} height={fixedHeight}>
-          텅 비었습니다.
+          <img
+            alt="yotubeUrl"
+            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
+          />
+          <YoutubeEmptyText>유튜브 URL을 넣어주세요 :)</YoutubeEmptyText>
         </Empty>
       )}
       <FormStyle>
+        <TitleText>제목입니다.</TitleText>
+        <ContentText>본문입니다.본문입니다.본문입니다.본문입니다.</ContentText>
         <form onSubmit={handleUrlSubmit}>
           <UrlInput
             type="text"
@@ -152,12 +158,16 @@ const YoutubeVideo = (props) => {
 const Empty = styled.div`
   width: 1280px;
   height: 720px;
-  background-color: black;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const FormStyle = styled.div`
   width: 1280px;
-  height: 180px;
+  height: 140px;
   background-color: brown;
   display: flex;
   flex-direction: column;
@@ -168,6 +178,7 @@ const FormStyle = styled.div`
 const UrlInput = styled.input`
   width: 500px;
   height: 30px;
+  margin-left: 30px;
 `;
 
 const Wrap = styled.div`
@@ -177,6 +188,25 @@ const Wrap = styled.div`
   margin-left: 4px; */
   /* width: 80vw;
   height: 45vw; */
+`;
+
+const TitleText = styled.h3`
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0px;
+  margin-bottom: 3px;
+  margin-left: 30px;
+`;
+const ContentText = styled.h5`
+  font-size: 15px;
+  margin: 0px;
+  margin-bottom: 15px;
+  margin-left: 30px;
+`;
+
+const YoutubeEmptyText = styled.h3`
+  font-size: 30px;
+  font-weight: bold;
 `;
 
 export default YoutubeVideo;

@@ -38,8 +38,8 @@ const NicknameTag = styled.p`
 `;
 
 const VideoWrap = styled.div`
-  width: 228px;
-  height: 171px;
+  width: 220px;
+  height: 165px;
   position: relative;
   justify-content: center;
   margin: 4px auto;

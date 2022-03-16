@@ -101,15 +101,15 @@ const VideoChatRoom = () => {
     });
     // created();
     return () => {
-      // disconnected();
-      // history.replace("/");
       apis
         .leaveRoom(roomId)
-        .then((res) => {
-          disconnected();
-          history.replace("/");
-        })
+        .then((res) => {})
         .catch((error) => console.log(error));
+      disconnected();
+      history.replace("/");
+      history.go(0);
+      // disconnected();
+      // history.replace("/");
     };
   }, []);
 
@@ -120,7 +120,7 @@ const VideoChatRoom = () => {
   return (
     <>
       <Wrap>
-        <ChatNav />
+        <ChatNav roomName={roomName} />
         <WrapContents>
           <YoutubeWrap>
             <YoutubeVideo ws={ws} token={token} roomId={roomId} />
@@ -140,8 +140,8 @@ const VideoChatRoom = () => {
 
 const Wrap = styled.div`
   width: 1920px;
-  height: 969px;
-  background-color: aliceblue;
+  height: 937px;
+  background-color: #f9f9f9;
 `;
 
 const WrapContents = styled.div`

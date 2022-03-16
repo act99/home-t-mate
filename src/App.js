@@ -57,12 +57,10 @@ const App = () => {
                 component={KakaoOauth}
               />
               <Route path="/story" exact component={Story} />
-              {/* 채팅방 입장 */}
               <Route path="/livenow" exact component={LiveNow} />
-
-              {/* <Route path="*" exact component={NotFound} /> */}
             </WrapMedium>
           </WrapWide>
+          {/* <Route path="*" exact component={NotFound} /> */}
         </Switch>
       </ConnectedRouter>
     </>

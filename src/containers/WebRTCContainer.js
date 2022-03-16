@@ -35,11 +35,12 @@ const WebRTCContainer = (props) => {
 };
 
 const SessionWrap = styled.div`
-  width: 320px;
+  width: 300px;
   height: 100%;
-  background-color: cyan;
+  background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
+  border-left: solid 1px #e0e0e0;
 `;
 
 export default WebRTCContainer;

@@ -53,7 +53,7 @@ const CheckVideo = () => {
   };
 
   const handleEnter = () => {
-    history.replace({
+    history.push({
       pathname: `/livenow/chat/${roomId}`,
       state: {
         roomId: roomId,
@@ -84,13 +84,13 @@ const CheckVideo = () => {
     //   .catch((error) => setFullPeople(true));
 
     return () => {
-      console.log("연결종료", roomId);
       apis
         .leaveRoom(roomId)
-        .then((res) => {})
+        .then((res) => {
+          history.go(0);
+        })
         .catch((error) => console.log(error));
       // ** 페이지에서 나갈 시 비디오 죽이기
-      history.go(0);
     };
   }, []);
 

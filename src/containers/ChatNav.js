@@ -6,7 +6,8 @@ import { useHistory } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 
-const ChatNav = () => {
+const ChatNav = (props) => {
+  const { roomName } = props;
   const session = useSelector((state) => state.sessionReducer);
   const leaveSession = session.leaveSession;
   const mySessionId = session.mySessionId;
@@ -21,10 +22,10 @@ const ChatNav = () => {
     <>
       <NavBar>
         <TitleWrap>
-          {mySessionId === null ? (
+          {roomName === null || roomName === undefined ? (
             <div></div>
           ) : (
-            <TitleText>{mySessionId}</TitleText>
+            <TitleText>{roomName}</TitleText>
           )}
           <PersonOutlineIcon sx={{ fontSize: 28, ml: 3, mr: 1 }} />
           <MemberText>(0/5)</MemberText>
@@ -44,7 +45,7 @@ const NavBar = styled.div`
   flex-direction: row;
   justify-content: space-between;
   justify-items: center;
-  background-color: beige;
+  background-color: #ffffff;
 `;
 
 const TitleText = styled.h3`
