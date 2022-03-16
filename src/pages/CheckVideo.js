@@ -124,7 +124,7 @@ const CheckVideo = () => {
   if (loading) {
     return (
       <Wrap>
-        <img src={LoadingImage} width="300px" />
+        <img alt="" src={LoadingImage} width="300px" />
         <Text>잠시만 기다려주세요.</Text>
         <LinearProgress color="success" sx={{ width: "300px", mt: 5 }} />
       </Wrap>
@@ -133,66 +133,49 @@ const CheckVideo = () => {
   return (
     <>
       <Wrap>
-        <MainWrap height={height}>
-          <VideoTitle>
-            <h3>
-              홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인해주세요.
-            </h3>
-          </VideoTitle>
-          <VideoWrap>
-            <video
-              ref={videoRef}
-              autoPlay
-              style={Styles.Video}
-              muted={!audio}
-            />
-            <div>
-              <ButtonGroup
-                disableElevation
-                variant="contained"
-                sx={{
-                  height: "100px",
-                }}
-              >
-                <IconButton onClick={videoOnOff}>
-                  {video ? (
-                    <VideocamIcon sx={{ fontSize: "40px", color: "black" }} />
-                  ) : (
-                    <VideocamOffIcon sx={{ fontSize: "40px", color: "red" }} />
-                  )}
-                </IconButton>
-                <IconButton onClick={audioOnOff}>
-                  {audio ? (
-                    <MicIcon sx={{ fontSize: "40px", color: "black" }} />
-                  ) : (
-                    <MicOffIcon sx={{ fontSize: "40px", color: "red" }} />
-                  )}
-                </IconButton>
-              </ButtonGroup>
-            </div>
-          </VideoWrap>
-          <EnterButton>
-            <Button
-              variant="outlined"
-              sx={{ height: 50, width: 300, display: "block", my: "auto" }}
-              onClick={handleEnter}
+        <VideoTitle>
+          <h3>홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인해주세요.</h3>
+        </VideoTitle>
+        <VideoWrap>
+          <video ref={videoRef} autoPlay style={Styles.Video} muted={!audio} />
+          <div>
+            <ButtonGroup
+              disableElevation
+              variant="contained"
+              sx={{
+                height: "100px",
+              }}
             >
-              입장하기
-            </Button>
-          </EnterButton>
-        </MainWrap>
+              <IconButton onClick={videoOnOff}>
+                {video ? (
+                  <VideocamIcon sx={{ fontSize: "40px", color: "black" }} />
+                ) : (
+                  <VideocamOffIcon sx={{ fontSize: "40px", color: "red" }} />
+                )}
+              </IconButton>
+              <IconButton onClick={audioOnOff}>
+                {audio ? (
+                  <MicIcon sx={{ fontSize: "40px", color: "black" }} />
+                ) : (
+                  <MicOffIcon sx={{ fontSize: "40px", color: "red" }} />
+                )}
+              </IconButton>
+            </ButtonGroup>
+          </div>
+        </VideoWrap>
+        <EnterButton>
+          <Button
+            variant="outlined"
+            sx={{ height: 50, width: 300, display: "block", my: "auto" }}
+            onClick={handleEnter}
+          >
+            입장하기
+          </Button>
+        </EnterButton>
       </Wrap>
     </>
   );
 };
-
-const MainWrap = styled.div`
-  width: 100%;
-  height: ${(props) => props.height * 0.8}px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-`;
 
 const VideoTitle = styled.div`
   width: 100%;
@@ -211,6 +194,7 @@ const VideoTitle = styled.div`
 const VideoWrap = styled.div`
   width: 100%;
   height: auto;
+  max-height: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -218,12 +202,12 @@ const VideoWrap = styled.div`
   background-color: white;
   video {
     width: 100%;
-    max-width: 1000px;
+    max-width: 600px;
     height: auto;
   }
   div {
     width: 100%;
-    max-width: 1000px;
+    max-width: 600px;
     height: 100px;
     background-color: white;
     display: flex;
@@ -238,7 +222,9 @@ const EnterButton = styled.div`
   max-width: 1000px;
   height: 100px;
   background-color: white;
-  margin: auto;
+  /* margin: auto; */
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   justify-content: center;
   justify-items: center;

@@ -37,6 +37,7 @@ export const apis = {
   enterRoom: (roomId, password) =>
     api.post(`/chat/room/enter/${roomId}`, { password: password }),
   leaveRoom: (roomId) => api.delete(`/chat/room/quit/${roomId}`),
+  deleteRoom: (roomId) => api.delete(`/room/delete/${roomId}`),
   // ** 포스트
   getPost: () => api.get(`/api/posts`),
   addPost: (contents) => api.post(`/api/posts`, contents),

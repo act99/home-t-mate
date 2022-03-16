@@ -24,8 +24,8 @@ const YoutubeVideo = (props) => {
 
   // ** 윈도우 사이즈 규격
   const size = useWindowSize();
-  const fixedWidth = `${size.width / 1.7}`;
-  const fixedHeight = `${((size.width / 1.7) * 9) / 16}`;
+  const width = size.width;
+  const height = size.height;
 
   // ** 유튜브 url 여부 확인
   function youtube_parser(url) {
@@ -116,22 +116,27 @@ const YoutubeVideo = (props) => {
     });
     return () => {};
   }, [on, url]);
-
+  console.log(((height - 200) * 16) / 9);
   return (
-    <Wrap>
+    <>
       {isYoutube ? (
         <ReactPlayer
           url={url}
           controls
-          width={"1280px"}
-          height={"720px"}
+          width={"100%"}
+          height={`${width * 0.34}px`}
+          // height={"auto"}
+          // width={`${width * 0.7}px`}
+          // height={`${width * 0.525}px`}
+          // height={`${height - 200}px`}
           playing={on}
           onPlay={handlePlay}
           onPause={handlePause}
         />
       ) : (
-        <Empty width={fixedWidth} height={fixedHeight}>
+        <Empty width={width} height={height}>
           <img
+            width={width * 0.2}
             alt="yotubeUrl"
             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
           />
@@ -151,13 +156,16 @@ const YoutubeVideo = (props) => {
           <button type="submit">유튜브 url 제출</button>
         </form>
       </FormStyle>
-    </Wrap>
+    </>
   );
 };
 
+//** 유튜브 안넣었을 때 */
+
 const Empty = styled.div`
-  width: 1280px;
-  height: 720px;
+  width: 100%;
+  height: ${(props) => props.height - 200}px;
+  background-color: aqua;
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
@@ -165,10 +173,19 @@ const Empty = styled.div`
   justify-content: center;
 `;
 
+const YoutubeEmptyText = styled.h3`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+//** 유튜브 안넣었을 때 */
+
+// ** 유튜브 아래
+
 const FormStyle = styled.div`
-  width: 1280px;
-  height: 140px;
-  background-color: brown;
+  width: 100%;
+  height: 144px;
+  background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -179,15 +196,6 @@ const UrlInput = styled.input`
   width: 500px;
   height: 30px;
   margin-left: 30px;
-`;
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* margin-top: 4px;
-  margin-left: 4px; */
-  /* width: 80vw;
-  height: 45vw; */
 `;
 
 const TitleText = styled.h3`
@@ -202,11 +210,6 @@ const ContentText = styled.h5`
   margin: 0px;
   margin-bottom: 15px;
   margin-left: 30px;
-`;
-
-const YoutubeEmptyText = styled.h3`
-  font-size: 30px;
-  font-weight: bold;
 `;
 
 export default YoutubeVideo;
