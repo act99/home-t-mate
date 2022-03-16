@@ -53,16 +53,22 @@ const CheckVideo = () => {
   };
 
   const handleEnter = () => {
-    history.push({
-      pathname: `/livenow/chat/${roomId}`,
-      state: {
-        roomId: roomId,
-        roomName: roomName,
-        video: video,
-        audio: audio,
-        password: password,
-      },
-    });
+    apis
+      .leaveRoom(roomId)
+      .then((res) => {
+        history.push({
+          pathname: `/livenow/chat/${roomId}`,
+          state: {
+            roomId: roomId,
+            roomName: roomName,
+            video: video,
+            audio: audio,
+            password: password,
+          },
+        });
+      })
+      .catch((error) => console.log(error));
+
     // dispatch(videoActions.setVideo({ video: video, audio: audio }));
   };
 

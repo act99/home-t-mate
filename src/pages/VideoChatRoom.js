@@ -96,9 +96,12 @@ const VideoChatRoom = () => {
   };
 
   React.useEffect(() => {
-    apis.enterRoom(roomId, password).then((res) => {
-      created();
-    });
+    apis
+      .enterRoom(roomId, password)
+      .then((res) => {
+        created();
+      })
+      .catch((error) => console.log(error.response.message));
     // created();
     return () => {
       apis
@@ -120,7 +123,7 @@ const VideoChatRoom = () => {
   return (
     <>
       <Wrap>
-        <ChatNav roomName={roomName} />
+        <ChatNav roomName={roomName} roomId={roomId} />
         <WrapContents>
           <YoutubeWrap>
             <YoutubeVideo ws={ws} token={token} roomId={roomId} />

@@ -5,14 +5,19 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { apis } from "../shared/api";
 
 const ChatNav = (props) => {
-  const { roomName } = props;
+  const { roomName, roomId } = props;
   const session = useSelector((state) => state.sessionReducer);
   const leaveSession = session.leaveSession;
   const mySessionId = session.mySessionId;
   const history = useHistory();
   const handleOut = () => {
+    apis
+      .leaveRoom(roomId)
+      .then((res) => {})
+      .catch((error) => console.log(error));
     console.log("out");
     history.replace("/");
     leaveSession();

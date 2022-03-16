@@ -48,8 +48,8 @@ const RoomCardModal = (props) => {
         });
       })
       .catch((error) => {
-        alert("잘못된 비밀번호입니다.");
-        console.log(error);
+        alert(error.response.data.message);
+        console.log(error.response.data);
       });
   };
 
