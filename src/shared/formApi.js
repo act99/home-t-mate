@@ -19,5 +19,6 @@ api.interceptors.request.use(function (config) {
 
 export const imageApis = {
   // ** 이미지 업로드
-  postImage: (formData) => api.post(`api/image`, formData),
+  postImage: (formData, content) => api.post(`api/image`, formData,content),
+  addPost: (postData) => api.post(`api/image`, postData),
 };

@@ -52,14 +52,16 @@ function Write(props) {
   };
 
   const addPost = () => {
-    const imgForm = new FormData();
+    const postData = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {
-      imgForm.append("file", tempFile[0][i]);
+      postData.append("imgUrl", tempFile[0][i]);
       console.log(tempFile[0][i]);
-      console.log(imgForm);
+      console.log(postData);
     }
-    const content = contents.current.value;
-    dispatch(postActions.addPostDB(content, imgForm));
+    postData.append("content", contents.current.value);
+
+    // const content = contents.current.value;
+    dispatch(postActions.addPostDB(postData));
   };
 
   return (
