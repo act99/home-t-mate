@@ -87,37 +87,38 @@ const NavBar = (props) => {
       },
     },
   });
-  if (pathname.includes("checkvideo")) {
+
+  if (pathname.includes("checkvideo") || pathname.includes("/livenow/chat")) {
     return <div> </div>;
   }
-  if (pathname.includes("livenow/")) {
-    return (
-      <ThemeProvider theme={theme}>
-        <AppBar
-          position="static"
-          sx={{
-            backgroundColor: "black",
-            width: `${width}px`,
-            height: `${height * 0.065}px`,
-          }}
-        >
-          <Container maxWidth="xl">
-            <Toolbar disableGutters>
-              <Typography variant="h6">{mySessionId}</Typography>
-              <PersonOutlineIcon sx={{ ml: 2 }} />
-              <Typography>( {chatNum + 1} / 5 )</Typography>
-              <Box
-                sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-              ></Box>
-              <IconButton color="inherit" onClick={handleOut}>
-                <LogoutIcon sx={{ fontSize: 35 }} />
-              </IconButton>
-            </Toolbar>
-          </Container>
-        </AppBar>
-      </ThemeProvider>
-    );
-  }
+  // if (pathname.includes("livenow/")) {
+  //   return (
+  //     <ThemeProvider theme={theme}>
+  //       <AppBar
+  //         position="static"
+  //         sx={{
+  //           backgroundColor: "black",
+  //           width: `${width}px`,
+  //           height: `${height * 0.065}px`,
+  //         }}
+  //       >
+  //         <Container maxWidth="xl">
+  //           <Toolbar disableGutters>
+  //             <Typography variant="h6">{mySessionId}</Typography>
+  //             <PersonOutlineIcon sx={{ ml: 2 }} />
+  //             <Typography>( {chatNum + 1} / 5 )</Typography>
+  //             <Box
+  //               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+  //             ></Box>
+  //             <IconButton color="inherit" onClick={handleOut}>
+  //               <LogoutIcon sx={{ fontSize: 35 }} />
+  //             </IconButton>
+  //           </Toolbar>
+  //         </Container>
+  //       </AppBar>
+  //     </ThemeProvider>
+  //   );
+  // }
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static" sx={{ backgroundColor: "white" }}>

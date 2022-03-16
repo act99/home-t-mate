@@ -14,68 +14,33 @@ const WebRTCContainer = (props) => {
   // ** leaveSession 전달용
   React.useEffect(() => {
     dispatch(sessionAcions.leaveSessionFunc(leaveSession));
-    return () => {};
+    dispatch(sessionAcions.bringMySessionId(leaveSession));
+    return () => {
+      leaveSession();
+    };
   }, []);
 
   return (
     <>
       <SessionWrap id="session">
-        <VideoListWrap id="video-container">
-          {subscribers.length < 5 ? (
-            <VideoList>
-              {publisher !== undefined ? (
-                <div>
-                  <UserVideoComponent streamManager={publisher} />
-                </div>
-              ) : null}
-              {subscribers.map((sub, i) => (
-                <div key={i}>
-                  <UserVideoComponent streamManager={sub} />
-                </div>
-              ))}
-            </VideoList>
-          ) : (
-            <FiveVideoList>
-              {publisher !== undefined ? (
-                <div>
-                  <UserVideoComponent streamManager={publisher} />
-                </div>
-              ) : null}
-              {subscribers.map((sub, i) => (
-                <div key={i}>
-                  <UserVideoComponent streamManager={sub} />
-                </div>
-              ))}
-            </FiveVideoList>
-          )}
-        </VideoListWrap>
+        {publisher !== undefined ? (
+          <UserVideoComponent streamManager={publisher} />
+        ) : null}
+        {subscribers.map((sub, i) => (
+          <UserVideoComponent streamManager={sub} key={i} />
+        ))}
       </SessionWrap>
     </>
   );
 };
 
 const SessionWrap = styled.div`
-  width: 100%;
+  width: 300px;
   height: 100%;
-`;
-
-const FiveVideoList = styled.div`
+  background-color: #f9f9f9;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  justify-items: center;
-  margin-top: 50px;
-  width: 100%;
-  height: 100%;
-
-  video {
-    position: relative;
-    float: left;
-    cursor: pointer;
-    height: auto;
-    min-height: 250px;
-    margin-left: 4px;
-  }
+  flex-direction: column;
+  border-left: solid 1px #e0e0e0;
 `;
 
 export default WebRTCContainer;

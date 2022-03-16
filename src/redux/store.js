@@ -44,6 +44,7 @@ const persistConfig = {
     "roomReducer",
     "router",
     "sessionReducer",
+    // "userReducer",
   ],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

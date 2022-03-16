@@ -172,6 +172,7 @@ class VideoContainer extends Component {
 
     return (
       <BodyWrap className="container">
+        <></>
         {this.state.session === undefined ? (
           <div id="join">
             <div id="join-dialog" className="jumbotron vertical-center">
@@ -219,6 +220,7 @@ class VideoContainer extends Component {
             leaveSession={this.leaveSession}
             session={this.state.session}
             OV={this.state.OV}
+            mySessionId={this.state.mySessionId}
           />
         ) : null}
       </BodyWrap>

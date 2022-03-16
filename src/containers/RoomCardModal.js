@@ -40,7 +40,11 @@ const RoomCardModal = (props) => {
       .then((res) => {
         history.push({
           pathname: `/checkvideo`,
-          state: { roomId: roomId, roomName: roomName },
+          state: {
+            roomId: roomId,
+            roomName: roomName,
+            password: passwordRef.current.value,
+          },
         });
       })
       .catch((error) => {

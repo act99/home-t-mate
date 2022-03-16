@@ -65,8 +65,9 @@ const ChatContainer = (props) => {
 
   React.useEffect(
     () => {
-      setSendMessage({ ...sendMessage, roomId: roomId, sender: username });
-      chattingRef.current.scrollIntoView({ behavior: "smooth" });
+      console.log(nickname);
+      setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
+      // chattingRef.current.scrollIntoView({ behavior: "smooth" });
       return () => {};
     },
     []
@@ -78,14 +79,14 @@ const ChatContainer = (props) => {
     <Wrap>
       <MemberTitle>
         <h3>지금 나와 함께 홈트하는 친구들</h3>
-        <Divider />
       </MemberTitle>
+      <Divider />
       <List
         sx={{
           width: "100%",
           overflow: "auto",
           bgcolor: "background.paper",
-          height: "25vh",
+          height: "150px",
         }}
       >
         <ListItem>
@@ -123,41 +124,6 @@ const ChatContainer = (props) => {
           </ButtonGroup>
         </ListItem>
       </List>
-      {/* <MemberWrap>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyItems: "flex-start",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-            alignContent: "flex-start",
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              height: "5vh",
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <Avatar
-              sx={{ my: "auto", width: "4vh", height: "4vh", ml: 1 }}
-              alt="Remy Sharp"
-              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
-            />
-            <Typography
-              variant="h6"
-              gutterBottom
-              component="div"
-              sx={{ my: "auto", mx: 1, fontSize: "2vh" }}
-            >
-              아이유
-            </Typography>
-          </Box>
-        </Box>
-      </MemberWrap> */}
       <ChatTitle>
         <h3>친구들과 채팅타임</h3>
       </ChatTitle>
@@ -199,7 +165,7 @@ const ChatContainer = (props) => {
       </List>
       <Divider />
       <Grid container style={{ padding: "10px" }}>
-        <Grid item xs={11}>
+        <Grid item xs={10}>
           <TextField
             autoComplete="off"
             onKeyDown={onEnterPress}
@@ -225,18 +191,18 @@ const ChatContainer = (props) => {
 };
 
 const Wrap = styled.div`
-  width: 20vw;
-  height: 93vh;
-  background-color: aliceblue;
+  width: 335px;
+  height: 100%;
+  background-color: #ffffff;
 `;
 
 const MemberTitle = styled.div`
-  width: 100%;
-  height: 5vh;
+  width: 335px;
+  height: 52px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: aquamarine;
+  background-color: #f9f9f9;
   h3 {
     font-size: medium;
     margin-left: 1vw;
@@ -244,7 +210,7 @@ const MemberTitle = styled.div`
 `;
 
 const MemberWrap = styled.div`
-  width: 100%;
+  width: 320px;
   height: 28vh;
   background-color: aliceblue;
   display: flex;
@@ -258,7 +224,7 @@ const ChatTitle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: aquamarine;
+  background-color: #f9f9f9;
   h3 {
     font-size: medium;
     margin-left: 1vw;

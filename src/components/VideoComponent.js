@@ -8,44 +8,47 @@ import { ButtonGroup, IconButton } from "@mui/material";
 
 const VideoComponent = (props) => {
   const videoRef = React.useRef();
+  const { streamManager, nickname } = props;
+
   React.useEffect(() => {
-    if (props && !!videoRef) {
-      props.streamManager.addVideoElement(videoRef.current);
+    if (streamManager && !!videoRef) {
+      streamManager.addVideoElement(videoRef.current);
     }
     console.log(videoRef.current.style);
-    // videoRef.current.style.height = "270px";
-    // videoRef.current.style.width = "480px";
     return () => {};
-  }, [props]);
+  }, [streamManager, nickname]);
 
   return (
     <>
       <VideoWrap>
-        <div>
-          <ButtonGroup sx={{ mt: 15 }}>
-            <IconButton>
-              <VideocamIcon sx={{ fontSize: 30, color: "white" }} />
-            </IconButton>
-            <IconButton>
-              <MicIcon sx={{ fontSize: 30, color: "white" }} />
-            </IconButton>
-          </ButtonGroup>
-        </div>
+        <NicknameTag>
+          {nickname.length > 7 ? nickname.slice(0, 7) + "..." : nickname}
+        </NicknameTag>
         <video autoPlay={true} ref={videoRef} />
       </VideoWrap>
     </>
   );
 };
 
+const NicknameTag = styled.p`
+  color: white;
+  background-color: rgb(0, 0, 0, 0.5);
+  position: absolute;
+  left: 25%;
+`;
+
 const VideoWrap = styled.div`
-  width: 100%;
-  /* height: ${(props) => console.log(props)}; */
+  width: 220px;
+  height: 165px;
   position: relative;
   justify-content: center;
-  margin: 16px 4px;
+  margin: 4px auto;
+
   video {
     transition: 0.5s;
+    border-radius: 12px;
   }
+
   div {
     display: none !important;
     transition: 0.5s;
@@ -65,8 +68,8 @@ const VideoWrap = styled.div`
       z-index: 1;
       flex-direction: row;
       justify-content: center;
-      /* flex-direction: "row"; */
-      /* background-color: green; */
+      flex-direction: "row";
+      background-color: green;
     }
   }
 `;
