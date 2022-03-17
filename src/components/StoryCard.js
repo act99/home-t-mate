@@ -18,9 +18,12 @@ import { color } from "@mui/system";
 
 export default function MainCard(props) {
 
-  const _user = useSelector(state=>state.userReducer);
+  const _user = useSelector((state) => state.userReducer.user);
+  const _post = useSelector((state) => state.postReducer.list);
   console.log('user확인용', _user);
+  console.log('post확인용', _post);
   const classes = storyCard();
+
 
   return (
     <div className="mainbox">
