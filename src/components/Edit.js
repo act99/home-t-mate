@@ -12,6 +12,7 @@ import { history } from "../redux/store";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
+import { filterEventStoreDefs } from "@fullcalendar/react";
 
 function Edit(props) {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function Edit(props) {
   const _user = useSelector((state) => state.userReducer.user);
 
   let tempData = [];
-  const formData = new FormData();
+  const formData = [];
 
   const selectFile = (e) => {
     console.log("e", e);
@@ -37,7 +38,8 @@ function Edit(props) {
     setTempFile([...tempFile, files]);
 
     for (let i = 0; i < files.length; i++) {
-      formData.append("imageUrl", files[i]);
+      formData.push("imageUrl", files[i]);
+      console.log('formdate확인용',files[i]);
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.addEventListener("load", function () {
@@ -152,7 +154,7 @@ function Edit(props) {
                   onChange={selectFile}
                   type="file"
                   multiple
-                  style={{ display: "none" }}
+                //   style={{ display: "none" }}
                 />
                 <Img
                   _onClick={() => {
