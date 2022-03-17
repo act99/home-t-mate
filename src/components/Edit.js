@@ -53,7 +53,6 @@ function Edit(props) {
       });
     }
   };
-  예진님 여기입니다 id 추가시켜주시면 됩니다.
   const editPost = () => {
     const changeImage = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {

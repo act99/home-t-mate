@@ -53,7 +53,6 @@ const getPostDB = () => {
   };
 };
 
-여기 디스패치만 고쳐주시면 됩니다.
 const editPostDB = (postId, contents, images) => {
   return function (dispatch, getState, { history }) {
     apis
@@ -123,7 +122,6 @@ const addPostDB = (postData) => {
 //       });
 //   };
 // };
-
 
 //액션에 필요한 추가 데이터는 payload라는 이름을 사용함
 
