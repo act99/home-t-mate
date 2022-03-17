@@ -70,6 +70,8 @@ function Edit(props) {
     dispatch(postActions.editPostDB(changeData));
   };
 
+  console.log("fileinput.current", fileInput.current);
+
   return (
     <>
       <Modal
@@ -111,7 +113,7 @@ function Edit(props) {
                   vertical_align="middle"
                   align_items="center"
                 >
-                  <Text vertical_align="middle">새 게시물 만들기</Text>
+                  <Text vertical_align="middle">게시물 수정하기</Text>
                 </Grid>
                 <Grid
                   width="42px"
@@ -145,6 +147,13 @@ function Edit(props) {
                 B_bottom_right_radius="15px"
                 BG_c="white"
               >
+                <input
+                  ref={fileInput}
+                  onChange={selectFile}
+                  type="file"
+                  multiple
+                  style={{ display: "none" }}
+                />
                 <Img
                   _onClick={() => {
                     fileInput.current.click();
@@ -152,13 +161,6 @@ function Edit(props) {
                   postImg={fileSelected ? preview : props.postImg}
                   size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
                 ></Img>
-                <input
-                  ref={fileInput}
-                  onChange={selectFile}
-                  type="file"
-                  multiple
-                  // style={{ display: "none" }}
-                />
                 <Grid is_flex flex_direction="column" width="100%">
                   <Grid
                     is_flex

@@ -54,7 +54,6 @@ function Cardheader(props) {
       action={
         //...아이콘 부분
         <>
-          <IconButton aria-label="settings">
             <Button
               aria-describedby={id}
               variant="contained"
@@ -78,7 +77,7 @@ function Cardheader(props) {
               <Text>삭제하기</Text>
               <Text>취소하기</Text>
             </Popover>
-          </IconButton>
+
           {/* 수정하기를 눌렀을때 Edit(수정)페이지로 이동 */}
           <Edit {...thisPost} open={editOpen} handleClose={edithandleClose}></Edit>
           </>
