@@ -72,6 +72,8 @@ const VideoChatRoom = () => {
                 dispatch(youtubeActions.youtubeOn(true));
               } else if (recv.type === "YOUTUBEPAUSE") {
                 dispatch(youtubeActions.youtubeOn(false));
+              } else if (recv.type === "YOUTUBESTOP") {
+                console.log("유튜브 스톱");
               }
             },
             { Authorization: token }
@@ -96,9 +98,12 @@ const VideoChatRoom = () => {
   };
 
   React.useEffect(() => {
-    apis.enterRoom(roomId, password).then((res) => {
-      created();
-    });
+    apis
+      .enterRoom(roomId, password)
+      .then((res) => {
+        created();
+      })
+      .catch((error) => console.log(error.response.message));
     // created();
     return () => {
       apis
@@ -108,8 +113,6 @@ const VideoChatRoom = () => {
       disconnected();
       history.replace("/");
       history.go(0);
-      // disconnected();
-      // history.replace("/");
     };
   }, []);
 
@@ -120,11 +123,23 @@ const VideoChatRoom = () => {
   return (
     <>
       <Wrap>
-        <ChatNav roomName={roomName} />
-        <WrapContents>
-          <YoutubeWrap>
-            <YoutubeVideo ws={ws} token={token} roomId={roomId} />
-          </YoutubeWrap>
+        <ChatNav roomName={roomName} roomId={roomId} />
+        <YoutubeTest height={height}>
+          <YoutubeVideo ws={ws} token={token} roomId={roomId} />
+        </YoutubeTest>
+        <VideoTest height={height}>
+          <EnterRoom
+            roomId={roomId}
+            nickname={nickname}
+            video={video}
+            audio={audio}
+          />
+        </VideoTest>
+        <ChattingTest height={height}>
+          <ChatContainer chattingRef={chattingRef} ws={ws} />
+        </ChattingTest>
+        {/* <WrapContents>
+          <YoutubeVideo ws={ws} token={token} roomId={roomId} />
           <EnterRoom
             roomId={roomId}
             nickname={nickname}
@@ -132,34 +147,46 @@ const VideoChatRoom = () => {
             audio={audio}
           />
           <ChatContainer chattingRef={chattingRef} ws={ws} />
-        </WrapContents>
+        </WrapContents> */}
       </Wrap>
     </>
   );
 };
 
 const Wrap = styled.div`
-  width: 1920px;
-  height: 937px;
+  position: absolute;
+  width: 100%;
   background-color: #f9f9f9;
 `;
 
-const WrapContents = styled.div`
-  display: flex;
-  flex-direction: row;
+const YoutubeTest = styled.div`
+  width: 65%;
+  height: ${(props) => props.height - 56}px;
+  position: absolute;
+  background-color: #f9f9f9;
+`;
+
+const VideoTest = styled.div`
+  width: 15%;
+  height: ${(props) => props.height - 56}px;
+  position: absolute;
+  background-color: #f9f9f9;
+  left: 65%;
+  border-left: solid 1px #e0e0e0;
+`;
+
+const ChattingTest = styled.div`
+  width: 20%;
+  height: ${(props) => props.height - 56}px;
+  position: absolute;
+  background-color: #f9f9f9;
+  left: 80%;
 `;
 
 const TabletWrap = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: beige;
-  flex-direction: column;
-`;
-
-const YoutubeWrap = styled.div`
-  width: 1280px;
-  height: auto;
-  display: flex;
+  background-color: #f9f9f9;
   flex-direction: column;
 `;
 

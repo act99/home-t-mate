@@ -8,8 +8,8 @@ const RoomImage = (props) => {
 };
 
 const RoomImageDefault = styled.div`
-  min-width: 200px;
-  min-height: 150px;
+  min-width: 320px;
+  min-height: 240px;
   width: 100%;
   height: 100%;
   background-image: url("${(props) => props.src}");

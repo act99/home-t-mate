@@ -71,6 +71,7 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
+        deleteCookie("token");
         draft.user = {
           ageRange: null,
           career: null,
@@ -84,8 +85,6 @@ export default handleActions(
           is_login: false,
           token: null,
         };
-        deleteCookie("token");
-        localStorage.removeItem("userId");
       }),
     // produce(state, (draft)) => {
     // }

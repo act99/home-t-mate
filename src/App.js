@@ -18,51 +18,32 @@ import styled from "@emotion/styled";
 import Story from "./pages/Story";
 import VideoChatRoom from "./pages/VideoChatRoom";
 import CheckVideo from "./pages/CheckVideo";
+import Logout from "./pages/Logout";
 
 const App = () => {
-  const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   
   React.useEffect(() => {
-    if (user.is_login === false) {
+    if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
-    // if (document.cookie) {
-    //   dispatch(userActions.userinfoDB());
-    // }
-  }, [user.is_login]);
+  }, [dispatch]);
 
   return (
     <>
-      {/* 배포 전 */}
       <NavBar />
-      {/* 배포 후 */}
-      {/* {window.location.href === `https://${window.location.host}/test` ? null : (
-        <NavBar />
-      )} */}
       <ConnectedRouter history={history}>
         <Switch>
-          <WrapWide>
-            <Route path="/checkvideo" exact component={CheckVideo} />
-            <Route
-              path="/livenow/chat/:roomId"
-              exact
-              component={VideoChatRoom}
-            />
-            <WrapMedium>
-              <Route path="/" exact component={Home} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/mypage" exact component={Mypage} />
-              <Route
-                path="/user/kakao/callback/"
-                exact
-                component={KakaoOauth}
-              />
-              <Route path="/story" exact component={Story} />
-              <Route path="/livenow" exact component={LiveNow} />
-            </WrapMedium>
-          </WrapWide>
-          {/* <Route path="*" exact component={NotFound} /> */}
+          <Route path="/" exact component={Home} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/mypage" exact component={Mypage} />
+          <Route path="/user/kakao/callback/" exact component={KakaoOauth} />
+          <Route path="/story" exact component={Story} />
+          <Route path="/livenow" exact component={LiveNow} />
+          <Route path="/checkvideo" exact component={CheckVideo} />
+          <Route path="/livenow/chat/:roomId" exact component={VideoChatRoom} />
+          <Route path="/logout" exact component={Logout} />
+          <Route path="*" exact component={NotFound} />
         </Switch>
       </ConnectedRouter>
     </>

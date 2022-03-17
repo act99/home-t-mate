@@ -27,6 +27,7 @@ const getRoomDB = () => {
     await apis
       .getRooms()
       .then((res) => {
+        console.log(res.data);
         dispatch(getRoom(res.data));
       })
       .catch((error) => console.log(error));
@@ -38,22 +39,24 @@ const createRoomDB = (name, password, content, roomImg) => {
   return function (dispatch, getState, { history }) {
     apis
       .createRooms(name, password, content, roomImg)
-      .then((res) =>
-        dispatch(
-          createRoom({
-            roomId: res.data.roomId,
-            name: res.data.name,
-            content: res.data.content,
-            workOut: res.data.workOut,
-            roomImg: res.data.roomImg,
-            // userCount: res.data.userCount,
-            // user: res.data.user,
-          })
-        )
+      .then(
+        (res) =>
+          dispatch(
+            createRoom({
+              ...res.data,
+              // roomId: res.data.roomId,
+              // name: res.data.name,
+              // content: res.data.content,
+              // workOut: res.data.workOut,
+              // roomImg: res.data.roomImg,
+              // userCount: res.data.userCount,
+              // user: res.data.user,
+            })
+          )
+        // history.go(0)
       )
       .catch((error) => {
-        alert("에러발생");
-        console.log(error);
+        alert(error.response.data.message);
       });
   };
 };

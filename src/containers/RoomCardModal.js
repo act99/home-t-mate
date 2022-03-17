@@ -21,7 +21,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 450,
-  height: 695,
+  height: 752,
   bgcolor: "background.paper",
   border: "solid 0px",
   boxShadow: 24,
@@ -29,27 +29,38 @@ const style = {
 
 const RoomCardModal = (props) => {
   const { clickCard, setClickCard, data } = props;
-  const { roomId, roomName, content, member, roomImg } = data;
+  const {
+    roomId,
+    roomName,
+    content,
+    roomImg,
+    passCheck,
+    userCount,
+    profileImg,
+    nickname,
+    workOut,
+  } = data;
   const history = useHistory();
   const passwordRef = React.useRef();
+  const [password, setPassword] = React.useState("");
+  console.log(data);
   const handleEnterRoom = (e) => {
     e.preventDefault();
-    console.log(passwordRef.current.value);
     apis
-      .enterRoom(roomId, passwordRef.current.value)
+      .enterRoom(roomId, password)
       .then((res) => {
         history.push({
           pathname: `/checkvideo`,
           state: {
             roomId: roomId,
             roomName: roomName,
-            password: passwordRef.current.value,
+            password: password,
           },
         });
       })
       .catch((error) => {
-        alert("잘못된 비밀번호입니다.");
-        console.log(error);
+        alert(error.response.data.message);
+        console.log(error.response.data);
       });
   };
 
@@ -63,7 +74,7 @@ const RoomCardModal = (props) => {
       <Box sx={style}>
         <Top>
           <IconButton onClick={() => setClickCard(false)}>
-            <CloseIcon sx={{ height: "100%", fontSize: "35px", mr: 1 }} />
+            <CloseIcon sx={{ height: "100%", fontSize: "40px", mr: 1 }} />
           </IconButton>
         </Top>
         <TitleContainer>
@@ -73,9 +84,9 @@ const RoomCardModal = (props) => {
             <Avatar
               sx={{ width: 30, height: 30, mt: 0.3, mr: 1 }}
               alt="Remy Sharp"
-              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
+              src={profileImg}
             />
-            by. 안뇽22
+            by. {nickname}
           </HostProfile>
         </TitleContainer>
 
@@ -88,8 +99,8 @@ const RoomCardModal = (props) => {
           >
             현재 멤버 수
           </Typography>
-          <PersonOutlineIcon sx={{ ml: 1 }} />
-          (4/5)
+          <PersonOutlineIcon sx={{ ml: 1 }} />(
+          {userCount === null ? 0 : userCount} / 5)
         </MemberNum>
         <RoomInfo>
           <Typography
@@ -105,58 +116,65 @@ const RoomCardModal = (props) => {
           </Typography>
         </RoomInfo>
         <form onSubmit={handleEnterRoom}>
-          <PasswordWrap>
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              sx={{ fontSize: "17px", fontWeight: "bold" }}
-            >
-              방 비밀번호
-            </Typography>
+          {passCheck === false ? null : (
+            <PasswordWrap>
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                sx={{ fontSize: "17px", fontWeight: "bold" }}
+              >
+                방 비밀번호
+              </Typography>
+              <PasswordInput
+                placeholder="비밀번호를 입력 해 주세요 :)"
+                type="password"
+                ref={passwordRef}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+            </PasswordWrap>
+          )}
+          {passCheck === false ? (
+            <Alert severity="warning" sx={{ height: 260, mt: 5 }}>
+              <AlertTitle>경고</AlertTitle>
+              아래의 운영정책을 준수 해 주시기 바랍니다.
+              <br />
+              <br />
+              <strong>음란 행위, 성 매매 홍보 금지</strong>
+              <br />
+              <strong>도박행위 및, 도박 사이트 홍보 금지</strong>
+              <br />
+              <strong>미풍양속 행위 및 청소년 유해 행위 금지</strong>
+              <br />
+              <strong>장애인 차별 및 비하</strong>
+              <br />
+              <strong>지역/종교/인종/성 차별 및 비하</strong>
+              <br />
+              <strong>타인 비하 및 불특정 다수 비하</strong>
+              <br />
+              <strong>폭력 영상물 게시</strong>
+              <br />
+              <br />
+              <strong>자체기준 위반 : 1개의 계정으로 동시 접속</strong>
+            </Alert>
+          ) : (
+            <Alert severity="warning" sx={{ height: 172, mt: 5 }}>
+              <AlertTitle>경고</AlertTitle>
+              아래의 운영정책을 준수 해 주시기 바랍니다.
+              <br />
+              <br />
+              <strong>음란 행위, 성 매매 홍보 금지</strong>
+              <br />
+              <strong>도박행위 및, 도박 사이트 홍보 금지</strong>
+              <br />
+              <strong>미풍양속 행위 및 청소년 유해 행위 금지</strong>
+              <br />
+              <strong>욕설 및 명예훼손 금지</strong>
+            </Alert>
+          )}
 
-            <PasswordInput
-              placeholder="비밀번호를 입력 해 주세요 :)"
-              type="password"
-              ref={passwordRef}
-            />
-          </PasswordWrap>
-          <Alert severity="warning" sx={{ height: 160, mt: 5 }}>
-            <AlertTitle>경고</AlertTitle>
-            아래의 운영정책을 준수 해 주시기 바랍니다.
-            <br />
-            <br />
-            <strong>음란 행위, 성 매매 홍보 금지</strong>
-            <br />
-            <strong>도박행위 및, 도박 사이트 홍보 금지</strong>
-            <br />
-            <strong>미풍양속 행위 및 청소년 유해 행위 금지</strong>
-            <br />
-            <strong>욕설 및 명예훼손 금지</strong>
-          </Alert>
-          <Button
-            sx={{
-              display: "block",
-              width: "90%",
-              py: 1.5,
-              borderRadius: "15px",
-              mx: "auto",
-              mt: 3,
-              fontWeight: "bold",
-              border: "solid 1px #ff9234",
-              color: "#ff9234",
-              "&:hover": {
-                backgroundColor: "#ffffff",
-                boxShadow: "none",
-                border: "solid 1px #ff9234",
-              },
-            }}
-            variant="outlined"
-            type="submit"
-            // onClick={() => {}}
-          >
-            이 방에 참여하기
-          </Button>
+          <EnterButton type="submit">이 방에 참여하기</EnterButton>
         </form>
       </Box>
     </Modal>
@@ -186,7 +204,7 @@ const TitleImageText = styled.h3`
   padding: 5px;
   position: absolute;
   font-size: 30px;
-  color: #ff9234;
+  color: green;
 `;
 
 const HostProfile = styled.div`
@@ -204,7 +222,7 @@ const HostProfile = styled.div`
 
 const Top = styled.div`
   width: 100%;
-  height: 50px;
+  height: 48px;
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -240,11 +258,33 @@ const PasswordWrap = styled.div`
 
 const PasswordInput = styled.input`
   width: 70%;
-  height: 30px;
-  border-radius: 3px;
+  height: 44px;
+  border-radius: 4px;
   border: solid 1px;
-  padding-left: 10px;
+  padding-left: 12px;
   ::placeholder {
+  }
+`;
+
+const EnterButton = styled.button`
+  display: block;
+  margin: auto;
+  margin-top: 24px;
+  width: 412px;
+  height: 50px;
+  border-radius: 10px;
+  border: solid 2px green;
+  background-color: white;
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
   }
 `;
 

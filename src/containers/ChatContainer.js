@@ -22,13 +22,18 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import MicIcon from "@mui/icons-material/Mic";
+import useWindowSize from "../hooks/useWindowSize";
 
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 
 const ChatContainer = (props) => {
+  // ** window Size
+  const size = useWindowSize();
+  const width = size.width;
+  const height = size.height;
+
   const { chattingRef, ws } = props;
-  const classes = useStyle.makeChattingStyle();
   const chattingList = useSelector((state) => state.chatReducer.list);
 
   // ** params 로 받은 roomId 와 roomName
@@ -76,7 +81,7 @@ const ChatContainer = (props) => {
   );
 
   return (
-    <Wrap>
+    <>
       <MemberTitle>
         <h3>지금 나와 함께 홈트하는 친구들</h3>
       </MemberTitle>
@@ -86,7 +91,7 @@ const ChatContainer = (props) => {
           width: "100%",
           overflow: "auto",
           bgcolor: "background.paper",
-          height: "150px",
+          height: "160px",
         }}
       >
         <ListItem>
@@ -128,7 +133,13 @@ const ChatContainer = (props) => {
         <h3>친구들과 채팅타임</h3>
       </ChatTitle>
       <Divider />
-      <List className={classes.messageArea}>
+      <List
+        sx={{
+          height: height - 428,
+          overflowY: "auto",
+          backgroundColor: "white",
+        }}
+      >
         {chattingList.map((item, index) =>
           item.sender === nickname ? (
             <ListItem key={index + "" + (item.id + "")}>
@@ -164,7 +175,7 @@ const ChatContainer = (props) => {
         <div ref={chattingRef} />
       </List>
       <Divider />
-      <Grid container style={{ padding: "10px" }}>
+      <Grid container style={{ padding: "10px", height: 56 }}>
         <Grid item xs={10}>
           <TextField
             autoComplete="off"
@@ -186,18 +197,12 @@ const ChatContainer = (props) => {
           </IconButton>
         </Grid>
       </Grid>
-    </Wrap>
+    </>
   );
 };
 
-const Wrap = styled.div`
-  width: 335px;
-  height: 100%;
-  background-color: #ffffff;
-`;
-
 const MemberTitle = styled.div`
-  width: 335px;
+  width: 100%;
   height: 52px;
   display: flex;
   flex-direction: column;
@@ -209,18 +214,9 @@ const MemberTitle = styled.div`
   }
 `;
 
-const MemberWrap = styled.div`
-  width: 320px;
-  height: 28vh;
-  background-color: aliceblue;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
 const ChatTitle = styled.div`
   width: 100%;
-  height: 5vh;
+  height: 52px;
   display: flex;
   flex-direction: column;
   justify-content: center;
