@@ -53,12 +53,13 @@ const getPostDB = () => {
   };
 };
 
-const editPostDB = (postId, contents) => {
+여기 디스패치만 고쳐주시면 됩니다.
+const editPostDB = (postId, contents, images) => {
   return function (dispatch, getState, { history }) {
     apis
-      .editPost(postId, contents)
+      .editPost(postId, contents, images)
       .then((res) => {
-        dispatch(editPost(contents));
+        // dispatch(editPost(postId, contents, images));
         history.push("/");
       })
       .catch((error) => {

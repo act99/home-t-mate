@@ -42,7 +42,10 @@ export const apis = {
   // ** 포스트
   getPost: () => api.get(`/api/posts`),
   addPost: (contents) => api.post(`/api/posts`, contents),
-  editPost: (postId, contents) => api.put(`/api/posts/${postId}`, contents),
+  예진님 여기 입니다.----------------
+  editPost: (postId, contents, imageUrls) =>
+    api.put(`/api/posts/${ postId }`, { contents, imageUrls }),
+  예진님 여기 입니다.----------------
   deletePost: (postId) => api.delete(`/api/posts/${postId}`),
   // ** TodoList
   getTodo: () => api.get(`/api/todolist`),
