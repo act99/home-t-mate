@@ -37,7 +37,7 @@ function Write(props) {
     setTempFile([...tempFile, files]);
 
     for (let i = 0; i < files.length; i++) {
-      formData.append("imgUrl", files[i]);
+      formData.append("imageUrl", files[i]);
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.addEventListener("load", function () {
@@ -52,14 +52,16 @@ function Write(props) {
   };
 
   const addPost = () => {
-    const imgForm = new FormData();
+    const postData = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {
-      imgForm.append("file", tempFile[0][i]);
+      postData.append("imageUrl", tempFile[0][i]);
       console.log(tempFile[0][i]);
-      console.log(imgForm);
+      console.log(postData);
     }
-    const content = contents.current.value;
-    dispatch(postActions.addPostDB(content, imgForm));
+    postData.append("content", contents.current.value);
+
+    // const content = contents.current.value;
+    dispatch(postActions.addPostDB(postData));
   };
 
   return (

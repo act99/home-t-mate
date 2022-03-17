@@ -1,5 +1,6 @@
 // ** 테스트
-const BASE_URL = "http://15.165.42.20:8080";
+// const BASE_URL = "http://15.165.42.20:8080";
+const BASE_URL = "http://3.38.252.235:8080";
 const REDIRECT_URI = "http://localhost:3000/user/kakao/callback";
 const WEB_SOCKET = "http://15.165.42.20:8080/ws-stomp";
 // ** 배포

@@ -43,11 +43,12 @@ const getPostDB = () => {
     apis
       .getPost()
       .then((res) => {
-        dispatch(setPost(res.data.data.postList));
-        console.log(res);
+        dispatch(setPost(res.data));
+        console.log("res확인용입니다", res);
       })
       .catch((error) => {
         window.alert("게시글 불러오기 실패!");
+        console.log("res,error확인용입니다", error);
       });
   };
 };
@@ -82,37 +83,17 @@ const deletePostDB = (postId) => {
   };
 };
 
-const addPostDB = (content, imgForm) => {
-  console.log(imgForm);
+const addPostDB = (postData) => {
+  console.log(postData);
   return async function (dispatch, getState) {
     imageApis
-      .postImage(imgForm)
+      .addPost(postData)
       .then((res) => {
-        console.log(res);
-        const postContent = {
-          content: content,
-          postImg: [...res.data.file],
-        };
-        console.log(postContent);
-        apis
-          .addPost(postContent)
-          .then((res1) => {
-            dispatch(getPostDB());
-          })
-          .catch((error1) => console.log("포스트 에러", error1));
+        alert("게시물 작성 성공!");
       })
-      .catch((error) => console.log("이미지 업로드 에러", error));
-
-    // console.log(content);
-    // apis
-    //   .addPost(content)
-    //   .then((res) => {
-    //     window.alert("게시물 작성 성공!");
-    //     window.location.reload();
-    //   })
-    //   .catch((error) => {
-    //     window.alert("게시물 작성 실패!");
-    //   });
+      .catch((error) => {
+        alert("게시물 작성 실패!");
+      });
   };
 };
 
@@ -142,16 +123,19 @@ const addPostDB = (content, imgForm) => {
 //   };
 // };
 
+
+//액션에 필요한 추가 데이터는 payload라는 이름을 사용함
+
 export default handleActions(
   {
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = [...action.payload.post_list];
       }),
-    [ADD_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.list.unshift(action.payload.post);
-      }),
+    // [ADD_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.list.unshift(action.payload.post);
+    //   }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
         let index = draft.list.findIndex(
