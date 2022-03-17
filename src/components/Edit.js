@@ -13,6 +13,7 @@ import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { filterEventStoreDefs } from "@fullcalendar/react";
+import { imageApis } from "../shared/formApi";
 
 function Edit(props) {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function Edit(props) {
 
     for (let i = 0; i < files.length; i++) {
       formData.push("imageUrl", files[i]);
-      console.log('formdate확인용',files[i]);
+      console.log("formdate확인용", files[i]);
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.addEventListener("load", function () {
@@ -52,24 +53,18 @@ function Edit(props) {
       });
     }
   };
-
   const editPost = () => {
-    // const changeData = new FormData();
-    // for (let i = 0; i < tempFile[0].length; i++) {
-    //   changeData.append("imageUrl", tempFile[0][i]);
-    //   console.log(tempFile[0][i]);
-    //   console.log(changeData);
-    // }
-    // changeData.append("content", contents.current.value);
-    // formData.forEach((value, key) => object[key] = value);
-    // var postImg = JSON.stringify();
-
-    const changeData = {
-      content: contents.current.value,
-      postImg: [],
-    };
-
-    dispatch(postActions.editPostDB(changeData));
+    const changeImage = new FormData();
+    for (let i = 0; i < tempFile[0].length; i++) {
+      changeImage.append("file", tempFile[0][i]);
+    }
+    const changeContents = contents.current.value;
+    imageApis
+      .postImage(changeImage)
+      .then((res) => {
+        dispatch(postActions.editPostDB(id, changeContents, res.data.file));
+      })
+      .catch((error) => console.log(error));
   };
 
   console.log("fileinput.current", fileInput.current);
@@ -154,7 +149,7 @@ function Edit(props) {
                   onChange={selectFile}
                   type="file"
                   multiple
-                //   style={{ display: "none" }}
+                  //   style={{ display: "none" }}
                 />
                 <Img
                   _onClick={() => {

@@ -42,7 +42,8 @@ export const apis = {
   // ** 포스트
   getPost: () => api.get(`/api/posts`),
   addPost: (contents) => api.post(`/api/posts`, contents),
-  editPost: (postId, contents) => api.put(`/api/posts/${postId}`, contents),
+  editPost: (postId, contents, imageUrls) =>
+    api.put(`/api/posts/${postId}`, { contents, imageUrls }),
   deletePost: (postId) => api.delete(`/api/posts/${postId}`),
   // ** TodoList
   getTodo: () => api.get(`/api/todolist`),

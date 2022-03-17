@@ -53,12 +53,12 @@ const getPostDB = () => {
   };
 };
 
-const editPostDB = (postId, contents) => {
+const editPostDB = (postId, contents, images) => {
   return function (dispatch, getState, { history }) {
     apis
-      .editPost(postId, contents)
+      .editPost(postId, contents, images)
       .then((res) => {
-        dispatch(editPost(contents));
+        // dispatch(editPost(postId, contents, images));
         history.push("/");
       })
       .catch((error) => {
@@ -122,7 +122,6 @@ const addPostDB = (postData) => {
 //       });
 //   };
 // };
-
 
 //액션에 필요한 추가 데이터는 payload라는 이름을 사용함
 
