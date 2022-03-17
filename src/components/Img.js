@@ -29,6 +29,7 @@ const Img = (props) => {
         ))} */}
         <Grid>
           <Image
+          _onClick={props._onClick}
             src={props.postImg}
             alt="포스트사진"
             height={props.size}

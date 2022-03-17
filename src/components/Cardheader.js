@@ -22,13 +22,15 @@ import { Image } from "../elements";
 function Cardheader(props) {
   const _user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
-
+  console.log('header_user', _user, 'header_post', _post);
 
   // 수정하기 post id 비교
   const thisPost = _post.reduce(
     (x, v, i) => (v.id === props.id ? v : x),
     ""
   );
+
+  console.log('headr_thispost', thisPost);
 
   //dropmodal open, close
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -46,7 +48,7 @@ function Cardheader(props) {
   const edithandleOpen = () => setEditOpen(true);
   const edithandleClose = () => setEditOpen(false);
 
-  return _user.is_login ? (
+  return _user.id === thisPost.id ? (
     // 로그인상태면 헤더에 ... 아이콘 보이게하기
     <CardHeader
       style={{ backgroundColor: "#FF9234", borderTopRightRadius: "20px" }}

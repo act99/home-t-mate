@@ -17,8 +17,9 @@ import { imageApis } from "../shared/formApi";
 
 function Edit(props) {
   const dispatch = useDispatch();
+  console.log(props);
 
-  const { open, handleClose } = props;
+  const { id, open, handleClose } = props;
 
   const fileInput = React.useRef();
   const contents = React.useRef();
@@ -30,7 +31,7 @@ function Edit(props) {
   const _user = useSelector((state) => state.userReducer.user);
 
   let tempData = [];
-  const formData = [];
+  const formData = new FormData();
 
   const selectFile = (e) => {
     console.log("e", e);
@@ -39,8 +40,7 @@ function Edit(props) {
     setTempFile([...tempFile, files]);
 
     for (let i = 0; i < files.length; i++) {
-      formData.push("imageUrl", files[i]);
-      console.log("formdate확인용", files[i]);
+      formData.append("file", files[i]);
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.addEventListener("load", function () {
@@ -53,15 +53,17 @@ function Edit(props) {
       });
     }
   };
+
   const editPost = () => {
     const changeImage = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {
       changeImage.append("file", tempFile[0][i]);
     }
     const changeContents = contents.current.value;
+    // const id = {props.id};
     imageApis
-      .postImage(changeImage)
-      .then((res) => {
+      .postImage(changeImage).then((res) => {
+          console.log('res확인용', res);
         dispatch(postActions.editPostDB(id, changeContents, res.data.file));
       })
       .catch((error) => console.log(error));
@@ -149,7 +151,7 @@ function Edit(props) {
                   onChange={selectFile}
                   type="file"
                   multiple
-                  //   style={{ display: "none" }}
+                  style={{ display: "none" }}
                 />
                 <Img
                   _onClick={() => {

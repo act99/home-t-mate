@@ -59,7 +59,8 @@ const editPostDB = (postId, contents, images) => {
       .editPost(postId, contents, images)
       .then((res) => {
         // dispatch(editPost(postId, contents, images));
-        history.push("/");
+        // history.push("/");
+        alert("게시글 수정 성공!");
       })
       .catch((error) => {
         alert("게시글 수정에 실패했습니다.");
