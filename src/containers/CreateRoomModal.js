@@ -1,6 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { IconButton, TextField } from "@mui/material";
@@ -10,19 +11,17 @@ import RoomImage from "../elements/RoomImage";
 import styled from "@emotion/styled";
 import CloseIcon from "@mui/icons-material/Close";
 import { imageApis } from "../shared/formApi";
-
+import Logo from "../assets/logo300.png";
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
-  height: 800,
+  width: 540,
+  height: 820,
   bgcolor: "background.paper",
-  border: "1px solid #000",
-  borderRadius: "50px",
+  border: "0px solid #000",
   boxShadow: 24,
-  p: 4,
 };
 
 const CreateRoomModal = (props) => {
@@ -49,6 +48,15 @@ const CreateRoomModal = (props) => {
     const data = new FormData(event.currentTarget);
     const file = fileInputRef.current.files[0];
     formData.append("file", file);
+    console.log(file);
+    if (file === undefined) {
+      roomCreators.createRoomDB(
+        data.get("title"),
+        password,
+        data.get("content"),
+        undefined
+      );
+    }
     imageApis
       .postImage(formData)
       .then((res) => {
@@ -61,7 +69,7 @@ const CreateRoomModal = (props) => {
         dispatch(
           roomCreators.createRoomDB(
             data.get("title"),
-            data.get("password"),
+            password,
             data.get("content"),
             res.data.file[0]
           )
@@ -70,27 +78,23 @@ const CreateRoomModal = (props) => {
       .catch((error) => {
         console.log(error);
       });
-    // ** 게시물 쪽
-    // const data = new FormData(event.currentTarget);
-    // let contents = {
-    //   title: data.get("title"),
-    //   password: data.get("password"),
-    //   content: data.get("content"),
-    //   roomImg: data.get("dummyImg"),
-    // };
-    // ** 임시로 방 제목만으로
-    // dispatch(
-    //   roomCreators.createRoomDB(
-    //     data.get("title"),
-    //     data.get("password"),
-    //     data.get("content"),
-    //     data.get("dummyImg")
-    //   )
-    // );
+    setPassword("");
+    handleClose();
   };
   const handleClose = () => {
     setPreview(null);
     setCreateRoomOpen(false);
+  };
+  // ** 패스워드 설정
+  const [passwordOn, setPasswordOn] = React.useState(false);
+  const [password, setPassword] = React.useState("");
+  const handlePassword = () => {
+    if (passwordOn === true) {
+      setPasswordOn(false);
+      setPassword("");
+    } else {
+      setPasswordOn(true);
+    }
   };
   return (
     <Modal
@@ -102,109 +106,114 @@ const CreateRoomModal = (props) => {
       <Box component="form" sx={style} onSubmit={handleSubmit}>
         <Top>
           <IconButton onClick={handleClose}>
-            <CloseIcon sx={{ height: "100%", fontSize: "35px", mr: 1 }} />
+            <CloseIcon sx={{ height: "100%", fontSize: "40px" }} />
           </IconButton>
         </Top>
-        <Typography
-          component="h1"
-          variant="h4"
-          sx={{ fontWeight: "bold", ml: 1, mb: 2, mt: 1, fontSize: 25 }}
-        >
-          🌊 방 만들기 🌊
-        </Typography>
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{ fontWeight: "bold", ml: 1, my: 3, fontSize: 20 }}
-        >
-          이미지를 선택해주세요.
-        </Typography>
-        <Box sx={{ width: "100%", maxWidth: 200, maxHeight: 150 }}>
-          <FileInput type="file" ref={fileInputRef} onChange={selectFile} />
-          <RoomImage
-            src={
-              preview
-                ? preview
-                : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FAw7S4%2Fbtrv3hi828F%2F9Ke2HIWCc1EqZmoE5TuSbk%2Fimg.jpg"
-            }
-          />
-        </Box>
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{ fontWeight: "bold", ml: 1, my: 3, fontSize: 20 }}
-        >
-          만드실 방 이름을 적어주세요.
-        </Typography>
-        <TextField
-          required
-          id="outlined-required"
-          name="title"
-          label="방 이름"
-          style={{
-            width: "50%",
-            minWidth: "470px",
-          }}
-        />
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{ fontWeight: "bold", ml: 1, my: 3, fontSize: 20 }}
-        >
-          비밀번호를 입력해주세요.
-        </Typography>
-
-        <TextField
-          required
-          id="outlined-required"
-          name="password"
-          label="비밀번호"
-          style={{
-            width: "50%",
-            minWidth: "470px",
-          }}
-        />
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{ fontWeight: "bold", ml: 1, my: 3, fontSize: 20 }}
-        >
-          간단한 운동 설명을 적어주세요.
-        </Typography>
-
-        <TextField
-          id="outlined-required"
-          name="content"
-          label="운동 설명"
-          style={{
-            width: "50%",
-            minWidth: "470px",
-          }}
-        />
-        <TextField
-          id="outlined-required"
-          name="dummyImg"
-          label="테스트 이미지 url"
-          style={{
-            width: "50%",
-            minWidth: "470px",
-          }}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          color="error"
-          variant="contained"
-          sx={{ mt: 3, mb: 2, backgroundColor: "#f86453", py: 1.5 }}
-        >
-          <Typography
-            component="h2"
-            variant="h6"
-            sx={{ fontWeight: "bold", ml: 1 }}
+        <ContentWrap>
+          <Box
+            sx={{ width: "100%", maxWidth: 320, maxHeight: 240, mx: "auto" }}
           >
-            방 만들기
-          </Typography>
-        </Button>
+            <FileInput type="file" ref={fileInputRef} onChange={selectFile} />
+            <RoomImage
+              src={
+                preview
+                  ? preview
+                  : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FAw7S4%2Fbtrv3hi828F%2F9Ke2HIWCc1EqZmoE5TuSbk%2Fimg.jpg"
+              }
+            />
+          </Box>
+          <TitleWrap style={{ marginTop: "56px" }}>
+            <Typography
+              component="h1"
+              variant="h5"
+              sx={{ fontWeight: "bold", fontSize: 16, my: 0, mr: 2 }}
+            >
+              방 제목 :
+            </Typography>
+            <InputStlye
+              required
+              maxLength={28}
+              name="title"
+              placeholder="방 이름"
+              style={{ marginLeft: 0, marginTop: 0, width: "382px" }}
+            />
+          </TitleWrap>
+          <TitleWrap>
+            <Typography
+              component="h1"
+              variant="h5"
+              sx={{ fontWeight: "bold", fontSize: 16 }}
+            >
+              비밀번호 설정 :
+            </Typography>
+            <YestButton
+              onClick={() => setPasswordOn(true)}
+              type="button"
+              password={passwordOn}
+            >
+              Yes
+            </YestButton>
+            <NoButton
+              onClick={handlePassword}
+              type="button"
+              password={passwordOn}
+            >
+              No
+            </NoButton>
+          </TitleWrap>
+          {passwordOn === true ? (
+            <InputStlye
+              required
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호"
+              maxLength={12}
+              style={{ marginLeft: 0, marginTop: "24px" }}
+            />
+          ) : (
+            <InputStlye
+              required
+              disabled
+              value={password}
+              type="password"
+              name="password"
+              placeholder="비밀번호 X"
+              maxLength={12}
+              style={{
+                marginLeft: 0,
+                marginTop: "24px",
+                backgroundColor: "#e2e2e2",
+              }}
+            />
+          )}
+
+          <TitleWrap
+            style={{ justifyContent: "space-between", width: "456px" }}
+          >
+            <Typography
+              component="h1"
+              variant="h5"
+              sx={{ fontWeight: "bold", fontSize: 16, mb: 2 }}
+            >
+              방에 대해 설명해주세요.{" "}
+            </Typography>
+          </TitleWrap>
+          <TextAreaStyle
+            required
+            name="content"
+            placeholder="하고 싶은 말을 적어주세요. (최대 100자)"
+            maxLength={100}
+            style={{
+              marginLeft: 0,
+              marginTop: 0,
+              paddingTop: "8px",
+            }}
+          />
+
+          <CreateButton type="submit">지금 방 만들기</CreateButton>
+        </ContentWrap>
       </Box>
     </Modal>
   );
@@ -219,20 +228,118 @@ const FileInput = styled.input`
   right: 0;  */
   width: 100%;
   height: 100%;
-  min-height: 150px;
+  /* min-height: 150px;
   max-height: 150px;
-  max-width: 200px;
+  max-width: 200px; */
   height: auto;
   cursor: pointer;
 `;
 
+const ContentWrap = styled.div`
+  width: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  margin: auto;
+`;
+
 const Top = styled.div`
   width: 100%;
-  height: 50px;
+  height: 48px;
   display: flex;
   flex-direction: row;
   justify-content: end;
   background-color: white;
+`;
+
+const TitleWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  margin-top: 24px;
+  /* margin-bottom: 24px; */
+`;
+
+const InputStlye = styled.input`
+  width: 464px;
+  height: 44px;
+  border-radius: 4px;
+  border: solid 1px #757575;
+  margin-left: 8px;
+  padding-left: 12px;
+`;
+
+const TextAreaStyle = styled.textarea`
+  width: 464px;
+  height: 88px;
+  border-radius: 4px;
+  border: solid 1px #757575;
+  margin-left: 8px;
+  padding-left: 12px;
+  resize: none;
+  margin-bottom: 16px;
+`;
+
+const NoButton = styled.button`
+  width: 164px;
+  height: 48px;
+  border-radius: 10px;
+  border: solid 0px green;
+  background-color: ${(props) =>
+    props.password === false ? "green" : "#8f8f8f"};
+  font-size: 16px;
+  color: white;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+  }
+`;
+
+const YestButton = styled.button`
+  margin-right: 20px;
+  margin-left: 20px;
+  width: 164px;
+  height: 48px;
+  border-radius: 10px;
+  border: solid 0px green;
+  background-color: ${(props) =>
+    props.password === true ? "green" : "#8f8f8f"};
+  font-size: 16px;
+  color: white;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+  }
+`;
+
+const CreateButton = styled.button`
+  display: block;
+  margin: auto;
+  margin-top: 24px;
+  width: 484px;
+  height: 50px;
+  border-radius: 10px;
+  border: solid 2px green;
+  background-color: white;
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
 `;
 
 export default CreateRoomModal;

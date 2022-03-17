@@ -72,6 +72,8 @@ const VideoChatRoom = () => {
                 dispatch(youtubeActions.youtubeOn(true));
               } else if (recv.type === "YOUTUBEPAUSE") {
                 dispatch(youtubeActions.youtubeOn(false));
+              } else if (recv.type === "YOUTUBESTOP") {
+                console.log("유튜브 스톱");
               }
             },
             { Authorization: token }

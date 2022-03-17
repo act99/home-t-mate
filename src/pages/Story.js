@@ -11,14 +11,14 @@ import { useSelector } from "react-redux";
 function Story() {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-  const _post = useSelector(state=>state.postReducer);
-  console.log('post확인용', _post);
-  
+  const _post = useSelector((state) => state.postReducer);
+  console.log("post확인용", _post);
+
   return (
     <React.Fragment>
       <Grid margin_top="120px" />
 
-      {_post.list.map((v,i)=>(
+      {_post.list.map((v, i) => (
         <Grid key={i} margin_bottom="8px">
           <StoryCard key={i} {...v} />
         </Grid>

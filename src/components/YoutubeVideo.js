@@ -136,7 +136,7 @@ const YoutubeVideo = (props) => {
       ) : (
         <Empty width={width} height={height}>
           <img
-            width={width * 0.2}
+            width={width * 0.2 + "px"}
             alt="yotubeUrl"
             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
           />

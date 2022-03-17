@@ -134,13 +134,17 @@ const ChattingRoom = () => {
                       <Grid item xs={12}>
                         <ListItemText
                           align="right"
+                          primary={item.sender}
+                        ></ListItemText>
+                        <ListItemText
+                          align="right"
                           primary={item.message}
                         ></ListItemText>
                       </Grid>
                       <Grid item xs={12}>
                         <ListItemText
                           align="right"
-                          secondary="09:30"
+                          secondary="09:35"
                         ></ListItemText>
                       </Grid>
                     </Grid>
@@ -151,13 +155,17 @@ const ChattingRoom = () => {
                       <Grid item xs={12}>
                         <ListItemText
                           align="left"
+                          primary={item.sender}
+                        ></ListItemText>
+                        <ListItemText
+                          align="left"
                           primary={item.message}
                         ></ListItemText>
                       </Grid>
                       <Grid item xs={12}>
                         <ListItemText
                           align="left"
-                          secondary="09:31"
+                          secondary="09:35"
                         ></ListItemText>
                       </Grid>
                     </Grid>

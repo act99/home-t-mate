@@ -7,31 +7,30 @@ import Button from "@mui/material/Button";
 import { history } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/userReducer.js";
-import { CreateRoomButton } from "../elements/BootstrapButton";
+import {
+  CreateRoomButton,
+  MCreateRoomButton,
+} from "../elements/BootstrapButton";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { IconButton, Typography } from "@mui/material";
-import LogoutIcon from "@mui/icons-material/Logout";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import {
+  Avatar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import CreateRoomModal from "../containers/CreateRoomModal";
 import useWindowSize from "../hooks/useWindowSize";
 import Logo from "../assets/logo500300.png";
 const NavBar = (props) => {
-  // ** leaveSession 가져오기 위해
-  const leaveSession = useSelector(
-    (state) => state.sessionReducer.leaveSession
-  );
   // ** 채팅방 이동 시 네비게이션 바 변경
-  const { mySessionId, chatNum } = props;
   const pathname = window.location.pathname;
   console.log(pathname);
-  const handleOut = () => {
-    console.log("out");
-    history.replace("/");
-    leaveSession();
-  };
+
   // ** 채팅방 이동 시 네비게이션 바 변경 끝
 
   const dispatch = useDispatch();
@@ -42,7 +41,7 @@ const NavBar = (props) => {
   const size = useWindowSize();
   const width = size.width;
   const height = size.height;
-
+  console.log(width);
   const logout = () => {
     dispatch(userActions.logout());
     history.replace("/");
@@ -58,7 +57,28 @@ const NavBar = (props) => {
   const routeUrl = useSelector((state) => state.router.location.pathname);
 
   // ** 방 만들기 모달
+
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
+
+  // ** 로그인 시 아바타
+  const settings = ["마이페이지", "로그아웃"];
+
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+  const handleMypage = (settings) => {
+    if (settings === "마이페이지") {
+      history.push("/mypage");
+      handleCloseUserMenu();
+    } else if (settings === "로그아웃") {
+      handleCloseUserMenu();
+      history.push("/logout");
+    }
+  };
   React.useEffect(() => {
     if (routeUrl === "/") {
       setValue("1");
@@ -67,9 +87,9 @@ const NavBar = (props) => {
     } else if (routeUrl.includes("/livenow")) {
       setValue("3");
     } else {
-      setValue("1");
+      setValue("0");
     }
-  }, [routeUrl, pathname]);
+  }, [routeUrl, pathname, width]);
 
   const theme = createTheme({
     palette: {
@@ -91,56 +111,141 @@ const NavBar = (props) => {
   if (pathname.includes("checkvideo") || pathname.includes("/livenow/chat")) {
     return <div> </div>;
   }
-  // if (pathname.includes("livenow/")) {
-  //   return (
-  //     <ThemeProvider theme={theme}>
-  //       <AppBar
-  //         position="static"
-  //         sx={{
-  //           backgroundColor: "black",
-  //           width: `${width}px`,
-  //           height: `${height * 0.065}px`,
-  //         }}
-  //       >
-  //         <Container maxWidth="xl">
-  //           <Toolbar disableGutters>
-  //             <Typography variant="h6">{mySessionId}</Typography>
-  //             <PersonOutlineIcon sx={{ ml: 2 }} />
-  //             <Typography>( {chatNum + 1} / 5 )</Typography>
-  //             <Box
-  //               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-  //             ></Box>
-  //             <IconButton color="inherit" onClick={handleOut}>
-  //               <LogoutIcon sx={{ fontSize: 35 }} />
-  //             </IconButton>
-  //           </Toolbar>
-  //         </Container>
-  //       </AppBar>
-  //     </ThemeProvider>
-  //   );
-  // }
+  if (width <= 700) {
+    return (
+      <ThemeProvider theme={theme}>
+        <AppBar
+          position="static"
+          sx={{
+            backgroundColor: "white",
+            position: "sticky",
+            zIndex: 100,
+            top: 0,
+            width: "100%",
+          }}
+        >
+          <Container>
+            <Toolbar disableGutters>
+              <img
+                alt=""
+                src={Logo}
+                height="40px"
+                onClick={() => history.push("/")}
+                style={{ cursor: "pointer", marginRight: 30 }}
+              />
+              <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
+                <TabContext value={value}>
+                  <Box sx={{}}>
+                    <TabList
+                      indicatorColor="secondary"
+                      onChange={handleChange}
+                      aria-label="lab API tabs example"
+                    >
+                      <Tab
+                        style={{
+                          color: "#000000",
+                          fontWeight: "bold",
+                          fontSize: 8,
+                        }}
+                        label=""
+                        value="0"
+                        onClick={() => history.push("/")}
+                      />
+                      <Tab
+                        style={{
+                          color: "#000000",
+                          fontWeight: "bold",
+                          fontSize: 8,
+                        }}
+                        label="홈"
+                        value="1"
+                        onClick={() => history.push("/")}
+                      />
+                      <Tab
+                        style={{
+                          color: "#000000",
+                          fontWeight: "bold",
+                          fontSize: 8,
+                        }}
+                        label="스토리"
+                        value="2"
+                        onClick={() => history.push("/story")}
+                      />
+                      <Tab
+                        style={{
+                          color: "#000000",
+                          fontWeight: "bold",
+                          fontSize: 8,
+                        }}
+                        label="LIVE NOW"
+                        value="3"
+                        onClick={() => history.push("/livenow")}
+                      />
+                    </TabList>
+                  </Box>
+                </TabContext>
+              </Box>
+              {user.is_login === false ? (
+                <Button
+                  color="inherit"
+                  onClick={() => handleNavigate("/login")}
+                  sx={{ color: "#000000", fontWeight: "bold" }}
+                >
+                  로그인
+                </Button>
+              ) : (
+                <>
+                  <MCreateRoomButton
+                    variant="contained"
+                    disableRipple
+                    sx={{ fontSize: 8 }}
+                    onClick={() => {
+                      setCreateRoomOpen(true);
+                    }}
+                  >
+                    지금 방 만들기
+                  </MCreateRoomButton>
+                  <CreateRoomModal
+                    createRoomOpen={createRoomOpen}
+                    setCreateRoomOpen={setCreateRoomOpen}
+                  />
+                  <Button
+                    color="inherit"
+                    onClick={logout}
+                    sx={{ color: "#000000", fontWeight: "bold", fontSize: 8 }}
+                  >
+                    로그아웃
+                  </Button>
+                </>
+              )}
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </ThemeProvider>
+    );
+  }
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="static" sx={{ backgroundColor: "white" }}>
-        <Container maxWidth="xl">
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "white",
+          position: "sticky",
+          zIndex: 100,
+          top: 0,
+          width: "100%",
+        }}
+      >
+        <Container>
           <Toolbar disableGutters>
             <img
+              alt=""
               src={Logo}
               height="50px"
               onClick={() => history.push("/")}
               style={{ cursor: "pointer", marginRight: 30 }}
             />
-            {/* <Button
-              onClick={() => history.push("/")}
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                backgroundColor: "white",
-              }}
-            >
-              Logo
-            </Button> */}
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
               <TabContext value={value}>
                 <Box sx={{}}>
                   <TabList
@@ -202,6 +307,35 @@ const NavBar = (props) => {
                 </Button>
               </>
             )}
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={() => handleMypage(setting)}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>

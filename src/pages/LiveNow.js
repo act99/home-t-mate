@@ -10,6 +10,7 @@ import {
   CardMedia,
   Container,
   Grid,
+  rgbToHex,
   Typography,
 } from "@mui/material";
 import styled from "@emotion/styled";
@@ -26,13 +27,28 @@ const LiveNow = () => {
   const [clickCard, setClickCard] = React.useState(false);
   // ** 모달 props 전달
   const [modalData, setModalData] = React.useState({
+    userCount: null,
+    passCheck: false,
     roomId: 0,
     roomName: "",
     content: "",
     member: 0,
+    nickname: "",
+    profileImg: "",
+    workOut: false,
     roomImg: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
   });
-  const cardOpenHandler = (roomId, roomName, content, roomImg) => {
+  const cardOpenHandler = (
+    roomId,
+    roomName,
+    content,
+    roomImg,
+    passCheck,
+    userCount,
+    profileImg,
+    nickname,
+    workOut
+  ) => {
     setClickCard(true);
     setModalData({
       ...modalData,
@@ -40,6 +56,11 @@ const LiveNow = () => {
       roomName: roomName,
       content: content,
       roomImg: roomImg,
+      passCheck: passCheck,
+      userCount: userCount,
+      profileImg: profileImg,
+      nickname: nickname,
+      workOut: workOut,
     });
   };
   React.useEffect(() => {
@@ -47,97 +68,123 @@ const LiveNow = () => {
   }, []);
   return (
     <>
-      <Container sx={{ py: 8, width: "100%" }}>
-        <Typography
-          component="h1"
-          variant="h4"
-          sx={{ fontWeight: "bold", ml: 1, mb: 6, mt: 1 }}
-        >
-          🔥 Live Now 🔥
-        </Typography>
-        <Grid container spacing={7}>
-          {roomList.map((item) => (
-            <Grid item key={item.roomId + item.name} xs={12} sm={6} md={3}>
-              <Card
-                onClick={() => {
-                  cardOpenHandler(
-                    item.roomId,
-                    item.name,
-                    item.content,
-                    item.roomImg
-                  );
-                }}
-                sx={{
-                  height: "352px",
-                  display: "flex",
-                  flexDirection: "column",
-                  cursor: "pointer",
-                  borderRadius: "20px",
-                }}
-              >
-                <CardMedia
-                  sx={{ maxHeight: "50%", minHeight: "214.86px" }}
-                  component="img"
-                  image={item.roomImg}
-                  alt="random"
-                />
-                <CardContent
-                  sx={{ flexGrow: 1, minHeight: "186px", paddingLeft: 0.5 }}
+      <Wrap>
+        <Container sx={{ py: 8, width: "100%" }}>
+          <Grid container spacing={7}>
+            {roomList.map((item) => (
+              <Grid item key={item.roomId + item.name} xs={12} sm={6} md={3}>
+                <Card
+                  onClick={() => {
+                    cardOpenHandler(
+                      item.roomId,
+                      item.name,
+                      item.content,
+                      item.roomImg,
+                      item.passCheck,
+                      item.userCount,
+                      item.profileImg,
+                      item.nickname,
+                      item.workOut
+                    );
+                  }}
+                  sx={{
+                    height: "352px",
+                    display: "flex",
+                    flexDirection: "column",
+                    cursor: "pointer",
+                    borderRadius: "8px",
+                  }}
                 >
-                  <Typography
-                    gutterBottom
-                    variant="h6"
-                    component="div"
-                    sx={{
-                      fontWeight: "bold",
-                      fontSize: 18,
-                      paddingTop: 1,
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
+                  <CardMedia
+                    sx={{ maxHeight: "50%", minHeight: "214.86px" }}
+                    component="img"
+                    image={item.roomImg}
+                    alt="random"
+                  />
+                  <CardContent
+                    sx={{ flexGrow: 1, minHeight: "186px", paddingLeft: 0.5 }}
                   >
-                    <AiOutlineLock
-                      style={{
-                        marginRight: "5px",
+                    <Typography
+                      gutterBottom
+                      variant="h6"
+                      component="div"
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: 18,
+                        paddingTop: 1,
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
                         marginLeft: "5px",
                       }}
-                    />
-                    {item.name.length > 10
-                      ? item.name.slice(0, 10) + "..."
-                      : item.name}
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: 12, paddingTop: 1, paddingBottom: 1 }}
-                  ></Typography>
-                  <CardBottom>
-                    <Nickname>
-                      <Avatar
-                        sx={{ width: 30, height: 30, mr: 1 }}
-                        alt="Remy Sharp"
-                        src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
-                      />
-                      by rlrl
-                    </Nickname>
-                    <MemberNum>
-                      <PersonOutlineIcon />
-                      (4/5)
-                    </MemberNum>
-                  </CardBottom>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-      <RoomCardModal
-        clickCard={clickCard}
-        setClickCard={setClickCard}
-        data={modalData}
-      />
+                    >
+                      {item.passCheck === true ? (
+                        <AiOutlineLock
+                          style={{
+                            marginRight: "5px",
+                          }}
+                        />
+                      ) : null}
+                      {item.name.length > 10
+                        ? item.name.slice(0, 10) + "..."
+                        : item.name}
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: 12, paddingTop: 1, paddingBottom: 1 }}
+                    ></Typography>
+                    <CardBottom>
+                      <Nickname>
+                        <Avatar
+                          sx={{ width: 30, height: 30, mr: 1, zIndex: 1 }}
+                          alt="Remy Sharp"
+                          src={
+                            item.profileImg === null ||
+                            item.profileImg === undefined
+                              ? null
+                              : item.profileImg
+                          }
+                        />
+                        by.{"  "}
+                        {item.nickname === null || item.nickname === undefined
+                          ? null
+                          : item.nickname.length === undefined
+                          ? null
+                          : item.nickname.length > 7
+                          ? item.nickname.slice(0, 6) + "..."
+                          : item.nickname}
+                        {/* {item.nickname !== null ||
+                      item.nickname.length !== undefined
+                        ? item.nickname.length > 7
+                          ? item.nickname.slice(0, 6) + "..."
+                          : item.nickname
+                        : null} */}
+                      </Nickname>
+                      <MemberNum>
+                        <PersonOutlineIcon />(
+                        {item.userCount === null ? 0 : item.userCount}/5)
+                      </MemberNum>
+                    </CardBottom>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+        <RoomCardModal
+          clickCard={clickCard}
+          setClickCard={setClickCard}
+          data={modalData}
+        />
+      </Wrap>
     </>
   );
 };
+
+const Wrap = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #f9f9f9;
+`;
 
 const CardBottom = styled.div`
   display: flex;
@@ -152,7 +199,7 @@ const CardBottom = styled.div`
 const Nickname = styled.div`
   display: flex;
   flex-direction: row;
-
+  align-items: center;
   font-size: md;
 `;
 
