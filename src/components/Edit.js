@@ -62,7 +62,7 @@ function Edit(props) {
     imageApis
       .postImage(changeImage)
       .then((res) => {
-        dispatch(postActions.editPostDB(id, changeContents, res.data.file));
+        // dispatch(postActions.editPostDB(id, changeContents, res.data.file));
       })
       .catch((error) => console.log(error));
   };

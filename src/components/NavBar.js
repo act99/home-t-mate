@@ -7,25 +7,17 @@ import Button from "@mui/material/Button";
 import { history } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/userReducer.js";
-import {
-  CreateRoomButton,
-  MCreateRoomButton,
-} from "../elements/BootstrapButton";
+import { MCreateRoomButton } from "../elements/BootstrapButton";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {
-  Avatar,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from "@mui/material";
 import CreateRoomModal from "../containers/CreateRoomModal";
 import useWindowSize from "../hooks/useWindowSize";
 import Logo from "../assets/logo500300.png";
+import "../App.css";
+import styled from "@emotion/styled";
+
 const NavBar = (props) => {
   // ** 채팅방 이동 시 네비게이션 바 변경
   const pathname = window.location.pathname;
@@ -60,25 +52,6 @@ const NavBar = (props) => {
 
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
 
-  // ** 로그인 시 아바타
-  const settings = ["마이페이지", "로그아웃"];
-
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-  const handleMypage = (settings) => {
-    if (settings === "마이페이지") {
-      history.push("/mypage");
-      handleCloseUserMenu();
-    } else if (settings === "로그아웃") {
-      handleCloseUserMenu();
-      history.push("/logout");
-    }
-  };
   React.useEffect(() => {
     if (routeUrl === "/") {
       setValue("1");
@@ -100,8 +73,8 @@ const NavBar = (props) => {
         contrastText: "#fff",
       },
       secondary: {
-        light: "#ff7961",
-        main: "#f44336",
+        light: "#000000",
+        main: "#008000",
         dark: "#ba000d",
         contrastText: "#000",
       },
@@ -144,8 +117,8 @@ const NavBar = (props) => {
                       <Tab
                         style={{
                           color: "#000000",
-                          fontWeight: "bold",
                           fontSize: 8,
+                          fontFamily: "GmarketSansMedium",
                         }}
                         label=""
                         value="0"
@@ -156,6 +129,7 @@ const NavBar = (props) => {
                           color: "#000000",
                           fontWeight: "bold",
                           fontSize: 8,
+                          fontFamily: "GmarketSansMedium",
                         }}
                         label="홈"
                         value="1"
@@ -166,6 +140,7 @@ const NavBar = (props) => {
                           color: "#000000",
                           fontWeight: "bold",
                           fontSize: 8,
+                          fontFamily: "GmarketSansMedium",
                         }}
                         label="스토리"
                         value="2"
@@ -176,6 +151,7 @@ const NavBar = (props) => {
                           color: "#000000",
                           fontWeight: "bold",
                           fontSize: 8,
+                          fontFamily: "GmarketSansMedium",
                         }}
                         label="LIVE NOW"
                         value="3"
@@ -233,10 +209,12 @@ const NavBar = (props) => {
           position: "sticky",
           zIndex: 100,
           top: 0,
+          left: 0,
           width: "100%",
+          height: "72px",
         }}
       >
-        <Container>
+        <Container sx={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
           <Toolbar disableGutters>
             <img
               alt=""
@@ -254,19 +232,31 @@ const NavBar = (props) => {
                     aria-label="lab API tabs example"
                   >
                     <Tab
-                      style={{ color: "#000000", fontWeight: "bold" }}
+                      style={{
+                        color: "#000000",
+                        fontWeight: "bold",
+                        fontFamily: "GmarketSansMedium",
+                      }}
                       label="홈"
                       value="1"
                       onClick={() => history.push("/")}
                     />
                     <Tab
-                      style={{ color: "#000000", fontWeight: "bold" }}
+                      style={{
+                        color: "#000000",
+                        fontWeight: "bold",
+                        fontFamily: "GmarketSansMedium",
+                      }}
                       label="스토리"
                       value="2"
                       onClick={() => history.push("/story")}
                     />
                     <Tab
-                      style={{ color: "#000000", fontWeight: "bold" }}
+                      style={{
+                        color: "#000000",
+                        fontWeight: "bold",
+                        fontFamily: "GmarketSansMedium",
+                      }}
                       label="LIVE NOW"
                       value="3"
                       onClick={() => history.push("/livenow")}
@@ -275,71 +265,92 @@ const NavBar = (props) => {
                 </Box>
               </TabContext>
             </Box>
-            {user.is_login === false ? (
-              <Button
+          </Toolbar>
+          {user.is_login === false ? (
+            <>
+              <LoginButton
                 color="inherit"
                 onClick={() => handleNavigate("/login")}
                 sx={{ color: "#000000", fontWeight: "bold" }}
               >
                 로그인
-              </Button>
-            ) : (
-              <>
-                <CreateRoomButton
-                  variant="contained"
-                  disableRipple
-                  onClick={() => {
-                    setCreateRoomOpen(true);
-                  }}
-                >
-                  지금 방 만들기
-                </CreateRoomButton>
-                <CreateRoomModal
-                  createRoomOpen={createRoomOpen}
-                  setCreateRoomOpen={setCreateRoomOpen}
-                />
-                <Button
-                  color="inherit"
-                  onClick={logout}
-                  sx={{ color: "#000000", fontWeight: "bold" }}
-                >
-                  로그아웃
-                </Button>
-              </>
-            )}
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+              </LoginButton>
+            </>
+          ) : (
+            <>
+              <CreateButton
+                onClick={() => {
+                  setCreateRoomOpen(true);
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={() => handleMypage(setting)}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Toolbar>
+                지금 방 만들기
+              </CreateButton>
+
+              <CreateRoomModal
+                createRoomOpen={createRoomOpen}
+                setCreateRoomOpen={setCreateRoomOpen}
+              />
+              <Button
+                color="inherit"
+                onClick={() => history.push("/logout")}
+                sx={{
+                  color: "#000000",
+                  fontWeight: "bold",
+                  fontFamily: "GmarketSansMedium",
+                }}
+              >
+                로그아웃
+              </Button>
+            </>
+          )}
         </Container>
       </AppBar>
     </ThemeProvider>
   );
 };
+
+const LoginButton = styled.button`
+  display: block;
+  margin: auto;
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  border: solid 0px black;
+  background-color: white;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  margin-right: 16px;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
+
+const CreateButton = styled.button`
+  display: block;
+  margin: auto;
+  width: 160px;
+  height: 40px;
+  border-radius: 10px;
+  border: solid 1px green;
+  background-color: white;
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+  margin-right: 16px;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
+
 export default NavBar;

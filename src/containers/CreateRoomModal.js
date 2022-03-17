@@ -11,7 +11,7 @@ import RoomImage from "../elements/RoomImage";
 import styled from "@emotion/styled";
 import CloseIcon from "@mui/icons-material/Close";
 import { imageApis } from "../shared/formApi";
-import Logo from "../assets/logo300.png";
+import Logo from "../assets/imageupload.png";
 const style = {
   position: "absolute",
   top: "50%",
@@ -114,19 +114,19 @@ const CreateRoomModal = (props) => {
             sx={{ width: "100%", maxWidth: 320, maxHeight: 240, mx: "auto" }}
           >
             <FileInput type="file" ref={fileInputRef} onChange={selectFile} />
-            <RoomImage
-              src={
-                preview
-                  ? preview
-                  : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FAw7S4%2Fbtrv3hi828F%2F9Ke2HIWCc1EqZmoE5TuSbk%2Fimg.jpg"
-              }
-            />
+            <RoomImage src={preview ? preview : Logo} />
           </Box>
           <TitleWrap style={{ marginTop: "56px" }}>
             <Typography
               component="h1"
               variant="h5"
-              sx={{ fontWeight: "bold", fontSize: 16, my: 0, mr: 2 }}
+              sx={{
+                fontWeight: "bold",
+                fontSize: 16,
+                my: 0,
+                mr: 2,
+                fontFamily: "SuncheonR",
+              }}
             >
               방 제목 :
             </Typography>
@@ -142,7 +142,7 @@ const CreateRoomModal = (props) => {
             <Typography
               component="h1"
               variant="h5"
-              sx={{ fontWeight: "bold", fontSize: 16 }}
+              sx={{ fontWeight: "bold", fontSize: 16, fontFamily: "SuncheonR" }}
             >
               비밀번호 설정 :
             </Typography>
@@ -195,7 +195,12 @@ const CreateRoomModal = (props) => {
             <Typography
               component="h1"
               variant="h5"
-              sx={{ fontWeight: "bold", fontSize: 16, mb: 2 }}
+              sx={{
+                fontWeight: "bold",
+                fontSize: 16,
+                mb: 2,
+                fontFamily: "SuncheonR",
+              }}
             >
               방에 대해 설명해주세요.{" "}
             </Typography>
@@ -227,7 +232,10 @@ const FileInput = styled.input`
   bottom: 0;
   right: 0;  */
   width: 100%;
+  /* height: 100%; */
   height: 100%;
+  min-height: 240px;
+  max-width: 320px;
   /* min-height: 150px;
   max-height: 150px;
   max-width: 200px; */

@@ -164,18 +164,36 @@ const CheckVideo = () => {
           </div>
         </VideoWrap>
         <EnterButton>
-          <Button
-            variant="outlined"
-            sx={{ height: 50, width: 300, display: "block", my: "auto" }}
-            onClick={handleEnter}
-          >
+          <JoinButton type="button" onClick={handleEnter}>
             입장하기
-          </Button>
+          </JoinButton>
         </EnterButton>
       </Wrap>
     </>
   );
 };
+
+const JoinButton = styled.button`
+  display: block;
+  margin: auto;
+  margin-top: 24px;
+  width: 484px;
+  height: 50px;
+  border-radius: 10px;
+  border: solid 2px green;
+  background-color: white;
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
 
 const VideoTitle = styled.div`
   width: 100%;
@@ -184,7 +202,7 @@ const VideoTitle = styled.div`
   flex-direction: row;
   justify-content: center;
   justify-items: center;
-  background-color: white;
+  background-color: #f9f9f9;
   h3 {
     font-size: 20px;
     font-weight: bold;
@@ -199,7 +217,7 @@ const VideoWrap = styled.div`
   flex-direction: column;
   align-items: center;
   align-content: center;
-  background-color: white;
+  background-color: #f9f9f9;
   video {
     width: 100%;
     max-width: 600px;
@@ -209,7 +227,7 @@ const VideoWrap = styled.div`
     width: 100%;
     max-width: 600px;
     height: 100px;
-    background-color: white;
+    background-color: #f9f9f9;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -221,7 +239,7 @@ const EnterButton = styled.div`
   width: 100%;
   max-width: 1000px;
   height: 100px;
-  background-color: white;
+  background-color: #f9f9f9;
   /* margin: auto; */
   margin-left: auto;
   margin-right: auto;
@@ -245,7 +263,7 @@ const Wrap = styled.div`
   justify-content: center;
   align-items: center;
   /* background-color: #ffffff; */
-  background-color: white;
+  background-color: #f9f9f9;
 `;
 
 const Text = styled.h3`

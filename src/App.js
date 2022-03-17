@@ -22,7 +22,7 @@ import Logout from "./pages/Logout";
 
 const App = () => {
   const dispatch = useDispatch();
-  
+
   React.useEffect(() => {
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
@@ -31,21 +31,27 @@ const App = () => {
 
   return (
     <>
-      <NavBar />
-      <ConnectedRouter history={history}>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/mypage" exact component={Mypage} />
-          <Route path="/user/kakao/callback/" exact component={KakaoOauth} />
-          <Route path="/story" exact component={Story} />
-          <Route path="/livenow" exact component={LiveNow} />
-          <Route path="/checkvideo" exact component={CheckVideo} />
-          <Route path="/livenow/chat/:roomId" exact component={VideoChatRoom} />
-          <Route path="/logout" exact component={Logout} />
-          <Route path="*" exact component={NotFound} />
-        </Switch>
-      </ConnectedRouter>
+      <div className="App">
+        <NavBar />
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/mypage" exact component={Mypage} />
+            <Route path="/user/kakao/callback/" exact component={KakaoOauth} />
+            <Route path="/story" exact component={Story} />
+            <Route path="/livenow" exact component={LiveNow} />
+            <Route path="/checkvideo" exact component={CheckVideo} />
+            <Route
+              path="/livenow/chat/:roomId"
+              exact
+              component={VideoChatRoom}
+            />
+            <Route path="/logout" exact component={Logout} />
+            <Route path="*" exact component={NotFound} />
+          </Switch>
+        </ConnectedRouter>
+      </div>
     </>
   );
 };
