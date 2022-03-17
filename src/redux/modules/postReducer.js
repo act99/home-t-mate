@@ -19,7 +19,7 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
 
 const initialPost = {
   id: 0,
-  postsImg: [
+  postImg: [
     "https://img.allurekorea.com/allure/2021/03/style_60586b3a9c105-916x1200.jpg",
     // "https://bunny.jjalbot.com/2019/01/b2ajc3wyBN/ILaMquQcp.jpeg",
     "https://pds.joins.com/news/component/htmlphoto_mmdata/202103/20/e92d9c8a-3518-4201-b2d9-ade6e3ea3c1d.jpg",

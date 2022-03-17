@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
 import {Text} from "../elements";
+import Edit from "./Edit";
 // import Edit from "./Edit";
 // import Write from "./Write";
 
@@ -20,6 +21,14 @@ import { Image } from "../elements";
 
 function Cardheader(props) {
   const _user = useSelector((state) => state.userReducer.user);
+  const _post = useSelector((state) => state.postReducer.list);
+
+
+  // 수정하기 post id 비교
+  const thisPost = _post.reduce(
+    (x, v, i) => (v.id === props.id ? v : x),
+    ""
+  );
 
   //dropmodal open, close
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -71,7 +80,7 @@ function Cardheader(props) {
             </Popover>
           </IconButton>
           {/* 수정하기를 눌렀을때 Edit(수정)페이지로 이동 */}
-          {/* <Edit open={editOpen} handleClose={edithandleClose}></Edit> */}
+          <Edit {...thisPost} open={editOpen} handleClose={edithandleClose}></Edit>
           </>
       }
       titleTypographyProps={{

@@ -13,7 +13,7 @@ import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 
-function Write(props) {
+function Edit (props) {
   const dispatch = useDispatch();
 
   const { open, handleClose } = props;
@@ -51,17 +51,22 @@ function Write(props) {
     }
   };
 
-  const addPost = () => {
-    const postData = new FormData();
-    for (let i = 0; i < tempFile[0].length; i++) {
-      postData.append("imageUrl", tempFile[0][i]);
-      console.log(tempFile[0][i]);
-      console.log(postData);
-    }
-    postData.append("content", contents.current.value);
+  const editPost = () => {
+    // const changeData = new FormData();
+    // for (let i = 0; i < tempFile[0].length; i++) {
+    //   changeData.append("imageUrl", tempFile[0][i]);
+    //   console.log(tempFile[0][i]);
+    //   console.log(changeData);
+    // }
+    // changeData.append("content", contents.current.value);
 
-    // const content = contents.current.value;
-    dispatch(postActions.addPostDB(postData));
+    const changeData = {
+        content : contents.current.value
+        
+    }
+
+
+    dispatch(postActions.editPostDB(changeData));
   };
 
   return (
@@ -80,8 +85,6 @@ function Write(props) {
         <Fade in={open}>
           <Box sx={style}>
 
-            { _user.is_login ?
-            fileSelected ? (
               <Grid>
                 <Grid
                   B_bottom="1px solid #dbdbdb"
@@ -121,7 +124,7 @@ function Write(props) {
                       border="0px"
                       BG_color="white"
                       width="30px"
-                      _onClick={addPost}
+                      _onClick={editPost}
                     >
                       <CheckIcon />
                     </Button>
@@ -143,9 +146,20 @@ function Write(props) {
                   BG_c="white"
                 >
                   <Img
-                    postImg={preview}
+                  _onClick={() => {
+                    fileInput.current.click();
+                  }}
+                  postImg={fileSelected ? preview : props.postImg}
+
                     size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
                   ></Img>
+                  <input
+                    ref={fileInput}
+                    onChange={selectFile}
+                    type="file"
+                    multiple
+                    style={{ display: "none" }}
+                  />
                   <Grid is_flex flex_direction="column" width="100%">
                     <Grid
                       is_flex
@@ -164,93 +178,6 @@ function Write(props) {
                   </Grid>
                 </Grid>
               </Grid>
-            ) : (
-              <Grid>
-                <Grid
-                  B_bottom="1px solid #dbdbdb"
-                  is_flex
-                  // min_width="348px"
-                  // max_width="min(calc(100vw - 372px),855px)"
-                  width="751px"
-                  justify_content="space-between"
-                  height="42px"
-                  BG_c=""
-                >
-                  <Grid
-                    width="42px"
-                    height="42px"
-                    B_top_left_radius="15px"
-                    BG_c="white"
-                  />
-                  <Grid
-                    is_flex
-                    width="100%"
-                    height="42px"
-                    BG_c="white"
-                    justify_content="center"
-                    vertical_align="middle"
-                    align_items="center"
-                  >
-                    <Text vertical_align="middle">새 게시물 만들기</Text>
-                  </Grid>
-                  <Grid
-                    width="42px"
-                    height="42px"
-                    B_top_right_radius="15px"
-                    BG_c="white"
-                  />
-                </Grid>
-                <Grid
-                  is_flex
-                  flex_direction="column"
-                  justify_content="center"
-                  align_items="center"
-                  // min_width="348px"
-                  // min_height="348px"
-                  // max_width="min(calc(100vw - 372px),855px)"
-                  // max_height="min(calc(100vw - 372px),855px)"
-                  width="751px"
-                  height="calc(100vmin - 219px)"
-                  B_bottom_left_radius="15px"
-                  B_bottom_right_radius="15px"
-                  BG_c="white"
-                >
-                  <ImageIcon />
-                  <Text margin="20px" F_size="22px">
-                    버튼을 눌러 사진을 추가하세요
-                  </Text>
-                  <Button
-                    _onClick={() => {
-
-                      fileInput.current.click();
-                    }}
-                    font_weight="600"
-                    font_color="white"
-                    B_radius="5px"
-                    border="0px solid #0095f6"
-                    BG_color="#0095f6"
-                    width="120px"
-                    height="30px"
-                  >
-                    컴퓨터에서 선택
-                  </Button>
-                  <input
-                    ref={fileInput}
-                    onChange={selectFile}
-                    type="file"
-                    multiple
-                    style={{ display: "none" }}
-                  />
-                </Grid>
-              </Grid>
-            ) : (
-              <Grid width="420px" height="220px">
-                <Text F_size="24px">홈트메이트를 즐기기 위해 로그인이 필요해요</Text>
-                <Text F_size="16px">로그인 후 더 재미있게 놀아볼까요?</Text>
-                <Button>취소하기</Button>
-                <Button>로그인하기</Button>
-              </Grid>
-            )}
           </Box>
         </Fade>
       </Modal>
@@ -282,4 +209,4 @@ const TextArea = styled.textarea`
   }
 `;
 
-export default Write;
+export default Edit;

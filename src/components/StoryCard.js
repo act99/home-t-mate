@@ -18,11 +18,12 @@ import { color } from "@mui/system";
 
 export default function MainCard(props) {
 
-  const _user = useSelector(state=>state.userReducer);
+  const _user = useSelector((state) => state.userReducer.user);
+  const _post = useSelector((state) => state.postReducer.list);
   console.log('user확인용', _user);
-  const classes = storyCard();
-  const _post = useSelector(state=>state.postReducer);
   console.log('post확인용', _post);
+  const classes = storyCard();
+
 
   return (
     <div className="mainbox">
@@ -30,7 +31,7 @@ export default function MainCard(props) {
         
         <Cardheader id={props.id} username={props.nickname} userImg={props.userImg}/>
 
-        <Img postsImg={props.postsImg} size="620px" />
+        <Img postImg={props.postImg} size="620px" />
 
         <LikeComment id={props.id} modal={true} />
 
