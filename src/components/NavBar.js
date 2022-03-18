@@ -17,6 +17,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import Logo from "../assets/logo500300.png";
 import "../App.css";
 import styled from "@emotion/styled";
+import { Avatar, IconButton } from "@mui/material";
 
 const NavBar = (props) => {
   // ** 채팅방 이동 시 네비게이션 바 변경
@@ -40,6 +41,7 @@ const NavBar = (props) => {
     history.go(0);
   };
   const user = useSelector((state) => state.userReducer.user);
+  const userImg = user.userImg;
 
   const [value, setValue] = React.useState("1");
 
@@ -280,6 +282,12 @@ const NavBar = (props) => {
             </>
           ) : (
             <>
+              <AvatarButton
+                onClick={() => history.push("/mypage")}
+                sx={{ p: 0 }}
+              >
+                <Avatar alt="Remy Sharp" src={userImg} />
+              </AvatarButton>
               <CreateButton
                 onClick={() => {
                   setCreateRoomOpen(true);
@@ -335,9 +343,11 @@ const LoginButton = styled.button`
 
 const CreateButton = styled.button`
   display: block;
-  margin: auto;
+  /* margin: auto; */
   width: 160px;
   height: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
   border-radius: 10px;
   border: solid 1px green;
   background-color: white;
@@ -353,6 +363,21 @@ const CreateButton = styled.button`
     background-color: green;
     color: white;
   }
+`;
+
+const AvatarButton = styled.button`
+  display: block;
+  margin: auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+  margin-right: 32px;
+  border: solid 0px;
+  cursor: pointer;
 `;
 
 export default NavBar;
