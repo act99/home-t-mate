@@ -1,5 +1,4 @@
 import axios from "axios";
-import { actionCreators as userActions } from "../redux/modules/userReducer";
 import url from "./url";
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
@@ -20,7 +19,7 @@ api.interceptors.request.use(function (config) {
 
 export const apis = {
   // ** 카카오 로그인
-  // kakaoLogin: (code) => api.get(`/user/kakao/callback?code=${code}`),
+  kakaoLogin: (code) => api.get(`/user/kakao/callback?code=${code}`),
   getUserInfo: () => api.post(`/chat/user`),
   // ** 영상채팅
   getRooms: () => api.get(`/chat/rooms`),
