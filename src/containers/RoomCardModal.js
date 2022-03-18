@@ -82,7 +82,13 @@ const RoomCardModal = (props) => {
           <TitleImageText>{roomName}</TitleImageText>
           <HostProfile>
             <Avatar
-              sx={{ width: 30, height: 30, mt: 0.3, mr: 1 }}
+              sx={{
+                width: 30,
+                height: 30,
+                mt: 0.3,
+                mr: 1,
+                fontFamily: "SuncheonR",
+              }}
               alt="Remy Sharp"
               src={profileImg}
             />
@@ -95,23 +101,44 @@ const RoomCardModal = (props) => {
             id="modal-modal-title"
             variant="h6"
             component="h2"
-            sx={{ fontSize: "17px", fontWeight: "bold" }}
+            sx={{
+              fontSize: "16px",
+              fontWeight: "bold",
+              fontFamily: "SuncheonR",
+            }}
           >
             현재 멤버 수
           </Typography>
-          <PersonOutlineIcon sx={{ ml: 1 }} />(
-          {userCount === null ? 0 : userCount} / 5)
+          <PersonOutlineIcon sx={{ ml: 1 }} />
+
+          <Typography
+            id="modal-modal-description"
+            sx={{
+              fontSize: "12px",
+              fontFamily: "SuncheonR",
+              fontWeight: "bold",
+            }}
+          >
+            ({userCount === null ? 0 : userCount} / 5)
+          </Typography>
         </MemberNum>
         <RoomInfo>
           <Typography
             id="modal-modal-title"
             variant="h6"
             component="h2"
-            sx={{ fontSize: "17px", fontWeight: "bold" }}
+            sx={{
+              fontSize: "16px",
+              fontWeight: "bold",
+              fontFamily: "SuncheonR",
+            }}
           >
             방 정보
           </Typography>
-          <Typography id="modal-modal-description" sx={{ fontSize: "13px" }}>
+          <Typography
+            id="modal-modal-description"
+            sx={{ fontSize: "12px", fontFamily: "SuncheonR" }}
+          >
             {content}
           </Typography>
         </RoomInfo>
@@ -122,7 +149,12 @@ const RoomCardModal = (props) => {
                 id="modal-modal-title"
                 variant="h6"
                 component="h2"
-                sx={{ fontSize: "17px", fontWeight: "bold" }}
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  fontFamily: "SuncheonR",
+                  mb: 1,
+                }}
               >
                 방 비밀번호
               </Typography>
@@ -137,7 +169,7 @@ const RoomCardModal = (props) => {
           )}
           {passCheck === false ? (
             <Alert severity="warning" sx={{ height: 260, mt: 5 }}>
-              <AlertTitle>경고</AlertTitle>
+              <AlertTitle sx={{ fontFamily: "SuncheonR" }}>경고</AlertTitle>
               아래의 운영정책을 준수 해 주시기 바랍니다.
               <br />
               <br />
@@ -205,6 +237,7 @@ const TitleImageText = styled.h3`
   position: absolute;
   font-size: 30px;
   color: green;
+  font-family: "SuncheonR";
 `;
 
 const HostProfile = styled.div`
@@ -232,6 +265,7 @@ const Top = styled.div`
 const MemberNum = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   font-size: md;
   margin-top: 20px;
   margin-bottom: 20px;

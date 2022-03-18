@@ -8,13 +8,17 @@ const RoomImage = (props) => {
 };
 
 const RoomImageDefault = styled.div`
-  min-width: 320px;
-  min-height: 240px;
-  width: 100%;
-  height: 100%;
+  /* max-width: 320px;
+  max-height: 240px; */
+  width: 320px;
+  height: 240px;
+
   background-image: url("${(props) => props.src}");
-  background-size: cover;
+  background-size: 80% auto;
   background-position: center;
+  background-repeat: no-repeat;
+  border: solid 1px #e2e2e2;
+  border-radius: 8px;
 `;
 
 RoomImage.defaultProps = {

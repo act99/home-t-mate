@@ -37,6 +37,10 @@ const getRoomDB = () => {
 // ** 방 생성
 const createRoomDB = (name, password, content, roomImg) => {
   return function (dispatch, getState, { history }) {
+    const state = getState();
+    const user = state.userReducer.user;
+    const nickname = user.nickname;
+    const profileImg = user.profileImg;
     apis
       .createRooms(name, password, content, roomImg)
       .then(
@@ -44,6 +48,9 @@ const createRoomDB = (name, password, content, roomImg) => {
           dispatch(
             createRoom({
               ...res.data,
+              profileImg: profileImg,
+              nickname: nickname,
+              // user :
               // roomId: res.data.roomId,
               // name: res.data.name,
               // content: res.data.content,

@@ -164,7 +164,7 @@ const YoutubeVideo = (props) => {
 
 const Empty = styled.div`
   width: 100%;
-  height: ${(props) => props.height - 200}px;
+  height: ${(props) => props.width * 0.34}px;
   background-color: aqua;
   background-color: #f9f9f9;
   display: flex;

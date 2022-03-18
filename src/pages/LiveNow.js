@@ -116,6 +116,7 @@ const LiveNow = () => {
                         flexDirection: "row",
                         alignItems: "center",
                         marginLeft: "5px",
+                        fontFamily: "SuncheonR",
                       }}
                     >
                       {item.passCheck === true ? (
@@ -207,6 +208,8 @@ const MemberNum = styled.div`
   display: flex;
   flex-direction: row;
   font-size: md;
+  font-family: "SuncheonR";
+  font-weight: bold;
 `;
 
 export default LiveNow;

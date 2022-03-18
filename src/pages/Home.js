@@ -16,6 +16,7 @@ import {
 import styled from "@emotion/styled";
 import { AiOutlineLock } from "react-icons/ai";
 import RoomCardModal from "../containers/RoomCardModal";
+import BxSlide from "../assets/bxslide.png";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -70,6 +71,9 @@ const Home = () => {
   return (
     <>
       <Wrap>
+        <BxSlideCon>
+          <img alt="" src={BxSlide} width="100%" />
+        </BxSlideCon>
         <Container sx={{ py: 8, width: "100%" }}>
           <Typography
             component="h1"
@@ -187,6 +191,11 @@ const Home = () => {
     </>
   );
 };
+
+const BxSlideCon = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 const Wrap = styled.div`
   width: 100%;
