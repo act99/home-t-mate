@@ -86,7 +86,7 @@ function Cardheader(props) {
             >
               <Text _onClick={edithandleOpen}>수정하기</Text>
               <Text _onClick={deletePostDB}>삭제하기</Text>
-              <Text>취소하기</Text>
+              <Text _onClick={handleClose}>취소하기</Text>
             </Popover>
 
           {/* 수정하기를 눌렀을때 Edit(수정)페이지로 이동 */}

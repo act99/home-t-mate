@@ -8,8 +8,13 @@ const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
+const LIKE_POST = "LIKE_POST";
 
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
+const like = createAction(LIKE_POST, (postId, userId) => ({
+  postId,
+  userId,
+}));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 // const editPost = createAction(EDIT_POST, (post_id, contents, images) => ({
@@ -95,7 +100,19 @@ const deletePostDB = (postId) => {
   };
 };
 
-
+const likePostDB = (postId, userId) => {
+  return async function (dispatch, getState) {
+    apis.likePost(postId, userId)
+    .then((res) => {
+      dispatch(like(postId, userId))
+      alert("좋아요 성공");
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("좋아요 실패");
+    });
+  };
+};
 
 // const addPostDB = (contents) => {
 //   let postContent = {
@@ -131,6 +148,24 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = [...action.payload.post_list];
       }),
+
+    [LIKE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        const index = state.list.reduce(
+          (x, v, i) => (v.postKey === action.payload.postKey ? i : x),
+          ""
+        );
+        const is_include = state.list[index].postLike.reduce(
+          (x, v, i) => (v === action.payload.userKey ? true : x),
+          false
+        );
+
+        if (is_include) {
+          draft.list[index].postLike.pop(action.payload.userKey);
+        } else {
+          draft.list[index].postLike.push(action.payload.userKey);
+        }
+      }),
     // [ADD_POST]: (state, action) =>
     //   produce(state, (draft) => {
     //     draft.list.unshift(action.payload.post);
@@ -160,6 +195,7 @@ const actionCreators = {
   getPostDB,
   deletePostDB,
   editPostDB,
+  likePostDB,
 };
 
 export { actionCreators };

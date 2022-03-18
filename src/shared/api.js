@@ -45,6 +45,7 @@ export const apis = {
   editPost: (postId, contents, images) =>
     api.put(`/api/posts/${postId}`, { contents, images }),
   deletePost: (postId) => api.delete(`/api/posts/${postId}`),
+  likePost: (postId, userId) => api.post(`/api/posts/${postId}`, userId),
   // ** TodoList
   getTodo: () => api.get(`/api/todolist`),
   addTodo: (todoContent) => api.post(`/api/todolist`, todoContent),

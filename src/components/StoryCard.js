@@ -1,7 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "@mui/styles";
 
-
 import Cardheader from "../components/Cardheader";
 import LikeComment from "./LikeComment";
 import Img from "../components/Img";
@@ -12,30 +11,42 @@ import "../App.css";
 import { Card, Typography } from "@mui/material";
 import Text from "../elements/Text";
 
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { color } from "@mui/system";
 // import  style  from "@mui/styles";
 
-export default function MainCard(props) {
+export default function StoryCard(props) {
+  console.log("storycard", props);
 
   const state = useSelector((state) => state);
   const _user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
-  console.log('user확인용', _user);
-  console.log('post확인용', _post);
-  console.log('state값 확인용', state)
+  console.log("user확인용", _user);
+  console.log("post확인용", _post);
+  console.log("state값 확인용", state);
   const classes = storyCard();
-
 
   return (
     <div className="mainbox">
-      <Card sx={{ maxWidth: 620, height:900, margin: "auto" }} className={classes.root}>
-        
-        <Cardheader id={props.id} username={props.nickname} userImg={props.userImg}/>
+      <Card
+        sx={{ maxWidth: 620, height: 900, margin: "auto" }}
+        className={classes.root}
+      >
+        <Cardheader
+          id={props.id}
+          username={props.nickname}
+          userImg={props.userImg}
+        />
 
         <Img postImg={props.postImg} size="620px" />
 
-        <LikeComment id={props.id} modal={true} />
+        {/* id는 post id */}
+        <LikeComment
+          likeUserDto={props.likeUserDto}
+          likeCount={props.likeCount}
+          id={props.id}
+          modal={true}
+        />
 
         <CardContent sx={{ p: 0, pl: "16px" }}>
           <Typography variant="body2" color="black" align="justify">
@@ -45,10 +56,10 @@ export default function MainCard(props) {
         </CardContent>
 
         <Text margin_left="16px" margin_top="28px">
-          이주석님 외 8명이 이 스토리를 좋아해요
+          {/* {props.likeUserDto[0]}님 외 {props.likeCount}명이 이 스토리를 좋아해요 */}
         </Text>
         <Text margin_left="16px" margin_bottom="8px">
-          홍길동님 외 20개의 댓글
+          {/* {props.commentUserDto[0]}님 외 {props.commentCount}개의 댓글 */}
         </Text>
       </Card>
     </div>
@@ -57,8 +68,7 @@ export default function MainCard(props) {
 
 const storyCard = makeStyles({
   root: {
-      borderRadius: 20,
-      boxShadow: '2px 5px 12px 6px rgba(240, 240, 240);',
+    borderRadius: 20,
+    boxShadow: "2px 5px 12px 6px rgba(240, 240, 240);",
   },
-
 });
