@@ -12,10 +12,9 @@ const DELETE_POST = "DELETE_POST";
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
-const editPost = createAction(EDIT_POST, (post_id, post) => ({
-  post_id,
-  post,
-}));
+// const editPost = createAction(EDIT_POST, (post_id, contents, images) => ({
+//   post_id, contents, images
+// }));
 
 const initialPost = {
   id: 0,
@@ -53,37 +52,6 @@ const getPostDB = () => {
   };
 };
 
-const editPostDB = (postId, contents, images) => {
-  return function (dispatch, getState, { history }) {
-    apis
-      .editPost(postId, contents, images)
-      .then((res) => {
-        // dispatch(editPost(postId, contents, images));
-        // history.push("/");
-        alert("게시글 수정 성공!");
-      })
-      .catch((error) => {
-        alert("게시글 수정에 실패했습니다.");
-      });
-  };
-};
-
-const deletePostDB = (postId) => {
-  return function (dispatch, getState, { history }) {
-    apis
-      .deletePost(postId)
-      .then((res) => {
-        dispatch(deletePost(postId));
-        alert("게시글이 삭제되었습니다.");
-        history.replace("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("게시글이 삭제되지 않았습니다.");
-      });
-  };
-};
-
 const addPostDB = (postData) => {
   console.log(postData);
   return async function (dispatch, getState) {
@@ -97,6 +65,37 @@ const addPostDB = (postData) => {
       });
   };
 };
+
+const editPostDB = (postId, contents, images) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .editPost(postId, contents, images)
+      .then((res) => {
+        history.replace("/story");
+        alert("게시글 수정 성공!");
+      })
+      .catch((error) => {
+        alert("게시글 수정에 실패했습니다.");
+      });
+  };
+};
+
+const deletePostDB = (postId) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .deletePost(postId)
+      .then((res) => {
+        alert("게시글이 삭제되었습니다.");
+        history.replace("/story");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("게시글이 삭제되지 않았습니다.");
+      });
+  };
+};
+
+
 
 // const addPostDB = (contents) => {
 //   let postContent = {
@@ -136,20 +135,22 @@ export default handleActions(
     //   produce(state, (draft) => {
     //     draft.list.unshift(action.payload.post);
     //   }),
-    [EDIT_POST]: (state, action) =>
-      produce(state, (draft) => {
-        let index = draft.list.findIndex(
-          (p) => p.id === action.payload.post_id
-        );
-        draft.list[index] = { ...draft.list[index], ...action.payload.post };
-      }),
-    [DELETE_POST]: (state, action) =>
-      produce(state, (draft) => {
-        let dummyIndex = draft.list.findIndex(
-          (item) => item["id"] === action.payload.post_id
-        );
-        draft.list.splice(dummyIndex, 1);
-      }),
+
+    // [EDIT_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     let index = draft.list.findIndex(
+    //       (p) => p.id === action.payload.postId
+    //     );
+    //     draft.list[index] = { ...draft.list[index], ...action.payload.post };
+    //   }),
+
+    // [DELETE_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     let dummyIndex = draft.list.findIndex(
+    //       (item) => item["id"] === action.payload.post_id
+    //     );
+    //     draft.list.splice(dummyIndex, 1);
+    //   }),
   },
   initialState
 );

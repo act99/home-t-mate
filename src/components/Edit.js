@@ -40,7 +40,7 @@ function Edit(props) {
     setTempFile([...tempFile, files]);
 
     for (let i = 0; i < files.length; i++) {
-      formData.append("file", files[i]);
+      formData.append("userImg", files[i]);
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.addEventListener("load", function () {
@@ -58,12 +58,13 @@ function Edit(props) {
     const changeImage = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {
       changeImage.append("file", tempFile[0][i]);
+      console.log(tempFile[0][i]);
+    console.log(changeImage);
     }
     const changeContents = contents.current.value;
-    // const id = {props.id};
     imageApis
       .postImage(changeImage).then((res) => {
-          console.log('res확인용', res);
+          console.log('edit img res확인용', res);
         dispatch(postActions.editPostDB(id, changeContents, res.data.file));
       })
       .catch((error) => console.log(error));

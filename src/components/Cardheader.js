@@ -3,11 +3,12 @@ import React from "react";
 
 import { CardHeader, IconButton } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
 import {Text} from "../elements";
 import Edit from "./Edit";
+import { actionCreators as postActions } from "../redux/modules/postReducer";
 // import Edit from "./Edit";
 // import Write from "./Write";
 
@@ -20,9 +21,17 @@ import { Image } from "../elements";
 }
 
 function Cardheader(props) {
+  const dispatch = useDispatch();
   const _user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
   console.log('header_user', _user, 'header_post', _post);
+
+
+  const deletePostDB =()=>{
+    dispatch(postActions.deletePostDB(props.id));
+    window.alert("포스트가 정상적으로 삭제되었습니다.");
+    window.location.reload();
+  }
 
   // 수정하기 post id 비교
   const thisPost = _post.reduce(
@@ -48,7 +57,7 @@ function Cardheader(props) {
   const edithandleOpen = () => setEditOpen(true);
   const edithandleClose = () => setEditOpen(false);
 
-  return _user.id === thisPost.id ? (
+  return _user.id === thisPost.userId ? (
     // 로그인상태면 헤더에 ... 아이콘 보이게하기
     <CardHeader
       style={{ backgroundColor: "#FF9234", borderTopRightRadius: "20px" }}
@@ -76,7 +85,7 @@ function Cardheader(props) {
               }}
             >
               <Text _onClick={edithandleOpen}>수정하기</Text>
-              <Text>삭제하기</Text>
+              <Text _onClick={deletePostDB}>삭제하기</Text>
               <Text>취소하기</Text>
             </Popover>
 

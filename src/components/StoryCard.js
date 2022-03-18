@@ -18,10 +18,12 @@ import { color } from "@mui/system";
 
 export default function MainCard(props) {
 
+  const state = useSelector((state) => state);
   const _user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
   console.log('user확인용', _user);
   console.log('post확인용', _post);
+  console.log('state값 확인용', state)
   const classes = storyCard();
 
 
