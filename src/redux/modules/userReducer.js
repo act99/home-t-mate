@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { apis } from "../../shared/api";
 import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
+import { kakaoApis } from "../../shared/kakaoApi";
 // actions
 const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
@@ -39,7 +40,7 @@ const userinfoDB = () => {
 
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
-    await apis
+    await kakaoApis
       .kakaoLogin(code)
       .then((res) => {
         setCookie("token", res.headers.authorization);

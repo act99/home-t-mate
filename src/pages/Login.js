@@ -29,7 +29,7 @@ const Login = (props) => {
           id="custom-login-btn"
           // onClick={kakaoLogin}
         >
-          <img src={kakaoImage} width="500" />
+          <img alt="" src={kakaoImage} width="500" />
         </a>
       </div>
       <SmallFont onClick={() => history.push("/")}>
