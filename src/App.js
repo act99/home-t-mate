@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import KakaoOauth from "./components/KakaoOauth";
 import LiveNow from "./pages/LiveNow";
-import ChattingRoom from "./pages/ChattingRoom";
 import { actionCreators as userActions } from "./redux/modules/userReducer";
 import { actionCreators as postActions } from "./redux/modules/postReducer";
 import { useDispatch, useSelector } from "react-redux";

@@ -4,8 +4,8 @@ import axios from "axios";
 import "../App.css";
 import { BodyWrap } from "./VideoContainer/VideoConEle";
 import WebRTCContainer from "./WebRTCContainer";
-const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
-// const OPENVIDU_SERVER_URL = "https://hanghae99.shop:8443";
+// const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+const OPENVIDU_SERVER_URL = "https://hanghae99.shop:8443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 class VideoContainer extends Component {

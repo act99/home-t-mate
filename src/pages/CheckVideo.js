@@ -67,7 +67,7 @@ const CheckVideo = () => {
           },
         });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error.response));
 
     // dispatch(videoActions.setVideo({ video: video, audio: audio }));
   };

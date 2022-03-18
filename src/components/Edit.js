@@ -59,12 +59,12 @@ function Edit(props) {
       changeImage.append("file", tempFile[0][i]);
     }
     const changeContents = contents.current.value;
-    imageApis
-      .postImage(changeImage)
-      .then((res) => {
-        // dispatch(postActions.editPostDB(id, changeContents, res.data.file));
-      })
-      .catch((error) => console.log(error));
+    // imageApis
+    //   .postImage(changeImage)
+    //   .then((res) => {
+    //     dispatch(postActions.editPostDB(id, changeContents, res.data.file));
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   console.log("fileinput.current", fileInput.current);
