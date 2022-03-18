@@ -95,6 +95,7 @@ const Hover = styled.div`
   z-index: 9;
   &:hover {
     background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
   }
 `;
 const ImageCircle = styled.div`

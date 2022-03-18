@@ -83,6 +83,7 @@ const CreateRoomModal = (props) => {
   };
   const handleClose = () => {
     setPreview(null);
+    setPassword("");
     setCreateRoomOpen(false);
   };
   // ** 패스워드 설정
