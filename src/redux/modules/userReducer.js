@@ -40,7 +40,7 @@ const userinfoDB = () => {
 
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
-    await kakaoApis
+    await apis
       .kakaoLogin(code)
       .then((res) => {
         setCookie("token", res.headers.authorization);

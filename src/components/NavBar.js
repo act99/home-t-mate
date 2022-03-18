@@ -59,9 +59,11 @@ const NavBar = (props) => {
       setValue("2");
     } else if (routeUrl.includes("/livenow")) {
       setValue("3");
-    } else {
-      setValue("0");
     }
+    // else
+    // {
+    //   setValue("0");
+    // }
   }, [routeUrl, pathname, width]);
 
   const theme = createTheme({
@@ -114,7 +116,7 @@ const NavBar = (props) => {
                       onChange={handleChange}
                       aria-label="lab API tabs example"
                     >
-                      <Tab
+                      {/* <Tab
                         style={{
                           color: "#000000",
                           fontSize: 8,
@@ -123,7 +125,7 @@ const NavBar = (props) => {
                         label=""
                         value="0"
                         onClick={() => history.push("/")}
-                      />
+                      /> */}
                       <Tab
                         style={{
                           color: "#000000",
