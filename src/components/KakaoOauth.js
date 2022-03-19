@@ -4,17 +4,22 @@ import { useDispatch } from "react-redux";
 import styled from "@emotion/styled";
 import LinearProgress from "@mui/material/LinearProgress";
 import LoadingImage from "../assets/loading_image.png";
+import { apis } from "../shared/api";
+import { setCookie } from "../shared/Cookie";
+import { KAKAO_AUTH_URL } from "../shared/OAuth";
 
 const KakaoOauth = () => {
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    let params = new URL(window.location.href).searchParams;
-    let code = params.get("code");
-    dispatch(userActions.kakaoLoginDB(code));
-    console.log(params, code);
-  }, [dispatch]);
-
+    let code = new URL(window.location.href).searchParams.get("code");
+    const kakaoLogin = async () => {
+      await apis.kakaoLogin(code).then((res) => {
+        setCookie("token", res.headers.authorization);
+        localStorage.setItem("userId", res.data);
+        window.location.href = KAKAO_AUTH_URL;
+      });
+    };
+    kakaoLogin();
+  }, []);
   return (
     <Wrap>
       <img alt="" src={LoadingImage} width="300px" />
