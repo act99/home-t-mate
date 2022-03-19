@@ -2,7 +2,7 @@
 
 import url from "./url";
 
-const CLIENT_ID = "dbf70dbcc152160d45ec6ce156a6c37e";
+const CLIENT_ID = url.CLIENT_KEY;
 const REDIRECT_URI = url.REDIRECT_URI;
 
 //닉네임 동의 페이지

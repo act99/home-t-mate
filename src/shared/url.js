@@ -10,6 +10,7 @@ const BASE_URL = "https://hanghae99.shop";
 const REDIRECT_URI = "https://act99.shop/user/kakao/callback";
 const WEB_SOCKET = "https://hanghae99.shop/ws-stomp";
 const OPEN_VIDU = "https://hanghae99.shop:8443";
+const CLIENT_KEY = "a0c21ddfb1632beaa7377ac0b91c9849";
 // ** 강욱님 url
 
 // const BASE_URL = "http://3.35.175.152:8080";
@@ -22,6 +23,7 @@ const url = {
   REDIRECT_URI,
   WEB_SOCKET,
   OPEN_VIDU,
+  CLIENT_KEY,
 };
 
 export default url;
