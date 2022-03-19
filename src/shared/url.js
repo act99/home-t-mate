@@ -7,7 +7,7 @@
 
 // ** 배포
 const BASE_URL = "https://hanghae99.shop";
-const REDIRECT_URI = "https://act99.shop/user/kakao/callback";
+const REDIRECT_URI = "https://www.act99.shop/user/kakao/callback";
 const WEB_SOCKET = "https://hanghae99.shop/ws-stomp";
 const OPEN_VIDU = "https://hanghae99.shop:8443";
 const CLIENT_KEY = "a0c21ddfb1632beaa7377ac0b91c9849";
