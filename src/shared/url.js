@@ -6,7 +6,7 @@
 // const OPEN_VIDU = "https://" + window.location.hostname + ":4443";
 
 // ** 배포
-const BASE_URL = "https://www.hanghae99.shop";
+const BASE_URL = "https://hanghae99.shop:443";
 const REDIRECT_URI = "https://www.act99.shop/user/kakao/callback";
 const WEB_SOCKET = "https://hanghae99.shop/ws-stomp";
 const OPEN_VIDU = "https://hanghae99.shop:8443";
