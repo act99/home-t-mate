@@ -37,11 +37,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
             <Route path="/mypage" exact component={Mypage} />
-            <Route
-              path="/user/kakao/callback/client"
-              exact
-              component={KakaoOauth}
-            />
+            <Route path="/user/kakao/callback" exact component={KakaoOauth} />
             <Route path="/story" exact component={Story} />
             <Route path="/livenow" exact component={LiveNow} />
             <Route path="/checkvideo" exact component={CheckVideo} />
