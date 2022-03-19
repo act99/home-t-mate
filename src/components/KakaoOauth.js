@@ -7,15 +7,13 @@ import LoadingImage from "../assets/loading_image.png";
 
 const KakaoOauth = () => {
   const dispatch = useDispatch();
-  let code = new URL(window.location.href).searchParams.get("code");
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(userActions.kakaoLoginDB(code));
-    }, 1000);
-
-    console.log(code);
-  }, [code, dispatch]);
+    let params = new URL(window.location.href).searchParams;
+    let code = params.get("code");
+    dispatch(userActions.kakaoLoginDB(code));
+    console.log(params, code);
+  }, [dispatch]);
 
   return (
     <Wrap>
