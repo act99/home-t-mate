@@ -3,14 +3,14 @@ import { purple } from "@mui/material/colors";
 import { styled } from "@mui/styles";
 
 export const CreateRoomButton = styled(Button)({
+  width: 160,
+  height: 50,
   borderRadius: "10px",
   boxShadow: "none",
   textTransform: "none",
   fontWeight: "bold",
   fontSize: 16,
-  padding: "6px 12px",
   border: "1px solid",
-  lineHeight: 1.5,
   backgroundColor: "#ffffff",
   borderColor: "#FF9234",
   color: "#FF9234",

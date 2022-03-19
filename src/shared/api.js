@@ -1,5 +1,4 @@
 import axios from "axios";
-import { actionCreators as userActions } from "../redux/modules/userReducer";
 import url from "./url";
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];

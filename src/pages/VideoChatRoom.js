@@ -14,7 +14,7 @@ import { actionCreators as chatActions } from "../redux/modules/chatReducer";
 import { actionCreators as youtubeActions } from "../redux/modules/youtubeReducer";
 import { apis } from "../shared/api";
 import ChatNav from "../containers/ChatNav";
-
+import { actionCreators as subscribersActions } from "../redux/modules/subscriberReducer";
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 const VideoChatRoom = () => {
@@ -116,9 +116,9 @@ const VideoChatRoom = () => {
     };
   }, []);
 
-  if (width <= 600) {
-    <TabletWrap></TabletWrap>;
-  }
+  // if (width <= 600) {
+  //   <TabletWrap></TabletWrap>;
+  // }
 
   return (
     <>

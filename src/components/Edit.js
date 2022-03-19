@@ -62,6 +62,7 @@ function Edit(props) {
     console.log(changeImage);
     }
     const changeContents = contents.current.value;
+
     imageApis
       .postImage(changeImage).then((res) => {
           console.log('edit img res확인용', res);
