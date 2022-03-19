@@ -4,16 +4,19 @@ import { useDispatch } from "react-redux";
 import styled from "@emotion/styled";
 import LinearProgress from "@mui/material/LinearProgress";
 import LoadingImage from "../assets/loading_image.png";
+
 const KakaoOauth = () => {
+  let code = new URL(window.location.href).searchParams.get("code");
+
   const dispatch = useDispatch();
   useEffect(() => {
-    let code = new URL(window.location.href).searchParams.get("code");
     dispatch(userActions.kakaoLoginDB(code));
-  }, []);
+    console.log(code);
+  }, [code, dispatch]);
 
   return (
     <Wrap>
-      <img src={LoadingImage} width="300px" />
+      <img alt="" src={LoadingImage} width="300px" />
       <Text>잠시만 기다려주세요.</Text>
       <LinearProgress color="success" sx={{ width: "300px", mt: 5 }} />
     </Wrap>
