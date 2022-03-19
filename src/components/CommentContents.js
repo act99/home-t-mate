@@ -9,7 +9,7 @@ export default function CommentContents(props) {
       flex_wrap="wrap"
       align_items="stretch"
       flex_direction="row"
-      width="400px"
+      width="545px"
       padding_left="16px"
       margin="0px"
     >
@@ -28,7 +28,7 @@ export default function CommentContents(props) {
         />
       </Grid>
 
-      <Grid width="300px" margin_left="16px">
+      <Grid width="460px" margin_left="16px">
         <Typography variant="body2" color="black" align="justify">
           <strong>yejin </strong>css...🔥🔥🔥🔥 안녕 말을 길게 쳐보자 말을 길게
           쳐보자말을 길게 쳐보자말을 길게 쳐보자말을 길게 쳐보자말을 길게

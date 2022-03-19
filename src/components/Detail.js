@@ -42,6 +42,7 @@ export default function Detail(props) {
           <Img postImg={thisPost.postImg} size="800px" border="20px"/>
         </div>
 
+
         <Grid width="545px">
         {/* id={props.id} username={props.nickname} userImg={props.userImgUrl} */}
         <Cardheader id={thisPost.id} username={thisPost.nickname} userImg={thisPost.userImg}/>
@@ -50,11 +51,16 @@ export default function Detail(props) {
           {thisPost.content}
         </Typography>
 
-        {/* 댓글 구현예정 */}
+        {/* 댓글 보이기 */}
+        
 
+        {/* {_comment.list[props.postKey]?thisCommnet.map((v,i)=>(
+            <CommentContents/> key={i} {...v}/>
+          )):""} */}
+
+        {/* 댓글작성부분 */}
           <Grid position="absolute" bottom="0px" width="545px">
-            <hr></hr>
-            <LikeComment modal={false} />
+            <LikeComment id={props.id} modal={false} />
             <CommentBox />
           </Grid>
         </Grid>
