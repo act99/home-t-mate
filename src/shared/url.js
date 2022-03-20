@@ -20,8 +20,8 @@
 // const BASE_URL = "http://15.165.42.20:8080";
 
 //강욱,건욱님 합친 url
-// const BASE_URL = "http://3.35.175.152:8080";
-const BASE_URL = "http://15.165.42.20:8080";
+const BASE_URL = "http://3.35.175.152:8080";
+// const BASE_URL = "http://15.165.42.20:8080";
 
 
 const REDIRECT_URI = "http://localhost:3000/user/kakao/callback";

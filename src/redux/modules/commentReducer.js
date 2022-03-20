@@ -1,0 +1,76 @@
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
+import "moment";
+import moment from "moment";
+import { apis } from "../../shared/api";
+
+//action
+const SET_COMMENT = "SET_COMMENT";
+const ADD_COMMENT = "ADD_COMMENT";
+const EDIT_COMMENT = "EDIT_COMMENT";
+const DEL_COMMENT = "DEL_COMMENT";
+
+//action create function
+const setComment = createAction(SET_COMMENT, (postId, comment_list) => ({postId, comment_list}));
+const addComment = createAction(ADD_COMMENT, (postId, comment) => ({postId, comment}));
+const delComment = createAction(DEL_COMMENT, (postId) => ({postId}));
+
+// 초기값
+const initialState = {
+  list:{},
+};
+
+// 미들웨어
+
+const addCommentDB = (postId, comment) => {
+
+  return function(dispatch, getState, {history}){
+    apis.addComment(postId, comment)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+}
+};
+
+const delCommentDB = (postId, commentId) => {
+  return function(dispatch, getState, {history}){
+    apis.delComment(postId, commentId)
+      .then((response) => {
+        console.log(response)
+        document.location.reload('/')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+}
+
+
+// 리듀서
+export default handleActions(
+  {
+      [SET_COMMENT]: (state, action) => produce(state, (draft) => {
+        draft.list[action.payload.postId] = action.payload.comment_list;
+      }),
+      [ADD_COMMENT]: (state, action) => produce(state, (draft)=> {
+        draft.list[action.payload.postId].unshift(action.payload.comment)
+      }),
+      // [EDIT_COMMENT]: (state, action) => produce(state, (draft)=> {
+      //   draft.list[action.payload.post_id].unshift(action.payload.comment)
+      // }),
+      [DEL_COMMENT]: (state, action) => produce(state, (draft)=> {
+        draft.list[action.payload.meetingId].filter((p,i) => p.id !== action.payload.meetingId)
+      }),
+  },
+  initialState
+);
+
+const actionCreators = {
+  addCommentDB,
+  delCommentDB
+};
+
+export { actionCreators };

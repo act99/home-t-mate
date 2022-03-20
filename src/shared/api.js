@@ -1,3 +1,4 @@
+import { applyMutationToEventStore } from "@fullcalendar/react";
 import axios from "axios";
 import url from "./url";
 const tokenCheck = document.cookie;
@@ -45,6 +46,15 @@ export const apis = {
     api.put(`/api/posts/${postId}`, { contents, images }),
   deletePost: (postId) => api.delete(`/api/posts/${postId}`),
   likePost: (postId, userId) => api.post(`/api/posts/${postId}`, userId),
+
+  //댓글
+    // 댓글 불러오기
+    getComment: (postId) => api.get(`api/comments/${postId}`),
+    // 댓글 작성하기
+    addComment: (postId, comment) => api.post(`api/comments/${postId}`, comment),
+    // 댓글 삭제하기
+    delComment: (postId, commentId) => api.delete(`api/comments/${postId}/${commentId}`),
+
   // ** TodoList
   getTodo: () => api.get(`/api/todolist`),
   addTodo: (todoContent) => api.post(`/api/todolist`, todoContent),

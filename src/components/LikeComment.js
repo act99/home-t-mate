@@ -25,6 +25,11 @@ import Detail from "./Detail";
 //import axios
 
 export default function LikeComment(props) {
+  // commentUserDto={props.commentUserDto}
+  // likeUserDto={props.likeUserDto}
+  // likeCount={props.likeCount}
+  // id={props.id}
+  // modal={true}
   console.log(props);
   const dispatch = useDispatch();
 
@@ -96,7 +101,9 @@ export default function LikeComment(props) {
             margin="0px 5px 4px 5px"
             height="28px"
           >
-            <BsChat size="22" border="3px" onClick={handleOpen} />
+            <BsChat size="22" border="3px" onClick={handleOpen}
+            
+            />
           </Button>
 
         </Grid>

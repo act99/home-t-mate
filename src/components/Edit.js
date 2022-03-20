@@ -173,7 +173,7 @@ function Edit(props) {
                       }}
 
                       fileSelected={fileSelected}
-                      postImg={fileSelected ? preview : props.potoResponseDto} />
+                      postImg={fileSelected ? preview : {...v}} />
                     ))}
                 </Carousel>
 
