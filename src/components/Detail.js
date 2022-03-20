@@ -13,6 +13,7 @@ import { borderRadius } from "@mui/system";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../App.css";
+import { actionCreators as commentActions } from "../redux/modules/commentReducer";
 
 const style = {
   position: "absolute",
@@ -31,6 +32,7 @@ const style = {
 };
 
 export default function Detail(props) {
+  const dispatch = useDispatch();
   const{ commentUserDto } = props
   // id={props.id}
   console.log("Detail props용", props); //post id값, comment어쩌구
@@ -42,7 +44,9 @@ export default function Detail(props) {
   console.log("postReducer확인용", _post);
   console.log("thispost확인용", thisPost);
 
-  const _comment = useSelector((state) => state.postReducer.list);
+  React.useEffect(()=>{
+    dispatch(commentActions.getCommentDB(props.id))
+  },[])
 
   return (
     <div>
