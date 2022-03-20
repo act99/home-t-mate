@@ -20,44 +20,35 @@ import Grid from "../elements/Grid";
 export default function CommentBox(props) {
   const dispatch = useDispatch();
   // console.log('commentBox', props) id
-  const [comment_text, setCommentText] = useState()
   // const comment = React.useRef();
   const _user = useSelector((state) => state.userReducer.user);
 
-  const onChange = (e) => {
-    setCommentText(e.target.value);
-}
+  const comment = React.useRef();
 
-  const write = () => {
-    const data = {
-        content: comment_text
+  const addComment = () =>{
+    if(!_user.is_login){
+      alert('로그인 해주세요');
+        return;
     }
-    console.log(data)
-    dispatch(commentActions.addCommentDB(props.id, data))
-    document.location.reload();
+    dispatch(commentActions.addCommentDB(props.id,comment.current.value));
+    comment.current.value="";
 }
 
-//   const addComment = () =>{
-//     if(!_user.is_login){
-//       alert("로그인을 하셔야 사용이 가능합니다.");
-//         return;
+//   const write = () => {
+//     const data = {
+//         content: comment_text
 //     }
-//     dispatch(commentActions.addCommentDB(props.postKey,comment.current.value));
-//     comment.current.value="";
+//     console.log(data)
+//     dispatch(commentActions.addCommentDB(props.id, data))
+//     document.location.reload();
 // }
+
 
   return (
     <Grid is_flex margin_left="16px" justify_content="space-between">
       <SentimentSatisfiedAltIcon className="SmileButton" fontSize="medium" />
-      <Input 
-                // label='댓글달기'
-                placeholder='댓글 내용을 입력해주세요!'
-                _onChange={onChange}
-                value={comment_text}
-                is_Submit 
-                onSubmit={write}
-                />
-      <Button onClick={write} variant="text">게시</Button>
+      <input ref={comment} className="CommentInputBox" placeholder="댓글 달기..."></input>
+      <Button onClick={addComment} variant="text">게시</Button>
     </Grid>
   );
 }

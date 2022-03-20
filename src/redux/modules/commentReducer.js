@@ -22,15 +22,33 @@ const initialState = {
 
 // 미들웨어
 
+const getCommentDB = (postId) => {
+  return async function (dispatch,getState){
+    apis.getComment(postId)
+    .then((response)=>{
+      dispatch(setComment(postId,response.data))
+      console.log('getComment res 확인용', response.data)
+    }).catch((error)=>{
+      console.log(error)
+      alert('댓글 불러오기 실패');
+    })
+    
+  }
+}
+
 const addCommentDB = (postId, comment) => {
 
   return function(dispatch, getState, {history}){
     apis.addComment(postId, comment)
       .then((response) => {
-        console.log(response)
+        apis.getComment().then((response)=>{
+          dispatch(setComment(postId, response.data))
+          console.log('addcommet res값 확인용', response.data);
+        })
       })
       .catch((error) => {
         console.log(error)
+        alert('댓글작성 실패');
       })
 }
 };
@@ -70,6 +88,7 @@ export default handleActions(
 );
 
 const actionCreators = {
+  getCommentDB,
   addCommentDB,
   delCommentDB
 };

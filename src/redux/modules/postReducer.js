@@ -34,7 +34,7 @@ const getPostDB = () => {
       .getPost()
       .then((res) => {
         dispatch(setPost(res.data));
-        console.log("res확인용입니다", res);
+        console.log("res확인용입니다", res.data);
       })
       .catch((error) => {
         window.alert("게시글 불러오기 실패!");

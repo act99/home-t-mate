@@ -45,24 +45,25 @@ export default function LikeComment(props) {
   console.log('like thispost' ,thisPost);
 
 
-  const likeUserList = thisPost.likeUserDto.map(a=>a.userId); //likeUserDto안에있는 키값 userId만 추출해서 배열로 만들기
-  console.log('likeUserList', likeUserList);
+  // const likeUserList = thisPost.likeUserDto.map(a=>a.userId); 
+  //likeUserDto안에있는 키값 userId만 추출해서 배열로 만들기
+  // console.log('likeUserList', likeUserList);
 
   // includes() 메서드는 배열이 특정 요소를 포함하고 있는지 판별
   // user가 좋아요 눌렀는지 안눌렀는지 판단
-  const [like, setLike] = React.useState(
-    likeUserList.includes(_user.id)
-  );
+  // const [like, setLike] = React.useState(
+  //   likeUserList.includes(_user.id)
+  // );
 
-  const likePost = () => {
-    if (!_user.is_login) {
-      alert("로그인을 해주세요");
-      return;
-    } else {
-      dispatch(postAcions.likePostDB(thisPost.id, _user.id));
-      setLike(!like); //이미 누른 좋아요를 다시누르면 취소됨
-    }
-  };
+  // const likePost = () => {
+  //   if (!_user.is_login) {
+  //     alert("로그인을 해주세요");
+  //     return;
+  //   } else {
+  //     dispatch(postAcions.likePostDB(thisPost.id, _user.id));
+  //     setLike(!like); //이미 누른 좋아요를 다시누르면 취소됨
+  //   }
+  // };
 
   //detail modal open,close
   const [open, setOpen] = React.useState(false);
@@ -82,7 +83,7 @@ export default function LikeComment(props) {
         <Grid is_flex flex_wrap="nowrap" width="auto">
           {/* 좋아요버튼 */}
           <Button
-            _onClick={likePost}
+            // _onClick={likePost}
             border="0px"
             BG_color="white"
             padding="0px"
@@ -90,10 +91,10 @@ export default function LikeComment(props) {
             width="28px"
             height="28px"
           >
-           {like ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
-          </Button>
-            {/* <FavoriteBorderOutlinedIcon />
+           {/* {like ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
           </Button> */}
+            <FavoriteBorderOutlinedIcon />
+          </Button>
 
           {/* 댓글버튼 => 상세페이지로 이동 */}
           <Button
