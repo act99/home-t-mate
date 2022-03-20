@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { borderRadius } from "@mui/system";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "../App.css";
 
 const style = {
   position: "absolute",
@@ -30,12 +31,14 @@ const style = {
 };
 
 export default function Detail(props) {
+  const{ commentUserDto } = props
   // id={props.id}
   console.log("Detail props용", props); //post id값, comment어쩌구
 
   const _post = useSelector((state) => state.postReducer.list);
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x), "");
   const thisPostPoto = thisPost.potoResponseDto;
+
   console.log("postReducer확인용", _post);
   console.log("thispost확인용", thisPost);
 
@@ -65,8 +68,9 @@ export default function Detail(props) {
             username={thisPost.nickname}
             userImg={thisPost.userImg}
           />
-
-          <Typography
+          <div className="commentlist" style={{ height: "640px", overflow: "auto" }}>
+            {/* 글 내용 */}
+            <Typography
             variant="body2"
             color="black"
             align="justify"
@@ -74,12 +78,13 @@ export default function Detail(props) {
           >
             {thisPost.content}
           </Typography>
-
+          
           {/* 댓글 보이기 */}
+            {commentUserDto.map((v,i)=>(
+              <CommentContents key={i} {...v} id={props.id} />
+            ))}
+          </div>
 
-          {/* {_comment.list[props.postKey]?thisCommnet.map((v,i)=>(
-            <CommentContents/> key={i} {...v}/>
-          )):""} */}
 
           {/* 댓글작성부분 */}
           <Grid position="absolute" bottom="0px" width="545px">

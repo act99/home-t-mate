@@ -4,7 +4,7 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 import { Button, Typography, Box, Modal } from "@mui/material";
 import { useSelector,useDispatch} from "react-redux";
 import { actionCreators as commentActions } from "../redux/modules/commentReducer";
-
+import Input from "../elements/Input";
 //import Actions
 
 //import elements
@@ -30,7 +30,7 @@ export default function CommentBox(props) {
 
   const write = () => {
     const data = {
-        comment: comment_text
+        content: comment_text
     }
     console.log(data)
     dispatch(commentActions.addCommentDB(props.id, data))
@@ -49,10 +49,14 @@ export default function CommentBox(props) {
   return (
     <Grid is_flex margin_left="16px" justify_content="space-between">
       <SentimentSatisfiedAltIcon className="SmileButton" fontSize="medium" />
-      <input _onChange={onChange}
+      <Input 
+                // label='댓글달기'
+                placeholder='댓글 내용을 입력해주세요!'
+                _onChange={onChange}
                 value={comment_text}
                 is_Submit 
-                onSubmit={write} className="CommentInputBox" placeholder="댓글 달기..."></input>
+                onSubmit={write}
+                />
       <Button onClick={write} variant="text">게시</Button>
     </Grid>
   );

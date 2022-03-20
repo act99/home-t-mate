@@ -50,7 +50,7 @@ const Button = (props) => {
       <Btn
         {...sytles}
         ref={_ref}
-        onClick={() => _onClick()}
+        onClick={()=>_onClick()}
         disabled={disabled}
       >
         {text}

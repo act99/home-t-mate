@@ -48,11 +48,8 @@ export const apis = {
   likePost: (postId, userId) => api.post(`/api/posts/${postId}`, userId),
 
   //댓글
-    // 댓글 불러오기
     getComment: (postId) => api.get(`api/comments/${postId}`),
-    // 댓글 작성하기
     addComment: (postId, comment) => api.post(`api/comments/${postId}`, comment),
-    // 댓글 삭제하기
     delComment: (postId, commentId) => api.delete(`api/comments/${postId}/${commentId}`),
 
   // ** TodoList

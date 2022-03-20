@@ -28,6 +28,13 @@ export default function StoryCard(props) {
   console.log("post확인용", _post);
   const classes = storyCard();
 
+  React.useEffect(()=>{
+    if(props.likeUserDto && props.likeUserDto.length > 0){
+      console.log(props.likeUserDto[0]);
+    }
+
+  },[]);
+
   return (
     <div className="mainbox">
       <Card
@@ -69,10 +76,10 @@ export default function StoryCard(props) {
         </CardContent>
 
         <Text margin_left="16px" margin_top="28px">
-          {/* {props.likeUserDto[0]}님 외 {props.likeCount}명이 이 스토리를 좋아해요 */}
+          {/* {props.likeUserDto[0].userId}님 외 {props.likeUserDto.length}명이 이 스토리를 좋아해요 */}
         </Text>
         <Text margin_left="16px" margin_bottom="8px">
-          {/* {props.commentUserDto[0]}님 외 {props.commentCount}개의 댓글 */}
+          {/* {props.commentUserDto[0].nickname}님 외 {props.commentUserDto.length}개의 댓글 */}
         </Text>
       </Card>
     </div>

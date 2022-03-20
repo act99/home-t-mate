@@ -1,8 +1,21 @@
 import React from "react";
 import { Grid, Input, Image, Text } from "../elements";
 import { Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { actionCreators as commentActions} from "../redux/modules/commentReducer";
+import {useDispatch, useSelector} from "react-redux";
 
 export default function CommentContents(props) {
+  console.log('CommentContentsprops', props)
+  const dispatch = useDispatch();
+
+//   React.useEffect(()=>{
+//     dispatch(commentActions.getComment(props.postKey));
+// },[])
+
+  const delComment= ()=>{
+    dispatch(commentActions.delCommentDB(props.id, props.commentId));
+}
   return (
     <Grid
       is_flex
@@ -23,19 +36,26 @@ export default function CommentContents(props) {
         <Image
           margin="0"
           shape="circle"
-          src="https://3.bp.blogspot.com/-x4gLW4b7sB4/XHE3SYQbIpI/AAAAAAAA4nM/SFGGsj7HgyELAWCFQfanqqQwwBJfg30YACLcBGAs/s1600/01.jpg"
+          src={props.profileImageUrl}
           size="35"
         />
       </Grid>
 
       <Grid width="460px" margin_left="16px">
         <Typography variant="body2" color="black" align="justify">
-          <strong>yejin </strong>css...🔥🔥🔥🔥 안녕 말을 길게 쳐보자 말을 길게
-          쳐보자말을 길게 쳐보자말을 길게 쳐보자말을 길게 쳐보자말을 길게
-          쳐보자말을 길게 쳐보자말을 길게 쳐보자
+          <strong>{props.nickname}</strong>
+          {props.comment}
+          <CloseIcon
+            sx={{ color: "black", fontSize: 20 }}
+            onClick={delComment}
+          />
         </Typography>
 
-        <Grid margin_top="10px">
+        <Grid>
+          
+        </Grid>
+
+        {/* <Grid margin_top="10px">
           <Typography
             variant="body2"
             color="text.secondary"
@@ -43,7 +63,7 @@ export default function CommentContents(props) {
             margin-top="10px"
           >
           </Typography>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
   );

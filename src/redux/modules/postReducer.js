@@ -138,18 +138,18 @@ export default handleActions(
     [LIKE_POST]: (state, action) =>
       produce(state, (draft) => {
         const index = state.list.reduce(
-          (x, v, i) => (v.postKey === action.payload.postKey ? i : x),
+          (x, v, i) => (v.postId === action.payload.postId ? i : x),
           ""
         );
         const is_include = state.list[index].postLike.reduce(
-          (x, v, i) => (v === action.payload.userKey ? true : x),
+          (x, v, i) => (v === action.payload.userId ? true : x),
           false
         );
 
         if (is_include) {
-          draft.list[index].postLike.pop(action.payload.userKey);
+          draft.list[index].postLike.pop(action.payload.userId);
         } else {
-          draft.list[index].postLike.push(action.payload.userKey);
+          draft.list[index].postLike.push(action.payload.userId);
         }
       }),
     // [ADD_POST]: (state, action) =>

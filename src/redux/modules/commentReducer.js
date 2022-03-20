@@ -13,7 +13,7 @@ const DEL_COMMENT = "DEL_COMMENT";
 //action create function
 const setComment = createAction(SET_COMMENT, (postId, comment_list) => ({postId, comment_list}));
 const addComment = createAction(ADD_COMMENT, (postId, comment) => ({postId, comment}));
-const delComment = createAction(DEL_COMMENT, (postId) => ({postId}));
+const delComment = createAction(DEL_COMMENT, (postId, commentId) => ({postId, commentId}));
 
 // 초기값
 const initialState = {
@@ -39,11 +39,12 @@ const delCommentDB = (postId, commentId) => {
   return function(dispatch, getState, {history}){
     apis.delComment(postId, commentId)
       .then((response) => {
-        console.log(response)
-        document.location.reload('/')
+        dispatch(delComment(postId,commentId))
+        alert("댓글삭제 성공")
       })
       .catch((error) => {
         console.log(error)
+        alert("댓글삭제 실패")
       })
   }
 }
@@ -62,7 +63,7 @@ export default handleActions(
       //   draft.list[action.payload.post_id].unshift(action.payload.comment)
       // }),
       [DEL_COMMENT]: (state, action) => produce(state, (draft)=> {
-        draft.list[action.payload.meetingId].filter((p,i) => p.id !== action.payload.meetingId)
+        draft.list[action.payload.postId] = [...state.list[action.payload.postId].filter((v,i)=> v.commentId!==action.payload.commentId)]
       }),
   },
   initialState
