@@ -124,7 +124,7 @@ export default function LikeComment(props) {
         aria-describedby="modal-modal-description"
       >
         <div>
-          <Detail id={props.id} />
+          <Detail id={props.id} commentUserDto={props.commentUserDto} />
           <Grid position="absolute" right="0">
             <CloseIcon
               sx={{ color: "white", fontSize: 40 }}

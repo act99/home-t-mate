@@ -5,6 +5,8 @@ import Cardheader from "../components/Cardheader";
 import LikeComment from "./LikeComment";
 import Img from "../components/Img";
 import CardContent from "@mui/material/CardContent";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import "../App.css";
 
@@ -18,6 +20,8 @@ import { color } from "@mui/system";
 export default function StoryCard(props) {
   console.log("storycard", props);
 
+  const _storyimg = props.potoResponseDto;
+  console.log("_storyimg", _storyimg);
   const _user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
   console.log("user확인용", _user);
@@ -36,10 +40,21 @@ export default function StoryCard(props) {
           userImg={props.userImg}
         />
 
-        <Img postImg={props.postImg} size="620px" />
+        <Carousel
+          showThumbs={false}
+          infiniteLoop={true}
+          height={props.size}
+          width={props.size}
+        >
+          {_storyimg &&
+            _storyimg.map((v, i) => <Img key={i} {...v} size="620px"  />)}
+        </Carousel>
+
+        {/* <Img postImg={props.potoResponseDto} size="620px" /> */}
 
         {/* id는 post id */}
         <LikeComment
+          commentUserDto={props.commentUserDto}
           likeUserDto={props.likeUserDto}
           likeCount={props.likeCount}
           id={props.id}

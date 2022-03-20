@@ -14,12 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { filterEventStoreDefs } from "@fullcalendar/react";
 import { imageApis } from "../shared/formApi";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 
 function Edit(props) {
   const dispatch = useDispatch();
   console.log(props);
 
-  const { id, open, handleClose } = props;
+  const { id, open, handleClose, potoResponseDto } = props;
 
   const fileInput = React.useRef();
   const contents = React.useRef();
@@ -59,13 +62,14 @@ function Edit(props) {
     for (let i = 0; i < tempFile[0].length; i++) {
       changeImage.append("file", tempFile[0][i]);
       console.log(tempFile[0][i]);
-    console.log(changeImage);
+      console.log(changeImage);
     }
     const changeContents = contents.current.value;
 
     imageApis
-      .postImage(changeImage).then((res) => {
-          console.log('edit img res확인용', res);
+      .postImage(changeImage)
+      .then((res) => {
+        console.log("edit img res확인용", res);
         dispatch(postActions.editPostDB(id, changeContents, res.data.file));
       })
       .catch((error) => console.log(error));
@@ -155,13 +159,31 @@ function Edit(props) {
                   multiple
                   style={{ display: "none" }}
                 />
-                <Img
+
+                <Carousel
+                  showThumbs={false}
+                  infiniteLoop={true}
+                  height={props.size}
+                  width={props.size}
+                >
+                  {potoResponseDto &&
+                    potoResponseDto.map((v, i) => (
+                      <Img key={i} {...v} size="800px" border="20px" _onClick={() => {
+                        fileInput.current.click();
+                      }}
+
+                      fileSelected={fileSelected}
+                      postImg={fileSelected ? preview : props.potoResponseDto} />
+                    ))}
+                </Carousel>
+
+                {/* <Img
                   _onClick={() => {
                     fileInput.current.click();
                   }}
-                  postImg={fileSelected ? preview : props.postImg}
+                  postImg={fileSelected ? preview : props.potoResponseDto}
                   size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
-                ></Img>
+                ></Img> */}
                 <Grid is_flex flex_direction="column" width="100%">
                   <Grid
                     is_flex
