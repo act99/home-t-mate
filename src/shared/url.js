@@ -23,7 +23,6 @@
 const BASE_URL = "http://3.35.175.152:8080";
 // const BASE_URL = "http://15.165.42.20:8080";
 
-
 const REDIRECT_URI = "http://localhost:3000/user/kakao/callback";
 const WEB_SOCKET = "http://3.35.175.152:8080/ws-stomp";
 const OPEN_VIDU = "https://" + window.location.hostname + ":4443";

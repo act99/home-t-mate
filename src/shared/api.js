@@ -1,4 +1,3 @@
-import { applyMutationToEventStore } from "@fullcalendar/react";
 import axios from "axios";
 import url from "./url";
 const tokenCheck = document.cookie;
@@ -43,7 +42,7 @@ export const apis = {
   getPost: () => api.get(`/api/posts`),
   addPost: (contents) => api.post(`/api/posts`, contents),
   editPost: (postId, contents, images) =>
-    api.put(`/api/posts/${postId}`, { contents, images }),
+    api.put(`/api/posts/${postId}`, { content: contents, image: images }),
   deletePost: (postId) => api.delete(`/api/posts/${postId}`),
   likePost: (postId, userId) => api.post(`/api/posts/${postId}`, userId),
 

@@ -7,6 +7,7 @@ import { Image, Grid } from "../elements";
 
 const Img = (props) => {
   console.log("img props확인용", props);
+  console.log(props.postImg);
   if (props.postImg) {
     return (
       <Image

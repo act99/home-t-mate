@@ -32,7 +32,6 @@ const Input = (props) => {
   }
 
   if (multiLine) {
-
     return (
       <Grid>
         {label && <Text margin="0px">{label}</Text>}
@@ -46,7 +45,6 @@ const Input = (props) => {
     );
   }
   if (radio) {
-
     return (
       <Grid>
         {label && <Text margin="0px">{label}</Text>}
@@ -93,8 +91,8 @@ Input.defaultProps = {
   type: "text",
   value: "",
   is_submit: false,
-  onSubmit: () => { },
-  _onChange: () => { },
+  onSubmit: () => {},
+  _onChange: () => {},
 };
 
 const ElTextarea = styled.textarea`
