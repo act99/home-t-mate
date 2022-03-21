@@ -173,13 +173,6 @@ function Edit(props) {
                     ))}
                 </Carousel>
 
-                {/* <Img
-                  _onClick={() => {
-                    fileInput.current.click();
-                  }}
-                  postImg={fileSelected ? preview : props.potoResponseDto}
-                  size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
-                ></Img> */}
                 <Grid is_flex flex_direction="column" width="100%">
                   <Grid
                     is_flex

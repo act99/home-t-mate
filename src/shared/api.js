@@ -44,12 +44,14 @@ export const apis = {
   editPost: (postId, contents, images) =>
     api.put(`/api/posts/${postId}`, { content: contents, image: images }),
   deletePost: (postId) => api.delete(`/api/posts/${postId}`),
-  likePost: (postId, userId) => api.post(`/api/posts/${postId}`, userId),
+  likePost: (postId) => api.post(`/api/like/${postId}`),
 
   //댓글
-    getComment: (postId) => api.get(`api/comments/${postId}`),
-    addComment: (postId, comment) => api.post(`api/comments/${postId}`, {comment:comment}),
-    delComment: (postId, commentId) => api.delete(`api/comments/${postId}/${commentId}`),
+  getComment: (postId) => api.get(`api/comments/${postId}`),
+  addComment: (postId, comment) =>
+    api.post(`api/comments/${postId}`, { comment: comment }),
+  delComment: (postId, commentId) =>
+    api.delete(`api/comments/${postId}/${commentId}`),
 
   // ** TodoList
   getTodo: () => api.get(`/api/todolist`),

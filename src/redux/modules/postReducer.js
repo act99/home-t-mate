@@ -89,7 +89,7 @@ const deletePostDB = (postId) => {
 const likePostDB = (postId, userId) => {
   return async function (dispatch, getState) {
     apis
-      .likePost(postId, userId)
+      .likePost(postId)
       .then((res) => {
         dispatch(like(postId, userId));
         alert("좋아요 성공");
@@ -138,21 +138,24 @@ export default handleActions(
 
     [LIKE_POST]: (state, action) =>
       produce(state, (draft) => {
-        const index = state.list.reduce(
-          (x, v, i) => (v.postId === action.payload.postId ? i : x),
-          ""
+        const index = draft.list.findIndex(
+          (item) => item.id === action.payload.postId
         );
-        const is_include = state.list[index].postLike.reduce(
-          (x, v, i) => (v === action.payload.userId ? true : x),
-          false
+        const is_include = draft.list[index].likeUserDto.includes(
+          action.payload.userId
         );
-
+        const userIndex = draft.list[index].likeUserDto.findIndex(
+          (item) => item === action.payload.userId
+        );
         if (is_include) {
-          draft.list[index].postLike.pop(action.payload.userId);
+          draft.list[index].likeUserDto.splice(userIndex, 1);
+          draft.list[index].likeCount -= 1;
         } else {
-          draft.list[index].postLike.push(action.payload.userId);
+          draft.list[index].likeUserDto.push(action.payload.userId);
+          draft.list[index].likeCount += 1;
         }
       }),
+
     // [ADD_POST]: (state, action) =>
     //   produce(state, (draft) => {
     //     draft.list.unshift(action.payload.post);

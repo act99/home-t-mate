@@ -14,7 +14,6 @@ import { Card, Typography } from "@mui/material";
 import Text from "../elements/Text";
 
 import { useDispatch, useSelector } from "react-redux";
-import { color } from "@mui/system";
 // import  style  from "@mui/styles";
 
 export default function StoryCard(props) {
@@ -28,12 +27,11 @@ export default function StoryCard(props) {
   console.log("post확인용", _post);
   const classes = storyCard();
 
-  React.useEffect(()=>{
-    if(props.likeUserDto && props.likeUserDto.length > 0){
+  React.useEffect(() => {
+    if (props.likeUserDto && props.likeUserDto.length > 0) {
       console.log(props.likeUserDto[0]);
     }
-
-  },[]);
+  }, []);
 
   return (
     <div className="mainbox">
@@ -54,7 +52,7 @@ export default function StoryCard(props) {
           width={props.size}
         >
           {_storyimg &&
-            _storyimg.map((v, i) => <Img key={i} {...v} size="620px"  />)}
+            _storyimg.map((v, i) => <Img key={i} {...v} size="620px" />)}
         </Carousel>
 
         {/* <Img postImg={props.potoResponseDto} size="620px" /> */}
