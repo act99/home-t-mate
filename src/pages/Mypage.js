@@ -9,7 +9,6 @@ import "moment/locale/ko";
 import CalendarModal from "../components/CalendarModal";
 import Text from "../elements/Text";
 import Image from "../elements/Image";
-import Button from "../elements/Button";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -17,172 +16,121 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import styled from "@emotion/styled";
-
-const events = [
-  {
-    id: 1,
-    title: "event 1",
-    start: "2022-03-17T13:00:00",
-    end: "2022-03-20T13:00:00",
-  },
-  {
-    id: 2,
-    title: "event 2",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 3,
-    title: "event 3",
-    start: "2022-03-17T13:00:00",
-    end: "2022-03-20T13:00:00",
-  },
-  {
-    id: 4,
-    title: "event 4",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 5,
-    title: "event 5",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 6,
-    title: "event 6",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 7,
-    title: "event 7",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 8,
-    title: "event 8",
-    start: "2022-03-16T13:00:00",
-    end: "2022-03-16T18:00:00",
-  },
-  {
-    id: 9,
-    title: "event 9",
-    start: "2022-03-27T13:00:00",
-    end: "2022-03-30",
-  },
-];
-
-function FullCalendarApp(props) {
-  // const dateClickHandler = (e) => {
-  //     console.log(e)
-
-  //     const date = events.filter((item) => item.start.includes(e.dateStr))
-  //     console.log(date)
-  //     const title = []
-  //     const startTime = [];  //time.push(item.split("T")[1])
-  //     const endTime = []
-  //     const totalData = {}
-  //     date.map((item, index) => {
-  //         title.push(item.title)
-  //         startTime.push(item.start.split("T")[1])
-  //         endTime.push(item.end.split("T")[1])
-  //     })
-  //     console.log(title,startTime, endTime)
-
-  // }
-  const [todoEvent, setTodoEvent] = React.useState({
-    id: 0,
-    title: "",
-    start: "",
-    end: "",
-  });
-
+import { useSelector } from "react-redux";
+import "../styles/fullcalendar.css";
+import CreateRoomModal from "../containers/CreateRoomModal";
+const Mypage = (props) => {
+  const todoList = useSelector((state) => state.todoReducer.list);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = (e) => {
-    if (e.event === undefined || null) {
-      setTodoEvent({});
-    } else {
-      setTodoEvent({
-        id: e.event.id,
-        title: e.event.title,
-        start: e.event.start,
-        end: e.event.end,
-      });
-    }
+  // ** event 를 클릭했을 때
+  const [events, setEvents] = React.useState({});
+  const eventClickHandler = (e) => {
+    setEvents({
+      id: e.event.id,
+      title: e.event.title,
+      start: e.event.start,
+      end: e.event.end,
+      time: e.event.time,
+    });
+    console.log(e.event.title);
     setOpen(true);
   };
-
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setEvents({});
+    setOpen(false);
+  };
   const [TabValue, setTabValue] = React.useState("1");
   const TabhandleChange = (event, newValue) => {
     setTabValue(newValue);
   };
+  const dateClickHandler = (e) => {
+    setEvents({
+      start: e.dateStr,
+    });
+    setOpen(true);
+  };
+
+  const user = useSelector((state) => state.userReducer.user);
+  const { nickname, userImg } = user;
+  const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    return () => {};
+  }, [todoList]);
 
   return (
     <Grid width="1200px" margin="auto">
-      <Text F_size="36px" margin_bottom="80px">
-        마이페이지
-      </Text>
-      <Text F_size="28px" margin_bottom="16px">
-        반가워요 <span>유저닉네임</span>님:)
-      </Text>
-      <Text F_size="28px" margin_bottom="48px">
-        오늘도 즐거운 <span>홈트</span>를 응원해요💪💪
-      </Text>
+      <UserContainer>
+        <Text F_size="28px" margin_bottom="16px">
+          반가워요 <span>{nickname}</span>님:)
+        </Text>
+        <Text F_size="16px" margin_bottom="48px">
+          오늘도 즐거운 <span>홈트</span>를 응원해요💪💪
+        </Text>
+        <UserInfoContainer>
+          <UserDataContainer>
+            <Image
+              src={userImg}
+              width="200px"
+              height="200px"
+              border_radius="20px"
+              margin_right="48px"
+            />
+            <UserNameContainer style={{ marginLeft: "40px", marginTop: "32x" }}>
+              <Text F_size="28px" F_weight="bold" margin_top="16px">
+                {nickname}
+              </Text>
+              <div
+                style={{
+                  width: "200px",
+                  height: "36px",
+                  backgroundColor: "#fee500",
+                  borderRadius: "16px",
+                  display: "flex",
+                  justifyContent: "center",
+                  justifyItems: "center",
+                  marginTop: "12px",
+                  marginBottom: "56px",
+                }}
+              >
+                <h3 style={{ margin: "auto", fontSize: "16px" }}>
+                  카카오톡으로 로그인 됨
+                </h3>
+              </div>
+              <CreateButton
+                onClick={() => {
+                  setCreateRoomOpen(true);
+                }}
+              >
+                지금 방 만들기
+              </CreateButton>
+              <CreateRoomModal
+                createRoomOpen={createRoomOpen}
+                setCreateRoomOpen={setCreateRoomOpen}
+              />
+            </UserNameContainer>
+          </UserDataContainer>
+          <InviteContainer>
+            <div
+              style={{
+                width: "200px",
+                height: "36px",
+                display: "flex",
+                justifyContent: "center",
+                justifyItems: "center",
+                marginTop: "12px",
+                marginBottom: "72px",
+              }}
+            >
+              <h3 style={{ margin: "auto", fontSize: "16px" }}>
+                홈트메이트로 친구 초대하기
+              </h3>
+            </div>
+          </InviteContainer>
+        </UserInfoContainer>
+      </UserContainer>
 
       {/* userimg */}
-      <Grid is_flex margin_bottom="100px">
-        <Image
-          src="https://3.bp.blogspot.com/-x4gLW4b7sB4/XHE3SYQbIpI/AAAAAAAA4nM/SFGGsj7HgyELAWCFQfanqqQwwBJfg30YACLcBGAs/s1600/01.jpg"
-          width="203px"
-          height="203px"
-          border_radius="20px"
-          margin_right="48px"
-        />
-        <Grid margin_left="48px">
-          <Text F_size="28px">유저닉네임</Text>
-          <Grid is_flex margin_bottom="50px" margin_top="16px">
-            <Text F_size="24px" margin_right="16px">
-              123@naver.com
-            </Text>
-            <Grid width="184px" height="33px" B_radius="12px" BG_c="#ebc634">
-              <Text F_size="14px">카카오톡으로 로그인됨</Text>
-            </Grid>
-          </Grid>
-          <Button width="183px" height="52px" B_radius="20px">
-            <Text F_size="20px">지금 방 만들기</Text>
-          </Button>
-        </Grid>
-
-        <Grid margin_left="282px" margin_top="118px">
-          <Text F_size="18px">홈트메이트로 친구 초대하기</Text>
-          <Grid is_flex width="252px">
-            <Image
-              src="https://3.bp.blogspot.com/-x4gLW4b7sB4/XHE3SYQbIpI/AAAAAAAA4nM/SFGGsj7HgyELAWCFQfanqqQwwBJfg30YACLcBGAs/s1600/01.jpg"
-              shape="circle"
-              size="48"
-            />
-            <Image
-              src="https://3.bp.blogspot.com/-x4gLW4b7sB4/XHE3SYQbIpI/AAAAAAAA4nM/SFGGsj7HgyELAWCFQfanqqQwwBJfg30YACLcBGAs/s1600/01.jpg"
-              shape="circle"
-              size="48"
-            />
-            <Image
-              src="https://3.bp.blogspot.com/-x4gLW4b7sB4/XHE3SYQbIpI/AAAAAAAA4nM/SFGGsj7HgyELAWCFQfanqqQwwBJfg30YACLcBGAs/s1600/01.jpg"
-              shape="circle"
-              size="48"
-            />
-            <Image
-              src="https://3.bp.blogspot.com/-x4gLW4b7sB4/XHE3SYQbIpI/AAAAAAAA4nM/SFGGsj7HgyELAWCFQfanqqQwwBJfg30YACLcBGAs/s1600/01.jpg"
-              shape="circle"
-              size="48"
-            />
-          </Grid>
-        </Grid>
-      </Grid>
 
       {/* tab영역 */}
       <Box sx={{ width: "100%", typography: "body1" }}>
@@ -199,7 +147,7 @@ function FullCalendarApp(props) {
           <TabPanel value="1" sx={{ p: "0px" }}>
             <Grid margin="auto" position="relative">
               <FullCalendar
-                height="600px"
+                height="800px"
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
                 dayMaxEvents={true} //일정 많아지면 +버튼 생성
@@ -208,26 +156,16 @@ function FullCalendarApp(props) {
                   center: "title",
                   left: "dayGridMonth,timeGridWeek,timeGridDay",
                 }}
-                // customButtons={{
-                //   new: {
-                //     text: 'new',
-                //     onclick: () => console.log('new event'),
-                //   },
-                // }}
-
-                events={events}
-                // editable="true" //드래그로 일정 변경 가능
-                // dateClick={dateClickHandler}
-                // eventClick={(e) => console.log(e.event.title)}
-                eventClick={handleOpen}
+                events={todoList}
+                dateClick={dateClickHandler}
+                eventClick={eventClickHandler}
                 locale="ko" //한국어변경
               />
-
-              <Write onClick={handleOpen}></Write>
+              <Write onClick={() => setOpen(true)}></Write>
               <CalendarModal
+                events={events}
                 open={open}
                 handleClose={handleClose}
-                todoEvent={todoEvent}
               ></CalendarModal>
             </Grid>
           </TabPanel>
@@ -236,7 +174,40 @@ function FullCalendarApp(props) {
       </Box>
     </Grid>
   );
-}
+};
+
+const UserContainer = styled.div`
+  width: 1200px;
+  height: 320px;
+  margin-top: 120px;
+  margin-bottom: 100px;
+`;
+
+const UserInfoContainer = styled.div`
+  width: 1200px;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const UserDataContainer = styled.div`
+  width: 700px;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+`;
+
+const UserNameContainer = styled.div`
+  width: 440px;
+  height: 176px;
+`;
+
+const InviteContainer = styled.div`
+  width: 252px;
+  height: 88px;
+  margin-top: 96px;
+`;
 
 const Write = styled.div`
   width: 55px;
@@ -250,4 +221,28 @@ const Write = styled.div`
   z-index: 1;
 `;
 
-export default FullCalendarApp;
+const CreateButton = styled.button`
+  display: block;
+  /* margin: auto; */
+  width: 160px;
+  height: 48px;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 16px;
+  border: solid 2px green;
+  background-color: rgb(0, 0, 0, 0);
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+  margin-right: 16px;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
+
+export default Mypage;

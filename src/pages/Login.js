@@ -8,9 +8,9 @@ import kakaoImage from "../assets/kakao_login_large_wide.png";
 const Login = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const kakaoLogin = () => {
-    window.location.href = KAKAO_AUTH_URL;
-  };
+  // const kakaoLogin = () => {
+  //   window.location.href = KAKAO_AUTH_URL;
+  // };
   const logout = () => {
     dispatch(userActions.logout());
     history.replace("/");
@@ -29,7 +29,7 @@ const Login = (props) => {
           id="custom-login-btn"
           // onClick={kakaoLogin}
         >
-          <img src={kakaoImage} width="500" />
+          <img alt="" src={kakaoImage} width="500" />
         </a>
       </div>
       <SmallFont onClick={() => history.push("/")}>

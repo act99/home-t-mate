@@ -15,7 +15,7 @@ const initialState = {
 };
 
 const initialRoom = {
-  roomId: 0,
+  roomId: "",
   name: "",
   userCount: 0,
   user: "",
@@ -27,6 +27,7 @@ const getRoomDB = () => {
     await apis
       .getRooms()
       .then((res) => {
+        console.log(res.data);
         dispatch(getRoom(res.data));
       })
       .catch((error) => console.log(error));
@@ -34,23 +35,35 @@ const getRoomDB = () => {
 };
 
 // ** 방 생성
-const createRoomDB = (name) => {
+const createRoomDB = (name, password, content, roomImg) => {
   return function (dispatch, getState, { history }) {
+    const state = getState();
+    const user = state.userReducer.user;
+    const nickname = user.nickname;
+    const profileImg = user.profileImg;
     apis
-      .createRooms(name)
-      .then((res) =>
-        dispatch(
-          createRoom({
-            roomId: res.data.roomId,
-            name: res.data.name,
-            userCount: res.data.userCount,
-            user: res.data.user,
-          })
-        )
+      .createRooms(name, password, content, roomImg)
+      .then(
+        (res) =>
+          dispatch(
+            createRoom({
+              ...res.data,
+              profileImg: profileImg,
+              nickname: nickname,
+              // user :
+              // roomId: res.data.roomId,
+              // name: res.data.name,
+              // content: res.data.content,
+              // workOut: res.data.workOut,
+              // roomImg: res.data.roomImg,
+              // userCount: res.data.userCount,
+              // user: res.data.user,
+            })
+          )
+        // history.go(0)
       )
       .catch((error) => {
-        alert("에러발생");
-        console.log(error);
+        alert(error.response.data.message);
       });
   };
 };

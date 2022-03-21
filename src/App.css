@@ -1,10 +1,52 @@
+@font-face {
+  font-family: "SuncheonB";
+  src: url("./assets/fonts/SuncheonB.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SuncheonR";
+  src: url("./assets/fonts/SuncheonR.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GmarketSansBold";
+  src: url("./assets/fonts/GmarketSansTTFBold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("./assets/fonts/GmarketSansTTFMedium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GmarketSansLight";
+  src: url("./assets/fonts/GmarketSansTTFLight.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  font-family: "SuncheonR";
+}
+
 .App {
-  text-align: center;
+  /* font-family: "GmarketSansBold"; */
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.NavBar {
+  font-family: "GmarketSansBold";
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -35,4 +77,19 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.stream-container {
+  padding: 0;
+}
+
+.fc .fc-col-header-cell-cushion {
+  /* needs to be same precedence */
+  padding-top: 5px; /* an override! */
+  padding-bottom: 5px; /* an override! */
+}
+
+.commentlist::-webkit-scrollbar {
+  display: none;
+
 }

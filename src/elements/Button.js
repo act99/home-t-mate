@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
 import React from "react";
+import styled from "@emotion/styled";
 
 const Button = (props) => {
   //Border category
@@ -75,10 +75,6 @@ Button.defaultProps = {
   _onClick: false,
   disabled: false,
   _ref: null,
-
-  font_color: null,
-  font_size: null,
-  font_weight: null,
 };
 
 const Btn = styled.button`
@@ -96,6 +92,7 @@ const Btn = styled.button`
   width: ${(props) => props.width};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
+
   position: ${(props) => props.position};
   top: ${(props) => props.top};
   bottom: ${(props) => props.bottom};
