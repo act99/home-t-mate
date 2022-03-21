@@ -141,17 +141,21 @@ export default handleActions(
         const index = draft.list.findIndex(
           (item) => item.id === action.payload.postId
         );
-        const is_include = draft.list[index].likeUserDto.includes(
-          action.payload.userId
+
+        let is_include = false;
+        draft.list[index].likeUserDto.map((item, index) =>
+          item.userId === action.payload.userId
+            ? (is_include = true)
+            : (is_include = false)
         );
         const userIndex = draft.list[index].likeUserDto.findIndex(
-          (item) => item === action.payload.userId
+          (item) => item.userId === action.payload.userId
         );
         if (is_include) {
           draft.list[index].likeUserDto.splice(userIndex, 1);
           draft.list[index].likeCount -= 1;
         } else {
-          draft.list[index].likeUserDto.push(action.payload.userId);
+          draft.list[index].likeUserDto.push({ userId: action.payload.userId });
           draft.list[index].likeCount += 1;
         }
       }),

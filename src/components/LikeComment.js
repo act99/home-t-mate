@@ -47,7 +47,9 @@ export default function LikeComment(props) {
 
   React.useEffect(() => {
     if (thisPost.likeUserDto) {
-      let result = thisPost.likeUserDto.filter((item) => item === _user.id);
+      let result = thisPost.likeUserDto.filter(
+        (item) => item.userId === _user.id
+      );
       if (result.length > 0) {
         setLike(true);
       } else {
@@ -56,7 +58,7 @@ export default function LikeComment(props) {
     }
 
     return () => {};
-  }, [thisPost.likeUserDto]);
+  }, [thisPost.likeUserDto, like]);
 
   // includes() 메서드는 배열이 특정 요소를 포함하고 있는지 판별
   // user가 좋아요 눌렀는지 안눌렀는지 판단
@@ -67,7 +69,11 @@ export default function LikeComment(props) {
       return;
     } else {
       dispatch(postAcions.likePostDB(thisPost.id, _user.id));
-      setLike(!like); //이미 누른 좋아요를 다시누르면 취소됨
+      if (like === true) {
+        setLike(false);
+      } else {
+        setLike(true);
+      }
     }
   };
 
