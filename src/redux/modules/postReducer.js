@@ -21,8 +21,7 @@ const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 //   post_id, contents, images
 // }));
 
-const initialPost = {
-};
+const initialPost = {};
 
 const initialState = {
   list: [{ ...initialPost }],
@@ -67,6 +66,7 @@ const editPostDB = (postId, contents, images) => {
       })
       .catch((error) => {
         alert("게시글 수정에 실패했습니다.");
+        console.log(error);
       });
   };
 };
@@ -88,15 +88,16 @@ const deletePostDB = (postId) => {
 
 const likePostDB = (postId, userId) => {
   return async function (dispatch, getState) {
-    apis.likePost(postId, userId)
-    .then((res) => {
-      dispatch(like(postId, userId))
-      alert("좋아요 성공");
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("좋아요 실패");
-    });
+    apis
+      .likePost(postId, userId)
+      .then((res) => {
+        dispatch(like(postId, userId));
+        alert("좋아요 성공");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("좋아요 실패");
+      });
   };
 };
 

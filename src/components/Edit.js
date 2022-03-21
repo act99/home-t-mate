@@ -17,13 +17,12 @@ import { imageApis } from "../shared/formApi";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-
 function Edit(props) {
   const dispatch = useDispatch();
   console.log(props);
 
   const { id, open, handleClose, potoResponseDto } = props;
-
+  console.log(potoResponseDto);
   const fileInput = React.useRef();
   const contents = React.useRef();
 
@@ -58,21 +57,14 @@ function Edit(props) {
   };
 
   const editPost = () => {
-    const changeImage = new FormData();
+    const imgData = new FormData();
+    const contentData = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {
-      changeImage.append("file", tempFile[0][i]);
+      imgData.append("image", tempFile[0][i]);
       console.log(tempFile[0][i]);
-      console.log(changeImage);
     }
-    const changeContents = contents.current.value;
-
-    imageApis
-      .postImage(changeImage)
-      .then((res) => {
-        console.log("edit img res확인용", res);
-        dispatch(postActions.editPostDB(id, changeContents, res.data.file));
-      })
-      .catch((error) => console.log(error));
+    contentData.append("content", contents.current.value);
+    dispatch(postActions.editPostDB(id, contentData, imgData));
   };
 
   console.log("fileinput.current", fileInput.current);
@@ -163,17 +155,21 @@ function Edit(props) {
                 <Carousel
                   showThumbs={false}
                   infiniteLoop={true}
-                  height={props.size}
-                  width={props.size}
+                  height="648px"
+                  width="648px"
                 >
                   {potoResponseDto &&
                     potoResponseDto.map((v, i) => (
-                      <Img key={i} {...v} size="800px" border="20px" _onClick={() => {
-                        fileInput.current.click();
-                      }}
-
-                      fileSelected={fileSelected}
-                      postImg={fileSelected ? preview : {...v}} />
+                      <Img
+                        key={i}
+                        size="648px"
+                        border="20px"
+                        _onClick={() => {
+                          fileInput.current.click();
+                        }}
+                        fileSelected={fileSelected}
+                        postImg={fileSelected ? preview : v.postImg}
+                      />
                     ))}
                 </Carousel>
 
