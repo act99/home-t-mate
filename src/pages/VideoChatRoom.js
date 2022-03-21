@@ -113,18 +113,11 @@ const VideoChatRoom = () => {
   React.useEffect(() => {
     let giveRoomId = locationState.roomId;
     let givePassword = locationState.password;
-    apis
-      .enterRoom(giveRoomId, givePassword)
-      .then((res) => {
-        created();
-      })
-      .catch((error) => console.log(error.response.message));
+
+    created();
+
     // created();
     return () => {
-      apis
-        .leaveRoom(giveRoomId)
-        .then((res) => {})
-        .catch((error) => console.log(error));
       disconnected();
       history.replace("/");
       history.go(0);
@@ -148,6 +141,7 @@ const VideoChatRoom = () => {
             nickname={nickname}
             video={video}
             audio={audio}
+            password={locationState.password}
           />
         </VideoTest>
         <ChattingTest height={height}>
