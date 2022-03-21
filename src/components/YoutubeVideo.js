@@ -9,6 +9,7 @@ import {
   sendYoutubeUrl,
 } from "../shared/SocketFunc";
 import ReactPlayer from "react-player";
+import { Avatar } from "@mui/material";
 
 const YoutubeVideo = (props) => {
   // ** history
@@ -116,7 +117,9 @@ const YoutubeVideo = (props) => {
     });
     return () => {};
   }, [on, url]);
-  console.log(((height - 200) * 16) / 9);
+  // console.log(((height - 200) * 16) / 9);
+  const roomData = useSelector((state) => state.selectedRoomReducer.room);
+
   return (
     <>
       {isYoutube ? (
@@ -144,17 +147,26 @@ const YoutubeVideo = (props) => {
         </Empty>
       )}
       <FormStyle>
-        <TitleText>제목입니다.</TitleText>
-        <ContentText>본문입니다.본문입니다.본문입니다.본문입니다.</ContentText>
-        <form onSubmit={handleUrlSubmit}>
+        <TitleText>방제 : {roomData.roomName}</TitleText>
+        <ContentText>설명 : {roomData.content}</ContentText>
+        <HostText>
+          <h3>호스트 : </h3>
+          <Avatar
+            alt={roomData.nickname}
+            src={roomData.profileImg}
+            sx={{ width: "28px", height: "28px", ml: 1 }}
+          />
+          <h3>{roomData.nickname}</h3>
+        </HostText>
+        <FormBox onSubmit={handleUrlSubmit}>
           <UrlInput
             type="text"
             onChange={handleUrlChange}
             required
             placeholder="유튜브 Url"
           />
-          <button type="submit">유튜브 url 제출</button>
-        </form>
+          <CreateButton type="submit">유튜브 url 제출</CreateButton>
+        </FormBox>
       </FormStyle>
     </>
   );
@@ -194,22 +206,72 @@ const FormStyle = styled.div`
 
 const UrlInput = styled.input`
   width: 500px;
-  height: 30px;
+  height: 36px;
   margin-left: 30px;
+  margin-right: 16px;
+  padding-left: 12px;
+  border-radius: 10px;
+  border: solid 1px green;
+  :focus {
+    outline: solid 1px green;
+    border: solid 1px green;
+  }
 `;
 
 const TitleText = styled.h3`
   font-size: 20px;
   font-weight: bold;
-  margin: 0px;
+  margin: 4px;
   margin-bottom: 3px;
   margin-left: 30px;
 `;
 const ContentText = styled.h5`
-  font-size: 15px;
-  margin: 0px;
+  font-size: 16px;
+  margin: 4px;
   margin-bottom: 15px;
   margin-left: 30px;
+`;
+const HostText = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 4px;
+  margin-bottom: 15px;
+  margin-left: 30px;
+  align-items: center;
+  h3 {
+    margin: 0px;
+    font-size: 16px;
+  }
+`;
+
+const CreateButton = styled.button`
+  display: block;
+  /* margin: auto; */
+  width: 160px;
+  height: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 10px;
+  border: solid 1px green;
+  background-color: white;
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+  margin-right: 16px;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
+
+const FormBox = styled.form`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export default YoutubeVideo;

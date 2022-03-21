@@ -33,17 +33,14 @@ const getPostDB = () => {
       .getPost()
       .then((res) => {
         dispatch(setPost(res.data));
-        console.log("res확인용입니다", res.data);
       })
       .catch((error) => {
         window.alert("게시글 불러오기 실패!");
-        console.log("res,error확인용입니다", error);
       });
   };
 };
 
 const addPostDB = (postData) => {
-  console.log(postData);
   return async function (dispatch, getState) {
     imageApis
       .addPost(postData)
@@ -56,12 +53,14 @@ const addPostDB = (postData) => {
   };
 };
 
-const editPostDB = (postId, contents, images) => {
+const editPostDB = (postId, content) => {
   return function (dispatch, getState, { history }) {
-    apis
-      .editPost(postId, contents, images)
+    console.log(postId, content);
+    imageApis
+      .editPost(postId, content)
       .then((res) => {
         history.replace("/story");
+        history.go(0);
         alert("게시글 수정 성공!");
       })
       .catch((error) => {
@@ -92,7 +91,6 @@ const likePostDB = (postId, userId) => {
       .likePost(postId)
       .then((res) => {
         dispatch(like(postId, userId));
-        alert("좋아요 성공");
       })
       .catch((error) => {
         console.log(error);

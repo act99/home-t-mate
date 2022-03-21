@@ -1,13 +1,10 @@
 //react-responsive-carousel 라이브러리 사용
 
 import React from "react";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Image, Grid } from "../elements";
+import { Image } from "../elements";
 
 const Img = (props) => {
-  console.log("img props확인용", props);
-  console.log(props.postImg);
   if (props.postImg) {
     return (
       <Image

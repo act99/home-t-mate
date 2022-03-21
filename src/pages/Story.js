@@ -14,14 +14,11 @@ function Story() {
 
   React.useEffect(() => {
     dispatch(postActions.getPostDB());
-  },[]);
+  }, []);
 
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const _post = useSelector((state) => state.postReducer.list);
-  const _state = useSelector((state) => state);
-  console.log("story.js state값 확인용", _state);
-  console.log("post확인용", _post);
 
   return (
     <React.Fragment>

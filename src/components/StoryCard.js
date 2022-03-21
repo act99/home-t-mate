@@ -17,69 +17,82 @@ import { useDispatch, useSelector } from "react-redux";
 // import  style  from "@mui/styles";
 
 export default function StoryCard(props) {
-  console.log("storycard", props);
-
-  const _storyimg = props.photoResponseDto;
-  console.log("_storyimg", _storyimg);
-  const _user = useSelector((state) => state.userReducer.user);
-  const _post = useSelector((state) => state.postReducer.list);
-  console.log("user확인용", _user);
-  console.log("post확인용", _post);
   const classes = storyCard();
-
+  const {
+    id,
+    nickname,
+    userImg,
+    size,
+    commentUserDto,
+    likeUserDto,
+    likeCount,
+    photoResponseDto,
+    content,
+  } = props;
   React.useEffect(() => {
     if (props.likeUserDto && props.likeUserDto.length > 0) {
       console.log(props.likeUserDto[0]);
     }
-  }, []);
+    console.log(commentUserDto, likeUserDto);
+  }, [commentUserDto, likeUserDto]);
 
-  return (
-    <div className="mainbox">
-      <Card
-        sx={{ maxWidth: 620, height: 900, margin: "auto" }}
-        className={classes.root}
-      >
-        <Cardheader
-          id={props.id}
-          username={props.nickname}
-          userImg={props.userImg}
-        />
-
-        <Carousel
-          showThumbs={false}
-          infiniteLoop={true}
-          height={props.size}
-          width={props.size}
+  if (commentUserDto !== undefined && likeUserDto !== undefined) {
+    return (
+      <div className="mainbox">
+        <Card
+          sx={{ maxWidth: 620, height: 900, margin: "auto" }}
+          className={classes.root}
         >
-          {_storyimg &&
-            _storyimg.map((v, i) => <Img key={i} {...v} size="620px" />)}
-        </Carousel>
+          <Cardheader id={id} username={nickname} userImg={userImg} />
 
-        {/* <Img postImg={props.photoResponseDto} size="620px" /> */}
+          <Carousel
+            showThumbs={false}
+            infiniteLoop={true}
+            height={size}
+            width={size}
+          >
+            {photoResponseDto &&
+              photoResponseDto.map((v, i) => (
+                <Img key={i} {...v} size="620px" />
+              ))}
+          </Carousel>
 
-        {/* id는 post id */}
-        <LikeComment
-          commentUserDto={props.commentUserDto}
-          likeUserDto={props.likeUserDto}
-          likeCount={props.likeCount}
-          id={props.id}
-          modal={true}
-        />
+          {/* <Img postImg={props.photoResponseDto} size="620px" /> */}
 
-        <CardContent sx={{ p: 0, pl: "16px" }}>
-          <Typography variant="body2" color="black" align="justify">
-            <strong>{props.nickname}</strong>
-            {props.content}
-          </Typography>
-        </CardContent>
+          {/* id는 post id */}
+          <LikeComment
+            commentUserDto={commentUserDto}
+            likeUserDto={likeUserDto}
+            likeCount={likeCount}
+            id={id}
+            modal={true}
+          />
 
-        <Text margin_left="16px" margin_top="28px">
-          {/* {props.likeUserDto[0].userId}님 외 {props.likeUserDto.length}명이 이 스토리를 좋아해요 */}
-        </Text>
-        <Text margin_left="16px" margin_bottom="8px">
-          {/* {props.commentUserDto[0].nickname}님 외 {props.commentUserDto.length}개의 댓글 */}
-        </Text>
-      </Card>
+          <CardContent sx={{ p: 0, pl: "16px" }}>
+            <Typography variant="body2" color="black" align="justify">
+              <strong>{nickname}</strong>
+              {content}
+            </Typography>
+          </CardContent>
+          {likeUserDto.length <= 0 ? null : (
+            <Text margin_left="16px" margin_top="28px">
+              {likeUserDto[0].userId}님 외 {likeUserDto.length}명이 이 스토리를
+              좋아해요
+            </Text>
+          )}
+          {commentUserDto <= 0 ? null : (
+            <Text margin_left="16px" margin_bottom="8px">
+              {props.commentUserDto[0].nickname}님 외{" "}
+              {props.commentUserDto.length}개의 댓글
+            </Text>
+          )}
+        </Card>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <h3>로딩중</h3>
     </div>
   );
 }
