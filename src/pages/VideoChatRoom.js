@@ -111,8 +111,10 @@ const VideoChatRoom = () => {
   };
 
   React.useEffect(() => {
+    let giveRoomId = locationState.roomId;
+    let givePassword = locationState.password;
     apis
-      .enterRoom(roomId, password)
+      .enterRoom(giveRoomId, givePassword)
       .then((res) => {
         created();
       })
@@ -120,7 +122,7 @@ const VideoChatRoom = () => {
     // created();
     return () => {
       apis
-        .leaveRoom(roomId)
+        .leaveRoom(giveRoomId)
         .then((res) => {})
         .catch((error) => console.log(error));
       disconnected();
