@@ -15,6 +15,7 @@ const Img = (props) => {
         src={props.postImg}
         alt="포스트사진"
         height={props.size}
+        width={props.size}
         B_bottom_left_radius={props.border}
         B_top_left_radius={props.border}
       ></Image>

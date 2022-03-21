@@ -3,6 +3,7 @@ import { result } from "lodash";
 import { createAction, handleActions } from "redux-actions";
 import { apis } from "../../shared/api";
 import { imageApis } from "../../shared/formApi";
+import { history } from "../store";
 
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
@@ -49,6 +50,7 @@ const addPostDB = (postData) => {
       .addPost(postData)
       .then((res) => {
         alert("게시물 작성 성공!");
+        history.go(0);
       })
       .catch((error) => {
         alert("게시물 작성 실패!");
