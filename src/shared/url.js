@@ -28,6 +28,7 @@ const REDIRECT_URI = "http://localhost:3000/user/kakao/callback";
 const WEB_SOCKET = "http://3.35.175.152:8080/ws-stomp";
 const OPEN_VIDU = "https://" + window.location.hostname + ":4443";
 const CLIENT_KEY = "dbf70dbcc152160d45ec6ce156a6c37e";
+// const CLIENT_KEY = "a0c21ddfb1632beaa7377ac0b91c9849";
 const url = {
   BASE_URL,
   REDIRECT_URI,

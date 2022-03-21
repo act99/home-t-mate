@@ -49,7 +49,7 @@ export const apis = {
 
   //댓글
     getComment: (postId) => api.get(`api/comments/${postId}`),
-    addComment: (postId, comment) => api.post(`api/comments/${postId}`, comment),
+    addComment: (postId, comment) => api.post(`api/comments/${postId}`, {comment:comment}),
     delComment: (postId, commentId) => api.delete(`api/comments/${postId}/${commentId}`),
 
   // ** TodoList

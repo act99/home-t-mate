@@ -41,10 +41,10 @@ const addCommentDB = (postId, comment) => {
   return function(dispatch, getState, {history}){
     apis.addComment(postId, comment)
       .then((response) => {
-        apis.getComment().then((response)=>{
-          dispatch(setComment(postId, response.data))
-          console.log('addcommet res값 확인용', response.data);
-        })
+        // apis.getComment().then((response)=>{
+        //   dispatch(setComment(postId, response.data))
+        //   console.log('addcommet res값 확인용', response.data);
+        // })
       })
       .catch((error) => {
         console.log(error)

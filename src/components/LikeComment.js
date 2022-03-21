@@ -44,9 +44,8 @@ export default function LikeComment(props) {
 
   console.log('like thispost' ,thisPost);
 
-
+  // likeUserDto안에있는 키값 userId만 추출해서 배열로 만들기
   // const likeUserList = thisPost.likeUserDto.map(a=>a.userId); 
-  //likeUserDto안에있는 키값 userId만 추출해서 배열로 만들기
   // console.log('likeUserList', likeUserList);
 
   // includes() 메서드는 배열이 특정 요소를 포함하고 있는지 판별
@@ -106,9 +105,7 @@ export default function LikeComment(props) {
             margin="0px 5px 4px 5px"
             height="28px"
           >
-            <BsChat size="22" border="3px" onClick={handleOpen}
-            
-            />
+            <BsChat size="22" border="3px" onClick={handleOpen}/>
           </Button>
 
         </Grid>
