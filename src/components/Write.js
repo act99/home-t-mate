@@ -100,29 +100,45 @@ function Write(props) {
                         <Img postImg={item} size="800px" border="20px" />
                       ))}
                     </Carousel>
-                    <Grid is_flex flex_direction="column">
-                      <Grid
-                        width="545px"
-                        position="absolute"
-                        top="0px"
-                        right="0px"
-                      >
-                        <Grid is_flex justify_content="flex-start">
-                          <Avatar
-                            alt="Remy Sharp"
-                            src={_user.userImg ? _user.userImg : ""}
-                            sx={{ margin: "20px", width: 50, height: 50 }}
-                          />
-                          <Text>{_user.nickname ? _user.nickname : ""}</Text>
-                        </Grid>
 
-                        <TextArea
-                          ref={contents}
-                          rows="10"
-                          wrap="hard"
-                          style={{marginLeft:"20px", height:"500px"}}
-                        ></TextArea>
+                    <Grid
+                      width="545px"
+                      position="absolute"
+                      top="0px"
+                      right="0px"
+                    >
+                      <Grid is_flex justify_content="flex-start">
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={_user.userImg ? _user.userImg : ""}
+                          sx={{ margin: "20px", width: 50, height: 50 }}
+                        />
+                        <Text>{_user.nickname ? _user.nickname : ""}</Text>
                       </Grid>
+
+                      <TextArea
+                        ref={contents}
+                        rows="10"
+                        wrap="hard"
+                        style={{ marginLeft: "20px", height: "500px" }}
+                      ></TextArea>
+
+                      <Button
+                        _onClick={addPost}
+                        font_size="20px"
+                        font_color="#587730"
+                        font_weight="700"
+                        B_radius="20px"
+                        border="2px solid #587730"
+                        width="197px"
+                        height="52px"
+                        BG_color="white"
+                        position="absolute"
+                        bottom="-140px"
+                        right="40px"
+                      >
+                        스토리 작성완료
+                      </Button>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -173,13 +189,48 @@ function Write(props) {
                 </Grid>
               )
             ) : (
-              <Grid width="420px" height="220px">
-                <Text F_size="24px">
+              <Grid
+                width="420px"
+                height="220px"
+                is_flex
+                flex_direction="column"
+                justify_content="center"
+                align_items="center"
+              >
+                <Text F_size="24px" F_align= "center" margin="0px 70px 12px 70px">
                   홈트메이트를 즐기기 위해 로그인이 필요해요
                 </Text>
-                <Text F_size="16px">로그인 후 더 재미있게 놀아볼까요?</Text>
-                <Button>취소하기</Button>
-                <Button>로그인하기</Button>
+                <Text F_size="16px" margin_bottom="32px">로그인 후 더 재미있게 놀아볼까요?</Text>
+                
+                <Grid is_flex>
+                <Button
+                        _onClick={handleOnClose}
+                        font_size="20px"
+                        font_color="#757575"
+                        font_weight="400"
+                        B_radius="20px"
+                        border="2px solid #757575"
+                        width="120px"
+                        height="50px"
+                        BG_color="white"
+                        margin="0px 30px 0px 0px"
+                      >
+                        취소하기
+                      </Button>
+                      <Button
+                        _onClick={()=>{history.push("/login")}}
+                        font_size="20px"
+                        font_color="#587730"
+                        font_weight="400"
+                        B_radius="20px"
+                        border="2px solid #587730"
+                        width="120px"
+                        height="50px"
+                        BG_color="white"
+                      >
+                        로그인하기
+                      </Button>
+                </Grid>
               </Grid>
             )}
           </Box>
