@@ -14,12 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { filterEventStoreDefs } from "@fullcalendar/react";
 import { imageApis } from "../shared/formApi";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 function Edit(props) {
   const dispatch = useDispatch();
+  console.log(props);
 
-  const { open, handleClose } = props;
-
+  const { id, open, handleClose, photoResponseDto } = props;
+  console.log(photoResponseDto);
   const fileInput = React.useRef();
   const contents = React.useRef();
 
@@ -30,7 +33,7 @@ function Edit(props) {
   const _user = useSelector((state) => state.userReducer.user);
 
   let tempData = [];
-  const formData = [];
+  const formData = new FormData();
 
   const selectFile = (e) => {
     console.log("e", e);
@@ -39,8 +42,7 @@ function Edit(props) {
     setTempFile([...tempFile, files]);
 
     for (let i = 0; i < files.length; i++) {
-      formData.push("imageUrl", files[i]);
-      console.log("formdate확인용", files[i]);
+      formData.append("file", files[i]);
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.addEventListener("load", function () {
@@ -53,18 +55,16 @@ function Edit(props) {
       });
     }
   };
+
   const editPost = () => {
-    const changeImage = new FormData();
+    const imgData = new FormData();
+    const contentData = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {
-      changeImage.append("file", tempFile[0][i]);
+      imgData.append("image", tempFile[0][i]);
+      console.log(tempFile[0][i]);
     }
-    const changeContents = contents.current.value;
-    // imageApis
-    //   .postImage(changeImage)
-    //   .then((res) => {
-    //     dispatch(postActions.editPostDB(id, changeContents, res.data.file));
-    //   })
-    //   .catch((error) => console.log(error));
+    contentData.append("content", contents.current.value);
+    dispatch(postActions.editPostDB(id, contentData, imgData));
   };
 
   console.log("fileinput.current", fileInput.current);
@@ -149,15 +149,30 @@ function Edit(props) {
                   onChange={selectFile}
                   type="file"
                   multiple
-                  //   style={{ display: "none" }}
+                  style={{ display: "none" }}
                 />
-                <Img
-                  _onClick={() => {
-                    fileInput.current.click();
-                  }}
-                  postImg={fileSelected ? preview : props.postImg}
-                  size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
-                ></Img>
+
+                <Carousel
+                  showThumbs={false}
+                  infiniteLoop={true}
+                  height="648px"
+                  width="648px"
+                >
+                  {photoResponseDto &&
+                    photoResponseDto.map((v, i) => (
+                      <Img
+                        key={i}
+                        size="648px"
+                        border="20px"
+                        _onClick={() => {
+                          fileInput.current.click();
+                        }}
+                        fileSelected={fileSelected}
+                        postImg={fileSelected ? preview : v.postImg}
+                      />
+                    ))}
+                </Carousel>
+
                 <Grid is_flex flex_direction="column" width="100%">
                   <Grid
                     is_flex

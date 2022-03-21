@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
 import React from "react";
+import styled from "@emotion/styled";
 
 const Button = (props) => {
   //Border category
@@ -75,24 +75,24 @@ Button.defaultProps = {
   _onClick: false,
   disabled: false,
   _ref: null,
-
-  font_color: null,
-  font_size: null,
-  font_weight: null,
 };
 
 const Btn = styled.button`
   border: ${(props) => props.border};
   border-radius: ${(props) => props.B_radius};
+
   background-color: ${(props) => props.BG_color};
   box-shadow: ${(props) => props.box_shadow};
+
   font-size: ${(props) => props.font_size};
   font-weight: ${(props) => props.font_weight};
   color: ${(props) => props.font_color};
+
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
+
   position: ${(props) => props.position};
   top: ${(props) => props.top};
   bottom: ${(props) => props.bottom};

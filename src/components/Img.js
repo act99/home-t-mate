@@ -6,37 +6,18 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Image, Grid } from "../elements";
 
 const Img = (props) => {
-  console.log("write props확인용", props);
+  console.log("img props확인용", props);
+  console.log(props.postImg);
   if (props.postImg) {
     return (
-      <Carousel
-        showThumbs={false}
-        infiniteLoop={true}
+      <Image
+        _onClick={props._onClick}
+        src={props.postImg}
+        alt="포스트사진"
         height={props.size}
-        width={props.size}
-      >
-        {/* map함수는 배열만 받는다 */}
-        {/* {props.postImg.map((item, i) => (
-          <Grid key={i}>
-            <Image
-              src={item}
-              alt="포스트사진"
-              height={props.size}
-              B_bottom_left_radius={props.border}
-              B_top_left_radius={props.border}
-            ></Image>
-          </Grid>
-        ))} */}
-        <Grid>
-          <Image
-            src={props.postImg}
-            alt="포스트사진"
-            height={props.size}
-            B_bottom_left_radius={props.border}
-            B_top_left_radius={props.border}
-          ></Image>
-        </Grid>
-      </Carousel>
+        B_bottom_left_radius={props.border}
+        B_top_left_radius={props.border}
+      ></Image>
     );
   }
 
