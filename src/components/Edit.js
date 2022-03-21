@@ -21,8 +21,8 @@ function Edit(props) {
   const dispatch = useDispatch();
   console.log(props);
 
-  const { id, open, handleClose, potoResponseDto } = props;
-  console.log(potoResponseDto);
+  const { id, open, handleClose, photoResponseDto } = props;
+  console.log(photoResponseDto);
   const fileInput = React.useRef();
   const contents = React.useRef();
 
@@ -158,8 +158,8 @@ function Edit(props) {
                   height="648px"
                   width="648px"
                 >
-                  {potoResponseDto &&
-                    potoResponseDto.map((v, i) => (
+                  {photoResponseDto &&
+                    photoResponseDto.map((v, i) => (
                       <Img
                         key={i}
                         size="648px"

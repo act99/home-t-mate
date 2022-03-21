@@ -33,20 +33,20 @@ const style = {
 
 export default function Detail(props) {
   const dispatch = useDispatch();
-  const{ commentUserDto } = props
+  const { commentUserDto } = props;
   // id={props.id}
   console.log("Detail props용", props); //post id값, comment어쩌구
 
   const _post = useSelector((state) => state.postReducer.list);
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x), "");
-  const thisPostPoto = thisPost.potoResponseDto;
+  const thisPostPhoto = thisPost.photoResponseDto;
 
   console.log("postReducer확인용", _post);
   console.log("thispost확인용", thisPost);
 
-  React.useEffect(()=>{
-    dispatch(commentActions.getCommentDB(props.id))
-  },[])
+  React.useEffect(() => {
+    dispatch(commentActions.getCommentDB(props.id));
+  }, []);
 
   return (
     <div>
@@ -58,8 +58,8 @@ export default function Detail(props) {
             height={props.size}
             width={props.size}
           >
-            {thisPostPoto &&
-              thisPostPoto.map((v, i) => (
+            {thisPostPhoto &&
+              thisPostPhoto.map((v, i) => (
                 <Img key={i} {...v} size="800px" border="20px" />
               ))}
           </Carousel>
@@ -72,23 +72,25 @@ export default function Detail(props) {
             username={thisPost.nickname}
             userImg={thisPost.userImg}
           />
-          <div className="commentlist" style={{ height: "640px", overflow: "auto" }}>
+          <div
+            className="commentlist"
+            style={{ height: "640px", overflow: "auto" }}
+          >
             {/* 글 내용 */}
             <Typography
-            variant="body2"
-            color="black"
-            align="justify"
-            marginLeft={"16px"}
-          >
-            {thisPost.content}
-          </Typography>
-          
-          {/* 댓글 보이기 */}
-            {commentUserDto.map((v,i)=>(
+              variant="body2"
+              color="black"
+              align="justify"
+              marginLeft={"16px"}
+            >
+              {thisPost.content}
+            </Typography>
+
+            {/* 댓글 보이기 */}
+            {commentUserDto.map((v, i) => (
               <CommentContents key={i} {...v} id={props.id} />
             ))}
           </div>
-
 
           {/* 댓글작성부분 */}
           <Grid position="absolute" bottom="0px" width="545px">

@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function StoryCard(props) {
   console.log("storycard", props);
 
-  const _storyimg = props.potoResponseDto;
+  const _storyimg = props.photoResponseDto;
   console.log("_storyimg", _storyimg);
   const _user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
@@ -55,7 +55,7 @@ export default function StoryCard(props) {
             _storyimg.map((v, i) => <Img key={i} {...v} size="620px" />)}
         </Carousel>
 
-        {/* <Img postImg={props.potoResponseDto} size="620px" /> */}
+        {/* <Img postImg={props.photoResponseDto} size="620px" /> */}
 
         {/* id는 post id */}
         <LikeComment
