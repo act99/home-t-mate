@@ -6,7 +6,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
-import { Text } from "../elements";
+import { Text,Grid } from "../elements";
 import Edit from "./Edit";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 
@@ -45,8 +45,7 @@ export default function Cardheader(props) {
       action={
         //...아이콘 부분
         <>
-
-            <MoreHorizIcon onClick={handleClick} />
+          <MoreHorizIcon onClick={handleClick} />
 
           {/* 삭제하기,수정하기,취소하기 dropdown modal부분 */}
           <Popover
@@ -62,11 +61,22 @@ export default function Cardheader(props) {
               style: { width: "200px", height: "200px" },
             }}
           >
-            <div style={{ }}>
-            <Text F_size="16px" _onClick={edithandleOpen}>수정하기</Text>
-            <Text F_size="16px" _onClick={deletePostDB}>삭제하기</Text>
-            <Text F_size="16px" _onClick={handleClose}>취소하기</Text>
-            </div>
+            <Grid
+              is_flex
+              flex_direction="column"
+              justify_content="center"
+              align_items="center"
+            >
+              <Text F_size="16px" _onClick={edithandleOpen}>
+                수정하기
+              </Text>
+              <Text F_size="16px" _onClick={deletePostDB}>
+                삭제하기
+              </Text>
+              <Text F_size="16px" _onClick={handleClose}>
+                취소하기
+              </Text>
+            </Grid>
           </Popover>
 
           {/* 수정하기를 눌렀을때 Edit(수정)페이지로 이동 */}
@@ -93,4 +103,4 @@ export default function Cardheader(props) {
       title={props.username}
     />
   );
-};
+}
