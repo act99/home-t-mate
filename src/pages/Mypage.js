@@ -135,26 +135,47 @@ const Mypage = (props) => {
       {/* tab영역 */}
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={TabValue}>
-          <Box sx={{ borderBottom: 1, borderColor: "white" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "white", mb: 4 }}>
             <TabList
               onChange={TabhandleChange}
               aria-label="lab API tabs example"
             >
-              <Tab label="나의 캘린더" value="1" />
-              <Tab label="내가 작성한 스토리" value="2" />
+              <Tab
+                label="나의 캘린더"
+                value="1"
+                sx={{
+                  fontWeight: "bold",
+                  fontFamily: "SuncheonR",
+                  color: "black",
+                  ":focus": "white",
+                }}
+              />
+              <Tab
+                label="내가 작성한 스토리"
+                value="2"
+                sx={{ fontWeight: "bold", fontFamily: "SuncheonR" }}
+              />
             </TabList>
           </Box>
           <TabPanel value="1" sx={{ p: "0px" }}>
             <Grid margin="auto" position="relative">
               <FullCalendar
-                height="800px"
+                height="960px"
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
                 dayMaxEvents={true} //일정 많아지면 +버튼 생성
+                customButtons={{
+                  myCustomButton: {
+                    text: " + 할 일 추가하기 ",
+                    click: function () {
+                      setOpen(true);
+                    },
+                  },
+                }}
                 headerToolbar={{
-                  right: "prev,next today",
+                  right: "myCustomButton",
                   center: "title",
-                  left: "dayGridMonth,timeGridWeek,timeGridDay",
+                  left: "prev,next",
                 }}
                 events={todoList}
                 dateClick={dateClickHandler}
