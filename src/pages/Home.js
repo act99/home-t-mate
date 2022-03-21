@@ -17,6 +17,7 @@ import styled from "@emotion/styled";
 import { AiOutlineLock } from "react-icons/ai";
 import RoomCardModal from "../containers/RoomCardModal";
 import BxSlide from "../assets/bxslide.png";
+import HowToUse from "../assets/howtouse.png";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -187,6 +188,9 @@ const Home = () => {
           setClickCard={setClickCard}
           data={modalData}
         />
+        <BxSlideCon>
+          <img alt="" src={HowToUse} width="100%" />
+        </BxSlideCon>
       </Wrap>
     </>
   );
