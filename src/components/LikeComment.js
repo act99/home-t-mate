@@ -25,12 +25,6 @@ import Detail from "./Detail";
 //import axios
 
 export default function LikeComment(props) {
-  // commentUserDto={props.commentUserDto}
-  // likeUserDto={props.likeUserDto}
-  // likeCount={props.likeCount}
-  // id={props.id}
-  // modal={true}
-  console.log(props);
   const dispatch = useDispatch();
 
   const _post = useSelector((state) => state.postReducer.list);
@@ -38,8 +32,6 @@ export default function LikeComment(props) {
 
   //post id와 props받아온 해당 post의 id가 서로 일치하는지
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x), "");
-
-  console.log("like thispost", thisPost);
 
   // ** likeUserDto안에있는 키값 userId만 추출해서 배열로 만들기
   // const likeUserList = thisPost.likeUserDto.map((a) => a.userId);

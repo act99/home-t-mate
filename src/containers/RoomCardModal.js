@@ -14,7 +14,8 @@ import { useHistory } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { apis } from "../shared/api";
-
+import { useDispatch } from "react-redux";
+import { actionCreators as selectedRoomActions } from "../redux/modules/selectedRoomReducer";
 const style = {
   position: "absolute",
   top: "50%",
@@ -28,6 +29,7 @@ const style = {
 };
 
 const RoomCardModal = (props) => {
+  const dispatch = useDispatch();
   const { clickCard, setClickCard, data } = props;
   const {
     roomId,
@@ -57,6 +59,7 @@ const RoomCardModal = (props) => {
             password: password,
           },
         });
+        dispatch(selectedRoomActions.setRoom({ ...data, password: password }));
       })
       .catch((error) => {
         alert(error.response.data.message);

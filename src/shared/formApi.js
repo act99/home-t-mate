@@ -21,4 +21,5 @@ export const imageApis = {
   // ** 이미지 업로드
   postImage: (formData) => api.post(`api/image`, formData),
   addPost: (postData) => api.post(`api/posts`, postData),
+  editPost: (postId, content) => api.put(`/api/posts/${postId}`, content),
 };

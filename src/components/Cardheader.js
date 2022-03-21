@@ -15,17 +15,12 @@ export default function Cardheader(props) {
   const dispatch = useDispatch();
   const _user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
-  console.log("header_user", _user, "header_post", _post);
   const deletePostDB = () => {
     dispatch(postActions.deletePostDB(props.id));
     window.alert("포스트가 정상적으로 삭제되었습니다.");
     window.location.reload();
   };
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x));
-
-  console.log("headr_thispost", thisPost);
-
-  // 삭제하기,수정하기,취소하기 dropdown modal 컨트롤러부분
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
