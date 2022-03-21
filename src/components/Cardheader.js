@@ -11,7 +11,7 @@ import Edit from "./Edit";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 
 import { Image } from "../elements";
-function Cardheader(props) {
+export default function Cardheader(props) {
   const dispatch = useDispatch();
   const _user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
@@ -38,20 +38,15 @@ function Cardheader(props) {
   const edithandleClose = () => setEditOpen(false);
 
   return _user.id === thisPost.userId ? (
-    // 로그인상태면 헤더에 ... 아이콘 보이게하기
+    // 글 작성자한테만 ... 아이콘 보이게하기
     <CardHeader
-      style={{ backgroundColor: "#FF9234", borderTopRightRadius: "20px" }}
+      style={{ backgroundColor: "#587730", borderTopRightRadius: "20px" }}
       avatar={<Image shape="circle" src={props.userImg} size="40" margin="0" />}
       action={
         //...아이콘 부분
         <>
-          <Button
-            aria-describedby={id}
-            variant="contained"
-            onClick={handleClick}
-          >
-            <MoreHorizIcon />
-          </Button>
+
+            <MoreHorizIcon onClick={handleClick} />
 
           {/* 삭제하기,수정하기,취소하기 dropdown modal부분 */}
           <Popover
@@ -63,10 +58,15 @@ function Cardheader(props) {
               vertical: "bottom",
               horizontal: "left",
             }}
+            PaperProps={{
+              style: { width: "200px", height: "200px" },
+            }}
           >
-            <Text _onClick={edithandleOpen}>수정하기</Text>
-            <Text _onClick={deletePostDB}>삭제하기</Text>
-            <Text _onClick={handleClose}>취소하기</Text>
+            <div style={{ }}>
+            <Text F_size="16px" _onClick={edithandleOpen}>수정하기</Text>
+            <Text F_size="16px" _onClick={deletePostDB}>삭제하기</Text>
+            <Text F_size="16px" _onClick={handleClose}>취소하기</Text>
+            </div>
           </Popover>
 
           {/* 수정하기를 눌렀을때 Edit(수정)페이지로 이동 */}
@@ -83,9 +83,9 @@ function Cardheader(props) {
       title={props.username}
     />
   ) : (
-    // 로그인상태가 아니면 ... 아이콘 안보이게하기
+    // 글 작성자가 아니면 ... 아이콘 안보이게하기
     <CardHeader
-      style={{ backgroundColor: "#FF9234", borderTopRightRadius: "20px" }}
+      style={{ backgroundColor: "#587730", borderTopRightRadius: "20px" }}
       avatar={<Image shape="circle" src={props.userImg} size="40" margin="0" />}
       titleTypographyProps={{
         fontWeight: 600,
@@ -93,6 +93,4 @@ function Cardheader(props) {
       title={props.username}
     />
   );
-}
-
-export default Cardheader;
+};
