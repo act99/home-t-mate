@@ -80,14 +80,27 @@ const VideoChatRoom = () => {
           );
         },
         (error) => {
+          created();
           // alert("방 인원이 꽉 찼습니다.");
           // history.replace("/");
           console.log("서버연결 실패", error);
         }
       );
     } catch (error) {
+      created();
       console.log(error);
     }
+    ws.disconnect = function (e) {
+      console.log("연결이 끊겼습니다. 재기동합니다.");
+      setTimeout(() => {
+        ws.connect();
+      }, 1000);
+    };
+    ws.unsubscribe = function (e) {
+      setTimeout(() => {
+        ws.connect();
+      }, 1000);
+    };
   };
 
   const disconnected = () => {
