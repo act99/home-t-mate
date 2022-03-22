@@ -1,21 +1,21 @@
 import React from "react";
-import { Grid, Input, Image, Text } from "../elements";
+import { Grid, Image } from "../elements";
 import { Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { actionCreators as commentActions} from "../redux/modules/commentReducer";
-import {useDispatch, useSelector} from "react-redux";
+import { actionCreators as commentActions } from "../redux/modules/commentReducer";
+import { useDispatch } from "react-redux";
 
 export default function CommentContents(props) {
-  console.log('CommentContentsprops', props)
+  console.log("CommentContentsprops", props);
   const dispatch = useDispatch();
 
-//   React.useEffect(()=>{
-//     dispatch(commentActions.getComment(props.postKey));
-// },[])
+  React.useEffect(() => {
+    return () => {};
+  }, [props]);
 
-  const delComment= ()=>{
+  const delComment = () => {
     dispatch(commentActions.delCommentDB(props.id, props.commentId));
-}
+  };
   return (
     <Grid
       is_flex
@@ -51,9 +51,7 @@ export default function CommentContents(props) {
           />
         </Typography>
 
-        <Grid>
-          
-        </Grid>
+        <Grid></Grid>
 
         {/* <Grid margin_top="10px">
           <Typography

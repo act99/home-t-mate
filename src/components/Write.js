@@ -13,6 +13,8 @@ import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { Carousel } from "react-responsive-carousel";
+import Imageupload from "../assets/imageupload.png";
+import { borderRadius } from "@mui/system";
 
 function Write(props) {
   const dispatch = useDispatch();
@@ -88,164 +90,94 @@ function Write(props) {
             {_user.is_login ? (
               fileSelected ? (
                 <Grid>
-                  <Grid
-                    B_bottom="1px solid #dbdbdb"
-                    is_flex
-                    // min_width="648px"
-                    // max_width="min(calc(100vw - 72px),1151px)"
-                    width="1151px"
-                    justify_content="space-between"
-                    height="42px"
-                    BG_c=""
-                  >
-                    <Grid
-                      width="42px"
-                      height="42px"
-                      B_top_left_radius="15px"
-                      BG_c="white"
-                    />
-                    <Grid
-                      is_flex
-                      width="100%"
-                      height="42px"
-                      BG_c="white"
-                      justify_content="center"
-                      vertical_align="middle"
-                      align_items="center"
-                    >
-                      <Text vertical_align="middle">새 게시물 만들기</Text>
-                    </Grid>
-                    <Grid
-                      width="42px"
-                      height="42px"
-                      B_top_right_radius="15px"
-                      BG_c="white"
-                    >
-                      <Button
-                        margin="7px 0 0 0"
-                        border="0px"
-                        BG_color="white"
-                        width="30px"
-                        _onClick={addPost}
-                      >
-                        <CheckIcon />
-                      </Button>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    is_flex
-                    flex_direction="row"
-                    justify_content="center"
-                    align_items="center"
-                    min_width="648px"
-                    min_height="348px"
-                    max_width="min(calc(100vw - 72px),1151px)"
-                    max_height="min(calc(100vw - 372px),855px)"
-                    width="1151px"
-                    height="calc(100vmin - 219px)"
-                    B_bottom_left_radius="15px"
-                    B_bottom_right_radius="15px"
-                    BG_c="white"
-                  >
+                  <Grid is_flex width="1345px" height="800px" B_radius="20px">
                     <Carousel
                       showThumbs={false}
                       infiniteLoop={true}
-                      height="648px"
-                      width="648px"
+                      height="800px"
+                      width="800px"
                     >
                       {preview.map((item, index) => (
-                        <Img
-                          postImg={item}
-                          size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
-                        />
+                        <Img postImg={item} size="800px" border="20px" />
                       ))}
                     </Carousel>
-                    <Grid is_flex flex_direction="column" width="100%">
-                      <Grid
-                        is_flex
-                        justify_content="flex-start"
-                        min_width="300px"
-                        width="100%"
-                      >
+
+                    <Grid
+                      width="545px"
+                      position="absolute"
+                      top="0px"
+                      right="0px"
+                    >
+                      <Grid is_flex justify_content="flex-start">
                         <Avatar
                           alt="Remy Sharp"
                           src={_user.userImg ? _user.userImg : ""}
                           sx={{ margin: "20px", width: 50, height: 50 }}
                         />
-                        <Text>{_user.nickname ? _user.nickname : ""}</Text>
+                        <Text F_size="20px">{_user.nickname ? _user.nickname : ""}</Text>
                       </Grid>
-                      <TextArea ref={contents} rows="10" wrap="hard"></TextArea>
+
+                      <TextArea
+                        ref={contents}
+                        rows="10"
+                        wrap="hard"
+                        style={{ marginLeft: "20px", height: "500px" }}
+                      ></TextArea>
+
+                      <Button
+                        _onClick={addPost}
+                        font_size="20px"
+                        font_color="#587730"
+                        font_weight="700"
+                        B_radius="20px"
+                        border="2px solid #587730"
+                        width="197px"
+                        height="52px"
+                        BG_color="white"
+                        position="absolute"
+                        bottom="-140px"
+                        right="40px"
+                      >
+                        스토리 작성완료
+                      </Button>
                     </Grid>
                   </Grid>
                 </Grid>
               ) : (
                 <Grid>
                   <Grid
-                    B_bottom="1px solid #dbdbdb"
-                    is_flex
-                    // min_width="348px"
-                    // max_width="min(calc(100vw - 372px),855px)"
-                    width="751px"
-                    justify_content="space-between"
-                    height="42px"
-                    BG_c=""
-                  >
-                    <Grid
-                      width="42px"
-                      height="42px"
-                      B_top_left_radius="15px"
-                      BG_c="white"
-                    />
-                    <Grid
-                      is_flex
-                      width="100%"
-                      height="42px"
-                      BG_c="white"
-                      justify_content="center"
-                      vertical_align="middle"
-                      align_items="center"
-                    >
-                      <Text vertical_align="middle">새 게시물 만들기</Text>
-                    </Grid>
-                    <Grid
-                      width="42px"
-                      height="42px"
-                      B_top_right_radius="15px"
-                      BG_c="white"
-                    />
-                  </Grid>
-                  <Grid
                     is_flex
                     flex_direction="column"
                     justify_content="center"
                     align_items="center"
-                    // min_width="348px"
-                    // min_height="348px"
-                    // max_width="min(calc(100vw - 372px),855px)"
-                    // max_height="min(calc(100vw - 372px),855px)"
-                    width="751px"
-                    height="calc(100vmin - 219px)"
-                    B_bottom_left_radius="15px"
-                    B_bottom_right_radius="15px"
+                    height="720px"
+                    width="1200px"
+                    B_radius="20px"
                     BG_c="white"
                   >
-                    <ImageIcon />
-                    <Text margin="20px" F_size="22px">
-                      버튼을 눌러 사진을 추가하세요
+                    <ImageIcon style={{ width: "103px", height: "103px" }} />
+
+                    <Text F_size="20px" F_color="#757575">
+                      pc에 있는 사진을 올려주세요
                     </Text>
+                    <Text F_size="20px" F_color="#757575" margin_bottom="24px">
+                      (최대 4개까지 가능해요).
+                    </Text>
+
                     <Button
                       _onClick={() => {
                         fileInput.current.click();
                       }}
-                      font_weight="600"
-                      font_color="white"
-                      B_radius="5px"
-                      border="0px solid #0095f6"
-                      BG_color="#0095f6"
-                      width="120px"
-                      height="30px"
+                      font_size="20px"
+                      font_color="#587730"
+                      font_weight="700"
+                      B_radius="20px"
+                      border="2px solid #587730"
+                      width="204px"
+                      height="60px"
+                      BG_color="white"
                     >
-                      컴퓨터에서 선택
+                      사진 올리기
                     </Button>
                     <input
                       ref={fileInput}
@@ -258,14 +190,51 @@ function Write(props) {
                 </Grid>
               )
             ) : (
-              <Grid width="420px" height="220px">
-                <Text F_size="24px">
+              <Box sx={stylenoborder}>
+              <Grid
+                width="420px"
+                height="220px"
+                is_flex
+                flex_direction="column"
+                justify_content="center"
+                align_items="center"
+              >
+                <Text F_size="24px" F_align= "center" margin="0px 70px 12px 70px">
                   홈트메이트를 즐기기 위해 로그인이 필요해요
                 </Text>
-                <Text F_size="16px">로그인 후 더 재미있게 놀아볼까요?</Text>
-                <Button>취소하기</Button>
-                <Button>로그인하기</Button>
+                <Text F_size="16px" margin_bottom="32px">로그인 후 더 재미있게 놀아볼까요?</Text>
+                
+                <Grid is_flex>
+                <Button
+                        _onClick={handleOnClose}
+                        font_size="20px"
+                        font_color="#757575"
+                        font_weight="400"
+                        B_radius="20px"
+                        border="2px solid #757575"
+                        width="120px"
+                        height="50px"
+                        BG_color="white"
+                        margin="0px 30px 0px 0px"
+                      >
+                        취소하기
+                      </Button>
+                      <Button
+                        _onClick={()=>{history.push("/login")}}
+                        font_size="20px"
+                        font_color="#587730"
+                        font_weight="400"
+                        B_radius="20px"
+                        border="2px solid #587730"
+                        width="120px"
+                        height="50px"
+                        BG_color="white"
+                      >
+                        로그인하기
+                      </Button>
+                </Grid>
               </Grid>
+              </Box>
             )}
           </Box>
         </Fade>
@@ -284,8 +253,24 @@ const style = {
   p: 4,
   zIndex: 13000,
   padding: 0,
-  border: "0px solid #000",
+  borderRadius: "20px",
+  outline: "none",
 };
+
+
+const stylenoborder = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  zIndex: 13000,
+  padding: 0,
+  outline: "none",
+};
+
 
 const TextArea = styled.textarea`
   width: 90%;

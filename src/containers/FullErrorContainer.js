@@ -6,15 +6,15 @@ import LoadingImage from "../assets/loading_image.png";
 import styled from "@emotion/styled";
 import { history } from "../redux/store";
 
-const FullErrorContainer = () => {
+const FullErrorContainer = (props) => {
   return (
     <>
       <WrapError>
         <Alert
           severity="error"
           sx={{
-            width: 400,
-            height: 600,
+            width: 450,
+            height: 752,
             display: "flex",
             flexDirection: "column",
             justifyItems: "center",
@@ -38,7 +38,7 @@ const FullErrorContainer = () => {
             variant="outlined"
             color="error"
             onClick={() => {
-              history.replace("/");
+              props.modalOff();
             }}
           >
             <strong>돌아가기</strong>
@@ -50,12 +50,16 @@ const FullErrorContainer = () => {
 };
 
 const WrapError = styled.div`
-  width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 752px;
 `;
 
 export default FullErrorContainer;

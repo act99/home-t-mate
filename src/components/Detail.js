@@ -44,6 +44,10 @@ export default function Detail(props) {
   console.log("postReducer확인용", _post);
   console.log("thispost확인용", thisPost);
 
+  const commentState = useSelector((state) => state.commentReducer.list)[
+    `${props.id}`
+  ];
+
   React.useEffect(() => {
     dispatch(commentActions.getCommentDB(props.id));
   }, []);
@@ -87,7 +91,7 @@ export default function Detail(props) {
             </Typography>
 
             {/* 댓글 보이기 */}
-            {commentUserDto.map((v, i) => (
+            {commentState && commentState.map((v, i) => (
               <CommentContents key={i} {...v} id={props.id} />
             ))}
           </div>

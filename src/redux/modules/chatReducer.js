@@ -1,5 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import "moment/locale/ko";
+import moment from "moment";
 // import { apis } from "../../shared/api";
 // import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
 // actions
@@ -19,7 +21,8 @@ export default handleActions(
   {
     [GET_CHAT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.push(action.payload.chat);
+        const nowaTime = moment().format("hh:mm");
+        draft.list.push({ ...action.payload.chat, time: nowaTime });
       }),
     [SEND_CHAT]: (state, action) =>
       produce(state, (draft) => {

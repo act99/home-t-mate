@@ -348,8 +348,8 @@ const CreateButton = styled.button`
   height: 40px;
   margin-top: auto;
   margin-bottom: auto;
-  border-radius: 10px;
-  border: solid 1px green;
+  border-radius: 8px;
+  border: solid 2px green;
   background-color: white;
   font-size: 16px;
   color: green;

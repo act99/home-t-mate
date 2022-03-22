@@ -1,21 +1,20 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { KAKAO_AUTH_URL } from "../shared/OAuth.js";
 import { actionCreators as userActions } from "../redux/modules/userReducer.js";
 import { useHistory } from "react-router-dom";
 import styled from "@emotion/styled";
 import kakaoImage from "../assets/kakao_login_large_wide.png";
 const Login = (props) => {
-  const dispatch = useDispatch();
   const history = useHistory();
-  // const kakaoLogin = () => {
-  //   window.location.href = KAKAO_AUTH_URL;
-  // };
-  const logout = () => {
-    dispatch(userActions.logout());
-    history.replace("/");
-    history.go(0);
-  };
+  const user = useSelector((state) => state.userReducer.user);
+  React.useEffect(() => {
+    if (user.is_login) {
+      alert("로그인 하신 상태입니다.");
+      history.push("/");
+    }
+    return () => {};
+  }, []);
 
   return (
     <Wrap>
@@ -35,10 +34,6 @@ const Login = (props) => {
       <SmallFont onClick={() => history.push("/")}>
         먼저 더 둘러볼래요
       </SmallFont>
-
-      <div>
-        <button onClick={logout}>로그아웃</button>
-      </div>
     </Wrap>
   );
 };

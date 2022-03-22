@@ -7,13 +7,16 @@ import {
   sendYoutubeOff,
   sendYoutubeOn,
   sendYoutubeUrl,
+  sendYoutubeStop,
 } from "../shared/SocketFunc";
 import ReactPlayer from "react-player";
-
+import { Avatar } from "@mui/material";
+import RestImage from "../assets/rest.png";
+import WorkoutImage from "../assets/workout.png";
 const YoutubeVideo = (props) => {
   // ** history
   // ** props 가져오기
-  const { ws, token, roomId } = props;
+  const { ws, token, roomId, workOut } = props;
 
   // ** 회원정보
   const user = useSelector((state) => state.userReducer.user);
@@ -60,8 +63,16 @@ const YoutubeVideo = (props) => {
     message: false,
   });
 
+  // ** 유튜브 Stop
+  const [youtubeStop, setYoutubeStop] = React.useState({
+    type: "YOUTUBESTOP",
+    roomId: "",
+    sender: "",
+  });
+
   // ** 유튜브 켜졌는지 꺼졌는지
   const [isYoutube, setIsYoutube] = React.useState(false);
+
   // ** 유튜브 상태관리
 
   // ** url change 핸들러
@@ -88,6 +99,11 @@ const YoutubeVideo = (props) => {
     sendYoutubeOff(ws, token, youtubeOff);
     console.log("pause");
   };
+  const handleStop = () => {
+    sendYoutubeStop(ws, token, youtubeStop);
+    console.log("stop");
+  };
+  // const roomData = useSelector((state) => state.selectedRoomReducer.room);
 
   // ** 유튜브 on Off controller
   React.useEffect(() => {
@@ -114,9 +130,16 @@ const YoutubeVideo = (props) => {
       sender: user.nickname,
       type: "YOUTUBEPAUSE",
     });
+    setYoutubeStop({
+      ...youtubeStop,
+      roomId: roomId,
+      sender: user.nickname,
+      type: "YOUTUBESTOP",
+    });
     return () => {};
   }, [on, url]);
-  console.log(((height - 200) * 16) / 9);
+  // console.log(((height - 200) * 16) / 9);
+
   return (
     <>
       {isYoutube ? (
@@ -132,6 +155,7 @@ const YoutubeVideo = (props) => {
           playing={on}
           onPlay={handlePlay}
           onPause={handlePause}
+          onEnded={handleStop}
         />
       ) : (
         <Empty width={width} height={height}>
@@ -143,24 +167,60 @@ const YoutubeVideo = (props) => {
           <YoutubeEmptyText>유튜브 URL을 넣어주세요 :)</YoutubeEmptyText>
         </Empty>
       )}
-      <FormStyle>
-        <TitleText>제목입니다.</TitleText>
-        <ContentText>본문입니다.본문입니다.본문입니다.본문입니다.</ContentText>
-        <form onSubmit={handleUrlSubmit}>
-          <UrlInput
-            type="text"
-            onChange={handleUrlChange}
-            required
-            placeholder="유튜브 Url"
-          />
-          <button type="submit">유튜브 url 제출</button>
-        </form>
-      </FormStyle>
+      <WrapFromStyle>
+        <FormStyle>
+          {/* <HostText>
+            <h3>호스트 : </h3>
+            <Avatar
+              alt={roomData.nickname}
+              src={roomData.profileImg}
+              sx={{ width: "28px", height: "28px", mx: 1 }}
+            />
+            <h3>{roomData.nickname}</h3>
+          </HostText> */}
+          {workOut ? (
+            <WorkOutWrap>
+              <img
+                src={WorkoutImage}
+                alt=""
+                style={{ width: "320px", height: "100px" }}
+              />
+            </WorkOutWrap>
+          ) : (
+            <WorkOutWrap>
+              <img
+                src={RestImage}
+                alt=""
+                style={{ width: "320px", height: "100px" }}
+              />
+            </WorkOutWrap>
+          )}
+          <WrapFormBox>
+            <FormBox onSubmit={handleUrlSubmit}>
+              <UrlInput
+                type="text"
+                value={urlIntput.message}
+                onChange={handleUrlChange}
+                required
+                placeholder="유튜브 Url"
+              />
+              <CreateButton type="submit">유튜브 url 제출</CreateButton>
+            </FormBox>
+          </WrapFormBox>
+        </FormStyle>
+      </WrapFromStyle>
     </>
   );
 };
 
 //** 유튜브 안넣었을 때 */
+
+const WorkOutWrap = styled.div`
+  width: 320px;
+  height: 100%;
+  margin-left: 30px;
+  margin-bottom: 16px;
+`;
 
 const Empty = styled.div`
   width: 100%;
@@ -182,6 +242,12 @@ const YoutubeEmptyText = styled.h3`
 
 // ** 유튜브 아래
 
+const WrapFromStyle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 const FormStyle = styled.div`
   width: 100%;
   height: 144px;
@@ -189,27 +255,85 @@ const FormStyle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 32px;
   /* align-items: center; */
 `;
 
 const UrlInput = styled.input`
-  width: 500px;
-  height: 30px;
+  width: 400px;
+  height: 36px;
   margin-left: 30px;
+  margin-right: 16px;
+  padding-left: 12px;
+  border-radius: 10px;
+  border: solid 1px green;
+  :focus {
+    outline: solid 1px green;
+    border: solid 1px green;
+  }
 `;
 
 const TitleText = styled.h3`
   font-size: 20px;
   font-weight: bold;
-  margin: 0px;
+  margin: 4px;
   margin-bottom: 3px;
   margin-left: 30px;
 `;
 const ContentText = styled.h5`
-  font-size: 15px;
-  margin: 0px;
+  font-size: 16px;
+  margin: 4px;
   margin-bottom: 15px;
   margin-left: 30px;
+`;
+const HostText = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 4px;
+  margin-bottom: 15px;
+  margin-left: 30px;
+  align-items: center;
+  h3 {
+    margin: 0px;
+    font-size: 16px;
+  }
+`;
+
+const CreateButton = styled.button`
+  display: block;
+  /* margin: auto; */
+  width: 160px;
+  height: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 10px;
+  border: solid 1px green;
+  background-color: white;
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+  margin-right: 16px;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
+
+const FormBox = styled.form`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const WrapFormBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export default YoutubeVideo;

@@ -2,6 +2,7 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import { TabList } from "@mui/lab";
 
 export const AntTabs = styled(Tabs)({
   borderBottom: "1px solid #e8e8e8",
@@ -45,9 +46,8 @@ export const AntTab = styled((props) => <Tab disableRipple {...props} />)(
     },
   })
 );
-
 export const StyledTabs = styled((props) => (
-  <Tabs
+  <TabList
     {...props}
     TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
   />
@@ -60,22 +60,23 @@ export const StyledTabs = styled((props) => (
   "& .MuiTabs-indicatorSpan": {
     maxWidth: 40,
     width: "100%",
-    backgroundColor: "#635ee7",
+    backgroundColor: "#008000",
   },
 });
 
-const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
+export const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   ({ theme }) => ({
     textTransform: "none",
     fontWeight: theme.typography.fontWeightRegular,
     fontSize: theme.typography.pxToRem(15),
     marginRight: theme.spacing(1),
-    color: "rgba(255, 255, 255, 0.7)",
+    color: "#757575",
     "&.Mui-selected": {
-      color: "#fff",
+      color: "#005000",
+      // borderBottom: "solid 1px #005000",
     },
     "&.Mui-focusVisible": {
-      backgroundColor: "rgba(100, 95, 228, 0.32)",
+      // backgroundColor: "008000",
     },
   })
 );

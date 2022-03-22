@@ -5,6 +5,7 @@ import "../App.css";
 import { BodyWrap } from "./VideoContainer/VideoConEle";
 import WebRTCContainer from "./WebRTCContainer";
 import url from "../shared/url";
+import { apis } from "../shared/api";
 // const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
 const OPENVIDU_SERVER_URL = url.OPEN_VIDU;
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -33,8 +34,8 @@ class VideoContainer extends Component {
 
   componentDidMount() {
     console.log(this.props);
-    this.joinSession();
     window.addEventListener("beforeunload", this.onbeforeunload);
+    this.joinSession();
   }
 
   componentWillUnmount() {
@@ -124,8 +125,9 @@ class VideoContainer extends Component {
                 videoSource: undefined, // The source of video. If undefined default webcam
                 publishAudio: this.props.audio, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: this.props.video, // Whether you want to start publishing with your video enabled or not
-                resolution: "640x480", // The resolution of your video "640x480", "1280x720"
-                frameRate: 30, // The frame rate of your video
+                resolution: "240x180", // The resolution of your video "640x480", "1280x720"
+                // frameRate: 30, // The frame rate of your video
+                frameRate: 8, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
               });

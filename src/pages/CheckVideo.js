@@ -66,6 +66,7 @@ const CheckVideo = () => {
             password: password,
           },
         });
+        dispatch(videoActions.setVideo({ video: video, audio: audio }));
       })
       .catch((error) => console.log(error.response));
 
@@ -73,6 +74,7 @@ const CheckVideo = () => {
   };
 
   React.useEffect(() => {
+    console.log(roomId);
     // **  ㄱㄱ
     setTimeout(() => {
       if (video === true) {
@@ -82,12 +84,6 @@ const CheckVideo = () => {
       }
       setLoading(false);
     }, 1000);
-    // apis
-    //   .joinRoom(roomId)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((error) => setFullPeople(true));
 
     return () => {
       apis
@@ -250,7 +246,7 @@ const EnterButton = styled.div`
 
 const Styles = {
   Video: {
-    background: "rgba(245, 240, 215, 0.3)",
+    // background: "rgba(0, 0, 0, 1)",
   },
   None: { display: "none" },
 };

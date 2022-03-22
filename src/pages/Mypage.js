@@ -19,6 +19,9 @@ import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import "../styles/fullcalendar.css";
 import CreateRoomModal from "../containers/CreateRoomModal";
+import { AntTabs, StyledTab, StyledTabs } from "../styles/tabStyle";
+import { Tabs } from "@mui/material";
+import KakaoShareButton from "../shared/Kakao-shared-btn";
 const Mypage = (props) => {
   const todoList = useSelector((state) => state.todoReducer.list);
   const [open, setOpen] = React.useState(false);
@@ -119,13 +122,14 @@ const Mypage = (props) => {
                 justifyContent: "center",
                 justifyItems: "center",
                 marginTop: "12px",
-                marginBottom: "72px",
+                marginBottom: "12px",
               }}
             >
               <h3 style={{ margin: "auto", fontSize: "16px" }}>
                 홈트메이트로 친구 초대하기
               </h3>
             </div>
+            <KakaoShareButton />
           </InviteContainer>
         </UserInfoContainer>
       </UserContainer>
@@ -135,26 +139,48 @@ const Mypage = (props) => {
       {/* tab영역 */}
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={TabValue}>
-          <Box sx={{ borderBottom: 1, borderColor: "white" }}>
-            <TabList
+          <Box sx={{ borderBottom: 1, borderColor: "white", mb: 4 }}>
+            <StyledTabs
               onChange={TabhandleChange}
-              aria-label="lab API tabs example"
+              aria-label="lab API tabs"
+              TabIndicatorProps={{
+                children: <span className="MuiTabs-indicatorSpan" />,
+              }}
             >
-              <Tab label="나의 캘린더" value="1" />
-              <Tab label="내가 작성한 스토리" value="2" />
-            </TabList>
+              <StyledTab
+                label="나의 캘린더"
+                value="1"
+                sx={{
+                  fontWeight: "bold",
+                  fontFamily: "SuncheonR",
+                }}
+              />
+              <StyledTab
+                label="내가 작성한 스토리"
+                value="2"
+                sx={{ fontWeight: "bold", fontFamily: "SuncheonR" }}
+              />
+            </StyledTabs>
           </Box>
           <TabPanel value="1" sx={{ p: "0px" }}>
             <Grid margin="auto" position="relative">
               <FullCalendar
-                height="800px"
+                height="960px"
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
                 dayMaxEvents={true} //일정 많아지면 +버튼 생성
+                customButtons={{
+                  myCustomButton: {
+                    text: " + 할 일 추가하기 ",
+                    click: function () {
+                      setOpen(true);
+                    },
+                  },
+                }}
                 headerToolbar={{
-                  right: "prev,next today",
+                  right: "myCustomButton",
                   center: "title",
-                  left: "dayGridMonth,timeGridWeek,timeGridDay",
+                  left: "prev,next",
                 }}
                 events={todoList}
                 dateClick={dateClickHandler}
@@ -225,10 +251,10 @@ const CreateButton = styled.button`
   display: block;
   /* margin: auto; */
   width: 160px;
-  height: 48px;
+  height: 40px;
   margin-top: auto;
   margin-bottom: auto;
-  border-radius: 16px;
+  border-radius: 8px;
   border: solid 2px green;
   background-color: rgb(0, 0, 0, 0);
   font-size: 16px;

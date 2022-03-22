@@ -20,23 +20,19 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 function Edit(props) {
   const dispatch = useDispatch();
   console.log(props);
-
-  const { id, open, handleClose, photoResponseDto } = props;
-  console.log(photoResponseDto);
+  const { id, open, handleClose, photoResponseDto, content } = props;
   const fileInput = React.useRef();
-  const contents = React.useRef();
-
+  const contentsRef = React.useRef();
   const [fileSelected, setFileSelected] = React.useState(false);
   const [preview, setPreview] = React.useState([]);
   const [tempFile, setTempFile] = React.useState([]);
-
+  const [contents, setContents] = React.useState("");
   const _user = useSelector((state) => state.userReducer.user);
 
   let tempData = [];
   const formData = new FormData();
 
   const selectFile = (e) => {
-    console.log("e", e);
     const files = fileInput.current.files;
 
     setTempFile([...tempFile, files]);
@@ -50,24 +46,32 @@ function Edit(props) {
         if (tempData.length === files.length) {
           setPreview([...preview, ...tempData]);
           setFileSelected(true);
-          console.log("selectFile입니다", formData);
         }
       });
     }
   };
 
   const editPost = () => {
-    const imgData = new FormData();
-    const contentData = new FormData();
-    for (let i = 0; i < tempFile[0].length; i++) {
-      imgData.append("image", tempFile[0][i]);
-      console.log(tempFile[0][i]);
+    console.log(tempFile);
+    if (tempFile.length <= 0 || tempFile[0] === undefined) {
+      alert("사진을 선택해주세요.");
+    } else {
+      console.log("hi");
+      // const imgData = new FormData();
+      const contentData = new FormData();
+      for (let i = 0; i < tempFile[0].length; i++) {
+        contentData.append("image", tempFile[0][i]);
+      }
+      contentData.append("content", contents);
+      dispatch(postActions.editPostDB(id, contentData));
+      setContents("");
     }
-    contentData.append("content", contents.current.value);
-    dispatch(postActions.editPostDB(id, contentData, imgData));
   };
+  React.useEffect(() => {
+    setContents(content);
 
-  console.log("fileinput.current", fileInput.current);
+    return () => {};
+  }, [content]);
 
   return (
     <>
@@ -118,15 +122,19 @@ function Edit(props) {
                   B_top_right_radius="15px"
                   BG_c="white"
                 >
-                  <Button
-                    margin="7px 0 0 0"
-                    border="0px"
-                    BG_color="white"
-                    width="30px"
-                    _onClick={editPost}
+                  <button
+                    style={{
+                      margin: "7px 0 0 0",
+                      border: "solid 0px",
+                      backgroundColor: "white",
+                      width: "30px",
+                      cursor: "pointer",
+                    }}
+                    onClick={editPost}
                   >
+                    {" "}
                     <CheckIcon />
-                  </Button>
+                  </button>
                 </Grid>
               </Grid>
               <Grid
@@ -151,27 +159,43 @@ function Edit(props) {
                   multiple
                   style={{ display: "none" }}
                 />
-
-                <Carousel
-                  showThumbs={false}
-                  infiniteLoop={true}
-                  height="648px"
-                  width="648px"
-                >
-                  {photoResponseDto &&
-                    photoResponseDto.map((v, i) => (
+                {tempFile.length <= 0 ? (
+                  <Carousel
+                    showThumbs={false}
+                    infiniteLoop={true}
+                    height="648px"
+                    width="648px"
+                  >
+                    {photoResponseDto &&
+                      photoResponseDto.map((v, i) => (
+                        <Img
+                          key={i}
+                          size="648px"
+                          border="20px"
+                          _onClick={() => {
+                            fileInput.current.click();
+                          }}
+                          fileSelected={fileSelected}
+                          postImg={fileSelected ? preview : v.postImg}
+                        />
+                      ))}
+                  </Carousel>
+                ) : (
+                  <Carousel
+                    showThumbs={false}
+                    infiniteLoop={true}
+                    height="648px"
+                    width="648px"
+                  >
+                    {preview.map((item, index) => (
                       <Img
-                        key={i}
-                        size="648px"
-                        border="20px"
-                        _onClick={() => {
-                          fileInput.current.click();
-                        }}
-                        fileSelected={fileSelected}
-                        postImg={fileSelected ? preview : v.postImg}
+                        key={index}
+                        postImg={item}
+                        size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
                       />
                     ))}
-                </Carousel>
+                  </Carousel>
+                )}
 
                 <Grid is_flex flex_direction="column" width="100%">
                   <Grid
@@ -188,10 +212,11 @@ function Edit(props) {
                     <Text>{_user.nickname ? _user.nickname : ""}</Text>
                   </Grid>
                   <TextArea
-                    defaultValue={props.content}
-                    ref={contents}
+                    value={contents}
+                    ref={contentsRef}
                     rows="10"
                     wrap="hard"
+                    onChange={(e) => setContents(e.target.value)}
                   ></TextArea>
                 </Grid>
               </Grid>

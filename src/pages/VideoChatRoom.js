@@ -15,6 +15,7 @@ import { actionCreators as youtubeActions } from "../redux/modules/youtubeReduce
 import { apis } from "../shared/api";
 import ChatNav from "../containers/ChatNav";
 import { actionCreators as subscribersActions } from "../redux/modules/subscriberReducer";
+import { sendQuitRoom } from "../shared/SocketFunc";
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 const VideoChatRoom = () => {
@@ -46,6 +47,23 @@ const VideoChatRoom = () => {
   const sock = new SockJS(url.WEB_SOCKET);
   const ws = Stomp.over(sock, options);
 
+  // ** session 값들을 가져오기 위한 state (유저 정보용)
+  const [session, setSession] = React.useState({});
+
+  // ** 유튜브 재생 시 운동 중
+  const [workOut, setWorkOut] = React.useState(false);
+
+  // ** 나갈 때
+  const [quit, setQuit] = React.useState({
+    type: "QUIT",
+    roomId: "",
+    sender: "",
+  });
+  const handleQuit = () => {
+    sendQuitRoom(ws, token, quit);
+    console.log("유저가 나감");
+  };
+
   // ** ws Open
 
   const created = () => {
@@ -64,16 +82,21 @@ const VideoChatRoom = () => {
                 chattingRef.current.scrollIntoView({ behavior: "smooth" });
               } else if (recv.type === "ENTER") {
                 dispatch(chatActions.getChat(recv));
+                dispatch(subscribersActions.getSubscribers(recv));
                 chattingRef.current.scrollIntoView({ behavior: "smooth" });
               } else if (recv.type === "YOUTUBEURL") {
-                console.log(recv.message, "유튜브 url");
                 dispatch(youtubeActions.youtubeUrl(recv.message));
+                setWorkOut(true);
               } else if (recv.type === "YOUTUBEON") {
                 dispatch(youtubeActions.youtubeOn(true));
               } else if (recv.type === "YOUTUBEPAUSE") {
                 dispatch(youtubeActions.youtubeOn(false));
               } else if (recv.type === "YOUTUBESTOP") {
-                console.log("유튜브 스톱");
+                setWorkOut(false);
+              } else if (recv.type === "QUIT") {
+                console.log("나갔음");
+                dispatch(chatActions.getChat(recv));
+                dispatch(subscribersActions.leaveSubscribers(recv));
               }
             },
             { Authorization: token }
@@ -96,21 +119,29 @@ const VideoChatRoom = () => {
       console.log("연결 종료");
     }
   };
+  const onbeforeunload = () => {
+    disconnected();
+  };
 
   React.useEffect(() => {
     apis
       .enterRoom(roomId, password)
       .then((res) => {
+        window.addEventListener("beforeunload", onbeforeunload);
         created();
       })
       .catch((error) => console.log(error.response.message));
+    setQuit({ roomId: roomId, sender: user.nickname });
     // created();
     return () => {
       apis
         .leaveRoom(roomId)
-        .then((res) => {})
+        .then((res) => {
+          window.removeEventListener("beforeunload", onbeforeunload);
+          disconnected();
+        })
         .catch((error) => console.log(error));
-      disconnected();
+      handleQuit();
       history.replace("/");
       history.go(0);
     };
@@ -125,7 +156,12 @@ const VideoChatRoom = () => {
       <Wrap>
         <ChatNav roomName={roomName} roomId={roomId} />
         <YoutubeTest height={height}>
-          <YoutubeVideo ws={ws} token={token} roomId={roomId} />
+          <YoutubeVideo
+            ws={ws}
+            token={token}
+            roomId={roomId}
+            workOut={workOut}
+          />
         </YoutubeTest>
         <VideoTest height={height}>
           <EnterRoom
@@ -133,6 +169,7 @@ const VideoChatRoom = () => {
             nickname={nickname}
             video={video}
             audio={audio}
+            password={locationState.password}
           />
         </VideoTest>
         <ChattingTest height={height}>

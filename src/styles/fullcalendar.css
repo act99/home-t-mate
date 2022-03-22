@@ -190,7 +190,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 }
 .fc .fc-button:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(50, 204, 3, 0.25);
 }
 .fc .fc-button:disabled {
   opacity: 0.65;
@@ -199,20 +199,26 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   /* "primary" coloring */
 }
 .fc .fc-button-primary {
-  color: #fff;
-  color: var(--fc-button-text-color, #fff);
-  background-color: #2c3e50;
-  background-color: var(--fc-button-bg-color, #2c3e50);
-  border-color: #2c3e50;
-  border-color: var(--fc-button-border-color, #2c3e50);
+  color: #587730;
+  font-weight: bold;
+  border-radius: 8px;
+  border: solid 2px;
+  /* color: var(--fc-button-text-color, #fff); */
+  background-color: #fff;
+  /* background-color: var(--fc-button-bg-color, #2c3e50); */
+  border-color: #587730;
+  /* border-color: var(--fc-button-border-color, #2c3e50); */
+  transition: 0.5s;
 }
 .fc .fc-button-primary:hover {
   color: #fff;
-  color: var(--fc-button-text-color, #fff);
-  background-color: #1e2b37;
-  background-color: var(--fc-button-hover-bg-color, #1e2b37);
-  border-color: #1a252f;
-  border-color: var(--fc-button-hover-border-color, #1a252f);
+  font-weight: bold;
+  /* color: var(--fc-button-text-color, #fff); */
+  background-color: #587730;
+  /* background-color: var(--fc-button-hover-bg-color, #1e2b37); */
+  border-color: #587730;
+  /* border-color: var(--fc-button-hover-border-color, #1a252f); */
+  transition: 0.5s;
 }
 .fc .fc-button-primary:disabled {
   /* not DRY */
@@ -224,7 +230,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   border-color: var(--fc-button-border-color, #2c3e50); /* overrides :hover */
 }
 .fc .fc-button-primary:focus {
-  box-shadow: 0 0 0 0.2rem rgba(76, 91, 106, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(43, 235, 26, 0);
 }
 .fc .fc-button-primary:not(:disabled):active,
 .fc .fc-button-primary:not(:disabled).fc-button-active {
@@ -295,6 +301,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 .fc .fc-toolbar-title {
   font-size: 1.75em;
   margin: 0;
+  color: #587730;
 }
 .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
   margin-left: 0.75em; /* space between */
@@ -577,10 +584,10 @@ A HORIZONTAL event
 .fc-h-event {
   /* allowed to be top-level */
   display: block;
-  border: 1px solid #3788d8;
-  border: 1px solid var(--fc-event-border-color, #3788d8);
-  background-color: #3788d8;
-  background-color: var(--fc-event-bg-color, #3788d8);
+  border: 1px solid #0db30d;
+  /* border: 1px solid var(--fc-event-border-color, #3788d8); */
+  background-color: #0db30d;
+  /* background-color: var(--fc-event-bg-color, #3788d8); */
 }
 .fc-h-event .fc-event-main {
   color: #fff;

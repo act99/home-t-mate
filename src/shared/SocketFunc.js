@@ -34,6 +34,22 @@ export const sendYoutubeOff = (ws, token, youtubeOff) => {
   );
 };
 
+export const sendYoutubeStop = (ws, token, youtubeStop) => {
+  ws.send(
+    `/pub/chat/message`,
+    { Authorization: token },
+    JSON.stringify({ ...youtubeStop })
+  );
+};
+
+export const sendQuitRoom = (ws, token, quit) => {
+  ws.send(
+    `/pub/chat/message`,
+    { Authorization: token },
+    JSON.stringify({ ...quit })
+  );
+};
+
 // 메시지 보내기 핸들러
 // const sendingMessage = () => {
 //   setSendMessage({ ...sendMessage, type: "TALK" });
