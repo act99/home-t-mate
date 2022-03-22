@@ -22,6 +22,9 @@ const ChatNav = (props) => {
     history.replace("/");
     leaveSession();
   };
+  React.useEffect(() => {
+    return () => {};
+  }, []);
 
   return (
     <>
@@ -30,7 +33,9 @@ const ChatNav = (props) => {
           {roomName === null || roomName === undefined ? (
             <div></div>
           ) : (
-            <TitleText>{roomName}</TitleText>
+            <TitleText>
+              {roomName.length > 8 ? roomName.slice(0, 8) + "..." : roomName}
+            </TitleText>
           )}
           <PersonOutlineIcon sx={{ fontSize: 28, ml: 3, mr: 1 }} />
           <MemberText>(0/5)</MemberText>

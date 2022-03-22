@@ -25,17 +25,15 @@ export default handleActions(
     [GET_SUBSCRIBERS]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload);
-        draft.subscribers.push(
-          action.payload.subscriber.message.split("님")[0]
-        );
+        draft.subscribers.push(action.payload);
       }),
     [LEAVE_SUBSCRIBERS]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload);
-        let dummyIndex = draft.subscribers.findIndex(
-          (item) => item === action.payload
-        );
-        draft.subscribers.splice(dummyIndex, 1);
+        // let dummyIndex = draft.subscribers.findIndex(
+        //   (item) => item === action.payload
+        // );
+        // draft.subscribers.splice(dummyIndex, 1);
       }),
   },
   initialState

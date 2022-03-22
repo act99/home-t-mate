@@ -13,6 +13,17 @@ const VideoComponent = (props) => {
   const size = useWindowSize();
   const { width, height } = size;
 
+  const [mic, setMic] = React.useState(true);
+  const [vid, setVid] = React.useState(true);
+  const handleVideo = () => {
+    console.log("비디오");
+    setVid(!vid);
+  };
+  const handleMic = () => {
+    console.log("마이크");
+    setMic(!mic);
+  };
+
   React.useEffect(() => {
     if (streamManager && !!videoRef) {
       streamManager.addVideoElement(videoRef.current);
@@ -27,6 +38,14 @@ const VideoComponent = (props) => {
         <NicknameTag height={height}>
           {nickname.length > 7 ? nickname.slice(0, 7) + "..." : nickname}
         </NicknameTag>
+        <ButtonTag>
+          <IconButton onClick={handleVideo}>
+            <VideocamIcon sx={{ color: "white" }} />
+          </IconButton>
+          <IconButton onClick={handleMic}>
+            <MicIcon sx={{ color: "white" }} />
+          </IconButton>
+        </ButtonTag>
         <video autoPlay={true} ref={videoRef} />
       </VideoWrap>
     </>
@@ -43,6 +62,16 @@ const NicknameTag = styled.p`
   font-size: 15px;
 `;
 
+const ButtonTag = styled.div`
+  color: white;
+  /* background-color: green; */
+  position: absolute;
+  transform: translate(-50%, -0%);
+  font-size: 15px;
+  width: 100%;
+  height: 50px;
+`;
+
 const VideoWrap = styled.div`
   width: ${(props) => (((props.height - 56) / 5 / 1.11) * 4) / 3}px;
   height: ${(props) => (props.height - 56) / 5 / 1.11}px;
@@ -50,31 +79,31 @@ const VideoWrap = styled.div`
   justify-content: center;
   margin: 4px auto;
   video {
-    transition: 0.5s;
+    transition: 0.2s;
     border-radius: 12px;
   }
-  /* div {
+  div {
     display: none !important;
-    transition: 0.5s;
-  } */
+    transition: 0.2s;
+  }
   :hover {
     video {
-      transition: filter 0.5s;
+      transition: filter 0.2s;
       filter: brightness(40%);
     }
-    /* div {
+    div {
+      transition: filter 0.2s;
       display: flex !important;
-      width: 2.5vw;
-      height: 50px;
       position: absolute;
-      top: 50%;
-      left: 3.4vw;
+      top: 65%;
+      left: 50%;
+      transform: translate(-50%, -0%);
       z-index: 1;
       flex-direction: row;
       justify-content: center;
-      flex-direction: "row";
-      background-color: green;
-    } */
+      align-items: center;
+      /* background-color: green; */
+    }
   }
 `;
 
