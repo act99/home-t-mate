@@ -1,7 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import "moment";
-import moment from "moment";
 import { apis } from "../../shared/api";
 import { actionCreators as postActions } from "./postReducer";
 //action

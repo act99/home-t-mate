@@ -35,20 +35,11 @@ class VideoContainer extends Component {
   componentDidMount() {
     console.log(this.props);
     window.addEventListener("beforeunload", this.onbeforeunload);
-    apis
-      .enterRoom(this.props.roomId, this.props.password)
-      .then((res) => {
-        this.joinSession();
-      })
-      .catch((error) => console.log(error.response.message));
+    this.joinSession();
   }
 
   componentWillUnmount() {
     window.removeEventListener("beforeunload", this.onbeforeunload);
-    apis
-      .leaveRoom(this.props.roomId)
-      .then((res) => {})
-      .catch((error) => console.log(error));
   }
 
   onbeforeunload(event) {

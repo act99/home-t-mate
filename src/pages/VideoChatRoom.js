@@ -80,27 +80,14 @@ const VideoChatRoom = () => {
           );
         },
         (error) => {
-          created();
           // alert("방 인원이 꽉 찼습니다.");
           // history.replace("/");
           console.log("서버연결 실패", error);
         }
       );
     } catch (error) {
-      created();
       console.log(error);
     }
-    ws.disconnect = function (e) {
-      console.log("연결이 끊겼습니다. 재기동합니다.");
-      setTimeout(() => {
-        ws.connect();
-      }, 1000);
-    };
-    ws.unsubscribe = function (e) {
-      setTimeout(() => {
-        ws.connect();
-      }, 1000);
-    };
   };
 
   const disconnected = () => {
@@ -111,14 +98,21 @@ const VideoChatRoom = () => {
   };
 
   React.useEffect(() => {
-    let giveRoomId = locationState.roomId;
-    let givePassword = locationState.password;
-
-    created();
+    apis
+      .enterRoom(roomId, password)
+      .then((res) => {
+        created();
+      })
+      .catch((error) => console.log(error.response.message));
 
     // created();
     return () => {
-      disconnected();
+      apis
+        .leaveRoom(roomId)
+        .then((res) => {
+          disconnected();
+        })
+        .catch((error) => console.log(error));
       history.replace("/");
       history.go(0);
     };
