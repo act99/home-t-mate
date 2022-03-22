@@ -68,7 +68,7 @@ const LiveNow = () => {
   return (
     <>
       <Wrap>
-        <Container sx={{ py: 8, width: "100%" }}>
+        <Container sx={{ py: 16, width: "100%" }}>
           <Grid container spacing={2}>
             {roomList.map((item) => (
               <Grid item key={item.roomId + item.name} xs={12} sm={6} md={3}>
@@ -196,6 +196,7 @@ const LiveNow = () => {
 const Wrap = styled.div`
   width: 100%;
   height: 100%;
+  min-height: 100vh;
   background-color: #f9f9f9;
 `;
 
