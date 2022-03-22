@@ -9,7 +9,6 @@ import Grid from "../elements/Grid";
 export default function CommentBox(props) {
   const dispatch = useDispatch();
   // console.log('commentBox', props) id
-  // const comment = React.useRef();
   const _user = useSelector((state) => state.userReducer.user);
 
   const comment = React.useRef();
@@ -26,15 +25,6 @@ export default function CommentBox(props) {
     );
     comment.current.value = "";
   };
-
-  //   const write = () => {
-  //     const data = {
-  //         content: comment_text
-  //     }
-  //     console.log(data)
-  //     dispatch(commentActions.addCommentDB(props.id, data))
-  //     document.location.reload();
-  // }
 
   if (_user.is_login) {
     return (

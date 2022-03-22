@@ -49,6 +49,7 @@ const Grid = (props) => {
     top,
     bottom,
     right,
+    left,
     z_index,
   } = props;
 
@@ -103,6 +104,7 @@ const Grid = (props) => {
     top,
     bottom,
     right,
+    left,
     z_index,
   };
 
@@ -158,7 +160,7 @@ Grid.defaultProps = {
   top: null,
   bottom: null,
   right: null,
-
+  left: null,
   z_index: null,
   _onClick: null,
 };
@@ -194,6 +196,7 @@ const GridBox = styled.div`
   top: ${(props) => props.top};
   bottom: ${(props) => props.bottom};
   right: ${(props) => props.right};
+  left: ${(props) => props.left};
   z-index: ${(props) => props.z_index};
   //border
   border: ${(props) => props.Border};

@@ -51,7 +51,7 @@ const persistConfig = {
     "sessionReducer",
     "subscriberReducer",
     "commentReducer",
-    // "selectedRoomReducer",
+    "selectedRoomReducer",
 
     // "userReducer",
   ],

@@ -91,7 +91,7 @@ export default function Detail(props) {
             </Typography>
 
             {/* 댓글 보이기 */}
-            {commentState.map((v, i) => (
+            {commentState && commentState.map((v, i) => (
               <CommentContents key={i} {...v} id={props.id} />
             ))}
           </div>
