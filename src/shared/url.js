@@ -1,7 +1,7 @@
 // ** 테스트
 const BASE_URL = "http://54.180.145.1:8080";
 const REDIRECT_URI = "http://localhost:3000/user/kakao/callback";
-const WEB_SOCKET = "http://54.180.145.1/ws-stomp";
+const WEB_SOCKET = "http://54.180.145.1:8080/ws-stomp";
 const OPEN_VIDU = "https://" + window.location.hostname + ":4443";
 const CLIENT_KEY = "a0c21ddfb1632beaa7377ac0b91c9849";
 // ** 배포
