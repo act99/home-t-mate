@@ -19,6 +19,9 @@ import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import "../styles/fullcalendar.css";
 import CreateRoomModal from "../containers/CreateRoomModal";
+import { AntTabs, StyledTab, StyledTabs } from "../styles/tabStyle";
+import { Tabs } from "@mui/material";
+import KakaoShareButton from "../shared/Kakao-shared-btn";
 const Mypage = (props) => {
   const todoList = useSelector((state) => state.todoReducer.list);
   const [open, setOpen] = React.useState(false);
@@ -119,13 +122,14 @@ const Mypage = (props) => {
                 justifyContent: "center",
                 justifyItems: "center",
                 marginTop: "12px",
-                marginBottom: "72px",
+                marginBottom: "12px",
               }}
             >
               <h3 style={{ margin: "auto", fontSize: "16px" }}>
                 홈트메이트로 친구 초대하기
               </h3>
             </div>
+            <KakaoShareButton />
           </InviteContainer>
         </UserInfoContainer>
       </UserContainer>
@@ -136,26 +140,27 @@ const Mypage = (props) => {
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={TabValue}>
           <Box sx={{ borderBottom: 1, borderColor: "white", mb: 4 }}>
-            <TabList
+            <StyledTabs
               onChange={TabhandleChange}
-              aria-label="lab API tabs example"
+              aria-label="lab API tabs"
+              TabIndicatorProps={{
+                children: <span className="MuiTabs-indicatorSpan" />,
+              }}
             >
-              <Tab
+              <StyledTab
                 label="나의 캘린더"
                 value="1"
                 sx={{
                   fontWeight: "bold",
                   fontFamily: "SuncheonR",
-                  color: "black",
-                  ":focus": "white",
                 }}
               />
-              <Tab
+              <StyledTab
                 label="내가 작성한 스토리"
                 value="2"
                 sx={{ fontWeight: "bold", fontFamily: "SuncheonR" }}
               />
-            </TabList>
+            </StyledTabs>
           </Box>
           <TabPanel value="1" sx={{ p: "0px" }}>
             <Grid margin="auto" position="relative">

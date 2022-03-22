@@ -18,6 +18,7 @@ import Story from "./pages/Story";
 import VideoChatRoom from "./pages/VideoChatRoom";
 import CheckVideo from "./pages/CheckVideo";
 import Logout from "./pages/Logout";
+import { Helmet } from "react-helmet";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ const App = () => {
   return (
     <>
       <div className="App">
+        <Helmet>
+          <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+        </Helmet>
         <NavBar />
         <ConnectedRouter history={history}>
           <Switch>
