@@ -6,7 +6,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
-import { Text,Grid } from "../elements";
+import { Text, Grid } from "../elements";
 import Edit from "./Edit";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 
@@ -15,6 +15,7 @@ export default function Cardheader(props) {
   const dispatch = useDispatch();
   const _user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
+
   const deletePostDB = () => {
     dispatch(postActions.deletePostDB(props.id));
     window.alert("포스트가 정상적으로 삭제되었습니다.");
@@ -22,6 +23,7 @@ export default function Cardheader(props) {
   };
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x));
 
+  /* 삭제하기,수정하기,취소하기 dropdown modal open, close */
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,16 +39,26 @@ export default function Cardheader(props) {
   const edithandleOpen = () => setEditOpen(true);
   const edithandleClose = () => setEditOpen(false);
 
+  // 글 작성자한테만 ... 아이콘 보이게하기
   return _user.id === thisPost.userId ? (
-    // 글 작성자한테만 ... 아이콘 보이게하기
     <CardHeader
-      style={{ backgroundColor: "#587730", borderTopRightRadius: "20px" }}
-      avatar={<Image shape="circle" src={props.userImg} size="40" margin="0" />}
+      style={{
+        backgroundColor: "#587730",
+        borderTopRightRadius: "20px",
+        padding: "0px",
+        paddingLeft: "16px",
+        height: "64px",
+      }}
+      avatar={<Image shape="circle" src={props.userImg} size="40" />}
       action={
         //...아이콘 부분
         <>
-          <MoreHorizIcon onClick={handleClick} />
-
+          <Grid is_flex align_items="center" height="64px">
+            <MoreHorizIcon
+              onClick={handleClick}
+              style={{ fontSize: "30px", paddingRight: "30px" }}
+            />
+          </Grid>
           {/* 삭제하기,수정하기,취소하기 dropdown modal부분 */}
           <Popover
             id={id}
@@ -64,18 +76,27 @@ export default function Cardheader(props) {
             <Grid
               is_flex
               flex_direction="column"
+              padding="10px"
+              height="200px"
+              align_content="space-around"
+              // align_items="center"
               justify_content="center"
-              align_items="center"
             >
-              <Text F_size="16px" _onClick={edithandleOpen}>
-                수정하기
-              </Text>
-              <Text F_size="16px" _onClick={deletePostDB}>
-                삭제하기
-              </Text>
-              <Text F_size="16px" _onClick={handleClose}>
-                취소하기
-              </Text>
+              <Grid>
+                <Text F_size="16px" _onClick={edithandleOpen}>
+                  이 스토리 수정하기
+                </Text>
+              </Grid>
+              <Grid>
+                <Text F_size="16px" _onClick={deletePostDB}>
+                  이 스토리 삭제하기
+                </Text>
+              </Grid>
+              <Grid>
+                <Text F_size="16px" _onClick={handleClose}>
+                  취소하기
+                </Text>
+              </Grid>
             </Grid>
           </Popover>
 
@@ -88,7 +109,9 @@ export default function Cardheader(props) {
         </>
       }
       titleTypographyProps={{
-        fontWeight: 600,
+        fontWeight: 400,
+        fontSize: 20,
+        color: "#ffffff",
       }}
       title={props.username}
     />

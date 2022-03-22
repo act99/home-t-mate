@@ -4,10 +4,11 @@ import { makeStyles } from "@mui/styles";
 import Cardheader from "../components/Cardheader";
 import LikeComment from "./LikeComment";
 import Img from "../components/Img";
+import { Grid } from "../elements";
 import CardContent from "@mui/material/CardContent";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-
+import styled from "styled-components";
 import "../App.css";
 
 import { Card, Typography } from "@mui/material";
@@ -69,21 +70,31 @@ export default function StoryCard(props) {
           />
 
           <CardContent sx={{ p: 0, pl: "16px" }}>
-            <Typography variant="body2" color="black" align="justify">
-              <strong>{nickname}</strong>
-              {content}
-            </Typography>
+            <Grid is_flex>
+              <Text F_color="black" F_size="20px">
+                {nickname}
+              </Text>
+              <div className="overFlowText">{content}</div>
+            </Grid>
           </CardContent>
-          {likeUserDto.length <= 0 ? null : (
+          {likeUserDto.length <= 0 ? (
+            <Text margin_left="16px" margin_top="28px">
+              좋아요를 처음 누른 친구가 되어봐요 :)
+            </Text>
+          ) : (
             <Text margin_left="16px" margin_top="28px">
               {likeUserDto[0].userId}님 외 {likeUserDto.length}명이 이 스토리를
               좋아해요
             </Text>
           )}
-          {commentUserDto <= 0 ? null : (
+          {commentUserDto <= 0 ? (
             <Text margin_left="16px" margin_bottom="8px">
-              {props.commentUserDto[0].nickname}님 외{" "}
-              {props.commentUserDto.length}개의 댓글
+              아직 댓글이 없어요
+            </Text>
+          ) : (
+            <Text margin_left="16px" margin_bottom="8px">
+              <p>{props.commentUserDto[0].nickname}님 외
+              <span>{props.commentUserDto.length}개</span>의 댓글</p>
             </Text>
           )}
         </Card>

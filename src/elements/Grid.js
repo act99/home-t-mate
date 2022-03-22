@@ -24,6 +24,7 @@ const Grid = (props) => {
     flex_wrap,
     justify_content,
     align_items,
+    align_content,
     vertical_align,
   } = props;
 
@@ -79,6 +80,7 @@ const Grid = (props) => {
     is_flex,
     flex_direction,
     justify_content,
+    align_content,
     align_items,
     flex_wrap,
     vertical_align,
@@ -126,6 +128,7 @@ Grid.defaultProps = {
   flex_wrap: "nowrap",
   align_items: "center",
   justify_content: null,
+  align_content: null,
 
   box_shadow: null,
   box_sizing: true,
@@ -171,6 +174,7 @@ const GridBox = styled.div`
   ${(props) => (props.is_flex ? `display : flex;` : "")}
   align-items : ${(props) => props.align_items};
   justify-content: ${(props) => props.justify_content};
+  align-content: ${(props) => props.align_content};
   flex-direction: ${(props) => props.flex_direction};
   flex-wrap: ${(props) => props.flex_wrap};
   box-shadow: ${(props) => props.box_shadow};

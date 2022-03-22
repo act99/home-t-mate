@@ -4,7 +4,7 @@ import React from "react";
 
 import { CardHeader, Avatar, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { BsChat } from "react-icons/bs";
+import { FaRegComment } from "react-icons/fa";
 import { Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
@@ -78,27 +78,24 @@ export default function LikeComment(props) {
   return (
     <>
       <Grid
-        B_top="1px solid #efefef"
         is_flex
         justify_content="space-between"
         margin="10px"
-        margin_top="0px"
+        margin_top="30px"
       >
-        <Grid is_flex flex_wrap="nowrap" width="auto">
+        <Grid is_flex flex_wrap="nowrap">
           {/* 좋아요버튼 */}
           <Button
             _onClick={likePost}
             border="0px"
             BG_color="white"
             padding="0px"
-            margin="0px 5px"
+            margin="0px 15px 0px 0px"
             width="28px"
             height="28px"
           >
-            {like ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
+            {like ? <FavoriteOutlinedIcon style={{fontSize:"40px", color:"#587730"}} /> : <FavoriteBorderOutlinedIcon style={{fontSize:"40px"}} />}
           </Button>
-          {/* <FavoriteBorderOutlinedIcon />
-          </Button> */}
 
           {/* 댓글버튼 => 상세페이지로 이동 */}
           <Button
@@ -110,24 +107,10 @@ export default function LikeComment(props) {
             margin="0px 5px 4px 5px"
             height="28px"
           >
-            <BsChat size="22" border="3px" onClick={handleOpen} />
+            <FaRegComment size="35" border="3px" onClick={handleOpen} />
           </Button>
         </Grid>
       </Grid>
-
-      {/* 좋아요버튼
-          <IconButton
-            sx={{ pl: 2, pb: 2 }}
-            aria-label="add to favorites"
-            onClick={() => console.log("hi")}
-          >
-            <FavoriteBorderIcon />
-          </IconButton>
-
-          댓글버튼 => 상세페이지로 이동
-          <IconButton sx={{ pb: 2 }} aria-label="chat" onClick={handleOpen}>
-            <BsChat size="22" border="3px" />
-          </IconButton> */}
 
       {/* 상세페이지 modal */}
       <Modal
