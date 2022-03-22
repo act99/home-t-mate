@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { Carousel } from "react-responsive-carousel";
 import Imageupload from "../assets/imageupload.png";
+import { borderRadius } from "@mui/system";
 
 function Write(props) {
   const dispatch = useDispatch();
@@ -113,7 +114,7 @@ function Write(props) {
                           src={_user.userImg ? _user.userImg : ""}
                           sx={{ margin: "20px", width: 50, height: 50 }}
                         />
-                        <Text>{_user.nickname ? _user.nickname : ""}</Text>
+                        <Text F_size="20px">{_user.nickname ? _user.nickname : ""}</Text>
                       </Grid>
 
                       <TextArea
@@ -189,6 +190,7 @@ function Write(props) {
                 </Grid>
               )
             ) : (
+              <Box sx={stylenoborder}>
               <Grid
                 width="420px"
                 height="220px"
@@ -232,6 +234,7 @@ function Write(props) {
                       </Button>
                 </Grid>
               </Grid>
+              </Box>
             )}
           </Box>
         </Fade>
@@ -253,6 +256,21 @@ const style = {
   borderRadius: "20px",
   outline: "none",
 };
+
+
+const stylenoborder = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  zIndex: 13000,
+  padding: 0,
+  outline: "none",
+};
+
 
 const TextArea = styled.textarea`
   width: 90%;

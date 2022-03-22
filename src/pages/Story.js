@@ -8,6 +8,7 @@ import Write from "../components/Write";
 import styled from "@emotion/styled";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { useDispatch, useSelector } from "react-redux";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 function Story() {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ function Story() {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const _post = useSelector((state) => state.postReducer.list);
+  const test = useSelector((state)=>state);
+  console.log('state확인용', test)
 
   return (
     <React.Fragment>
@@ -30,20 +33,17 @@ function Story() {
         </Grid>
       ))}
 
-      <WriteButton onClick={() => setOpen(true)}></WriteButton>
+      <WriteButton onClick={() => setOpen(true)}><AddCircleIcon style={{fontSize:"80px"}}/></WriteButton>
+      
       <Write open={open} handleClose={handleClose}></Write>
     </React.Fragment>
   );
 }
 
 const WriteButton = styled.div`
-  width: 80px;
-  height: 80px;
-  background-color: rgb(255, 228, 228);
-  border-radius: 100%;
   position: fixed;
-  right: 0px;
-  bottom: 0px;
+  right: 8px;
+  bottom: 8px;
   cursor: pointer;
   z-index: 1;
 `;
