@@ -51,8 +51,10 @@ export default function Detail(props) {
   console.log("commentState", commentState);
 
   React.useEffect(() => {
-    dispatch(commentActions.getCommentDB(props.id));
-  }, [commentState]);
+    if(!commentState) {
+      dispatch(commentActions.getCommentDB(props.id));
+    }
+  }, []);
 
   return (
     <Box sx={style}>
@@ -95,7 +97,7 @@ export default function Detail(props) {
           <Grid is_flex B_top="2px solid #D3D3D3" margin_bottom="10px">
             <BsChat size="24" style={{ margin: "15px 10px 17px 16px" }} />
             <Text>총 {commentState && commentState.length}개의 댓글</Text>
-            <Text>총 {commentUserDto.length}개의 댓글</Text>
+            {/* <Text>총 {commentUserDto.length}개의 댓글</Text> */}
           </Grid>
 
           {/* 댓글 보이기 */}

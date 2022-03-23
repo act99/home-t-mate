@@ -122,3 +122,13 @@
   text-overflow: ellipsis;
   width: 300px;
 }
+
+/* commentBox.js input css */
+.CommentInputBox{
+  border: none;
+  width:100%;
+}
+
+.CommentInputBox:focus {
+  outline: none;
+}
