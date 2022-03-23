@@ -26,30 +26,30 @@ const initialTodo = {
 
 const initialState = {
   list: [
-    {
-      id: 0,
-      title: "할일1",
-      start: `2022-03-17T13:00:00`,
-      end: "2022-03-20T15:00:00",
-      time: "13:00",
-      completed: false,
-    },
-    {
-      id: 1,
-      title: "할일2",
-      start: "2022-03-17T15:00:00",
-      time: "15:00",
-      end: "2022-03-22T15:00:00",
-      completed: false,
-    },
-    {
-      id: 2,
-      title: "할일3",
-      start: "2022-03-17T17:00:00",
-      time: "17:00",
-      end: "2022-03-20T15:00:00",
-      completed: false,
-    },
+    // {
+    //   id: 0,
+    //   title: "할일1",
+    //   start: `2022-03-17T13:00:00`,
+    //   end: "2022-03-20T15:00:00",
+    //   time: "13:00",
+    //   completed: false,
+    // },
+    // {
+    //   id: 1,
+    //   title: "할일2",
+    //   start: "2022-03-17T15:00:00",
+    //   time: "15:00",
+    //   end: "2022-03-22T15:00:00",
+    //   completed: false,
+    // },
+    // {
+    //   id: 2,
+    //   title: "할일3",
+    //   start: "2022-03-17T17:00:00",
+    //   time: "17:00",
+    //   end: "2022-03-20T15:00:00",
+    //   completed: false,
+    // },
   ],
 };
 
@@ -69,7 +69,7 @@ const editTodoDB = (todoId, contents) => {
     apis
       .editTodo(todoId, contents)
       .then((res) => {
-        dispatch(editTodo(contents));
+        dispatch(editTodo(todoId, contents));
         history.push("/");
       })
       .catch((error) => {
@@ -151,9 +151,6 @@ const actionCreators = {
   getTodoDB,
   editTodoDB,
   deleteTodoDB,
-  addTodo,
-  editTodo,
-  deleteTodo,
 };
 
 export { actionCreators };
