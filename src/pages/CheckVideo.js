@@ -74,6 +74,7 @@ const CheckVideo = () => {
   };
 
   React.useEffect(() => {
+    console.log(roomId);
     // **  ㄱㄱ
     setTimeout(() => {
       if (video === true) {

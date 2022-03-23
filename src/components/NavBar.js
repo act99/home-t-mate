@@ -62,10 +62,6 @@ const NavBar = (props) => {
     } else if (routeUrl.includes("/livenow")) {
       setValue("3");
     }
-    // else
-    // {
-    //   setValue("0");
-    // }
   }, [routeUrl, pathname, width]);
 
   const theme = createTheme({
@@ -152,7 +148,7 @@ const NavBar = (props) => {
                       />
                       <Tab
                         style={{
-                          color: "#000000",
+                          color: "#ff0000",
                           fontWeight: "bold",
                           fontSize: 8,
                           fontFamily: "GmarketSansMedium",
@@ -257,11 +253,11 @@ const NavBar = (props) => {
                     />
                     <Tab
                       style={{
-                        color: "#000000",
+                        color: "#ff0000",
                         fontWeight: "bold",
                         fontFamily: "GmarketSansMedium",
                       }}
-                      label="LIVE NOW"
+                      label="LIVE NOW 🔥"
                       value="3"
                       onClick={() => history.push("/livenow")}
                     />
@@ -348,8 +344,8 @@ const CreateButton = styled.button`
   height: 40px;
   margin-top: auto;
   margin-bottom: auto;
-  border-radius: 10px;
-  border: solid 1px green;
+  border-radius: 8px;
+  border: solid 2px green;
   background-color: white;
   font-size: 16px;
   color: green;

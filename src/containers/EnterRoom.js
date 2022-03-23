@@ -5,6 +5,7 @@ import "../App.css";
 import { BodyWrap } from "./VideoContainer/VideoConEle";
 import WebRTCContainer from "./WebRTCContainer";
 import url from "../shared/url";
+import { apis } from "../shared/api";
 // const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
 const OPENVIDU_SERVER_URL = url.OPEN_VIDU;
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -33,8 +34,8 @@ class VideoContainer extends Component {
 
   componentDidMount() {
     console.log(this.props);
-    this.joinSession();
     window.addEventListener("beforeunload", this.onbeforeunload);
+    this.joinSession();
   }
 
   componentWillUnmount() {

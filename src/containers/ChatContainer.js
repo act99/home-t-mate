@@ -23,6 +23,7 @@ import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import MicIcon from "@mui/icons-material/Mic";
 import useWindowSize from "../hooks/useWindowSize";
+import LogoImage from "../assets/loading_image.png";
 
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
@@ -47,6 +48,10 @@ const ChatContainer = (props) => {
   const user = useSelector((state) => state.userReducer.user);
   const nickname = user.nickname;
   const username = user.username;
+
+  const subscribers = useSelector(
+    (state) => state.subscriberReducer.subscribers
+  );
 
   // ** 메시지 핸들러
   const [sendMessage, setSendMessage] = React.useState({
@@ -94,40 +99,24 @@ const ChatContainer = (props) => {
           height: "160px",
         }}
       >
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
-            />
-          </ListItemAvatar>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-          <ButtonGroup size="large" aria-label="large button group">
-            <IconButton>
-              <VideocamIcon />
-            </IconButton>
-            <IconButton>
-              <MicIcon />
-            </IconButton>
-          </ButtonGroup>
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
-            />
-          </ListItemAvatar>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-          <ButtonGroup size="large" aria-label="large button group">
-            <IconButton>
-              <VideocamIcon />
-            </IconButton>
-            <IconButton>
-              <MicIcon />
-            </IconButton>
-          </ButtonGroup>
-        </ListItem>
+        {subscribers.map((item, index) => (
+          <>
+            <ListItem key={index}>
+              <ListItemAvatar>
+                <Avatar alt={item.nickname} src={item.profileImg} />
+              </ListItemAvatar>
+              <ListItemText primary={item.nickname} />
+              <ButtonGroup size="large" aria-label="large button group">
+                <IconButton>
+                  <VideocamIcon />
+                </IconButton>
+                <IconButton>
+                  <MicIcon />
+                </IconButton>
+              </ButtonGroup>
+            </ListItem>
+          </>
+        ))}
       </List>
       <ChatTitle>
         <h3>친구들과 채팅타임</h3>
@@ -145,13 +134,14 @@ const ChatContainer = (props) => {
             <ListItem key={index + "" + (item.id + "")}>
               <Grid container>
                 <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary={item.message}
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="09:30"></ListItemText>
+                  <ProfileRight>
+                    {/* <h3>{item.sender}</h3> */}
+                    <h3>나</h3>
+                  </ProfileRight>
+                  <MyText>
+                    <h5>{item.time}</h5>
+                    <h3>{item.message}</h3>
+                  </MyText>
                 </Grid>
               </Grid>
             </ListItem>
@@ -159,14 +149,27 @@ const ChatContainer = (props) => {
             <ListItem key={index + "" + (item.id + "")}>
               <Grid container>
                 <Grid item xs={12}>
-                  <ListItemText
-                    sx={{ wordBreak: "break-all" }}
-                    align="left"
-                    primary={item.message}
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="left" secondary="09:31"></ListItemText>
+                  <ProfileLeft>
+                    {item.profileImg !== null ? (
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={item.profileImg}
+                        sx={{ width: 32, height: 32, mr: 1 }}
+                      />
+                    ) : (
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={LogoImage}
+                        sx={{ width: 32, height: 32, mr: 1 }}
+                      />
+                    )}
+
+                    <h3>{item.sender}</h3>
+                  </ProfileLeft>
+                  <OtherText>
+                    <h3>{item.message}</h3>
+                    <h5>{item.time}</h5>
+                  </OtherText>
                 </Grid>
               </Grid>
             </ListItem>
@@ -224,6 +227,77 @@ const ChatTitle = styled.div`
   h3 {
     font-size: medium;
     margin-left: 1vw;
+  }
+`;
+
+const ProfileLeft = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  h3 {
+    font-size: 12px;
+    font-weight: bold;
+  }
+`;
+
+const ProfileRight = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  width: 100%;
+  h3 {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0px;
+    margin-bottom: 4px;
+  }
+`;
+
+const MyText = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  h3 {
+    background-color: #c3e5ae;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0px;
+  }
+  h5 {
+    font-size: 8px;
+    font-weight: bold;
+    margin: 0px;
+    margin-top: 24px;
+    margin-right: 8px;
+  }
+`;
+
+const OtherText = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  h3 {
+    background-color: #f1e1a6;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0px;
+  }
+  h5 {
+    font-size: 8px;
+    font-weight: bold;
+    margin: 0px;
+    margin-top: 24px;
+    margin-left: 8px;
   }
 `;
 

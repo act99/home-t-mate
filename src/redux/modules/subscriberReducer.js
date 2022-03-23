@@ -24,18 +24,29 @@ export default handleActions(
   {
     [GET_SUBSCRIBERS]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
-        draft.subscribers.push(
-          action.payload.subscriber.message.split("님")[0]
-        );
+        if (Array.isArray(action.payload.subscriber)) {
+          draft.subscribers = [...action.payload.subscriber];
+        } else if (typeof action.payload.subscriber === "object") {
+          const check = draft.subscribers.filter(
+            (item) =>
+              item.nickname ===
+              action.payload.subscriber.message.split("님이")[0]
+          );
+          if (check.length <= 0) {
+            draft.subscribers.push({
+              nickname: action.payload.subscriber.message.split("님이")[0],
+              profileImg: action.payload.subscriber.profileImg,
+            });
+          }
+        }
       }),
     [LEAVE_SUBSCRIBERS]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload);
-        let dummyIndex = draft.subscribers.findIndex(
-          (item) => item === action.payload
-        );
-        draft.subscribers.splice(dummyIndex, 1);
+        // let dummyIndex = draft.subscribers.findIndex(
+        //   (item) => item === action.payload
+        // );
+        // draft.subscribers.splice(dummyIndex, 1);
       }),
   },
   initialState
