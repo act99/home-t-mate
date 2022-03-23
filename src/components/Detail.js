@@ -57,24 +57,25 @@ export default function Detail(props) {
   console.log('commentState', commentState);
 
   React.useEffect(() => {
+
     dispatch(commentActions.getCommentDB(props.id));
-  }, []);
+  }, [commentState]);
 
-  const [like, setLike] = React.useState(false);
+  // const [like, setLike] = React.useState(false);
 
-  const likePost = () => {
-    if (!_user.is_login) {
-      alert("로그인을 해주세요");
-      return;
-    } else {
-      dispatch(postAcions.likePostDB(thisPost.id, _user.id));
-      if (like === true) {
-        setLike(false);
-      } else {
-        setLike(true);
-      }
-    }
-  };
+  // const likePost = () => {
+  //   if (!_user.is_login) {
+  //     alert("로그인을 해주세요");
+  //     return;
+  //   } else {
+  //     dispatch(postAcions.likePostDB(thisPost.id, _user.id));
+  //     if (like === true) {
+  //       setLike(false);
+  //     } else {
+  //       setLike(true);
+  //     }
+  //   }
+  // };
 
 
 
@@ -125,7 +126,8 @@ export default function Detail(props) {
           {/* 댓글몇개인지 보이기 */}
           <Grid is_flex B_top="2px solid #D3D3D3" margin_bottom="10px">
           <BsChat size="24" style={{margin:"15px 10px 17px 16px"}}/>
-          <Text>총 {commentState.length}개의 댓글</Text>
+          <Text>총 {commentState? 0 : commentState.length}개의 댓글</Text>
+          {/* <Text>총 {commentUserDto.length}개의 댓글</Text> */}
           </Grid>
 
           {/* 댓글 보이기 */}
@@ -140,7 +142,7 @@ export default function Detail(props) {
           <Grid is_flex>
 
 
-
+{/* 
           <Button
             _onClick={likePost}
             border="0px"
@@ -151,13 +153,13 @@ export default function Detail(props) {
             height="28px"
           >
             {like ? <FavoriteOutlinedIcon style={{fontSize:"40px", color:"#587730"}} /> : <FavoriteBorderOutlinedIcon style={{fontSize:"40px"}} />}
-          </Button>
+          </Button> */}
 
 
 
 
 
-          {/* <LikeComment id={props.id} modal={false} none="none" /> */}
+          <LikeComment id={props.id} modal={false} none="none" default="default" />
           
           </Grid>
           <CommentBox id={props.id} />
