@@ -8,13 +8,10 @@ import { Grid } from "../elements";
 import CardContent from "@mui/material/CardContent";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import styled from "styled-components";
 import "../App.css";
-
-import { Card, Typography } from "@mui/material";
+import { Card } from "@mui/material";
 import Text from "../elements/Text";
 
-import { useDispatch, useSelector } from "react-redux";
 // import  style  from "@mui/styles";
 
 export default function StoryCard(props) {
@@ -37,7 +34,7 @@ export default function StoryCard(props) {
     }
     console.log(commentUserDto, likeUserDto);
   }, [commentUserDto, likeUserDto]);
-  
+
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
     return (
       <div className="mainbox">
@@ -45,7 +42,7 @@ export default function StoryCard(props) {
           sx={{ maxWidth: 620, height: 870, margin: "auto" }}
           className={classes.root}
         >
-          <Cardheader id={id} username={nickname} userImg={userImg}/>
+          <Cardheader id={id} username={nickname} userImg={userImg} />
 
           <Carousel
             showThumbs={false}
@@ -84,8 +81,8 @@ export default function StoryCard(props) {
             </Text>
           ) : (
             <Text margin_left="16px" margin_top="28px">
-              {likeUserDto[0].userId}님 외 {likeUserDto.length-1}명이 이 스토리를
-              좋아해요
+              {likeUserDto[0].userId}님 외 {likeUserDto.length - 1}명이 이
+              스토리를 좋아해요
             </Text>
           )}
           {commentUserDto <= 0 ? (
@@ -94,8 +91,10 @@ export default function StoryCard(props) {
             </Text>
           ) : (
             <Text margin_left="16px" margin_bottom="8px" F_color="#757575">
-              <p>{commentUserDto[0].nickname}님 외
-              <span>{commentUserDto.length-1}개</span>의 댓글</p>
+              <p>
+                {commentUserDto[0].nickname}님 외
+                <span>{commentUserDto.length - 1}개</span>의 댓글
+              </p>
             </Text>
           )}
         </Card>

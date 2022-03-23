@@ -1,19 +1,14 @@
 import React from "react";
-import { Grid, Image, Button, Text } from "../elements";
+import { Grid, Button, Text } from "../elements";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import ImageIcon from "@mui/icons-material/Image";
 import Img from "../components/Img";
-import CheckIcon from "@mui/icons-material/Check";
 import Avatar from "@mui/material/Avatar";
-import { history } from "../redux/store";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
-import { filterEventStoreDefs } from "@fullcalendar/react";
-import { imageApis } from "../shared/formApi";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -23,7 +18,6 @@ function Edit(props) {
   const { id, open, handleClose, photoResponseDto, content } = props;
   const fileInput = React.useRef();
   const contentsRef = React.useRef();
-  const [fileSelected, setFileSelected] = React.useState(false);
   const [preview, setPreview] = React.useState([]);
   const [tempFile, setTempFile] = React.useState([]);
   const [contents, setContents] = React.useState("");
@@ -45,7 +39,6 @@ function Edit(props) {
         tempData.push(reader.result);
         if (tempData.length === files.length) {
           setPreview([...preview, ...tempData]);
-          setFileSelected(true);
         }
       });
     }
@@ -69,18 +62,29 @@ function Edit(props) {
   };
   React.useEffect(() => {
     setContents(content);
+    // photoResponseDto.map((item, index) =>
+    //   setPreview([...preview, item.postImg])
+    // );
+    // setPreview([...item])
 
     return () => {};
   }, [content]);
 
-
   const handleOnClose = () => {
-    handleClose();
     setPreview([]);
-    setFileSelected(false);
+    setContents(content);
+    tempData = [];
+    console.log(preview.length);
+    handleClose();
   };
 
-
+  const previewImage = (v) => {
+    if (preview.length === 0) {
+      return v.postImg;
+    } else {
+      return preview;
+    }
+  };
   return (
     <>
       <Modal
@@ -106,7 +110,7 @@ function Edit(props) {
                   style={{ display: "none" }}
                 />
 
-                {tempFile.length <= 0 ? (
+                {preview.length <= 0 ? (
                   <Carousel
                     showThumbs={false}
                     infiniteLoop={true}
@@ -122,8 +126,7 @@ function Edit(props) {
                           _onClick={() => {
                             fileInput.current.click();
                           }}
-                          fileSelected={fileSelected}
-                          postImg={fileSelected ? preview : v.postImg}
+                          postImg={previewImage(v)}
                         />
                       ))}
                   </Carousel>
