@@ -51,7 +51,7 @@ export default function Detail(props) {
   console.log("commentState", commentState);
 
   React.useEffect(() => {
-    if(!commentState) {
+    if (!commentState) {
       dispatch(commentActions.getCommentDB(props.id));
     }
   }, []);
@@ -130,7 +130,7 @@ export default function Detail(props) {
               default="default"
             />
           </Grid>
-          <CommentBox id={props.id} />
+            <CommentBox id={props.id} />
         </Grid>
       </Grid>
     </Box>
