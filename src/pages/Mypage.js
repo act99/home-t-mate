@@ -20,6 +20,9 @@ import CreateRoomModal from "../containers/CreateRoomModal";
 import { StyledTab, StyledTabs } from "../styles/tabStyle";
 import KakaoShareButton from "../shared/Kakao-shared-btn";
 import { actionCreators as todoActions } from "../redux/modules/todoReducer";
+import ChangeProfileModal from "../containers/ChangeProfileModal";
+import ProfileImage from "../elements/ProfileImage";
+
 const Mypage = (props) => {
   const dispatch = useDispatch();
   const todoList = useSelector((state) => state.todoReducer.list);
@@ -53,10 +56,11 @@ const Mypage = (props) => {
   };
 
   const user = useSelector((state) => state.userReducer.user);
-  const { nickname, userImg } = user;
+  const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
 
-  // ** todoList
+  // ** 프로필 이미지 수정
+  const [openProfile, setOpenProfile] = React.useState(false);
 
   React.useEffect(() => {
     dispatch(todoActions.getTodoDB());
@@ -67,20 +71,24 @@ const Mypage = (props) => {
   return (
     <Grid width="1200px" margin="auto">
       <UserContainer>
-        <Text F_size="28px" margin_bottom="16px">
-          반가워요 <span>{nickname}</span>님:)
-        </Text>
-        <Text F_size="16px" margin_bottom="48px">
-          오늘도 즐거운 <span>홈트</span>를 응원해요💪💪
-        </Text>
+        <Title
+          F_size="28px"
+          margin_bottom="16px"
+          style={{ fontFamily: "GmarketSansMedium" }}
+        >
+          <h3>
+            반가워요 <span>{nickname}</span> 님 :)
+          </h3>
+          <h5>
+            오늘도 즐거운 <span>홈트</span>를 응원해요💪💪
+          </h5>
+        </Title>
+
         <UserInfoContainer>
           <UserDataContainer>
-            <Image
-              src={userImg}
-              width="200px"
-              height="200px"
-              border_radius="20px"
-              margin_right="48px"
+            <ProfileImage
+              src={profileImg}
+              onClick={() => setOpenProfile(true)}
             />
             <UserNameContainer style={{ marginLeft: "40px", marginTop: "32x" }}>
               <Text F_size="28px" F_weight="bold" margin_top="16px">
@@ -124,7 +132,7 @@ const Mypage = (props) => {
                 display: "flex",
                 justifyContent: "center",
                 justifyItems: "center",
-                marginTop: "12px",
+                // marginTop: "12px",
                 marginBottom: "12px",
               }}
             >
@@ -200,6 +208,11 @@ const Mypage = (props) => {
           <TabPanel value="2">Item Two</TabPanel>
         </TabContext>
       </Box>
+      <ChangeProfileModal
+        setOpenProfile={setOpenProfile}
+        openProfile={openProfile}
+        profileImg={profileImg}
+      />
     </Grid>
   );
 };
@@ -234,7 +247,7 @@ const UserNameContainer = styled.div`
 const InviteContainer = styled.div`
   width: 252px;
   height: 88px;
-  margin-top: 96px;
+  margin-top: 76px;
 `;
 
 const CreateButton = styled.button`
@@ -258,6 +271,21 @@ const CreateButton = styled.button`
     transition: 0.3s;
     background-color: green;
     color: white;
+  }
+`;
+
+const Title = styled.div`
+  h3 {
+    font-size: 32px;
+    font-family: "GmarketSansMedium";
+  }
+  h5 {
+    font-size: 16px;
+    font-family: "GmarketSansLight";
+  }
+  span {
+    font-size: 32px;
+    font-family: "GmarketSansMedium";
   }
 `;
 

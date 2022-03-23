@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/roomReducer";
-import { useHistory } from "react-router-dom";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import {
   Avatar,
@@ -10,7 +9,6 @@ import {
   CardMedia,
   Container,
   Grid,
-  rgbToHex,
   Typography,
 } from "@mui/material";
 import styled from "@emotion/styled";
@@ -21,10 +19,8 @@ import HowToUse from "../assets/howtouse.png";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   // ** 방 생성 버튼
   const roomList = useSelector((state) => state.roomReducer.room_list);
-  const roomEight = roomList.slice(0, 8);
 
   // ** 모달 생성
   const [clickCard, setClickCard] = React.useState(false);
@@ -221,9 +217,15 @@ const Home = () => {
           setClickCard={setClickCard}
           data={modalData}
         />
-        <BxSlideCon>
-          <img alt="" src={HowToUse} width="100%" />
-        </BxSlideCon>
+        <FooterBxSlideCon>
+          <img
+            alt=""
+            src={HowToUse}
+            width="100%"
+            // height="30vw"
+            style={{ margin: "0px" }}
+          />
+        </FooterBxSlideCon>
       </Wrap>
     </>
   );
@@ -231,7 +233,12 @@ const Home = () => {
 
 const BxSlideCon = styled.div`
   width: 100%;
-  height: 100%;
+  margin: 0px;
+`;
+
+const FooterBxSlideCon = styled.div`
+  width: 100%;
+  background-color: #e2f7de;
 `;
 
 const Wrap = styled.div`

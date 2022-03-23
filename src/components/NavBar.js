@@ -41,7 +41,7 @@ const NavBar = (props) => {
     history.go(0);
   };
   const user = useSelector((state) => state.userReducer.user);
-  const userImg = user.userImg;
+  const profileImg = user.profileImg;
 
   const [value, setValue] = React.useState("1");
 
@@ -282,7 +282,7 @@ const NavBar = (props) => {
                 onClick={() => history.push("/mypage")}
                 sx={{ p: 0 }}
               >
-                <Avatar alt="Remy Sharp" src={userImg} />
+                <Avatar alt="Remy Sharp" src={profileImg} />
               </AvatarButton>
               <CreateButton
                 onClick={() => {

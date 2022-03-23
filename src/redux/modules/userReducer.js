@@ -13,14 +13,9 @@ const logout = createAction(LOG_OUT, (user) => ({ user }));
 // initialState
 export const initialState = {
   user: {
-    ageRange: null,
-    career: null,
-    gender: null,
     id: 0,
     nickname: "",
-    phoneNum: null,
     userImg: "",
-    selfIntro: null,
     username: "",
     is_login: false,
     token: null,
@@ -57,14 +52,9 @@ export default handleActions(
       produce(state, (draft) => {
         console.log(action.payload);
         draft.user = {
-          ageRange: action.payload.user.ageRange,
-          career: action.payload.user.career,
-          gender: action.payload.user.gender,
           id: action.payload.user.id,
           nickname: action.payload.user.nickname,
-          phoneNum: action.payload.user.phoneNum,
-          userImg: action.payload.user.userImg,
-          selfIntro: action.payload.user.selfIntro,
+          profileImg: action.payload.user.profileImg,
           username: action.payload.user.username,
           is_login: true,
           token: getCookie("token"),
@@ -74,14 +64,9 @@ export default handleActions(
       produce(state, (draft) => {
         deleteCookie("token");
         draft.user = {
-          ageRange: null,
-          career: null,
-          gender: null,
           id: 0,
           nickname: "",
-          phoneNum: null,
-          userImg: "",
-          selfIntro: null,
+          profileImg: "",
           username: "",
           is_login: false,
           token: null,

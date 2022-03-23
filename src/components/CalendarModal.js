@@ -58,7 +58,6 @@ export default function TransitionsModal(props) {
     );
     dispatch(
       todoActions.addTodoDB({
-        id: 5,
         title: changeTitle,
         start:
           moment(changeStart).format().split("T")[0] + "T" + changeTime + ":00",
@@ -67,9 +66,10 @@ export default function TransitionsModal(props) {
         time: changeTime,
       })
     );
-    handleClose();
+    closeModal();
   };
   const editClickHandler = () => {
+    console.log(events.id);
     dispatch(
       todoActions.editTodoDB(events.id, {
         id: events.id,
@@ -81,6 +81,13 @@ export default function TransitionsModal(props) {
         time: changeTime,
       })
     );
+    closeModal();
+  };
+  const closeModal = () => {
+    setChangeTitle("");
+    setChangeTime("00:00");
+    setChangeEnd(new Date());
+    setChangeStart(new Date());
     handleClose();
   };
   const deleteClickHandler = () => {
@@ -116,7 +123,7 @@ export default function TransitionsModal(props) {
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           open={open}
-          onClose={handleClose}
+          onClose={closeModal}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{

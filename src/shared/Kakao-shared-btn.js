@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import React, { useEffect } from "react";
 import KaKaoShare from "../assets/kakaoShare.png";
 const KakaoShareButton = () => {
@@ -50,8 +51,14 @@ const KakaoShareButton = () => {
           style={{ width: "48px", height: "48px" }}
         />
       </button>
+      <Text>카카오톡</Text>
     </div>
   );
 };
+
+const Text = styled.h3`
+  font-family: "GmarketSansLight";
+  font-size: 16px;
+`;
 
 export default KakaoShareButton;
