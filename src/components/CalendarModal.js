@@ -57,7 +57,7 @@ export default function TransitionsModal(props) {
       changeTime
     );
     dispatch(
-      todoActions.addTodo({
+      todoActions.addTodoDB({
         id: 5,
         title: changeTitle,
         start:
@@ -71,7 +71,7 @@ export default function TransitionsModal(props) {
   };
   const editClickHandler = () => {
     dispatch(
-      todoActions.editTodo(events.id, {
+      todoActions.editTodoDB(events.id, {
         id: events.id,
         title: changeTitle,
         start:
@@ -84,7 +84,7 @@ export default function TransitionsModal(props) {
     handleClose();
   };
   const deleteClickHandler = () => {
-    dispatch(todoActions.deleteTodo(events.id));
+    dispatch(todoActions.deleteTodoDB(events.id));
   };
   React.useEffect(() => {
     if (events.title !== undefined) {

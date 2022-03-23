@@ -25,6 +25,9 @@ const ChatNav = (props) => {
   React.useEffect(() => {
     return () => {};
   }, []);
+  const subscribers = useSelector(
+    (state) => state.subscriberReducer.subscribers
+  );
 
   return (
     <>
@@ -38,7 +41,8 @@ const ChatNav = (props) => {
             </TitleText>
           )}
           <PersonOutlineIcon sx={{ fontSize: 28, ml: 3, mr: 1 }} />
-          <MemberText>(0/5)</MemberText>
+
+          <MemberText>({subscribers.length}/5)</MemberText>
         </TitleWrap>
         <IconButton color="inherit" onClick={handleOut}>
           <LogoutIcon sx={{ fontSize: 36, mr: 4 }} />

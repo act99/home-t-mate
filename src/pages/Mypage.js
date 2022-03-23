@@ -11,18 +11,17 @@ import Text from "../elements/Text";
 import Image from "../elements/Image";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import styled from "@emotion/styled";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../styles/fullcalendar.css";
 import CreateRoomModal from "../containers/CreateRoomModal";
-import { AntTabs, StyledTab, StyledTabs } from "../styles/tabStyle";
-import { Tabs } from "@mui/material";
+import { StyledTab, StyledTabs } from "../styles/tabStyle";
 import KakaoShareButton from "../shared/Kakao-shared-btn";
+import { actionCreators as todoActions } from "../redux/modules/todoReducer";
 const Mypage = (props) => {
+  const dispatch = useDispatch();
   const todoList = useSelector((state) => state.todoReducer.list);
   const [open, setOpen] = React.useState(false);
   // ** event 를 클릭했을 때
@@ -57,9 +56,13 @@ const Mypage = (props) => {
   const { nickname, userImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
 
+  // ** todoList
+
   React.useEffect(() => {
+    dispatch(todoActions.getTodoDB());
+    console.log(todoList);
     return () => {};
-  }, [todoList]);
+  }, []);
 
   return (
     <Grid width="1200px" margin="auto">
@@ -187,7 +190,6 @@ const Mypage = (props) => {
                 eventClick={eventClickHandler}
                 locale="ko" //한국어변경
               />
-              <Write onClick={() => setOpen(true)}></Write>
               <CalendarModal
                 events={events}
                 open={open}
@@ -233,18 +235,6 @@ const InviteContainer = styled.div`
   width: 252px;
   height: 88px;
   margin-top: 96px;
-`;
-
-const Write = styled.div`
-  width: 55px;
-  height: 55px;
-  background-color: rgb(255, 228, 228);
-  border-radius: 100%;
-  position: absolute;
-  bottom: -3px;
-  right: -3px;
-  cursor: pointer;
-  z-index: 1;
 `;
 
 const CreateButton = styled.button`

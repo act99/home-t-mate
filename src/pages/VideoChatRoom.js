@@ -127,6 +127,7 @@ const VideoChatRoom = () => {
     apis
       .enterRoom(roomId, password)
       .then((res) => {
+        dispatch(subscribersActions.getSubscribers(res.data));
         window.addEventListener("beforeunload", onbeforeunload);
         created();
       })

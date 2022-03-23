@@ -49,6 +49,10 @@ const ChatContainer = (props) => {
   const nickname = user.nickname;
   const username = user.username;
 
+  const subscribers = useSelector(
+    (state) => state.subscriberReducer.subscribers
+  );
+
   // ** 메시지 핸들러
   const [sendMessage, setSendMessage] = React.useState({
     type: "TALK",
@@ -95,40 +99,24 @@ const ChatContainer = (props) => {
           height: "160px",
         }}
       >
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
-            />
-          </ListItemAvatar>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-          <ButtonGroup size="large" aria-label="large button group">
-            <IconButton>
-              <VideocamIcon />
-            </IconButton>
-            <IconButton>
-              <MicIcon />
-            </IconButton>
-          </ButtonGroup>
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
-            />
-          </ListItemAvatar>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-          <ButtonGroup size="large" aria-label="large button group">
-            <IconButton>
-              <VideocamIcon />
-            </IconButton>
-            <IconButton>
-              <MicIcon />
-            </IconButton>
-          </ButtonGroup>
-        </ListItem>
+        {subscribers.map((item, index) => (
+          <>
+            <ListItem key={index}>
+              <ListItemAvatar>
+                <Avatar alt={item.nickname} src={item.profileImg} />
+              </ListItemAvatar>
+              <ListItemText primary={item.nickname} />
+              <ButtonGroup size="large" aria-label="large button group">
+                <IconButton>
+                  <VideocamIcon />
+                </IconButton>
+                <IconButton>
+                  <MicIcon />
+                </IconButton>
+              </ButtonGroup>
+            </ListItem>
+          </>
+        ))}
       </List>
       <ChatTitle>
         <h3>친구들과 채팅타임</h3>
