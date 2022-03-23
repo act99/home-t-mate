@@ -52,7 +52,6 @@ const Image = (props) => {
   return (
     <div>
       <ImageDefault onClick={_onClick} {...styles}>
-        <Hover></Hover>
       </ImageDefault>
     </div>
   );
@@ -89,15 +88,6 @@ const ImageDefault = styled.div`
   flex: ${(props) => props.flex};
 `;
 
-const Hover = styled.div`
-  width: 100%;
-  height: 100%;
-  z-index: 9;
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
-  }
-`;
 const ImageCircle = styled.div`
   --size: ${(props) => props.size}px;
   width: var(--size);

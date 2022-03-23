@@ -112,3 +112,13 @@
   margin-right: auto;
   margin-top: 12px;
 }
+
+/* StoryCard. 일정구간이상 글이 작성되면 ...하면서 생략됨 */
+.overFlowText {
+  font-size: 16px;
+  margin-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300px;
+}

@@ -73,13 +73,21 @@ function Edit(props) {
     return () => {};
   }, [content]);
 
+
+  const handleOnClose = () => {
+    handleClose();
+    setPreview([]);
+    setFileSelected(false);
+  };
+
+
   return (
     <>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
-        onClose={handleClose}
+        onClose={handleOnClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -89,69 +97,7 @@ function Edit(props) {
         <Fade in={open}>
           <Box sx={style}>
             <Grid>
-              <Grid
-                B_bottom="1px solid #dbdbdb"
-                is_flex
-                // min_width="648px"
-                // max_width="min(calc(100vw - 72px),1151px)"
-                width="1151px"
-                justify_content="space-between"
-                height="42px"
-                BG_c=""
-              >
-                <Grid
-                  width="42px"
-                  height="42px"
-                  B_top_left_radius="15px"
-                  BG_c="white"
-                />
-                <Grid
-                  is_flex
-                  width="100%"
-                  height="42px"
-                  BG_c="white"
-                  justify_content="center"
-                  vertical_align="middle"
-                  align_items="center"
-                >
-                  <Text vertical_align="middle">게시물 수정하기</Text>
-                </Grid>
-                <Grid
-                  width="42px"
-                  height="42px"
-                  B_top_right_radius="15px"
-                  BG_c="white"
-                >
-                  <button
-                    style={{
-                      margin: "7px 0 0 0",
-                      border: "solid 0px",
-                      backgroundColor: "white",
-                      width: "30px",
-                      cursor: "pointer",
-                    }}
-                    onClick={editPost}
-                  >
-                    {" "}
-                    <CheckIcon />
-                  </button>
-                </Grid>
-              </Grid>
-              <Grid
-                is_flex
-                flex_direction="row"
-                justify_content="center"
-                align_items="center"
-                min_width="648px"
-                min_height="348px"
-                max_width="min(calc(100vw - 72px),1151px)"
-                max_height="min(calc(100vw - 372px),855px)"
-                width="1151px"
-                height="calc(100vmin - 219px)"
-                B_bottom_left_radius="15px"
-                B_bottom_right_radius="15px"
-                BG_c="white"
-              >
+              <Grid is_flex width="1345px" height="800px" B_radius="20px">
                 <input
                   ref={fileInput}
                   onChange={selectFile}
@@ -159,18 +105,19 @@ function Edit(props) {
                   multiple
                   style={{ display: "none" }}
                 />
+
                 {tempFile.length <= 0 ? (
                   <Carousel
                     showThumbs={false}
                     infiniteLoop={true}
-                    height="648px"
-                    width="648px"
+                    height="800px"
+                    width="800px"
                   >
                     {photoResponseDto &&
                       photoResponseDto.map((v, i) => (
                         <Img
                           key={i}
-                          size="648px"
+                          size="800px"
                           border="20px"
                           _onClick={() => {
                             fileInput.current.click();
@@ -184,40 +131,57 @@ function Edit(props) {
                   <Carousel
                     showThumbs={false}
                     infiniteLoop={true}
-                    height="648px"
-                    width="648px"
+                    height="800px"
+                    width="800px"
                   >
                     {preview.map((item, index) => (
                       <Img
                         key={index}
                         postImg={item}
-                        size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
+                        size="800px"
+                        border="20px"
                       />
                     ))}
                   </Carousel>
                 )}
 
-                <Grid is_flex flex_direction="column" width="100%">
-                  <Grid
-                    is_flex
-                    justify_content="flex-start"
-                    min_width="300px"
-                    width="100%"
-                  >
+                <Grid width="545px" position="absolute" top="0px" right="0px">
+                  <Grid is_flex justify_content="flex-start">
                     <Avatar
                       alt="Remy Sharp"
                       src={_user.userImg ? _user.userImg : ""}
                       sx={{ margin: "20px", width: 50, height: 50 }}
                     />
-                    <Text>{_user.nickname ? _user.nickname : ""}</Text>
+                    <Text F_size="20px">
+                      {_user.nickname ? _user.nickname : ""}
+                    </Text>
                   </Grid>
+
                   <TextArea
                     value={contents}
                     ref={contentsRef}
                     rows="10"
                     wrap="hard"
+                    style={{ marginLeft: "20px", height: "500px" }}
                     onChange={(e) => setContents(e.target.value)}
                   ></TextArea>
+
+                  <Button
+                    _onClick={editPost}
+                    font_size="20px"
+                    font_color="#587730"
+                    font_weight="700"
+                    B_radius="20px"
+                    border="2px solid #587730"
+                    width="197px"
+                    height="52px"
+                    BG_color="white"
+                    position="absolute"
+                    bottom="-140px"
+                    right="40px"
+                  >
+                    수정완료
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
@@ -238,7 +202,8 @@ const style = {
   p: 4,
   zIndex: 13000,
   padding: 0,
-  border: "0px solid #000",
+  borderRadius: "20px",
+  outline: "none",
 };
 
 const TextArea = styled.textarea`

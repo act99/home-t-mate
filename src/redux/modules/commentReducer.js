@@ -97,7 +97,7 @@ export default handleActions(
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list[action.payload.postId].push(action.payload.comment);
+        draft.list[action.payload.postId].unshift(action.payload.comment);
       }),
     [DEL_COMMENT]: (state, action) =>
       produce(state, (draft) => {
