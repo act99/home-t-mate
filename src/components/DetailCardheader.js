@@ -1,4 +1,3 @@
-//import Library
 import React from "react";
 
 import { CardHeader, IconButton } from "@mui/material";
@@ -43,7 +42,6 @@ export default function Cardheader(props) {
   return _user.id === thisPost.userId ? (
     <CardHeader
       style={{
-        backgroundColor: "#587730",
         borderTopRightRadius: "20px",
         padding: "0px",
         paddingLeft: "16px",
@@ -111,7 +109,6 @@ export default function Cardheader(props) {
       titleTypographyProps={{
         fontWeight: 400,
         fontSize: 20,
-        color: "#ffffff",
       }}
       title={props.username}
     />
