@@ -96,7 +96,8 @@ export default function LikeComment(props) {
           >
             {like ? <FavoriteOutlinedIcon style={{fontSize:"40px", color:"#587730"}} /> : <FavoriteBorderOutlinedIcon style={{fontSize:"40px"}} />}
           </Button>
-
+         
+         
           {/* 댓글버튼 => 상세페이지로 이동 */}
           <Button
             _onClick={handleOpen}
@@ -107,7 +108,8 @@ export default function LikeComment(props) {
             margin="0px 5px 4px 5px"
             height="28px"
           >
-            <FaRegComment size="35" border="3px" onClick={handleOpen} />
+            <FaRegComment size="35" border="3px" onClick={handleOpen} display={props.none} cursor={props.none} />
+
           </Button>
         </Grid>
       </Grid>
@@ -120,7 +122,7 @@ export default function LikeComment(props) {
         aria-describedby="modal-modal-description"
       >
         <div>
-          <Detail id={props.id} commentUserDto={props.commentUserDto} />
+          <Detail id={props.id} commentUserDto={props.commentUserDto} likeUserDto={props.likeUserDto}/>
           <Grid position="absolute" right="0">
             <CloseIcon
               sx={{ color: "white", fontSize: 40 }}
