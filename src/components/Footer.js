@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import { Link } from "@mui/material";
+import { Divider, Link } from "@mui/material";
 import styled from "@emotion/styled";
 import { history } from "../redux/store";
 import Logo from "../assets/mainlogo.png";
@@ -8,6 +8,7 @@ import Logo from "../assets/mainlogo.png";
 const Footer = () => {
   return (
     <>
+      <Divider />
       <Wrap>
         <FooterList>
           <img

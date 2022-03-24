@@ -65,7 +65,7 @@ const Home = () => {
     });
   };
   React.useEffect(() => {
-    dispatch(roomCreators.getRoomDB());
+    dispatch(roomCreators.getMainRoomDB());
   }, []);
   return (
     <>
@@ -85,10 +85,10 @@ const Home = () => {
             <Wrap>
               <Container sx={{ py: 8, width: "100%" }}>
                 <Grid container spacing={2}>
-                  {roomList.slice(0, 8).map((item) => (
+                  {roomList.slice(0, 8).map((item, index) => (
                     <Grid
                       item
-                      key={item.roomId + item.name}
+                      key={item.roomId + item.name + index}
                       xs={12}
                       sm={6}
                       md={3}

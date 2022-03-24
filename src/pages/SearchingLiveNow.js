@@ -14,15 +14,15 @@ import styled from "@emotion/styled";
 import { AiOutlineLock } from "react-icons/ai";
 import RoomCardModal from "../containers/RoomCardModal";
 import { BsSearch } from "react-icons/bs";
-import { useHistory } from "react-router-dom";
-import InfinityScroll from "../shared/InfinityScroll";
-const LiveNow = () => {
-  const dispatch = useDispatch();
+import NoSearchedRoom from "../containers/NoSearchedRoom";
+import { useLocation, useHistory } from "react-router-dom";
+const SearchingLiveNow = () => {
   const history = useHistory();
+  const location = useLocation();
+  const searchInput = location.state.keyword;
+  const dispatch = useDispatch();
   // ** 방 생성 버튼
   const roomList = useSelector((state) => state.roomReducer.room_list);
-  const is_loading = useSelector((state) => state.roomReducer.is_loading);
-  const paging = useSelector((state) => state.roomReducer.paging);
 
   // ** 모달 생성
   const [clickCard, setClickCard] = React.useState(false);
@@ -66,67 +66,54 @@ const LiveNow = () => {
   };
 
   // ** 검색기능 구현
-  const [searchInput, setSearchInput] = React.useState("");
+  const [researchInput, setResearchInput] = React.useState("");
   const submitSearchHandler = (e) => {
-    console.log(searchInput.length);
     e.preventDefault();
-    if (searchInput.length === 0) {
+    if (researchInput.length === 0) {
       history.push("/reenterkeyword");
-    } else {
-      history.push({
-        pathname: `/livenow/${searchInput}`,
-        state: {
-          keyword: searchInput,
-        },
-      });
     }
+    dispatch(roomCreators.searchRoomDB(researchInput));
   };
   const searchInputHandler = (e) => {
-    setSearchInput(e.target.value);
+    setResearchInput(e.target.value);
   };
   const onEnterPress = (e) => {
     if (e.keyCode === 13 && e.shiftKey === false) {
       return submitSearchHandler();
     }
   };
-  // const [paging, setPaging] = React.useState(1);
-  const handleNext = () => {
-    // setPaging(paging + 1);
-    dispatch(roomCreators.getRoomDB());
-  };
   React.useEffect(() => {
-    dispatch(roomCreators.getRoomDB());
+    console.log(searchInput);
+    dispatch(roomCreators.searchRoomDB(searchInput));
     return () => {
-      if (window.location.pathname !== "/livenow") {
-        dispatch(roomCreators.clearRoom([]));
-      }
+      dispatch(roomCreators.clearRoom([]));
     };
   }, []);
 
   return (
     <>
-      <InfinityScroll callNext={handleNext} loading={is_loading}>
-        <Wrap>
-          <Container sx={{ py: 16, width: "100%" }}>
-            <form onSubmit={submitSearchHandler}>
-              <SearchBarWrap>
-                <SearchBarInput
-                  placeholder="원하시는 방 제목을 검색해주세요"
-                  onKeyDown={onEnterPress}
-                  value={searchInput}
-                  onChange={searchInputHandler}
-                />
-                <BsSearch
-                  style={{
-                    fontSize: "24px",
-                    marginLeft: "16px",
-                    marginRight: "16px",
-                  }}
-                />
-              </SearchBarWrap>
-            </form>
-            <Grid container spacing={2}>
-              {roomList.map((item, index) => (
+      <Wrap>
+        <Container sx={{ py: 16, width: "100%" }}>
+          <form onSubmit={submitSearchHandler}>
+            <SearchBarWrap>
+              <SearchBarInput
+                placeholder="원하시는 방 제목을 검색해주세요"
+                onKeyDown={onEnterPress}
+                value={researchInput}
+                onChange={searchInputHandler}
+              />
+              <BsSearch
+                style={{
+                  fontSize: "24px",
+                  marginLeft: "16px",
+                  marginRight: "16px",
+                }}
+              />
+            </SearchBarWrap>
+          </form>
+          <Grid container spacing={2}>
+            {roomList.length > 0 ? (
+              roomList.map((item, index) => (
                 <Grid
                   item
                   key={item.roomId + item.name + index}
@@ -242,16 +229,18 @@ const LiveNow = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-              ))}
-            </Grid>
-          </Container>
-          <RoomCardModal
-            clickCard={clickCard}
-            setClickCard={setClickCard}
-            data={modalData}
-          />
-        </Wrap>
-      </InfinityScroll>
+              ))
+            ) : (
+              <NoSearchedRoom />
+            )}
+          </Grid>
+        </Container>
+        <RoomCardModal
+          clickCard={clickCard}
+          setClickCard={setClickCard}
+          data={modalData}
+        />
+      </Wrap>
     </>
   );
 };
@@ -385,4 +374,4 @@ const SearchBarInput = styled.input`
   }
 `;
 
-export default LiveNow;
+export default SearchingLiveNow;
