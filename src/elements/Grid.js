@@ -52,6 +52,7 @@ const Grid = (props) => {
     right,
     left,
     z_index,
+    cursor,
   } = props;
 
   //event category
@@ -108,6 +109,7 @@ const Grid = (props) => {
     right,
     left,
     z_index,
+    cursor,
   };
 
   return (
@@ -166,6 +168,7 @@ Grid.defaultProps = {
   left: null,
   z_index: null,
   _onClick: null,
+  cursor: "auto",
 };
 
 const GridBox = styled.div`
@@ -217,6 +220,7 @@ const GridBox = styled.div`
   background-color: ${(props) => props.BG_c};
   box-sizing: ${(props) => props.box_sizing};
   ${(props) => (props.box_sizing ? "box-sizing :border-box" : "")};
+  cursor : ${(props) => props.cursor};
 `;
 
 export default Grid;
