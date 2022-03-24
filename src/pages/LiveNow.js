@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/roomReducer";
-import { useHistory } from "react-router-dom";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import {
   Avatar,
@@ -14,11 +13,11 @@ import {
 import styled from "@emotion/styled";
 import { AiOutlineLock } from "react-icons/ai";
 import RoomCardModal from "../containers/RoomCardModal";
-import RestImage from "../assets/rest.png";
-
+import SearchIcon from "@mui/icons-material/Search";
+import { BsSearch } from "react-icons/bs";
+import { apis } from "../shared/api";
 const LiveNow = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   // ** 방 생성 버튼
   const roomList = useSelector((state) => state.roomReducer.room_list);
 
@@ -62,15 +61,214 @@ const LiveNow = () => {
       workOut: workOut,
     });
   };
+
+  // ** 검색기능 구현
+  const [searchInput, setSearchInput] = React.useState("");
+  const [searchedRoom, setSearchedRoom] = React.useState([]);
+  const submitSearchHandler = (e) => {
+    e.preventDefault();
+    apis
+      .searchRoom(searchInput)
+      .then((res) => {
+        setSearchedRoom(res.data);
+      })
+      .catch((error) => console.log(error.response.data));
+    console.log(typeof searchInput);
+  };
+  const searchInputHandler = (e) => {
+    setSearchInput(e.target.value);
+  };
+  const onEnterPress = (e) => {
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      return submitSearchHandler();
+    }
+  };
+  const searchRef = React.useRef();
+
   React.useEffect(() => {
-    dispatch(roomCreators.getRoomDB());
-  }, []);
+    if (searchInput === "") {
+      setSearchedRoom([]);
+      dispatch(roomCreators.getRoomDB());
+    }
+  }, [searchInput]);
+
+  if (searchInput === "") {
+    return (
+      <>
+        <Wrap>
+          <Container sx={{ py: 16, width: "100%" }}>
+            <form onSubmit={submitSearchHandler}>
+              <SearchBarWrap>
+                {/* <SearchIcon
+                sx={{ height: "100%", m: 0, p: 0, ml: 4, fontSize: "28px" }}
+              /> */}
+
+                <SearchBarInput
+                  placeholder="원하시는 방 제목 또는 호스트 이름을 검색해주세요"
+                  onKeyDown={onEnterPress}
+                  value={searchInput}
+                  onChange={searchInputHandler}
+                  ref={searchRef}
+                />
+                <BsSearch
+                  style={{
+                    fontSize: "24px",
+                    marginLeft: "16px",
+                    marginRight: "16px",
+                  }}
+                />
+              </SearchBarWrap>
+            </form>
+            <Grid container spacing={2}>
+              {roomList.map((item) => (
+                <Grid item key={item.roomId + item.name} xs={12} sm={6} md={3}>
+                  <Card
+                    onClick={() => {
+                      cardOpenHandler(
+                        item.roomId,
+                        item.name,
+                        item.content,
+                        item.roomImg,
+                        item.passCheck,
+                        item.userCount,
+                        item.profileImg,
+                        item.nickname,
+                        item.workOut
+                      );
+                    }}
+                    sx={{
+                      height: "300px",
+                      display: "flex",
+                      flexDirection: "column",
+                      cursor: "pointer",
+                      borderRadius: "0px",
+                      boxShadow: "none",
+                      backgroundColor: "rgb(0,0,0,0)",
+                    }}
+                  >
+                    <CardMedia
+                      sx={{
+                        maxHeight: "50%",
+                        minHeight: "180px",
+                      }}
+                      component="img"
+                      image={item.roomImg}
+                      alt="random"
+                    />
+                    <CardContent
+                      sx={{
+                        flexGrow: 1,
+                        minHeight: "76px",
+                        py: 1,
+                        px: 1,
+                        maxHeight: "30%",
+                      }}
+                    >
+                      <ContentWrap>
+                        {item.workOut ? (
+                          <WorkOutWrap>
+                            <h3>운동중</h3>
+                          </WorkOutWrap>
+                        ) : (
+                          <RestWrap>
+                            <h3>휴식중</h3>
+                          </RestWrap>
+                        )}
+                        <TitleWrap>
+                          {item.passCheck === true ? (
+                            <AiOutlineLock
+                              style={{
+                                marginRight: "5px",
+                              }}
+                            />
+                          ) : null}
+                          <TitleText>
+                            {item.name.length > 22
+                              ? item.name.slice(0, 22) + "..."
+                              : item.name}
+                          </TitleText>
+                        </TitleWrap>
+                        <NickANumWrap>
+                          <MemberNum>
+                            <PersonOutlineIcon
+                              style={{ width: "20px", marginRight: "4px" }}
+                            />
+                            <h3>
+                              ({item.userCount === null ? 0 : item.userCount}/5)
+                            </h3>
+                          </MemberNum>
+                          <NickWrap>
+                            <Avatar
+                              sx={{
+                                width: 24,
+                                height: 24,
+                                zIndex: 1,
+                                marginRight: 0.5,
+                              }}
+                              alt="Remy Sharp"
+                              src={
+                                item.profileImg === null ||
+                                item.profileImg === undefined
+                                  ? null
+                                  : item.profileImg
+                              }
+                            />
+                            <NickText>
+                              {item.nickname === null ||
+                              item.nickname === undefined
+                                ? null
+                                : item.nickname.length === undefined
+                                ? null
+                                : item.nickname.length > 7
+                                ? item.nickname.slice(0, 6) + "..."
+                                : item.nickname}
+                            </NickText>
+                          </NickWrap>
+                        </NickANumWrap>
+                      </ContentWrap>
+                      <RowForDiv></RowForDiv>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+          <RoomCardModal
+            clickCard={clickCard}
+            setClickCard={setClickCard}
+            data={modalData}
+          />
+        </Wrap>
+      </>
+    );
+  }
   return (
     <>
       <Wrap>
         <Container sx={{ py: 16, width: "100%" }}>
+          <form onSubmit={submitSearchHandler}>
+            <SearchBarWrap>
+              {/* <SearchIcon
+              sx={{ height: "100%", m: 0, p: 0, ml: 4, fontSize: "28px" }}
+            /> */}
+
+              <SearchBarInput
+                placeholder="원하시는 방 제목을 검색해주세요"
+                onKeyDown={onEnterPress}
+                value={searchInput}
+                onChange={searchInputHandler}
+              />
+              <BsSearch
+                style={{
+                  fontSize: "24px",
+                  marginLeft: "16px",
+                  marginRight: "16px",
+                }}
+              />
+            </SearchBarWrap>
+          </form>
           <Grid container spacing={2}>
-            {roomList.map((item) => (
+            {searchedRoom.map((item) => (
               <Grid item key={item.roomId + item.name} xs={12} sm={6} md={3}>
                 <Card
                   onClick={() => {
@@ -291,6 +489,35 @@ const NickANumWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+`;
+
+const SearchBarWrap = styled.div`
+  width: 100%;
+  height: 52px;
+  /* background-color: black; */
+  border-radius: 8px;
+  border: solid 1px #e2e2e2;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+`;
+
+const SearchBarInput = styled.input`
+  width: 100%;
+  height: 48px;
+  border: solid 0px;
+  border-right: solid 1px #e2e2e2;
+  background-color: rgb(0, 0, 0, 0);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding-left: 16px;
+  font-size: 18px;
+  font-family: "GmarketSansLight";
+
+  :focus {
+    outline: none;
+    border: solid 2px #e2e2e2;
+  }
 `;
 
 export default LiveNow;

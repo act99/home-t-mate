@@ -16,8 +16,10 @@ import { AiOutlineLock } from "react-icons/ai";
 import RoomCardModal from "../containers/RoomCardModal";
 import BxSlide from "../assets/bxslide.png";
 import HowToUse from "../assets/howtouse.png";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   // ** 방 생성 버튼
   const roomList = useSelector((state) => state.roomReducer.room_list);
@@ -68,7 +70,7 @@ const Home = () => {
   return (
     <>
       <Wrap>
-        <BxSlideCon>
+        <BxSlideCon onClick={() => history.push("/livenow")}>
           <img alt="" src={BxSlide} width="100%" />
         </BxSlideCon>
         <Container sx={{ py: 8, width: "100%" }}>
@@ -234,11 +236,13 @@ const Home = () => {
 const BxSlideCon = styled.div`
   width: 100%;
   margin: 0px;
+  cursor: pointer;
 `;
 
 const FooterBxSlideCon = styled.div`
   width: 100%;
   background-color: #e2f7de;
+  padding-bottom: 96px;
 `;
 
 const Wrap = styled.div`
@@ -339,4 +343,5 @@ const NickANumWrap = styled.div`
   justify-content: space-between;
   width: 100%;
 `;
+
 export default Home;

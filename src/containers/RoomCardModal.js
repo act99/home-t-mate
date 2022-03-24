@@ -47,7 +47,6 @@ const RoomCardModal = (props) => {
   const passwordRef = React.useRef();
   const [password, setPassword] = React.useState("");
   const [errorGenerate, setErrorGenerate] = React.useState(false);
-  console.log(data);
   const handleEnterRoom = (e) => {
     e.preventDefault();
     apis
