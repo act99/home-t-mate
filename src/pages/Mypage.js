@@ -7,8 +7,7 @@ import "react-datetime/css/react-datetime.css";
 import "moment/locale/ko";
 // import React from "react";
 import CalendarModal from "../components/CalendarModal";
-import Text from "../elements/Text";
-import Image from "../elements/Image";
+import { Text, Image, Button } from "../elements";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TabContext from "@mui/lab/TabContext";
@@ -22,6 +21,7 @@ import KakaoShareButton from "../shared/Kakao-shared-btn";
 import { actionCreators as todoActions } from "../redux/modules/todoReducer";
 import ChangeProfileModal from "../containers/ChangeProfileModal";
 import ProfileImage from "../elements/ProfileImage";
+import MypagePost from "../components/MypagePost";
 
 const Mypage = (props) => {
   const dispatch = useDispatch();
@@ -56,6 +56,11 @@ const Mypage = (props) => {
   };
 
   const user = useSelector((state) => state.userReducer.user);
+  const _post = useSelector((state) => state.postReducer.list);
+  const mypagePost = _post.filter((v, i) =>
+    v.userId === user.id ? true : false
+  );
+
   const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
 
@@ -205,7 +210,50 @@ const Mypage = (props) => {
               ></CalendarModal>
             </Grid>
           </TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
+          <TabPanel value="2">
+            <Grid
+              padding="40px"
+              position="relative"
+              width="1200px"
+              heignt="823px"
+              B_radius="20px"
+              Border="2px solid #587730"
+            >
+              <Button
+                position="absolute"
+                right="20px"
+                top="10px"
+                width="54px"
+                B_radius="20px"
+                border="none"
+                BG_color="white"
+                font_color="#757575"
+                font_size="20px"
+              >
+                삭제
+              </Button>
+
+              <Grid is_flex margin_top="44px" B_bottom="1px solid #C4C4C4">
+                <Text F_size="18px" margin_left="80px">
+                  스토리 리스트(총 20개)
+                </Text>{" "}
+                <Text margin_left="496px" F_size="18px">
+                  작성날짜
+                </Text>
+              </Grid>
+
+              {/* post 목록들 보이기 */}
+
+              {/* {_post.map((v, i) => (
+        <Grid key={i} margin_bottom="8px">
+          <StoryCard key={i} {...v} />
+        </Grid>
+      ))} */}
+              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v}/>)}
+            </Grid>
+
+            <Grid></Grid>
+          </TabPanel>
         </TabContext>
       </Box>
       <ChangeProfileModal
