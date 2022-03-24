@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 import { CardHeader, IconButton } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -22,6 +23,8 @@ export default function Cardheader(props) {
   };
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x));
 
+  const time = moment(props.createdAt).format("YYYY.MM.DD a h:mm");
+
   /* 삭제하기,수정하기,취소하기 dropdown modal open, close */
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -40,78 +43,85 @@ export default function Cardheader(props) {
 
   // 글 작성자한테만 ... 아이콘 보이게하기
   return _user.id === thisPost.userId ? (
-    <CardHeader
-      style={{
-        borderTopRightRadius: "20px",
-        padding: "0px",
-        paddingLeft: "16px",
-        height: "64px",
-      }}
-      avatar={<Image shape="circle" src={props.userImg} size="40" />}
-      action={
-        //...아이콘 부분
-        <>
-          <Grid is_flex align_items="center" height="64px">
-            <MoreHorizIcon
-              onClick={handleClick}
-              style={{ fontSize: "30px", paddingRight: "30px" }}
-            />
-          </Grid>
-          {/* 삭제하기,수정하기,취소하기 dropdown modal부분 */}
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            PaperProps={{
-              style: { width: "200px", height: "200px" },
-            }}
-          >
-            <Grid
-              is_flex
-              flex_direction="column"
-              padding="10px"
-              height="200px"
-              align_content="space-around"
-              // align_items="center"
-              justify_content="center"
-            >
-              <Grid>
-                <Text F_size="16px" _onClick={edithandleOpen}>
-                  이 스토리 수정하기
-                </Text>
-              </Grid>
-              <Grid>
-                <Text F_size="16px" _onClick={deletePostDB}>
-                  이 스토리 삭제하기
-                </Text>
-              </Grid>
-              <Grid>
-                <Text F_size="16px" _onClick={handleClose}>
-                  취소하기
-                </Text>
-              </Grid>
-            </Grid>
-          </Popover>
+    <Grid is_flex>
+      <CardHeader
+        style={{
+          borderTopRightRadius: "20px",
+          padding: "0px",
+          paddingLeft: "16px",
+          height: "64px",
+        }}
+        avatar={<Image shape="circle" src={props.userImg} size="40" />}
 
-          {/* 수정하기를 눌렀을때 Edit(수정)페이지로 이동 */}
-          <Edit
-            {...thisPost}
-            open={editOpen}
-            handleClose={edithandleClose}
-          ></Edit>
-        </>
-      }
-      titleTypographyProps={{
-        fontWeight: 400,
-        fontSize: 20,
-      }}
-      title={props.username}
-    />
+        titleTypographyProps={{
+          fontWeight: 400,
+          fontSize: 20,
+        }}
+        title={props.username}
+
+        action={
+          //...아이콘 부분
+          <>
+            <Grid is_flex align_items="center" height="64px" position="absolute" right="0px">
+              <MoreHorizIcon
+                onClick={handleClick}
+                style={{ fontSize: "30px", paddingRight: "30px" }}
+              />
+            </Grid>
+            {/* 삭제하기,수정하기,취소하기 dropdown modal부분 */}
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              PaperProps={{
+                style: { width: "200px", height: "200px" },
+              }}
+            >
+              <Grid
+                is_flex
+                flex_direction="column"
+                padding="10px"
+                height="200px"
+                align_content="space-around"
+                // align_items="center"
+                justify_content="center"
+              >
+                <Grid>
+                  <Text F_size="16px" _onClick={edithandleOpen}>
+                    이 스토리 수정하기
+                  </Text>
+                </Grid>
+                <Grid>
+                  <Text F_size="16px" _onClick={deletePostDB}>
+                    이 스토리 삭제하기
+                  </Text>
+                </Grid>
+                <Grid>
+                  <Text F_size="16px" _onClick={handleClose}>
+                    취소하기
+                  </Text>
+                </Grid>
+              </Grid>
+            </Popover>
+
+            {/* 수정하기를 눌렀을때 Edit(수정)페이지로 이동 */}
+            <Edit
+              {...thisPost}
+              open={editOpen}
+              handleClose={edithandleClose}
+            ></Edit>
+          </>
+        }
+      />
+      <Text margin_left="20px" F_size="14px" F_color="#757575">
+        {time}에 작성됨
+      </Text>
+      </Grid>
   ) : (
     // 글 작성자가 아니면 ... 아이콘 안보이게하기
     <CardHeader

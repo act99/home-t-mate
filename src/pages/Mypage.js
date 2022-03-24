@@ -22,6 +22,7 @@ import { actionCreators as todoActions } from "../redux/modules/todoReducer";
 import ChangeProfileModal from "../containers/ChangeProfileModal";
 import ProfileImage from "../elements/ProfileImage";
 import MypagePost from "../components/MypagePost";
+import { actionCreators as postActions } from "../redux/modules/postReducer";
 
 const Mypage = (props) => {
   const dispatch = useDispatch();
@@ -55,11 +56,20 @@ const Mypage = (props) => {
     setOpen(true);
   };
 
+  const deletePostDB = () => {
+    dispatch(postActions.deletePostDB(props.id));
+    window.alert("포스트가 정상적으로 삭제되었습니다.");
+    window.location.reload();
+  };
+
+
   const user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
   const mypagePost = _post.filter((v, i) =>
     v.userId === user.id ? true : false
   );
+
+  console.log('mypagepost', mypagePost);
 
   const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
@@ -210,7 +220,7 @@ const Mypage = (props) => {
               ></CalendarModal>
             </Grid>
           </TabPanel>
-          <TabPanel value="2">
+          <TabPanel value="2" sx={{ p: "0px" }}>
             <Grid
               padding="40px"
               position="relative"
@@ -220,6 +230,7 @@ const Mypage = (props) => {
               Border="2px solid #587730"
             >
               <Button
+              _onClick={deletePostDB}
                 position="absolute"
                 right="20px"
                 top="10px"
@@ -229,27 +240,24 @@ const Mypage = (props) => {
                 BG_color="white"
                 font_color="#757575"
                 font_size="20px"
+                margin="32px 0px 0px 0px"
               >
                 삭제
               </Button>
 
               <Grid is_flex margin_top="44px" B_bottom="1px solid #C4C4C4">
-                <Text F_size="18px" margin_left="80px">
-                  스토리 리스트(총 20개)
+                <Text F_size="18px" margin="0px 0px 16px 80px">
+                  스토리 리스트(총 {mypagePost.length}개)
                 </Text>{" "}
-                <Text margin_left="496px" F_size="18px">
+                <Text margin="0px 0px 16px 496px" F_size="18px">
                   작성날짜
                 </Text>
               </Grid>
 
-              {/* post 목록들 보이기 */}
+              {/* <Grid B_bottom="1px solid #C4C4C4" marign="px 0px 0px 0px"></Grid> */}
 
-              {/* {_post.map((v, i) => (
-        <Grid key={i} margin_bottom="8px">
-          <StoryCard key={i} {...v} />
-        </Grid>
-      ))} */}
-              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v}/>)}
+              {/* post 목록들 보이기 */}
+              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v} modal={true}/>)}
             </Grid>
 
             <Grid></Grid>
