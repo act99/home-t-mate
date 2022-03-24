@@ -7,8 +7,7 @@ import "react-datetime/css/react-datetime.css";
 import "moment/locale/ko";
 // import React from "react";
 import CalendarModal from "../components/CalendarModal";
-import Text from "../elements/Text";
-import Image from "../elements/Image";
+import { Text, Image, Button } from "../elements";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TabContext from "@mui/lab/TabContext";
@@ -22,6 +21,10 @@ import KakaoShareButton from "../shared/Kakao-shared-btn";
 import { actionCreators as todoActions } from "../redux/modules/todoReducer";
 import ChangeProfileModal from "../containers/ChangeProfileModal";
 import ProfileImage from "../elements/ProfileImage";
+import MypagePost from "../components/MypagePost";
+import { actionCreators as postActions } from "../redux/modules/postReducer";
+import { useState } from "react";
+
 
 const Mypage = (props) => {
   const dispatch = useDispatch();
@@ -55,7 +58,21 @@ const Mypage = (props) => {
     setOpen(true);
   };
 
+  const deletePostDB = () => {
+    dispatch(postActions.deletePostDB(props.id));
+    window.alert("포스트가 정상적으로 삭제되었습니다.");
+    window.location.reload();
+  };
+
+
   const user = useSelector((state) => state.userReducer.user);
+  const _post = useSelector((state) => state.postReducer.list);
+  const mypagePost = _post.filter((v, i) =>
+    v.userId === user.id ? true : false
+  );
+
+  console.log('mypagepost', mypagePost);
+
   const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
 
@@ -67,6 +84,8 @@ const Mypage = (props) => {
     console.log(todoList);
     return () => {};
   }, []);
+
+  const [data, setData] = useState("");
 
   return (
     <Grid width="1200px" margin="auto">
@@ -205,7 +224,48 @@ const Mypage = (props) => {
               ></CalendarModal>
             </Grid>
           </TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
+          <TabPanel value="2" sx={{ p: "0px" }}>
+            <Grid
+              padding="40px"
+              position="relative"
+              width="1200px"
+              heignt="823px"
+              B_radius="20px"
+              Border="2px solid #587730"
+            >
+              <Button
+              _onClick={deletePostDB}
+                position="absolute"
+                right="20px"
+                top="10px"
+                width="54px"
+                B_radius="20px"
+                border="none"
+                BG_color="white"
+                font_color="#757575"
+                font_size="20px"
+                margin="32px 0px 0px 0px"
+              >
+                삭제
+              </Button>
+
+              <Grid is_flex margin_top="44px" B_bottom="1px solid #C4C4C4">
+                <Text F_size="18px" margin="0px 0px 16px 80px">
+                  스토리 리스트(총 {mypagePost.length}개)
+                </Text>{" "}
+                <Text margin="0px 0px 16px 496px" F_size="18px">
+                  작성날짜
+                </Text>
+              </Grid>
+
+              {/* <Grid B_bottom="1px solid #C4C4C4" marign="px 0px 0px 0px"></Grid> */}
+
+              {/* post 목록들 보이기 */}
+              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v} modal={true} setData={setData}/>)}
+            </Grid>
+
+            <Grid></Grid>
+          </TabPanel>
         </TabContext>
       </Box>
       <ChangeProfileModal
