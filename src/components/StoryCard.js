@@ -85,7 +85,7 @@ export default function StoryCard(props) {
             </Text>
           ) : (
             <Text margin_left="16px" margin_top="28px">
-              {likeUserDto[0].userId}님 외 {likeUserDto.length-1}명이 이 스토리를
+              {likeUserDto[0].nickname}님 외 {likeUserDto.length-1}명이 이 스토리를
               좋아해요
             </Text>
           )}

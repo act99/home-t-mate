@@ -28,7 +28,7 @@ function Story() {
       <Grid margin_top="120px" />
 
       {_post.map((v, i) => (
-        <Grid key={i} margin_bottom="8px">
+        <Grid key={i} margin_bottom="15px">
           <StoryCard key={i} {...v} />
         </Grid>
       ))}

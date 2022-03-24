@@ -10,6 +10,7 @@ import { AiOutlineSmile } from "react-icons/ai";
 import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
 
 import Grid from "../elements/Grid";
+import Popover from "@mui/material/Popover";
 
 export default function CommentBox(props) {
   const dispatch = useDispatch();
@@ -36,6 +37,17 @@ export default function CommentBox(props) {
     setChosenEmoji(emojiObject);
   };
 
+  //웃는 아이콘 클릭했을때 이모지 나오게하기
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
   const EmojiData = ({ chosenEmoji }) => (
     <div>
       <strong>Unified:</strong> {chosenEmoji.unified}
@@ -61,6 +73,7 @@ export default function CommentBox(props) {
           height="58px"
         >
           <AiOutlineSmile
+            onClick={handleClick}
             style={{
               color: "#757575",
               marginRight: "8px",
@@ -68,6 +81,32 @@ export default function CommentBox(props) {
               marginLeft: "8px",
             }}
           />
+          {/* 이모지부분 */}
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            PaperProps={
+              {
+                // style: { width: "200px", height: "200px" },
+              }
+            }
+          >
+            <Picker
+              onEmojiClick={onEmojiClick}
+              disableAutoFocus={true}
+              skinTone={SKIN_TONE_MEDIUM_DARK}
+              groupNames={{ smileys_people: "PEOPLE" }}
+              native
+            />
+            {chosenEmoji && <EmojiData chosenEmoji={chosenEmoji} />}
+          </Popover>
+
           <input
             ref={comment}
             className="CommentInputBox"
@@ -85,14 +124,14 @@ export default function CommentBox(props) {
           </Button>
         </Grid>
 
-        <Picker
+        {/* <Picker
           onEmojiClick={onEmojiClick}
           disableAutoFocus={true}
           skinTone={SKIN_TONE_MEDIUM_DARK}
           groupNames={{ smileys_people: "PEOPLE" }}
           native
         />
-        {chosenEmoji && <EmojiData chosenEmoji={chosenEmoji} />}
+        {chosenEmoji && <EmojiData chosenEmoji={chosenEmoji} />} */}
       </>
     );
   }

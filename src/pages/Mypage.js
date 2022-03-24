@@ -23,6 +23,8 @@ import ChangeProfileModal from "../containers/ChangeProfileModal";
 import ProfileImage from "../elements/ProfileImage";
 import MypagePost from "../components/MypagePost";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
+import { useState } from "react";
+
 
 const Mypage = (props) => {
   const dispatch = useDispatch();
@@ -82,6 +84,8 @@ const Mypage = (props) => {
     console.log(todoList);
     return () => {};
   }, []);
+
+  const [data, setData] = useState("");
 
   return (
     <Grid width="1200px" margin="auto">
@@ -257,7 +261,7 @@ const Mypage = (props) => {
               {/* <Grid B_bottom="1px solid #C4C4C4" marign="px 0px 0px 0px"></Grid> */}
 
               {/* post 목록들 보이기 */}
-              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v} modal={true}/>)}
+              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v} modal={true} setData={setData}/>)}
             </Grid>
 
             <Grid></Grid>

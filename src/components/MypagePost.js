@@ -4,6 +4,7 @@ import moment from "moment";
 import { Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Detail from "../components/Detail.js";
+import "../App.css";
 
 function MypagePost(props) {
   console.log("mypagepost props확인용", props);
@@ -22,6 +23,7 @@ function MypagePost(props) {
       <Grid is_flex>
         <Grid>
           <input
+          onClick={()=> props.setData(props.id)}
             type="checkbox"
             id="horns"
             name="horns"

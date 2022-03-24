@@ -124,6 +124,7 @@
   width: 300px;
 }
 
+/* mypage 내스토리보기에서 글이 2줄이상 넘어가면 ...하면서 생략됨 */
 .overFlowTextTwo {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -141,3 +142,8 @@
 .CommentInputBox:focus {
   outline: none;
 }
+
+/* 이모지 nav쪽 검정바탕 없애기 */
+/* .emoji-categories {
+  background-color: "#ffffff";
+} */
