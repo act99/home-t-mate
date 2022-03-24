@@ -14,10 +14,10 @@ import TabList from "@mui/lab/TabList";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CreateRoomModal from "../containers/CreateRoomModal";
 import useWindowSize from "../hooks/useWindowSize";
-import Logo from "../assets/logo500300.png";
+import Logo from "../assets/mainlogo.png";
 import "../App.css";
 import styled from "@emotion/styled";
-import { Avatar, IconButton } from "@mui/material";
+import { Avatar } from "@mui/material";
 
 const NavBar = (props) => {
   // ** 채팅방 이동 시 네비게이션 바 변경
@@ -41,7 +41,7 @@ const NavBar = (props) => {
     history.go(0);
   };
   const user = useSelector((state) => state.userReducer.user);
-  const userImg = user.userImg;
+  const profileImg = user.profileImg;
 
   const [value, setValue] = React.useState("1");
 
@@ -102,7 +102,7 @@ const NavBar = (props) => {
               <img
                 alt=""
                 src={Logo}
-                height="40px"
+                height="35px"
                 onClick={() => history.push("/")}
                 style={{ cursor: "pointer", marginRight: 30 }}
               />
@@ -219,7 +219,7 @@ const NavBar = (props) => {
             <img
               alt=""
               src={Logo}
-              height="50px"
+              height="40px"
               onClick={() => history.push("/")}
               style={{ cursor: "pointer", marginRight: 30 }}
             />
@@ -282,7 +282,7 @@ const NavBar = (props) => {
                 onClick={() => history.push("/mypage")}
                 sx={{ p: 0 }}
               >
-                <Avatar alt="Remy Sharp" src={userImg} />
+                <Avatar alt="Remy Sharp" src={profileImg} />
               </AvatarButton>
               <CreateButton
                 onClick={() => {
@@ -374,6 +374,16 @@ const AvatarButton = styled.button`
   margin-right: 32px;
   border: solid 0px;
   cursor: pointer;
+`;
+
+const LogoButton = styled.div`
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  background-image: url("${(props) => props.src}");
+  background-size: 80% auto;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 export default NavBar;

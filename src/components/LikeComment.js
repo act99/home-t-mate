@@ -4,16 +4,15 @@ import React from "react";
 
 import { CardHeader, Avatar, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { BsChat } from "react-icons/bs";
+import { FaRegComment } from "react-icons/fa";
 import { Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postAcions } from "../redux/modules/postReducer";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-//import Actions
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-//import elements
 import { Grid, Text, Button } from "../elements";
 
 //import Icon
@@ -60,7 +59,7 @@ export default function LikeComment(props) {
       alert("로그인을 해주세요");
       return;
     } else {
-      dispatch(postAcions.likePostDB(thisPost.id, _user.id));
+      dispatch(postAcions.likePostDB(thisPost.id, _user.id, _user.nickname));
       if (like === true) {
         setLike(false);
       } else {
@@ -78,27 +77,28 @@ export default function LikeComment(props) {
   return (
     <>
       <Grid
-        B_top="1px solid #efefef"
         is_flex
         justify_content="space-between"
         margin="10px"
-        margin_top="0px"
+        margin_top="24px"
       >
-        <Grid is_flex flex_wrap="nowrap" width="auto">
+        <Grid is_flex flex_wrap="nowrap">
           {/* 좋아요버튼 */}
           <Button
             _onClick={likePost}
             border="0px"
             BG_color="white"
             padding="0px"
-            margin="0px 5px"
+            margin="0px 15px 0px 0px"
             width="28px"
             height="28px"
           >
-            {like ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
+            {like ? (
+              <AiFillHeart size="32" color="red" />
+            ) : (
+              <AiOutlineHeart size="32" />
+            )}
           </Button>
-          {/* <FavoriteBorderOutlinedIcon />
-          </Button> */}
 
           {/* 댓글버튼 => 상세페이지로 이동 */}
           <Button
@@ -107,27 +107,17 @@ export default function LikeComment(props) {
             BG_color="white"
             padding="0px"
             width="28px"
-            margin="0px 5px 4px 5px"
             height="28px"
           >
-            <BsChat size="22" border="3px" onClick={handleOpen} />
+            <FaRegComment
+              size="28"
+              onClick={handleOpen}
+              display={props.none}
+              cursor={props.none}
+            />
           </Button>
         </Grid>
       </Grid>
-
-      {/* 좋아요버튼
-          <IconButton
-            sx={{ pl: 2, pb: 2 }}
-            aria-label="add to favorites"
-            onClick={() => console.log("hi")}
-          >
-            <FavoriteBorderIcon />
-          </IconButton>
-
-          댓글버튼 => 상세페이지로 이동
-          <IconButton sx={{ pb: 2 }} aria-label="chat" onClick={handleOpen}>
-            <BsChat size="22" border="3px" />
-          </IconButton> */}
 
       {/* 상세페이지 modal */}
       <Modal
@@ -137,7 +127,11 @@ export default function LikeComment(props) {
         aria-describedby="modal-modal-description"
       >
         <div>
-          <Detail id={props.id} commentUserDto={props.commentUserDto} />
+          <Detail
+            id={props.id}
+            commentUserDto={props.commentUserDto}
+            likeUserDto={props.likeUserDto}
+          />
           <Grid position="absolute" right="0">
             <CloseIcon
               sx={{ color: "white", fontSize: 40 }}

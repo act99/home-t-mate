@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/roomReducer";
-import { useHistory } from "react-router-dom";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import {
   Avatar,
@@ -10,7 +9,6 @@ import {
   CardMedia,
   Container,
   Grid,
-  rgbToHex,
   Typography,
 } from "@mui/material";
 import styled from "@emotion/styled";
@@ -18,13 +16,13 @@ import { AiOutlineLock } from "react-icons/ai";
 import RoomCardModal from "../containers/RoomCardModal";
 import BxSlide from "../assets/bxslide.png";
 import HowToUse from "../assets/howtouse.png";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
   // ** 방 생성 버튼
   const roomList = useSelector((state) => state.roomReducer.room_list);
-  const roomEight = roomList.slice(0, 8);
 
   // ** 모달 생성
   const [clickCard, setClickCard] = React.useState(false);
@@ -67,12 +65,12 @@ const Home = () => {
     });
   };
   React.useEffect(() => {
-    dispatch(roomCreators.getRoomDB());
+    dispatch(roomCreators.getMainRoomDB());
   }, []);
   return (
     <>
       <Wrap>
-        <BxSlideCon>
+        <BxSlideCon onClick={() => history.push("/livenow")}>
           <img alt="" src={BxSlide} width="100%" />
         </BxSlideCon>
         <Container sx={{ py: 8, width: "100%" }}>
@@ -87,10 +85,10 @@ const Home = () => {
             <Wrap>
               <Container sx={{ py: 8, width: "100%" }}>
                 <Grid container spacing={2}>
-                  {roomList.slice(0, 8).map((item) => (
+                  {roomList.slice(0, 8).map((item, index) => (
                     <Grid
                       item
-                      key={item.roomId + item.name}
+                      key={item.roomId + item.name + index}
                       xs={12}
                       sm={6}
                       md={3}
@@ -221,9 +219,15 @@ const Home = () => {
           setClickCard={setClickCard}
           data={modalData}
         />
-        <BxSlideCon>
-          <img alt="" src={HowToUse} width="100%" />
-        </BxSlideCon>
+        <FooterBxSlideCon>
+          <img
+            alt=""
+            src={HowToUse}
+            width="100%"
+            // height="30vw"
+            style={{ margin: "0px" }}
+          />
+        </FooterBxSlideCon>
       </Wrap>
     </>
   );
@@ -231,7 +235,14 @@ const Home = () => {
 
 const BxSlideCon = styled.div`
   width: 100%;
-  height: 100%;
+  margin: 0px;
+  cursor: pointer;
+`;
+
+const FooterBxSlideCon = styled.div`
+  width: 100%;
+  background-color: #e2f7de;
+  padding-bottom: 96px;
 `;
 
 const Wrap = styled.div`
@@ -332,4 +343,5 @@ const NickANumWrap = styled.div`
   justify-content: space-between;
   width: 100%;
 `;
+
 export default Home;

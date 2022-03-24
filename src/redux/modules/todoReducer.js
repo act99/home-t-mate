@@ -16,7 +16,6 @@ const editTodo = createAction(EDIT_TODO, (todo_id, todo) => ({
 }));
 
 const initialTodo = {
-  id: 0,
   title: "할일1",
   start: "2022-03-17T13:00:00",
   end: "2022-03-20T15:00:00",
@@ -70,7 +69,6 @@ const editTodoDB = (todoId, contents) => {
       .editTodo(todoId, contents)
       .then((res) => {
         dispatch(editTodo(todoId, contents));
-        history.push("/");
       })
       .catch((error) => {
         alert("게시글 수정에 실패했습니다.");
@@ -85,7 +83,6 @@ const deleteTodoDB = (postId) => {
       .then((res) => {
         dispatch(deleteTodo(postId));
         alert("게시글이 삭제되었습니다.");
-        history.replace("/");
       })
       .catch((error) => {
         console.log(error);
@@ -97,10 +94,9 @@ const deleteTodoDB = (postId) => {
 const addTodoDB = (contents) => {
   let todoContent = {
     ...initialTodo,
-    id: contents.id,
     title: contents.title,
-    start: contents.startAt,
-    end: contents.endAt,
+    start: contents.start,
+    end: contents.end,
     time: contents.time,
     completed: false,
   };
@@ -108,8 +104,9 @@ const addTodoDB = (contents) => {
     apis
       .addTodo(todoContent)
       .then((res) => {
-        dispatch(addTodo(todoContent));
-        history.replace("/");
+        console.log("내가 보낸 데이터 : ", todoContent);
+        console.log("날라오는 데이터 : ", res.data);
+        dispatch(addTodo(res.data));
       })
       .catch((error) => {
         alert("저장에 실패했습니다. 네트워크 상태를 확인해주세요.");

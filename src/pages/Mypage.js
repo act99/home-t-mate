@@ -7,8 +7,7 @@ import "react-datetime/css/react-datetime.css";
 import "moment/locale/ko";
 // import React from "react";
 import CalendarModal from "../components/CalendarModal";
-import Text from "../elements/Text";
-import Image from "../elements/Image";
+import { Text, Image, Button } from "../elements";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TabContext from "@mui/lab/TabContext";
@@ -20,6 +19,13 @@ import CreateRoomModal from "../containers/CreateRoomModal";
 import { StyledTab, StyledTabs } from "../styles/tabStyle";
 import KakaoShareButton from "../shared/Kakao-shared-btn";
 import { actionCreators as todoActions } from "../redux/modules/todoReducer";
+import ChangeProfileModal from "../containers/ChangeProfileModal";
+import ProfileImage from "../elements/ProfileImage";
+import MypagePost from "../components/MypagePost";
+import { actionCreators as postActions } from "../redux/modules/postReducer";
+import { useState } from "react";
+
+
 const Mypage = (props) => {
   const dispatch = useDispatch();
   const todoList = useSelector((state) => state.todoReducer.list);
@@ -52,11 +58,26 @@ const Mypage = (props) => {
     setOpen(true);
   };
 
+  const deletePostDB = () => {
+    dispatch(postActions.deletePostDB(props.id));
+    window.alert("포스트가 정상적으로 삭제되었습니다.");
+    window.location.reload();
+  };
+
+
   const user = useSelector((state) => state.userReducer.user);
-  const { nickname, userImg } = user;
+  const _post = useSelector((state) => state.postReducer.list);
+  const mypagePost = _post.filter((v, i) =>
+    v.userId === user.id ? true : false
+  );
+
+  console.log('mypagepost', mypagePost);
+
+  const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
 
-  // ** todoList
+  // ** 프로필 이미지 수정
+  const [openProfile, setOpenProfile] = React.useState(false);
 
   React.useEffect(() => {
     dispatch(todoActions.getTodoDB());
@@ -64,23 +85,29 @@ const Mypage = (props) => {
     return () => {};
   }, []);
 
+  const [data, setData] = useState("");
+
   return (
     <Grid width="1200px" margin="auto">
       <UserContainer>
-        <Text F_size="28px" margin_bottom="16px">
-          반가워요 <span>{nickname}</span>님:)
-        </Text>
-        <Text F_size="16px" margin_bottom="48px">
-          오늘도 즐거운 <span>홈트</span>를 응원해요💪💪
-        </Text>
+        <Title
+          F_size="28px"
+          margin_bottom="16px"
+          style={{ fontFamily: "GmarketSansMedium" }}
+        >
+          <h3>
+            반가워요 <span>{nickname}</span> 님 :)
+          </h3>
+          <h5>
+            오늘도 즐거운 <span>홈트</span>를 응원해요💪💪
+          </h5>
+        </Title>
+
         <UserInfoContainer>
           <UserDataContainer>
-            <Image
-              src={userImg}
-              width="200px"
-              height="200px"
-              border_radius="20px"
-              margin_right="48px"
+            <ProfileImage
+              src={profileImg}
+              onClick={() => setOpenProfile(true)}
             />
             <UserNameContainer style={{ marginLeft: "40px", marginTop: "32x" }}>
               <Text F_size="28px" F_weight="bold" margin_top="16px">
@@ -124,7 +151,7 @@ const Mypage = (props) => {
                 display: "flex",
                 justifyContent: "center",
                 justifyItems: "center",
-                marginTop: "12px",
+                // marginTop: "12px",
                 marginBottom: "12px",
               }}
             >
@@ -197,9 +224,55 @@ const Mypage = (props) => {
               ></CalendarModal>
             </Grid>
           </TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
+          <TabPanel value="2" sx={{ p: "0px" }}>
+            <Grid
+              padding="40px"
+              position="relative"
+              width="1200px"
+              heignt="823px"
+              B_radius="20px"
+              Border="2px solid #587730"
+            >
+              <Button
+              _onClick={deletePostDB}
+                position="absolute"
+                right="20px"
+                top="10px"
+                width="54px"
+                B_radius="20px"
+                border="none"
+                BG_color="white"
+                font_color="#757575"
+                font_size="20px"
+                margin="32px 0px 0px 0px"
+              >
+                삭제
+              </Button>
+
+              <Grid is_flex margin_top="44px" B_bottom="1px solid #C4C4C4">
+                <Text F_size="18px" margin="0px 0px 16px 80px">
+                  스토리 리스트(총 {mypagePost.length}개)
+                </Text>{" "}
+                <Text margin="0px 0px 16px 496px" F_size="18px">
+                  작성날짜
+                </Text>
+              </Grid>
+
+              {/* <Grid B_bottom="1px solid #C4C4C4" marign="px 0px 0px 0px"></Grid> */}
+
+              {/* post 목록들 보이기 */}
+              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v} modal={true} setData={setData}/>)}
+            </Grid>
+
+            <Grid></Grid>
+          </TabPanel>
         </TabContext>
       </Box>
+      <ChangeProfileModal
+        setOpenProfile={setOpenProfile}
+        openProfile={openProfile}
+        profileImg={profileImg}
+      />
     </Grid>
   );
 };
@@ -234,7 +307,7 @@ const UserNameContainer = styled.div`
 const InviteContainer = styled.div`
   width: 252px;
   height: 88px;
-  margin-top: 96px;
+  margin-top: 76px;
 `;
 
 const CreateButton = styled.button`
@@ -258,6 +331,21 @@ const CreateButton = styled.button`
     transition: 0.3s;
     background-color: green;
     color: white;
+  }
+`;
+
+const Title = styled.div`
+  h3 {
+    font-size: 32px;
+    font-family: "GmarketSansMedium";
+  }
+  h5 {
+    font-size: 16px;
+    font-family: "GmarketSansLight";
+  }
+  span {
+    font-size: 32px;
+    font-family: "GmarketSansMedium";
   }
 `;
 

@@ -1,29 +1,24 @@
 import React from "react";
-import { Grid, Image, Button, Text } from "../elements";
+import { Grid, Button, Text } from "../elements";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import ImageIcon from "@mui/icons-material/Image";
 import Img from "../components/Img";
-import CheckIcon from "@mui/icons-material/Check";
 import Avatar from "@mui/material/Avatar";
-import { history } from "../redux/store";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
-import { filterEventStoreDefs } from "@fullcalendar/react";
-import { imageApis } from "../shared/formApi";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import useWindowSize from "../hooks/useWindowSize";
+import { Divider } from "@mui/material";
 
 function Edit(props) {
   const dispatch = useDispatch();
-  console.log(props);
   const { id, open, handleClose, photoResponseDto, content } = props;
   const fileInput = React.useRef();
   const contentsRef = React.useRef();
-  const [fileSelected, setFileSelected] = React.useState(false);
   const [preview, setPreview] = React.useState([]);
   const [tempFile, setTempFile] = React.useState([]);
   const [contents, setContents] = React.useState("");
@@ -45,18 +40,15 @@ function Edit(props) {
         tempData.push(reader.result);
         if (tempData.length === files.length) {
           setPreview([...preview, ...tempData]);
-          setFileSelected(true);
         }
       });
     }
   };
 
   const editPost = () => {
-    console.log(tempFile);
     if (tempFile.length <= 0 || tempFile[0] === undefined) {
       alert("사진을 선택해주세요.");
     } else {
-      console.log("hi");
       // const imgData = new FormData();
       const contentData = new FormData();
       for (let i = 0; i < tempFile[0].length; i++) {
@@ -69,17 +61,38 @@ function Edit(props) {
   };
   React.useEffect(() => {
     setContents(content);
+    // photoResponseDto.map((item, index) =>
+    //   setPreview([...preview, item.postImg])
+    // );
+    // setPreview([...item])
 
     return () => {};
   }, [content]);
 
+  const handleOnClose = () => {
+    setPreview([]);
+    setContents(content);
+    tempData = [];
+    handleClose();
+  };
+
+  const previewImage = (v) => {
+    if (preview.length === 0) {
+      return v.postImg;
+    } else {
+      return preview;
+    }
+  };
+
+  const size = useWindowSize();
+  const { width, height } = size;
   return (
     <>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
-        onClose={handleClose}
+        onClose={handleOnClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -90,67 +103,10 @@ function Edit(props) {
           <Box sx={style}>
             <Grid>
               <Grid
-                B_bottom="1px solid #dbdbdb"
                 is_flex
-                // min_width="648px"
-                // max_width="min(calc(100vw - 72px),1151px)"
-                width="1151px"
-                justify_content="space-between"
-                height="42px"
-                BG_c=""
-              >
-                <Grid
-                  width="42px"
-                  height="42px"
-                  B_top_left_radius="15px"
-                  BG_c="white"
-                />
-                <Grid
-                  is_flex
-                  width="100%"
-                  height="42px"
-                  BG_c="white"
-                  justify_content="center"
-                  vertical_align="middle"
-                  align_items="center"
-                >
-                  <Text vertical_align="middle">게시물 수정하기</Text>
-                </Grid>
-                <Grid
-                  width="42px"
-                  height="42px"
-                  B_top_right_radius="15px"
-                  BG_c="white"
-                >
-                  <button
-                    style={{
-                      margin: "7px 0 0 0",
-                      border: "solid 0px",
-                      backgroundColor: "white",
-                      width: "30px",
-                      cursor: "pointer",
-                    }}
-                    onClick={editPost}
-                  >
-                    {" "}
-                    <CheckIcon />
-                  </button>
-                </Grid>
-              </Grid>
-              <Grid
-                is_flex
-                flex_direction="row"
-                justify_content="center"
-                align_items="center"
-                min_width="648px"
-                min_height="348px"
-                max_width="min(calc(100vw - 72px),1151px)"
-                max_height="min(calc(100vw - 372px),855px)"
-                width="1151px"
-                height="calc(100vmin - 219px)"
-                B_bottom_left_radius="15px"
-                B_bottom_right_radius="15px"
-                BG_c="white"
+                width={width * 0.7 + "px"}
+                height={width * 0.4 + "px"}
+                B_radius="20px"
               >
                 <input
                   ref={fileInput}
@@ -159,24 +115,24 @@ function Edit(props) {
                   multiple
                   style={{ display: "none" }}
                 />
-                {tempFile.length <= 0 ? (
+
+                {preview.length <= 0 ? (
                   <Carousel
                     showThumbs={false}
                     infiniteLoop={true}
-                    height="648px"
-                    width="648px"
+                    height={width * 0.4 + "px"}
+                    width={width * 0.4 + "px"}
                   >
                     {photoResponseDto &&
                       photoResponseDto.map((v, i) => (
                         <Img
                           key={i}
-                          size="648px"
+                          size={width * 0.4 + "px"}
                           border="20px"
                           _onClick={() => {
                             fileInput.current.click();
                           }}
-                          fileSelected={fileSelected}
-                          postImg={fileSelected ? preview : v.postImg}
+                          postImg={previewImage(v)}
                         />
                       ))}
                   </Carousel>
@@ -184,40 +140,54 @@ function Edit(props) {
                   <Carousel
                     showThumbs={false}
                     infiniteLoop={true}
-                    height="648px"
-                    width="648px"
+                    height={width * 0.4 + "px"}
+                    width={width * 0.4 + "px"}
                   >
                     {preview.map((item, index) => (
                       <Img
+                        cursor="pointer"
                         key={index}
                         postImg={item}
-                        size="max(348px,min(calc(100vmin - 219px),min(calc(100vw - 372px),855px)))"
+                        size={width * 0.4 + "px"}
+                        border="20px"
                       />
                     ))}
                   </Carousel>
                 )}
 
-                <Grid is_flex flex_direction="column" width="100%">
-                  <Grid
-                    is_flex
-                    justify_content="flex-start"
-                    min_width="300px"
-                    width="100%"
-                  >
+                <Grid
+                  width={width * 0.3 + "px"}
+                  position="absolute"
+                  top="0px"
+                  right="0px"
+                >
+                  <Grid is_flex justify_content="flex-start">
                     <Avatar
                       alt="Remy Sharp"
-                      src={_user.userImg ? _user.userImg : ""}
-                      sx={{ margin: "20px", width: 50, height: 50 }}
+                      src={_user.profileImg ? _user.profileImg : ""}
+                      sx={{ margin: "10px 20px", width: 50, height: 50 }}
                     />
-                    <Text>{_user.nickname ? _user.nickname : ""}</Text>
+                    <Text F_size="20px">
+                      {_user.nickname ? _user.nickname : ""}
+                    </Text>
                   </Grid>
+                  <Divider />
                   <TextArea
                     value={contents}
                     ref={contentsRef}
                     rows="10"
                     wrap="hard"
+                    maxLength={600}
+                    style={{
+                      marginTop: "16px",
+                      marginLeft: "20px",
+                      height: `${width * 0.2}px`,
+                    }}
                     onChange={(e) => setContents(e.target.value)}
                   ></TextArea>
+                  <WriteButton onClick={editPost} width={width}>
+                    수정완료
+                  </WriteButton>
                 </Grid>
               </Grid>
             </Grid>
@@ -238,7 +208,8 @@ const style = {
   p: 4,
   zIndex: 13000,
   padding: 0,
-  border: "0px solid #000",
+  borderRadius: "20px",
+  outline: "none",
 };
 
 const TextArea = styled.textarea`
@@ -249,6 +220,28 @@ const TextArea = styled.textarea`
   line-height: 24px;
   &:focus-visible {
     outline-color: white;
+  }
+`;
+
+const WriteButton = styled.button`
+  display: block;
+  width: ${(props) => props.width * 0.1 + "px"};
+  height: ${(props) => props.width * 0.03 + "px"};
+  margin-left: auto;
+  margin-top: ${(props) => props.width * 0.08 + "px"};
+  margin-right: ${(props) => props.width * 0.02 + "px"};
+  border-radius: 20px;
+  border: solid 2px green;
+  background-color: white;
+  color: green;
+  font-weight: bold;
+  font-size: ${(props) => props.width * 0.01 + "px"};
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
   }
 `;
 

@@ -47,16 +47,17 @@ const getCommentDB = (postId) => {
 
 const addCommentDB = (postId, comment, user) => {
   return function (dispatch, getState, { history }) {
+    console.log("애드커멘트 유저정보", user);
     apis
       .addComment(postId, comment)
       .then((response) => {
         // https://skifriendbucket.s3.ap-northeast-2.amazonaws.com/static/defalt+user+frofile.png
         let userProfileImg = "";
-        if (user.userImg === null) {
+        if (user.profileImg === null) {
           userProfileImg =
             "https://skifriendbucket.s3.ap-northeast-2.amazonaws.com/static/defalt+user+frofile.png";
         } else {
-          userProfileImg = user.userImg;
+          userProfileImg = user.profileImg;
         }
         console.log(user);
         const dummyComment = {
@@ -97,7 +98,7 @@ export default handleActions(
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list[action.payload.postId].push(action.payload.comment);
+        draft.list[action.payload.postId].unshift(action.payload.comment);
       }),
     [DEL_COMMENT]: (state, action) =>
       produce(state, (draft) => {

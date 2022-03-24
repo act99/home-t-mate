@@ -1,7 +1,6 @@
-import styled from "@emotion/styled";
 import React from "react";
 import VideoComponent from "./VideoComponent";
-import "./UserVideo.css";
+import "../styles/UserVideo.css";
 
 const UserVideoComponent = (props) => {
   const getNicknameTag = () =>
