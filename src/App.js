@@ -17,8 +17,9 @@ import Story from "./pages/Story";
 import VideoChatRoom from "./pages/VideoChatRoom";
 import CheckVideo from "./pages/CheckVideo";
 import Logout from "./pages/Logout";
-import Footer from "./shared/Footer";
-
+import Footer from "./components/Footer";
+import TermsOfUse from "./pages/TermsOfUse";
+import Privacy from "./pages/Privacy";
 const App = () => {
   const dispatch = useDispatch();
 
@@ -47,6 +48,8 @@ const App = () => {
               component={VideoChatRoom}
             />
             <Route path="/logout" exact component={Logout} />
+            <Route path="/privacy" exact component={Privacy} />
+            <Route path="/termsofuse" exact component={TermsOfUse} />
             <Route path="*" exact component={NotFound} />
           </Switch>
         </ConnectedRouter>
