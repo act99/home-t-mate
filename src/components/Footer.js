@@ -4,8 +4,15 @@ import { Divider, Link } from "@mui/material";
 import styled from "@emotion/styled";
 import { history } from "../redux/store";
 import Logo from "../assets/mainlogo.png";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
+  let pathname = window.location.pathname;
+  const routeUrl = useSelector((state) => state.router.location.pathname);
+  React.useEffect(() => {}, [pathname, routeUrl]);
+  if (pathname.includes("checkvideo") || pathname.includes("/livenow/chat")) {
+    return <div> </div>;
+  }
   return (
     <>
       <Divider />

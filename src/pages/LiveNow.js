@@ -389,7 +389,7 @@ const SearchBarWrap = styled.div`
   border: solid 1px #e2e2e2;
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 96px;
   margin-left: auto;
   margin-right: auto;
 `;

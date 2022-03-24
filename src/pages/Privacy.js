@@ -4,15 +4,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 export default function Privacy() {
-  const scrollRef = React.useRef();
   React.useEffect(() => {
-    scrollRef.current.scrollIntoView({ behavior: "smooth" });
     return () => {};
   }, []);
 
   return (
     <>
-      <div ref={scrollRef}></div>
       <Container maxWidth="lg">
         <Box sx={{ width: "100%", maxWidth: 1200 }}>
           <Typography

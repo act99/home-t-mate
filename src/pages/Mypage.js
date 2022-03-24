@@ -7,7 +7,7 @@ import "react-datetime/css/react-datetime.css";
 import "moment/locale/ko";
 // import React from "react";
 import CalendarModal from "../components/CalendarModal";
-import { Text, Image, Button } from "../elements";
+import { Text, Button } from "../elements";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TabContext from "@mui/lab/TabContext";
@@ -24,7 +24,7 @@ import ProfileImage from "../elements/ProfileImage";
 import MypagePost from "../components/MypagePost";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { useState } from "react";
-
+import MyChattingRoom from "../containers/MyChattingRoom";
 
 const Mypage = (props) => {
   const dispatch = useDispatch();
@@ -64,14 +64,13 @@ const Mypage = (props) => {
     window.location.reload();
   };
 
-
   const user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
   const mypagePost = _post.filter((v, i) =>
     v.userId === user.id ? true : false
   );
 
-  console.log('mypagepost', mypagePost);
+  console.log("mypagepost", mypagePost);
 
   const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
@@ -190,6 +189,11 @@ const Mypage = (props) => {
                 value="2"
                 sx={{ fontWeight: "bold", fontFamily: "SuncheonR" }}
               />
+              <StyledTab
+                label="내가 만든 홈트방"
+                value="3"
+                sx={{ fontWeight: "bold", fontFamily: "SuncheonR" }}
+              />
             </StyledTabs>
           </Box>
           <TabPanel value="1" sx={{ p: "0px" }}>
@@ -234,7 +238,7 @@ const Mypage = (props) => {
               Border="2px solid #587730"
             >
               <Button
-              _onClick={deletePostDB}
+                _onClick={deletePostDB}
                 position="absolute"
                 right="20px"
                 top="10px"
@@ -261,10 +265,14 @@ const Mypage = (props) => {
               {/* <Grid B_bottom="1px solid #C4C4C4" marign="px 0px 0px 0px"></Grid> */}
 
               {/* post 목록들 보이기 */}
-              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v} modal={true} setData={setData}/>)}
+              {mypagePost &&
+                mypagePost.map((v, i) => (
+                  <MypagePost key={i} {...v} modal={true} setData={setData} />
+                ))}
             </Grid>
-
-            <Grid></Grid>
+          </TabPanel>
+          <TabPanel value="3" sx={{ p: "0px" }}>
+            <MyChattingRoom />
           </TabPanel>
         </TabContext>
       </Box>

@@ -72,9 +72,9 @@ const CheckVideo = () => {
 
     // dispatch(videoActions.setVideo({ video: video, audio: audio }));
   };
+  // const scrollRef = React.useRef();
 
   React.useEffect(() => {
-    console.log(roomId);
     // **  ㄱㄱ
     setTimeout(() => {
       if (video === true) {
@@ -84,6 +84,7 @@ const CheckVideo = () => {
       }
       setLoading(false);
     }, 1000);
+    // scrollRef.current.scrollIntoView({ behavior: "smooth" });
 
     return () => {
       apis

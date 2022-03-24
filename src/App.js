@@ -22,6 +22,7 @@ import TermsOfUse from "./pages/TermsOfUse";
 import Privacy from "./pages/Privacy";
 import SearchingLiveNow from "./pages/SearchingLiveNow";
 import ReEnterKeyword from "./pages/ReEnterKeyword";
+import ScrollToTop from "./hooks/scrollToTop";
 const App = () => {
   const dispatch = useDispatch();
 
@@ -36,6 +37,7 @@ const App = () => {
       <div className="App">
         <NavBar />
         <ConnectedRouter history={history}>
+          <ScrollToTop />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
