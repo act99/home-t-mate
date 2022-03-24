@@ -1,10 +1,9 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { IconButton, TextField } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/roomReducer";
 import RoomImage from "../elements/RoomImage";

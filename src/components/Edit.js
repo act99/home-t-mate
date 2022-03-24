@@ -11,10 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import useWindowSize from "../hooks/useWindowSize";
+import { Divider } from "@mui/material";
 
 function Edit(props) {
   const dispatch = useDispatch();
-  console.log(props);
   const { id, open, handleClose, photoResponseDto, content } = props;
   const fileInput = React.useRef();
   const contentsRef = React.useRef();
@@ -45,11 +46,9 @@ function Edit(props) {
   };
 
   const editPost = () => {
-    console.log(tempFile);
     if (tempFile.length <= 0 || tempFile[0] === undefined) {
       alert("사진을 선택해주세요.");
     } else {
-      console.log("hi");
       // const imgData = new FormData();
       const contentData = new FormData();
       for (let i = 0; i < tempFile[0].length; i++) {
@@ -74,7 +73,6 @@ function Edit(props) {
     setPreview([]);
     setContents(content);
     tempData = [];
-    console.log(preview.length);
     handleClose();
   };
 
@@ -85,6 +83,9 @@ function Edit(props) {
       return preview;
     }
   };
+
+  const size = useWindowSize();
+  const { width, height } = size;
   return (
     <>
       <Modal
@@ -101,7 +102,12 @@ function Edit(props) {
         <Fade in={open}>
           <Box sx={style}>
             <Grid>
-              <Grid is_flex width="1345px" height="800px" B_radius="20px">
+              <Grid
+                is_flex
+                width={width * 0.7 + "px"}
+                height={width * 0.4 + "px"}
+                B_radius="20px"
+              >
                 <input
                   ref={fileInput}
                   onChange={selectFile}
@@ -114,14 +120,14 @@ function Edit(props) {
                   <Carousel
                     showThumbs={false}
                     infiniteLoop={true}
-                    height="800px"
-                    width="800px"
+                    height={width * 0.4 + "px"}
+                    width={width * 0.4 + "px"}
                   >
                     {photoResponseDto &&
                       photoResponseDto.map((v, i) => (
                         <Img
                           key={i}
-                          size="800px"
+                          size={width * 0.4 + "px"}
                           border="20px"
                           _onClick={() => {
                             fileInput.current.click();
@@ -134,57 +140,54 @@ function Edit(props) {
                   <Carousel
                     showThumbs={false}
                     infiniteLoop={true}
-                    height="800px"
-                    width="800px"
+                    height={width * 0.4 + "px"}
+                    width={width * 0.4 + "px"}
                   >
                     {preview.map((item, index) => (
                       <Img
+                        cursor="pointer"
                         key={index}
                         postImg={item}
-                        size="800px"
+                        size={width * 0.4 + "px"}
                         border="20px"
                       />
                     ))}
                   </Carousel>
                 )}
 
-                <Grid width="545px" position="absolute" top="0px" right="0px">
+                <Grid
+                  width={width * 0.3 + "px"}
+                  position="absolute"
+                  top="0px"
+                  right="0px"
+                >
                   <Grid is_flex justify_content="flex-start">
                     <Avatar
                       alt="Remy Sharp"
-                      src={_user.userImg ? _user.userImg : ""}
-                      sx={{ margin: "20px", width: 50, height: 50 }}
+                      src={_user.profileImg ? _user.profileImg : ""}
+                      sx={{ margin: "10px 20px", width: 50, height: 50 }}
                     />
                     <Text F_size="20px">
                       {_user.nickname ? _user.nickname : ""}
                     </Text>
                   </Grid>
-
+                  <Divider />
                   <TextArea
                     value={contents}
                     ref={contentsRef}
                     rows="10"
                     wrap="hard"
-                    style={{ marginLeft: "20px", height: "500px" }}
+                    maxLength={600}
+                    style={{
+                      marginTop: "16px",
+                      marginLeft: "20px",
+                      height: `${width * 0.2}px`,
+                    }}
                     onChange={(e) => setContents(e.target.value)}
                   ></TextArea>
-
-                  <Button
-                    _onClick={editPost}
-                    font_size="20px"
-                    font_color="#587730"
-                    font_weight="700"
-                    B_radius="20px"
-                    border="2px solid #587730"
-                    width="197px"
-                    height="52px"
-                    BG_color="white"
-                    position="absolute"
-                    bottom="-140px"
-                    right="40px"
-                  >
+                  <WriteButton onClick={editPost} width={width}>
                     수정완료
-                  </Button>
+                  </WriteButton>
                 </Grid>
               </Grid>
             </Grid>
@@ -217,6 +220,28 @@ const TextArea = styled.textarea`
   line-height: 24px;
   &:focus-visible {
     outline-color: white;
+  }
+`;
+
+const WriteButton = styled.button`
+  display: block;
+  width: ${(props) => props.width * 0.1 + "px"};
+  height: ${(props) => props.width * 0.03 + "px"};
+  margin-left: auto;
+  margin-top: ${(props) => props.width * 0.08 + "px"};
+  margin-right: ${(props) => props.width * 0.02 + "px"};
+  border-radius: 20px;
+  border: solid 2px green;
+  background-color: white;
+  color: green;
+  font-weight: bold;
+  font-size: ${(props) => props.width * 0.01 + "px"};
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
   }
 `;
 

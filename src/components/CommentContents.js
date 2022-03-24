@@ -1,14 +1,11 @@
 import React from "react";
 import { Grid, Image } from "../elements";
-import { Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { actionCreators as commentActions } from "../redux/modules/commentReducer";
 import { useDispatch } from "react-redux";
 import { Text } from "../elements";
-import { enableCursor } from "@fullcalendar/react";
 
 export default function CommentContents(props) {
-  console.log("CommentContentsprops", props);
   const dispatch = useDispatch();
 
   // React.useEffect(() => {
@@ -37,12 +34,7 @@ export default function CommentContents(props) {
           flex_direction="column"
           justify_content="start"
         >
-          <Image
-            margin="0"
-            shape="circle"
-            src={props.profileImageUrl}
-            size="35"
-          />
+          <Image margin="0" shape="circle" src={props.profileImg} size="35" />
         </Grid>
 
         <Grid width="297px" margin_left="16px">
@@ -54,7 +46,7 @@ export default function CommentContents(props) {
               {props.comment}
             </Text>
             <CloseIcon
-              sx={{ color: "#757575", fontSize: "13px", cursor:"pointer" }}
+              sx={{ color: "#757575", fontSize: "13px", cursor: "pointer" }}
               onClick={delComment}
             />
           </Grid>

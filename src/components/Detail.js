@@ -33,22 +33,19 @@ const style = {
 
 export default function Detail(props) {
   const dispatch = useDispatch();
-  const { commentUserDto } = props;
   // id={props.id}
-  console.log("Detail props용", props); //post id값, comment어쩌구
 
   const _post = useSelector((state) => state.postReducer.list);
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x), "");
   const thisPostPhoto = thisPost.photoResponseDto;
 
-  console.log("postReducer확인용", _post);
-  console.log("thispost확인용", thisPost);
-
   const commentState = useSelector((state) => state.commentReducer.list)[
     `${props.id}`
   ];
 
-  console.log("commentState", commentState);
+  const comment = useSelector((state) => state.commentReducer.list);
+  const thisComment = comment[`${props.id}`];
+  console.log(thisPost.likeUserDto);
 
   React.useEffect(() => {
     if (!commentState) {
@@ -80,14 +77,15 @@ export default function Detail(props) {
         />
         <div
           className="commentlist"
-          style={{ height: "640px", overflow: "auto" }}
+          style={{ height: "592px", overflow: "auto" }}
         >
           {/* 글 내용 */}
           <Typography
             variant="body2"
             color="black"
             align="justify"
-            marginLeft={"16px"}
+            marginLeft="16px"
+            marginRight="16px"
             marginBottom="13px"
           >
             {thisPost.content}
@@ -100,8 +98,8 @@ export default function Detail(props) {
           </Grid>
 
           {/* 댓글 보이기 */}
-          {commentState &&
-            commentState.map((v, i) => (
+          {thisComment &&
+            thisComment.map((v, i) => (
               <CommentContents key={i} {...v} id={props.id} />
             ))}
         </div>
@@ -109,27 +107,24 @@ export default function Detail(props) {
         {/* 댓글작성부분 */}
         <Grid position="absolute" bottom="0px" width="545px">
           <Grid is_flex>
-            {/* 
-          <Button
-            _onClick={likePost}
-            border="0px"
-            BG_color="white"
-            padding="0px"
-            margin="0px 15px 0px 0px"
-            width="28px"
-            height="28px"
-          >
-            {like ? <FavoriteOutlinedIcon style={{fontSize:"40px", color:"#587730"}} /> : <FavoriteBorderOutlinedIcon style={{fontSize:"40px"}} />}
-          </Button> */}
-
             <LikeComment
               id={props.id}
               modal={false}
               none="none"
               default="default"
             />
+            {thisPost.likeUserDto && thisPost.likeUserDto.length > 0 ? (
+              <Text margin_top="8px">
+                {thisPost.likeUserDto[0].nickname}님 외{" "}
+                {thisPost.likeUserDto.length - 1}명이 이 스토리를 좋아해요
+              </Text>
+            ) : (
+              <Text margin_top="8px">
+                좋아요를 처음 누른 친구가 되어봐요 :)
+              </Text>
+            )}
           </Grid>
-            <CommentBox id={props.id} />
+          <CommentBox id={props.id} />
         </Grid>
       </Grid>
     </Box>

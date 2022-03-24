@@ -2,7 +2,15 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const Text = (props) => {
-  const { F_size, F_color, F_weight, F_style, F_decoration, F_align } = props;
+  const {
+    F_size,
+    F_color,
+    F_weight,
+    F_style,
+    F_decoration,
+    F_align,
+    F_family,
+  } = props;
 
   const { cursor } = props;
 
@@ -35,6 +43,7 @@ const Text = (props) => {
     F_style,
     F_decoration,
     F_align,
+    F_family,
 
     is_flex,
     flex_direction,
@@ -72,6 +81,7 @@ Text.defaultProps = {
   F_style: null,
   F_decoration: null,
   F_align: null,
+  F_family: "GmarketSansLight",
 
   is_flex: false,
   flex_direction: "row",
@@ -102,6 +112,7 @@ const P = styled.div`
   color: ${(props) => props.F_color};
   font-weight: ${(props) => props.F_weight};
   font-style: ${(props) => props.F_style};
+  font-family: ${(props) => props.F_family};
   text-decoration: ${(props) => props.F_decoration};
   text-align: ${(props) => props.F_align};
   ${(props) => (props.is_flex ? `display : flex;` : "")};

@@ -52,17 +52,21 @@ export default function Cardheader(props) {
           height: "64px",
         }}
         avatar={<Image shape="circle" src={props.userImg} size="40" />}
-
         titleTypographyProps={{
           fontWeight: 400,
           fontSize: 20,
         }}
         title={props.username}
-
         action={
           //...아이콘 부분
           <>
-            <Grid is_flex align_items="center" height="64px" position="absolute" right="0px">
+            <Grid
+              is_flex
+              align_items="center"
+              height="64px"
+              position="absolute"
+              right="0px"
+            >
               <MoreHorizIcon
                 onClick={handleClick}
                 style={{ fontSize: "30px", paddingRight: "30px" }}
@@ -79,29 +83,29 @@ export default function Cardheader(props) {
                 horizontal: "left",
               }}
               PaperProps={{
-                style: { width: "200px", height: "200px" },
+                style: { width: "200px", height: "140px" },
               }}
             >
               <Grid
                 is_flex
                 flex_direction="column"
                 padding="10px"
-                height="200px"
+                height="140px"
                 align_content="space-around"
                 // align_items="center"
                 justify_content="center"
               >
-                <Grid>
+                <Grid margin="auto" cursor="pointer">
                   <Text F_size="16px" _onClick={edithandleOpen}>
                     이 스토리 수정하기
                   </Text>
                 </Grid>
-                <Grid>
+                <Grid margin="auto" cursor="pointer">
                   <Text F_size="16px" _onClick={deletePostDB}>
                     이 스토리 삭제하기
                   </Text>
                 </Grid>
-                <Grid>
+                <Grid margin="auto" cursor="pointer">
                   <Text F_size="16px" _onClick={handleClose}>
                     취소하기
                   </Text>
@@ -121,7 +125,7 @@ export default function Cardheader(props) {
       <Text margin_left="20px" F_size="14px" F_color="#757575">
         {time}에 작성됨
       </Text>
-      </Grid>
+    </Grid>
   ) : (
     // 글 작성자가 아니면 ... 아이콘 안보이게하기
     <CardHeader

@@ -1,6 +1,6 @@
 //emoji-picker-react
 
-import React, { useState } from "react";
+import React from "react";
 
 // import { Button } from "@mui/material";
 import { Button } from "../elements";
@@ -17,7 +17,13 @@ export default function CommentBox(props) {
   // console.log('commentBox', props) id
   const _user = useSelector((state) => state.userReducer.user);
 
-  const comment = React.useRef();
+  const commentRef = React.useRef();
+
+  const [comment, setComment] = React.useState("");
+
+  const handleOnChange = (e) => {
+    setComment(e.target.value);
+  };
 
   console.log(_user);
   const addComment = () => {
@@ -26,15 +32,13 @@ export default function CommentBox(props) {
       return;
     }
 
-    dispatch(
-      commentActions.addCommentDB(props.id, comment.current.value, _user)
-    );
-    comment.current.value = "";
+    dispatch(commentActions.addCommentDB(props.id, comment, _user));
+    setComment("");
   };
 
-  const [chosenEmoji, setChosenEmoji] = useState(null);
   const onEmojiClick = (event, emojiObject) => {
-    setChosenEmoji(emojiObject);
+    console.log(emojiObject.emoji);
+    setComment(comment + emojiObject.emoji);
   };
 
   //웃는 아이콘 클릭했을때 이모지 나오게하기
@@ -48,17 +52,11 @@ export default function CommentBox(props) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const EmojiData = ({ chosenEmoji }) => (
-    <div>
-      <strong>Unified:</strong> {chosenEmoji.unified}
-      <br />
-      <strong>Names:</strong> {chosenEmoji.names.join(", ")}
-      <br />
-      <strong>Symbol:</strong> {chosenEmoji.emoji}
-      <br />
-      <strong>ActiveSkinTone:</strong> {chosenEmoji.activeSkinTone}
-    </div>
-  );
+  const onEnterPress = (e) => {
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      return addComment();
+    }
+  };
 
   if (_user.is_login) {
     return (
@@ -104,13 +102,15 @@ export default function CommentBox(props) {
               groupNames={{ smileys_people: "PEOPLE" }}
               native
             />
-            {chosenEmoji && <EmojiData chosenEmoji={chosenEmoji} />}
           </Popover>
 
           <input
-            ref={comment}
+            ref={commentRef}
+            value={comment}
+            onChange={handleOnChange}
             className="CommentInputBox"
             placeholder="하고 싶은 말을 남기세요 :)"
+            onKeyDown={onEnterPress}
           ></input>
           <Button
             _onClick={addComment}

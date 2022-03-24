@@ -108,10 +108,14 @@ const LiveNow = () => {
       <InfinityScroll callNext={handleNext} loading={is_loading}>
         <Wrap>
           <Container sx={{ py: 16, width: "100%" }}>
+            <MainTitle>
+              <h3>친구들과 함께하는 화상 홈트레이닝</h3>
+              <h5>오늘도 여러분의 운동을 응원합니다</h5>
+            </MainTitle>
             <form onSubmit={submitSearchHandler}>
               <SearchBarWrap>
                 <SearchBarInput
-                  placeholder="원하시는 방 제목을 검색해주세요"
+                  placeholder="원하시는 방 제목 또는 호스트 이름을 검색해주세요"
                   onKeyDown={onEnterPress}
                   value={searchInput}
                   onChange={searchInputHandler}
@@ -263,6 +267,27 @@ const Wrap = styled.div`
   background-color: #f9f9f9;
 `;
 
+const MainTitle = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin-bottom: 64px;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  h3 {
+    font-size: 28px;
+    font-family: "GmarketSansMedium";
+    margin: 0px;
+    margin-bottom: 8px;
+  }
+  h5 {
+    font-size: 16px;
+    font-family: "GmarketSansLight";
+    margin: 0px;
+  }
+`;
+
 const TitleText = styled.h3`
   font-size: 16px;
   font-family: "GmarketSansMedium";
@@ -357,14 +382,16 @@ const NickANumWrap = styled.div`
 `;
 
 const SearchBarWrap = styled.div`
-  width: 100%;
+  width: 70%;
   height: 52px;
   /* background-color: black; */
-  border-radius: 8px;
+  border-radius: 24px;
   border: solid 1px #e2e2e2;
   display: flex;
   align-items: center;
   margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const SearchBarInput = styled.input`
@@ -373,10 +400,10 @@ const SearchBarInput = styled.input`
   border: solid 0px;
   border-right: solid 1px #e2e2e2;
   background-color: rgb(0, 0, 0, 0);
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
   padding-left: 16px;
-  font-size: 18px;
+  font-size: 16px;
   font-family: "GmarketSansLight";
 
   :focus {

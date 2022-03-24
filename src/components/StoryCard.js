@@ -38,7 +38,7 @@ export default function StoryCard(props) {
     }
     console.log(commentUserDto, likeUserDto);
   }, [commentUserDto, likeUserDto]);
-  
+
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
     return (
       <div className="mainbox">
@@ -46,7 +46,7 @@ export default function StoryCard(props) {
           sx={{ maxWidth: 620, height: 870, margin: "auto" }}
           className={classes.root}
         >
-          <Cardheader id={id} username={nickname} userImg={userImg}/>
+          <Cardheader id={id} username={nickname} userImg={userImg} />
 
           <Carousel
             showThumbs={false}
@@ -73,30 +73,48 @@ export default function StoryCard(props) {
 
           <CardContent sx={{ p: 0, pl: "16px" }}>
             <Grid is_flex>
-              <Text F_color="black" F_size="20px">
-                {nickname}
+              <Text F_color="black" F_size="20px" F_family="GmarketSansMedium">
+                {nickname.length > 6 ? nickname.slice(0, 6) + "..." : nickname}
               </Text>
-              <div className="overFlowText">{content}</div>
+              <div className="overFlowText">
+                <h3
+                  style={{ fontSize: "16px", fontFamily: "GmarketSansLight" }}
+                >
+                  {content.length > 25 ? content.slice(0, 25) + "..." : content}
+                </h3>
+              </div>
             </Grid>
           </CardContent>
           {likeUserDto.length <= 0 ? (
-            <Text margin_left="16px" margin_top="28px">
+            <Text margin_left="16px" margin_top="8px">
               좋아요를 처음 누른 친구가 되어봐요 :)
             </Text>
           ) : (
-            <Text margin_left="16px" margin_top="28px">
-              {likeUserDto[0].nickname}님 외 {likeUserDto.length-1}명이 이 스토리를
-              좋아해요
+            <Text margin_left="16px" margin_top="8px">
+              {likeUserDto[0].nickname}님 외 {likeUserDto.length - 1}명이 이
+              스토리를 좋아해요
             </Text>
           )}
           {commentUserDto <= 0 ? (
-            <Text margin_left="16px" margin_bottom="8px" F_color="#757575">
+            <Text
+              margin_left="16px"
+              margin_bottom="8px"
+              F_color="#757575"
+              margin_top="8px"
+            >
               아직 댓글이 없어요
             </Text>
           ) : (
-            <Text margin_left="16px" margin_bottom="8px" F_color="#757575">
-              <p>{commentUserDto[0].nickname}님 외
-              <span>{commentUserDto.length-1}개</span>의 댓글</p>
+            <Text
+              margin_left="16px"
+              margin_bottom="8px"
+              F_color="#757575"
+              margin_top="8px"
+            >
+              <p>
+                {commentUserDto[0].nickname}님 외
+                <span>{commentUserDto.length - 1}개</span>의 댓글
+              </p>
             </Text>
           )}
         </Card>

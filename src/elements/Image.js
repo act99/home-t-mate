@@ -24,6 +24,7 @@ const Image = (props) => {
     B_bottom_right_radius,
     B_top_left_radius,
     B_top_right_radius,
+    cursor,
   } = props;
 
   const styles = {
@@ -39,6 +40,7 @@ const Image = (props) => {
     B_bottom_right_radius,
     B_top_left_radius,
     B_top_right_radius,
+    cursor,
   };
   if (shape === "imageBG") {
     return <ImageBG onClick={_onClick} {...styles}></ImageBG>;
@@ -51,8 +53,7 @@ const Image = (props) => {
   }
   return (
     <div>
-      <ImageDefault onClick={_onClick} {...styles}>
-      </ImageDefault>
+      <ImageDefault onClick={_onClick} {...styles}></ImageDefault>
     </div>
   );
 };
@@ -86,6 +87,7 @@ const ImageDefault = styled.div`
   border-top-left-radius: ${(props) => props.B_top_left_radius};
   border-top-right-radius: ${(props) => props.B_top_right_radius};
   flex: ${(props) => props.flex};
+  cursor: pointer;
 `;
 
 const ImageCircle = styled.div`
@@ -94,8 +96,10 @@ const ImageCircle = styled.div`
   height: var(--size);
   border-radius: 50%;
   background-image: url("${(props) => props.src}");
+  background-position: center;
   background-size: cover;
   margin: ${(props) => props.margin};
+  cursor: ${(props) => props.cursor};
 `;
 const ImagePost = styled.div`
   width: ${(props) => props.width};
@@ -105,6 +109,7 @@ const ImagePost = styled.div`
   background-position: center;
   box-shadow: ${(props) => props.box_shadow};
   border-radius: ${(props) => props.border_radius};
+  cursor: ${(props) => props.cursor};
 `;
 const ImageBG = styled.div`
   width: 100%;
@@ -112,6 +117,7 @@ const ImageBG = styled.div`
   background-image: url("${(props) => props.src}");
   object-fit: cover;
   background-position: center;
+  cursor: ${(props) => props.cursor};
   // border: 1px solid #ffec99;
 `;
 

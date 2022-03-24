@@ -11,9 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postAcions } from "../redux/modules/postReducer";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-//import Actions
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-//import elements
 import { Grid, Text, Button } from "../elements";
 
 //import Icon
@@ -60,7 +59,7 @@ export default function LikeComment(props) {
       alert("로그인을 해주세요");
       return;
     } else {
-      dispatch(postAcions.likePostDB(thisPost.id, _user.id));
+      dispatch(postAcions.likePostDB(thisPost.id, _user.id, _user.nickname));
       if (like === true) {
         setLike(false);
       } else {
@@ -81,7 +80,7 @@ export default function LikeComment(props) {
         is_flex
         justify_content="space-between"
         margin="10px"
-        margin_top="30px"
+        margin_top="24px"
       >
         <Grid is_flex flex_wrap="nowrap">
           {/* 좋아요버튼 */}
@@ -94,10 +93,13 @@ export default function LikeComment(props) {
             width="28px"
             height="28px"
           >
-            {like ? <FavoriteOutlinedIcon style={{fontSize:"40px", color:"#587730"}} /> : <FavoriteBorderOutlinedIcon style={{fontSize:"40px"}} />}
+            {like ? (
+              <AiFillHeart size="32" color="red" />
+            ) : (
+              <AiOutlineHeart size="32" />
+            )}
           </Button>
-         
-         
+
           {/* 댓글버튼 => 상세페이지로 이동 */}
           <Button
             _onClick={handleOpen}
@@ -105,11 +107,14 @@ export default function LikeComment(props) {
             BG_color="white"
             padding="0px"
             width="28px"
-            margin="0px 5px 4px 5px"
             height="28px"
           >
-            <FaRegComment size="35" border="3px" onClick={handleOpen} display={props.none} cursor={props.none} />
-
+            <FaRegComment
+              size="28"
+              onClick={handleOpen}
+              display={props.none}
+              cursor={props.none}
+            />
           </Button>
         </Grid>
       </Grid>
@@ -122,7 +127,11 @@ export default function LikeComment(props) {
         aria-describedby="modal-modal-description"
       >
         <div>
-          <Detail id={props.id} commentUserDto={props.commentUserDto} likeUserDto={props.likeUserDto}/>
+          <Detail
+            id={props.id}
+            commentUserDto={props.commentUserDto}
+            likeUserDto={props.likeUserDto}
+          />
           <Grid position="absolute" right="0">
             <CloseIcon
               sx={{ color: "white", fontSize: 40 }}

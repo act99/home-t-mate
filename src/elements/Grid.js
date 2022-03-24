@@ -53,6 +53,7 @@ const Grid = (props) => {
     left,
     z_index,
     cursor,
+    text_align,
   } = props;
 
   //event category
@@ -75,7 +76,7 @@ const Grid = (props) => {
 
     box_shadow,
     box_sizing,
-
+    text_align,
     BG_c,
 
     is_flex,
@@ -182,6 +183,7 @@ const GridBox = styled.div`
   flex-wrap: ${(props) => props.flex_wrap};
   box-shadow: ${(props) => props.box_shadow};
   //size, position
+  text-align: ${(props) => props.text_align};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   max-width: ${(props) => props.max_width};
@@ -192,7 +194,7 @@ const GridBox = styled.div`
   padding-left: ${(props) => props.padding_left};
   margin: ${(props) => props.margin};
   margin-left: ${(props) => props.margin_left};
-  margin_right: ${(props) => props.margin_right};
+  margin-right: ${(props) => props.margin_right};
   margin-top: ${(props) => props.margin_top};
   margin-bottom: ${(props) => props.margin_bottom};
   gap: ${(props) => props.gap};
@@ -220,7 +222,7 @@ const GridBox = styled.div`
   background-color: ${(props) => props.BG_c};
   box-sizing: ${(props) => props.box_sizing};
   ${(props) => (props.box_sizing ? "box-sizing :border-box" : "")};
-  cursor : ${(props) => props.cursor};
+  cursor: ${(props) => props.cursor};
 `;
 
 export default Grid;

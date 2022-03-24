@@ -46,8 +46,11 @@ export default function Cardheader(props) {
         backgroundColor: "#587730",
         borderTopRightRadius: "20px",
         padding: "0px",
-        paddingLeft: "16px",
+        paddingLeft: "32px",
         height: "64px",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
       }}
       avatar={<Image shape="circle" src={props.userImg} size="40" />}
       action={
@@ -56,7 +59,11 @@ export default function Cardheader(props) {
           <Grid is_flex align_items="center" height="64px">
             <MoreHorizIcon
               onClick={handleClick}
-              style={{ fontSize: "30px", paddingRight: "30px" }}
+              style={{
+                fontSize: "30px",
+                paddingRight: "30px",
+                cursor: "pointer",
+              }}
             />
           </Grid>
           {/* 삭제하기,수정하기,취소하기 dropdown modal부분 */}
@@ -70,29 +77,29 @@ export default function Cardheader(props) {
               horizontal: "left",
             }}
             PaperProps={{
-              style: { width: "200px", height: "200px" },
+              style: { width: "200px", height: "140px" },
             }}
           >
             <Grid
               is_flex
               flex_direction="column"
               padding="10px"
-              height="200px"
-              align_content="space-around"
+              height="140px"
+              // align_content="space-between"
               // align_items="center"
               justify_content="center"
             >
-              <Grid>
+              <Grid margin="auto" text_align="start" cursor="pointer">
                 <Text F_size="16px" _onClick={edithandleOpen}>
                   이 스토리 수정하기
                 </Text>
               </Grid>
-              <Grid>
+              <Grid margin="auto" cursor="pointer">
                 <Text F_size="16px" _onClick={deletePostDB}>
                   이 스토리 삭제하기
                 </Text>
               </Grid>
-              <Grid>
+              <Grid margin="auto" cursor="pointer">
                 <Text F_size="16px" _onClick={handleClose}>
                   취소하기
                 </Text>
@@ -109,9 +116,9 @@ export default function Cardheader(props) {
         </>
       }
       titleTypographyProps={{
-        fontWeight: 400,
-        fontSize: 20,
+        fontSize: 18,
         color: "#ffffff",
+        fontFamily: "GmarketSansMedium",
       }}
       title={props.username}
     />
