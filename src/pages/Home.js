@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/roomReducer";
+import { actionCreators as postActions } from "../redux/modules/postReducer";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import {
   Avatar,
@@ -17,10 +18,16 @@ import RoomCardModal from "../containers/RoomCardModal";
 import BxSlide from "../assets/bxslide.png";
 import HowToUse from "../assets/howtouse.png";
 import { useHistory } from "react-router-dom";
+import HomeImg from "../components/HomeImg";
+import { Image } from "../elements";
 
 const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  //스토리 게시글 목록 가져오기
+  const _post = useSelector((state) => state.postReducer.list);
+
   // ** 방 생성 버튼
   const roomList = useSelector((state) => state.roomReducer.room_list);
 
@@ -66,6 +73,13 @@ const Home = () => {
   };
   React.useEffect(() => {
     dispatch(roomCreators.getMainRoomDB());
+    // dispatch(postActions.getPostDB());
+    // if (_post && _post.length >= 0) {
+    //   console.log(_post);
+    // }
+    // if (_post && _post.length > 0) {
+    //   console.log(photoResponseDto);
+    // }
   }, []);
   return (
     <>
@@ -211,6 +225,19 @@ const Home = () => {
                 setClickCard={setClickCard}
                 data={modalData}
               />
+
+
+              <h3>스토리</h3>
+
+              <Grid is_flex>
+                  {_post && _post.slice(0,5).map((v, i)=> (
+                    <HomeImg key={i} {...v}></HomeImg>
+                    // <Grid v
+                    // key={i}>
+                    //   <Image src={v.photoResponseDto[0].postImg}></Image>
+                    // </Grid>
+                  ))}</Grid>
+
             </Wrap>
           </>
         </Container>
