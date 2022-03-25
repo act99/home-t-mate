@@ -125,10 +125,22 @@ export default function Cardheader(props) {
   ) : (
     // 글 작성자가 아니면 ... 아이콘 안보이게하기
     <CardHeader
-      style={{ backgroundColor: "#587730", borderTopRightRadius: "20px" }}
-      avatar={<Image shape="circle" src={props.userImg} size="40" margin="0" />}
+      // style={{ backgroundColor: "#587730", borderTopRightRadius: "20px" }}
+      style={{
+        backgroundColor: "#587730",
+        borderTopRightRadius: "20px",
+        padding: "0px",
+        paddingLeft: "32px",
+        height: "64px",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+      }}
+      avatar={<Image shape="circle" src={props.userImg} size="40" />}
       titleTypographyProps={{
-        fontWeight: 600,
+        fontSize: 18,
+        color: "#ffffff",
+        fontFamily: "GmarketSansMedium",
       }}
       title={props.username}
     />

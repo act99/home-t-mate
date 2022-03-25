@@ -87,6 +87,8 @@ export default function Detail(props) {
             marginLeft="16px"
             marginRight="16px"
             marginBottom="13px"
+            fontFamily="GmarketSansMedium"
+            fontSize="18px"
           >
             {thisPost.content}
           </Typography>
@@ -113,6 +115,7 @@ export default function Detail(props) {
               none="none"
               default="default"
             />
+            <Grid is_flex position="relative" left="-40px">
             {thisPost.likeUserDto && thisPost.likeUserDto.length > 0 ? (
               <Text margin_top="8px">
                 {thisPost.likeUserDto[0].nickname}님 외{" "}
@@ -122,7 +125,7 @@ export default function Detail(props) {
               <Text margin_top="8px">
                 좋아요를 처음 누른 친구가 되어봐요 :)
               </Text>
-            )}
+            )}</Grid>
           </Grid>
           <CommentBox id={props.id} />
         </Grid>

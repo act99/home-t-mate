@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/roomReducer";
+import { actionCreators as postActions } from "../redux/modules/postReducer";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import {
   Avatar,
@@ -8,7 +9,7 @@ import {
   CardContent,
   CardMedia,
   Container,
-  Grid,
+  Grid as MuiGrid,
   Typography,
 } from "@mui/material";
 import styled from "@emotion/styled";
@@ -17,10 +18,18 @@ import RoomCardModal from "../containers/RoomCardModal";
 import BxSlide from "../assets/bxslide.png";
 import HowToUse from "../assets/howtouse.png";
 import { useHistory } from "react-router-dom";
+import HomeImg from "../components/HomeImg";
+import { Image, Text } from "../elements";
+import { flexbox, fontFamily } from "@mui/system";
+import { Grid } from "../elements";
 
 const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  //스토리 게시글 목록 가져오기
+  const _post = useSelector((state) => state.postReducer.list);
+
   // ** 방 생성 버튼
   const roomList = useSelector((state) => state.roomReducer.room_list);
 
@@ -67,6 +76,7 @@ const Home = () => {
   React.useEffect(() => {
     dispatch(roomCreators.getMainRoomDB());
   }, []);
+
   return (
     <>
       <Wrap>
@@ -84,9 +94,9 @@ const Home = () => {
           <>
             <Wrap>
               <Container sx={{ py: 8, width: "100%" }}>
-                <Grid container spacing={2}>
+                <MuiGrid container spacing={2}>
                   {roomList.slice(0, 8).map((item, index) => (
-                    <Grid
+                    <MuiGrid
                       item
                       key={item.roomId + item.name + index}
                       xs={12}
@@ -202,15 +212,60 @@ const Home = () => {
                           <RowForDiv></RowForDiv>
                         </CardContent>
                       </Card>
-                    </Grid>
+                    </MuiGrid>
                   ))}
-                </Grid>
+                </MuiGrid>
               </Container>
               <RoomCardModal
                 clickCard={clickCard}
                 setClickCard={setClickCard}
                 data={modalData}
               />
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                  margin: "100px 0px 32px 0px",
+                }}
+              >
+                <Text F_size="36px" F_family="GmarketSansMedium">
+                  스토리
+                </Text>
+                <div style={{ position: "absolute", right: "0" }}>
+                  <Text
+                    cursor="pointer"
+                    F_size="18px"
+                    F_color="#757575"
+                    F_family="SuncheonR"
+                    _onClick={() => history.push("/story")}
+                  >
+                    더 보기
+                  </Text>
+                </div>
+              </div>
+              <div style={{ display: "flex" }}>
+                {_post &&
+                  _post
+                    .slice(0, 5)
+                    .map((v, i) => (
+                      <HomeImg key={i} {...v} modal={true}></HomeImg>
+                    ))}
+              </div>
+
+              <Text F_size="44px" F_align="center" margin_top="227px">
+                how to use
+              </Text>
+              <Text F_size="44px" F_align="center">
+                홈트메이트는 무엇인가요?
+              </Text>
+
+              <Grid is_flex width="1200px" justify_content="space-between" margin_top="0px">
+                <Grid width="353px" height="390px" BG_c="black" margin_top="300px"></Grid>
+                <Grid width="353px" height="390px" BG_c="black" ></Grid>
+                <Grid width="353px" height="390px" BG_c="black" margin_top="300px"></Grid>
+              </Grid>
             </Wrap>
           </>
         </Container>

@@ -8,8 +8,6 @@ const ProfileImage = (props) => {
 };
 
 const RoomImageDefault = styled.div`
-  /* max-width: 320px;
-  max-height: 240px; */
   width: 200px;
   height: 200px;
   margin-top: 4px;

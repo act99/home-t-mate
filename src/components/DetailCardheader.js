@@ -55,6 +55,7 @@ export default function Cardheader(props) {
         titleTypographyProps={{
           fontWeight: 400,
           fontSize: 20,
+          fontFamily: "GmarketSansMedium",
         }}
         title={props.username}
         action={
@@ -127,14 +128,26 @@ export default function Cardheader(props) {
       </Text>
     </Grid>
   ) : (
-    // 글 작성자가 아니면 ... 아이콘 안보이게하기
-    <CardHeader
-      style={{ backgroundColor: "#587730", borderTopRightRadius: "20px" }}
-      avatar={<Image shape="circle" src={props.userImg} size="40" margin="0" />}
-      titleTypographyProps={{
-        fontWeight: 600,
-      }}
-      title={props.username}
-    />
+    // 글 작성자가 아니면 ... 아이콘 안보이게하
+    <Grid is_flex>
+      <CardHeader
+        style={{
+          borderTopRightRadius: "20px",
+          padding: "0px",
+          paddingLeft: "16px",
+          height: "64px",
+        }}
+        avatar={<Image shape="circle" src={props.userImg} size="40" />}
+        titleTypographyProps={{
+          fontWeight: 400,
+          fontSize: 20,
+          fontFamily: "GmarketSansMedium",
+        }}
+        title={props.username}
+      />
+      <Text margin_left="20px" F_size="14px" F_color="#757575">
+        {time}에 작성됨
+      </Text>
+    </Grid>
   );
 }
