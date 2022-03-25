@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/userReducer";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
+import { Grid, Text } from "../elements";
+import { border } from "@mui/system";
 
 const ChangeProfileModal = (props) => {
   const { openProfile, setOpenProfile, profileImg } = props;
@@ -62,21 +64,57 @@ const ChangeProfileModal = (props) => {
       BackdropProps={{
         timeout: 500,
       }}
+      sx={{ p: 0 }}
     >
       <Fade in={openProfile}>
         <Box sx={ProfileStyle} component="form" onSubmit={handleSubmit}>
-          <Top>
-            <IconButton onClick={handleClose}>
-              <CloseIcon sx={{ height: "100%", fontSize: "40px" }} />
-            </IconButton>
-          </Top>
-          <Box
-            sx={{ width: "100%", maxWidth: 320, maxHeight: 240, mx: "auto" }}
+          <Grid
+            is_flex
+            justify_content="space-between"
+            BG_c="#597731"
+            height="53px"
+            padding="0px 30px 0px 30px"
           >
+            <Text
+              _onClick={handleClose}
+              cursor="pointer"
+              F_size="16px"
+              F_family="SuncheonR"
+              F_color="white"
+            >
+              취소
+            </Text>
+            <Text F_size="16px" F_family="SuncheonR" F_color="white">
+              이미지 수정
+            </Text>
+            <button
+              type="submit"
+              style={{
+                backgroundColor: "#597731",
+                border: "none",
+                padding: "0px",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "16px",
+                  fontFamily: "SuncheonR",
+                  color: "white",
+                }}
+              >
+                완료
+              </p>
+            </button>
+          </Grid>
+
+{/* 이미지 선택하는부분 */}
+          <Grid is_flex width="200px" height="350px" margin="auto" align_items="center">
             <FileInput type="file" ref={fileInputRef} onChange={selectFile} />
             <ProfileImage src={preview ? preview : profileImg} />
-          </Box>
-          <button type="submit">버튼</button>
+          </Grid>
+          <Grid is_flex position="absolute" bottom="0px" margin_left="33%">
+          {preview===null? <Text F_size="16px" F_align="center" margin_bottom="90px" F_family="SuncheonB">이미지를 넣어주세요.</Text> : <Text F_size="16px" F_align="center" margin_bottom="90px" F_family="SuncheonB">이미지가 등록되었어요.</Text>}
+        </Grid>
         </Box>
       </Fade>
     </Modal>
@@ -86,29 +124,12 @@ const ChangeProfileModal = (props) => {
 const FileInput = styled.input`
   opacity: 0;
   position: absolute;
-  /* top: 100px;
-  left: 0;
-  bottom: 0;
-  right: 0;  */
   width: 100%;
-  /* height: 100%; */
   height: 100%;
   min-height: 200px;
   max-width: 200px;
-  /* min-height: 150px;
-  max-height: 150px;
-  max-width: 200px; */
   height: auto;
   cursor: pointer;
-`;
-
-const Top = styled.div`
-  width: 100%;
-  height: 48px;
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  background-color: white;
 `;
 
 export default ChangeProfileModal;

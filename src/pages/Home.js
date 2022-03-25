@@ -9,7 +9,7 @@ import {
   CardContent,
   CardMedia,
   Container,
-  Grid,
+  Grid as MuiGrid,
   Typography,
 } from "@mui/material";
 import styled from "@emotion/styled";
@@ -21,6 +21,7 @@ import { useHistory } from "react-router-dom";
 import HomeImg from "../components/HomeImg";
 import { Image, Text } from "../elements";
 import { flexbox, fontFamily } from "@mui/system";
+import { Grid } from "../elements";
 
 const Home = () => {
   const history = useHistory();
@@ -93,9 +94,9 @@ const Home = () => {
           <>
             <Wrap>
               <Container sx={{ py: 8, width: "100%" }}>
-                <Grid container spacing={2}>
+                <MuiGrid container spacing={2}>
                   {roomList.slice(0, 8).map((item, index) => (
-                    <Grid
+                    <MuiGrid
                       item
                       key={item.roomId + item.name + index}
                       xs={12}
@@ -211,9 +212,9 @@ const Home = () => {
                           <RowForDiv></RowForDiv>
                         </CardContent>
                       </Card>
-                    </Grid>
+                    </MuiGrid>
                   ))}
-                </Grid>
+                </MuiGrid>
               </Container>
               <RoomCardModal
                 clickCard={clickCard}
@@ -248,8 +249,23 @@ const Home = () => {
                 {_post &&
                   _post
                     .slice(0, 5)
-                    .map((v, i) => <HomeImg key={i} {...v} modal={true}></HomeImg>)}
+                    .map((v, i) => (
+                      <HomeImg key={i} {...v} modal={true}></HomeImg>
+                    ))}
               </div>
+
+              <Text F_size="44px" F_align="center" margin_top="227px">
+                how to use
+              </Text>
+              <Text F_size="44px" F_align="center">
+                홈트메이트는 무엇인가요?
+              </Text>
+
+              <Grid is_flex width="1200px" justify_content="space-between" margin_top="0px">
+                <Grid width="353px" height="390px" BG_c="black" margin_top="300px"></Grid>
+                <Grid width="353px" height="390px" BG_c="black" ></Grid>
+                <Grid width="353px" height="390px" BG_c="black" margin_top="300px"></Grid>
+              </Grid>
             </Wrap>
           </>
         </Container>
