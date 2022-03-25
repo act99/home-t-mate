@@ -23,7 +23,7 @@ function MypagePost(props) {
       <Grid is_flex>
         <Grid>
           <input
-          onClick={()=> props.setData(props.id)}
+          onClick={(e)=> { props.setDelData(e.target.value)}}
             type="checkbox"
             id="horns"
             name="horns"

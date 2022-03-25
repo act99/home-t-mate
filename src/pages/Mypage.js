@@ -24,6 +24,7 @@ import ProfileImage from "../elements/ProfileImage";
 import MypagePost from "../components/MypagePost";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { useState } from "react";
+import { dateRangePickerDayClasses } from "@mui/lab";
 
 
 const Mypage = (props) => {
@@ -58,8 +59,14 @@ const Mypage = (props) => {
     setOpen(true);
   };
 
+
+
+  const [delData, setDelData] = React.useState(props.id);
+
+
+
   const deletePostDB = () => {
-    dispatch(postActions.deletePostDB(props.id));
+    dispatch(postActions.deletePostDB(delData));
     window.alert("포스트가 정상적으로 삭제되었습니다.");
     window.location.reload();
   };
@@ -84,8 +91,6 @@ const Mypage = (props) => {
     console.log(todoList);
     return () => {};
   }, []);
-
-  const [data, setData] = useState("");
 
   return (
     <Grid width="1200px" margin="auto">
@@ -261,7 +266,7 @@ const Mypage = (props) => {
               {/* <Grid B_bottom="1px solid #C4C4C4" marign="px 0px 0px 0px"></Grid> */}
 
               {/* post 목록들 보이기 */}
-              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v} modal={true} setData={setData}/>)}
+              {mypagePost && mypagePost.map((v, i) => <MypagePost key={i} {...v} modal={true} setDelData={setDelData}/>)}
             </Grid>
 
             <Grid></Grid>

@@ -123,15 +123,6 @@ export default function CommentBox(props) {
             댓글달기
           </Button>
         </Grid>
-
-        {/* <Picker
-          onEmojiClick={onEmojiClick}
-          disableAutoFocus={true}
-          skinTone={SKIN_TONE_MEDIUM_DARK}
-          groupNames={{ smileys_people: "PEOPLE" }}
-          native
-        />
-        {chosenEmoji && <EmojiData chosenEmoji={chosenEmoji} />} */}
       </>
     );
   }

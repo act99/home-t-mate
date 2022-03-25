@@ -4,6 +4,7 @@ const WEB_SOCKET = process.env.REACT_APP_WEB_SOCKET;
 const OPEN_VIDU = process.env.REACT_APP_OPEN_VIDU;
 const CLIENT_KEY = process.env.REACT_APP_CLIENT_KEY;
 
+
 const url = {
   BASE_URL,
   REDIRECT_URI,
