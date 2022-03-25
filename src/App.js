@@ -23,6 +23,7 @@ import Privacy from "./pages/Privacy";
 import SearchingLiveNow from "./pages/SearchingLiveNow";
 import ReEnterKeyword from "./pages/ReEnterKeyword";
 import ScrollToTop from "./hooks/scrollToTop";
+import { deleteCookie } from "./shared/Cookie";
 const App = () => {
   const dispatch = useDispatch();
 
@@ -30,7 +31,17 @@ const App = () => {
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
-    return () => {};
+    // window.addEventListener("beforeunload", dispatch(userActions.logout()));
+    // window.addEventListener("beforeunload", alert("종료!!"));
+    return () => {
+      // if (window.location.reload) {
+      // } else {
+      //   window.removeEventListener(
+      //     "beforeunload",
+      //     dispatch(userActions.logout())
+      //   );
+      // }
+    };
   }, [dispatch]);
 
   return (
