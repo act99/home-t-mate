@@ -126,7 +126,6 @@ const VideoChatRoom = () => {
   };
 
   React.useEffect(() => {
-    dispatch(videoActions.getVideo({}));
     apis
       .enterRoom(roomId, password)
       .then((res) => {
