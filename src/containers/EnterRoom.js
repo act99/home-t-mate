@@ -22,6 +22,7 @@ class VideoContainer extends Component {
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
+      sessionToken: undefined,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -114,6 +115,9 @@ class VideoContainer extends Component {
         // ** 토큰 가져오는 과정에서 session 과 token 이 생성되며 return  된다.
         // ** 그 후, 가져온 세션과 토큰을 이용해 WebScoket과 통신을 시도하며, sdp 정보를 보내준다.
         this.getToken().then((token) => {
+          this.setState({
+            sessionToken: token,
+          });
           // ** 첫 번째 param은 OV Server 에서 오는 토큰 값이며, 두 번째 param은 모든 유저가 "streamCreated"를 통해
           // ** 받는 정보들이다. 그리고 이것은 유저 닉네임으로 DOM 에 추가된다.
           mySession
@@ -127,7 +131,7 @@ class VideoContainer extends Component {
                 publishVideo: this.props.video, // Whether you want to start publishing with your video enabled or not
                 resolution: "240x180", // The resolution of your video "640x480", "1280x720"
                 // frameRate: 30, // The frame rate of your video
-                frameRate: 8, // The frame rate of your video
+                frameRate: 16, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
               });
@@ -224,6 +228,9 @@ class VideoContainer extends Component {
             session={this.state.session}
             OV={this.state.OV}
             mySessionId={this.state.mySessionId}
+            host={this.props.host}
+            sessionToken={this.state.sessionToken}
+            myUserName={this.state.myUserName}
           />
         ) : null}
       </BodyWrap>

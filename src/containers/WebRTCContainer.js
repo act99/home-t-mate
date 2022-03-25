@@ -3,8 +3,17 @@ import UserVideoComponent from "../components/UserVideoComponent";
 import styled from "@emotion/styled";
 
 const WebRTCContainer = (props) => {
-  const { publisher, subscribers, leaveSession, session, OV, mySessionId } =
-    props;
+  const {
+    publisher,
+    subscribers,
+    leaveSession,
+    session,
+    OV,
+    mySessionId,
+    host,
+    sessionToken,
+    myUserName,
+  } = props;
   console.log(props);
 
   // ** windowSize
@@ -19,10 +28,16 @@ const WebRTCContainer = (props) => {
     <>
       <SessionWrap id="session">
         {publisher !== undefined ? (
-          <UserVideoComponent streamManager={publisher} />
+          <UserVideoComponent
+            streamManager={publisher}
+            host={host}
+            OV={OV}
+            sessionToken={sessionToken}
+            myUserName={myUserName}
+          />
         ) : null}
         {subscribers.map((sub, i) => (
-          <UserVideoComponent streamManager={sub} key={i} />
+          <UserVideoComponent streamManager={sub} key={i} host={host} />
         ))}
       </SessionWrap>
     </>

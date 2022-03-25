@@ -5,7 +5,6 @@ import YoutubeVideo from "../components/YoutubeVideo";
 import useWindowSize from "../hooks/useWindowSize";
 import EnterRoom from "../containers/EnterRoom";
 import { useDispatch, useSelector } from "react-redux";
-import useStyle from "../styles/chattingStyle";
 import { useHistory, useLocation } from "react-router-dom";
 import SockJS from "sockjs-client";
 import url from "../shared/url";
@@ -122,6 +121,7 @@ const VideoChatRoom = () => {
   };
   const onbeforeunload = () => {
     disconnected();
+    handleQuit();
   };
 
   React.useEffect(() => {
@@ -156,7 +156,7 @@ const VideoChatRoom = () => {
   return (
     <>
       <Wrap>
-        <ChatNav roomName={roomName} roomId={roomId} />
+        <ChatNav roomName={roomName} roomId={roomId} handleQuit={handleQuit} />
         <YoutubeTest height={height}>
           <YoutubeVideo
             ws={ws}
@@ -176,6 +176,7 @@ const VideoChatRoom = () => {
             video={video}
             audio={audio}
             password={locationState.password}
+            host={host}
           />
         </VideoTest>
         <ChattingTest height={height}>
