@@ -63,8 +63,6 @@ const CheckVideo = () => {
           state: {
             roomId: roomId,
             roomName: roomName,
-            video: video,
-            audio: audio,
             password: password,
             host: host,
             hostImg: hostImg,

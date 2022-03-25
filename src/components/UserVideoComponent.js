@@ -17,6 +17,8 @@ const UserVideoComponent = (props) => {
           OV={OpenVidu}
           sessionToken={props.sessionToken}
           myUserName={props.myUserName}
+          me={props.me}
+          session={props.session}
         />
       ) : (
         <VideoWrap>

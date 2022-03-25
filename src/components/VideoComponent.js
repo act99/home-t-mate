@@ -6,80 +6,63 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 import MicIcon from "@mui/icons-material/Mic";
 import { ButtonGroup, IconButton } from "@mui/material";
 import useWindowSize from "../hooks/useWindowSize";
-
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as videoActions } from "../redux/modules/videoReducer";
 const VideoComponent = (props) => {
+  const dispatch = useDispatch();
+  const videoReducer = useSelector((state) => state.videoReducer.video);
   const videoRef = React.useRef();
-  const { streamManager, nickname, host, OV, sessionToken, myUserName } = props;
+  const { streamManager, nickname, host, OV, me, session } = props;
   const size = useWindowSize();
   const { width, height } = size;
 
   const [mic, setMic] = React.useState(false);
   const [vid, setVid] = React.useState(true);
-  const handleVideo = () => {
-    if (vid === true) {
-      // videoRef.current.pause();
-    } else {
-      // videoRef.current.play();
-    }
-    setVid(!vid);
-  };
-  const handleMic = () => {
-    console.log("마이크");
-    setMic(!mic);
-  };
 
   React.useEffect(() => {
     if (streamManager && !!videoRef) {
       streamManager.addVideoElement(videoRef.current);
     }
-    console.log(streamManager);
-    console.log(OV);
+    if (session) {
+      session.on("signal:userChanged", (event) => {
+        const data = JSON.parse(event.data);
+        if (nickname === data.nickname) {
+          if (data.audio !== undefined) {
+            setMic(data.audio);
+          } else if (data.video !== undefined) {
+            setVid(data.video);
+          }
+        }
+      });
+    }
     return () => {};
-  }, [streamManager, nickname]);
+  }, [streamManager, nickname, mic, vid]);
 
-  // const handleVideo = () => {
-  //   if (OV !== null) {
-  //     if (vid === true) {
-  //       const mySession = OV.initSession();
-  //       mySession
-  //         .connect(sessionToken, { clientData: myUserName })
-  //         .then(() => {
-  //           let publisher = OV.initPublisher(undefined, {
-  //             audioSource: undefined,
-  //             videoSource: undefined,
-  //             publishAudio: mic,
-  //             publishVideo: false,
-  //             resolution: "240x180",
-  //             frameRate: 16,
-  //             insertMode: "APPEND",
-  //             mirror: false,
-  //           });
-  //           mySession.publish(publisher);
-  //         })
-  //         .catch((error) => console.log(error.code, error.message));
-  //     } else {
-  //       const mySession = OV.initSession();
-  //       mySession
-  //         .connect(sessionToken, { clientData: myUserName })
-  //         .then(() => {
-  //           let publisher = OV.initPublisher(undefined, {
-  //             audioSource: undefined,
-  //             videoSource: undefined,
-  //             publishAudio: mic,
-  //             publishVideo: true,
-  //             resolution: "240x180",
-  //             frameRate: 16,
-  //             insertMode: "APPEND",
-  //             mirror: false,
-  //           });
-  //           mySession.publish(publisher);
-  //         })
-  //         .catch((error) => console.log(error.code, error.message));
-  //     }
-  //   }
-  //   setVid(!vid);
-  // };
+  const handleVideo = () => {
+    if (me === true) {
+      if (vid === true) {
+        dispatch(videoActions.setVideo({ ...videoReducer, video: false }));
+      } else {
+        dispatch(videoActions.setVideo({ ...videoReducer, video: true }));
+      }
+      setVid(!vid);
+    } else {
+      setVid(!vid);
+    }
+  };
 
+  const handleMic = () => {
+    if (me === true) {
+      if (mic === true) {
+        dispatch(videoActions.setVideo({ ...videoReducer, audio: false }));
+      } else {
+        dispatch(videoActions.setVideo({ ...videoReducer, audio: true }));
+      }
+      setMic(!mic);
+    } else {
+      setMic(!mic);
+    }
+  };
   return (
     <>
       <VideoWrap height={height}>
@@ -91,6 +74,7 @@ const VideoComponent = (props) => {
             : nickname.length > 7
             ? nickname.slice(0, 7) + "..."
             : nickname}
+          {mic.toString()}
         </NicknameTag>
         <ButtonTag id="buttondiv">
           <IconButton onClick={handleVideo}>

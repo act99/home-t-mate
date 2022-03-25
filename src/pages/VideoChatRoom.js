@@ -33,10 +33,9 @@ const VideoChatRoom = () => {
   // ** params 로 받은 roomId 와 roomName
   const location = useLocation();
   const locationState = location.state;
-  const { roomName, roomId, video, audio, password, host, hostImg } =
-    locationState;
-
-  console.log(roomName, roomId, video, audio);
+  const { roomName, roomId, password, host, hostImg } = locationState;
+  const myVideo = useSelector((state) => state.videoReducer.video);
+  const { audio, video } = myVideo;
 
   // ** SockJS 설정
   let options = {

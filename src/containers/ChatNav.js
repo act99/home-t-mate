@@ -10,7 +10,6 @@ import { apis } from "../shared/api";
 const ChatNav = (props) => {
   const { roomName, roomId, handleQuit } = props;
   const session = useSelector((state) => state.sessionReducer);
-  const leaveSession = session.leaveSession;
   const mySessionId = session.mySessionId;
   const history = useHistory();
   const handleOut = () => {
@@ -18,10 +17,8 @@ const ChatNav = (props) => {
       .leaveRoom(roomId)
       .then((res) => {})
       .catch((error) => console.log(error));
-    console.log("out");
     history.replace("/");
     handleQuit();
-    leaveSession();
   };
   React.useEffect(() => {
     return () => {};
