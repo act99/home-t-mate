@@ -20,6 +20,10 @@ const VideoComponent = (props) => {
   const [vid, setVid] = React.useState(true);
 
   React.useEffect(() => {
+    if (me === true) {
+      setMic(videoReducer.audio);
+      setVid(videoReducer.video);
+    }
     if (streamManager && !!videoRef) {
       streamManager.addVideoElement(videoRef.current);
     }
@@ -74,7 +78,6 @@ const VideoComponent = (props) => {
             : nickname.length > 7
             ? nickname.slice(0, 7) + "..."
             : nickname}
-          {mic.toString()}
         </NicknameTag>
         <ButtonTag id="buttondiv">
           <IconButton onClick={handleVideo}>

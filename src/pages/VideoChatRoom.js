@@ -15,6 +15,7 @@ import { apis } from "../shared/api";
 import ChatNav from "../containers/ChatNav";
 import { actionCreators as subscribersActions } from "../redux/modules/subscriberReducer";
 import { sendQuitRoom } from "../shared/SocketFunc";
+import { actionCreators as videoActions } from "../redux/modules/videoReducer";
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 const VideoChatRoom = () => {
@@ -36,6 +37,7 @@ const VideoChatRoom = () => {
   const { roomName, roomId, password, host, hostImg } = locationState;
   const myVideo = useSelector((state) => state.videoReducer.video);
   const { audio, video } = myVideo;
+  console.log(myVideo);
 
   // ** SockJS 설정
   let options = {
@@ -124,6 +126,7 @@ const VideoChatRoom = () => {
   };
 
   React.useEffect(() => {
+    dispatch(videoActions.getVideo({}));
     apis
       .enterRoom(roomId, password)
       .then((res) => {
