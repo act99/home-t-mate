@@ -19,7 +19,8 @@ import BxSlide from "../assets/bxslide.png";
 import HowToUse from "../assets/howtouse.png";
 import { useHistory } from "react-router-dom";
 import HomeImg from "../components/HomeImg";
-import { Image } from "../elements";
+import { Image, Text } from "../elements";
+import { flexbox, fontFamily } from "@mui/system";
 
 const Home = () => {
   const history = useHistory();
@@ -73,14 +74,8 @@ const Home = () => {
   };
   React.useEffect(() => {
     dispatch(roomCreators.getMainRoomDB());
-    // dispatch(postActions.getPostDB());
-    // if (_post && _post.length >= 0) {
-    //   console.log(_post);
-    // }
-    // if (_post && _post.length > 0) {
-    //   console.log(photoResponseDto);
-    // }
   }, []);
+
   return (
     <>
       <Wrap>
@@ -226,18 +221,35 @@ const Home = () => {
                 data={modalData}
               />
 
-
-              <h3>스토리</h3>
-
-              <Grid is_flex>
-                  {_post && _post.slice(0,5).map((v, i)=> (
-                    <HomeImg key={i} {...v}></HomeImg>
-                    // <Grid v
-                    // key={i}>
-                    //   <Image src={v.photoResponseDto[0].postImg}></Image>
-                    // </Grid>
-                  ))}</Grid>
-
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                  margin: "100px 0px 32px 0px",
+                }}
+              >
+                <Text F_size="36px" F_family="GmarketSansMedium">
+                  스토리
+                </Text>
+                <div style={{ position: "absolute", right: "0" }}>
+                  <Text
+                    cursor="pointer"
+                    F_size="18px"
+                    F_color="#757575"
+                    F_family="SuncheonR"
+                    _onClick={() => history.push("/story")}
+                  >
+                    더 보기
+                  </Text>
+                </div>
+              </div>
+              <div style={{ display: "flex" }}>
+                {_post &&
+                  _post
+                    .slice(0, 5)
+                    .map((v, i) => <HomeImg key={i} {...v} modal={true}></HomeImg>)}
+              </div>
             </Wrap>
           </>
         </Container>
