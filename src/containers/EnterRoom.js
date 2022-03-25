@@ -44,14 +44,14 @@ class VideoContainer extends Component {
     window.removeEventListener("beforeunload", this.onbeforeunload);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps, prevState);
-    if (prevProps.video !== this.props.video) {
-      this.sendSignalUserVideo(this.props.video);
-    } else if (prevProps.audio !== this.props.audio) {
-      this.sendSignalUserAudio(this.props.audio);
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log(prevProps, prevState);
+  //   if (prevProps.video !== this.props.video) {
+  //     this.sendSignalUserVideo(this.props.video);
+  //   } else if (prevProps.audio !== this.props.audio) {
+  //     this.sendSignalUserAudio(this.props.audio);
+  //   }
+  // }
 
   onbeforeunload(event) {
     this.leaveSession();

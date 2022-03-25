@@ -4,7 +4,7 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import MicIcon from "@mui/icons-material/Mic";
-import { ButtonGroup, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import useWindowSize from "../hooks/useWindowSize";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as videoActions } from "../redux/modules/videoReducer";
@@ -16,56 +16,58 @@ const VideoComponent = (props) => {
   const size = useWindowSize();
   const { width, height } = size;
 
-  const [mic, setMic] = React.useState(false);
+  const [mic, setMic] = React.useState(true);
   const [vid, setVid] = React.useState(true);
 
   React.useEffect(() => {
-    if (me === true) {
-      setMic(videoReducer.audio);
-      setVid(videoReducer.video);
-    }
+    // if (me === true) {
+    //   setMic(videoReducer.audio);
+    //   setVid(videoReducer.video);
+    // }
     if (streamManager && !!videoRef) {
       streamManager.addVideoElement(videoRef.current);
     }
-    if (session) {
-      session.on("signal:userChanged", (event) => {
-        const data = JSON.parse(event.data);
-        if (nickname === data.nickname) {
-          if (data.audio !== undefined) {
-            setMic(data.audio);
-          } else if (data.video !== undefined) {
-            setVid(data.video);
-          }
-        }
-      });
-    }
+    // if (session) {
+    //   session.on("signal:userChanged", (event) => {
+    //     const data = JSON.parse(event.data);
+    //     if (nickname === data.nickname) {
+    //       if (data.audio !== undefined) {
+    //         setMic(data.audio);
+    //       } else if (data.video !== undefined) {
+    //         setVid(data.video);
+    //       }
+    //     }
+    //   });
+    // }
     return () => {};
   }, [streamManager, nickname, mic, vid]);
 
   const handleVideo = () => {
-    if (me === true) {
-      if (vid === true) {
-        dispatch(videoActions.setVideo({ ...videoReducer, video: false }));
-      } else {
-        dispatch(videoActions.setVideo({ ...videoReducer, video: true }));
-      }
-      setVid(!vid);
-    } else {
-      setVid(!vid);
-    }
+    // if (me === true) {
+    //   if (vid === true) {
+    //     dispatch(videoActions.setVideo({ ...videoReducer, video: false }));
+    //   } else {
+    //     dispatch(videoActions.setVideo({ ...videoReducer, video: true }));
+    //   }
+    //   setVid(!vid);
+    // } else {
+    //   setVid(!vid);
+    // }
+    setVid(!vid);
   };
 
   const handleMic = () => {
-    if (me === true) {
-      if (mic === true) {
-        dispatch(videoActions.setVideo({ ...videoReducer, audio: false }));
-      } else {
-        dispatch(videoActions.setVideo({ ...videoReducer, audio: true }));
-      }
-      setMic(!mic);
-    } else {
-      setMic(!mic);
-    }
+    // if (me === true) {
+    //   if (mic === true) {
+    //     dispatch(videoActions.setVideo({ ...videoReducer, audio: false }));
+    //   } else {
+    //     dispatch(videoActions.setVideo({ ...videoReducer, audio: true }));
+    //   }
+    //   setMic(!mic);
+    // } else {
+    //   setMic(!mic);
+    // }
+    setMic(!mic);
   };
   return (
     <>
@@ -79,7 +81,27 @@ const VideoComponent = (props) => {
             ? nickname.slice(0, 7) + "..."
             : nickname}
         </NicknameTag>
-        <ButtonTag id="buttondiv">
+        {me === true ? (
+          <></>
+        ) : (
+          <ButtonTag id="buttondiv">
+            <IconButton onClick={handleVideo}>
+              {vid === true ? (
+                <VideocamIcon sx={{ color: "white" }} />
+              ) : (
+                <VideocamOffIcon sx={{ color: "red" }} />
+              )}
+            </IconButton>
+            <IconButton onClick={handleMic}>
+              {mic === true ? (
+                <MicIcon sx={{ color: "white" }} />
+              ) : (
+                <MicOffIcon sx={{ color: "red" }} />
+              )}
+            </IconButton>
+          </ButtonTag>
+        )}
+        {/* <ButtonTag id="buttondiv">
           <IconButton onClick={handleVideo}>
             {vid === true ? (
               <VideocamIcon sx={{ color: "white" }} />
@@ -89,14 +111,14 @@ const VideoComponent = (props) => {
           </IconButton>
           <IconButton onClick={handleMic}>
             {mic === true ? (
-              <MicOffIcon sx={{ color: "red" }} />
-            ) : (
               <MicIcon sx={{ color: "white" }} />
+            ) : (
+              <MicOffIcon sx={{ color: "red" }} />
             )}
           </IconButton>
-        </ButtonTag>
+        </ButtonTag> */}
 
-        <video autoPlay={true} ref={videoRef} muted={mic} hidden={!vid} />
+        <video autoPlay={true} ref={videoRef} muted={!mic} hidden={!vid} />
         <div
           style={{
             width: "100%",
