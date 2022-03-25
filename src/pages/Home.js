@@ -77,7 +77,7 @@ const Home = () => {
           <Typography
             component="h1"
             variant="h4"
-            sx={{ fontWeight: "bold", ml: 1, mb: 6, mt: 1, color: "#FF9234" }}
+            sx={{ fontWeight: "bold", ml: 1, mb: 1, mt: 1, color: "#FF9234" }}
           >
             LIVE NOW 🔥
           </Typography>

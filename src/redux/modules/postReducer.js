@@ -19,6 +19,7 @@ const like = createAction(LIKE_POST, (postId, userId, nickname) => ({
 }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
+
 // const editPost = createAction(EDIT_POST, (post_id, contents, images) => ({
 //   post_id, contents, images
 // }));
@@ -78,8 +79,9 @@ const deletePostDB = (postId) => {
     apis
       .deletePost(postId)
       .then((res) => {
+        dispatch(deletePost(postId));
         alert("게시글이 삭제되었습니다.");
-        history.replace("/story");
+        // history.replace("/story");
       })
       .catch((error) => {
         console.log(error);
@@ -177,13 +179,13 @@ export default handleActions(
     //     draft.list[index] = { ...draft.list[index], ...action.payload.post };
     //   }),
 
-    // [DELETE_POST]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     let dummyIndex = draft.list.findIndex(
-    //       (item) => item["id"] === action.payload.post_id
-    //     );
-    //     draft.list.splice(dummyIndex, 1);
-    //   }),
+    [DELETE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        let dummyIndex = draft.list.findIndex(
+          (item) => item["id"] === action.payload.post_id
+        );
+        draft.list.splice(dummyIndex, 1);
+      }),
   },
   initialState
 );

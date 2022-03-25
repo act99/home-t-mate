@@ -30,6 +30,7 @@ const App = () => {
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
+    return () => {};
   }, [dispatch]);
 
   return (

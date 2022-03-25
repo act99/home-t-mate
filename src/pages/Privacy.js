@@ -11,7 +11,7 @@ export default function Privacy() {
   return (
     <>
       <Container maxWidth="lg">
-        <Box sx={{ width: "100%", maxWidth: 1200 }}>
+        <Box sx={{ width: "100%", maxWidth: 1200, mb: 16 }}>
           <Typography
             variant="h4"
             gutterBottom

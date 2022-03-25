@@ -25,6 +25,8 @@ const CheckVideo = () => {
   const roomId = location.state.roomId;
   const roomName = location.state.roomName;
   const password = location.state.password;
+  const host = location.state.host;
+  const hostImg = location.state.hostImg;
   // ** 비디오 세팅
   const [video, setVideo] = React.useState(videoReducer.video);
   const [audio, setAudio] = React.useState(videoReducer.audio);
@@ -64,6 +66,8 @@ const CheckVideo = () => {
             video: video,
             audio: audio,
             password: password,
+            host: host,
+            hostImg: hostImg,
           },
         });
         dispatch(videoActions.setVideo({ video: video, audio: audio }));

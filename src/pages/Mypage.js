@@ -7,7 +7,7 @@ import "react-datetime/css/react-datetime.css";
 import "moment/locale/ko";
 // import React from "react";
 import CalendarModal from "../components/CalendarModal";
-import { Text, Button } from "../elements";
+import { Text, Image, Button } from "../elements";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TabContext from "@mui/lab/TabContext";
@@ -23,9 +23,7 @@ import ChangeProfileModal from "../containers/ChangeProfileModal";
 import ProfileImage from "../elements/ProfileImage";
 import MypagePost from "../components/MypagePost";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
-import { useState } from "react";
 import MyChattingRoom from "../containers/MyChattingRoom";
-
 const Mypage = (props) => {
   const dispatch = useDispatch();
   const todoList = useSelector((state) => state.todoReducer.list);
@@ -57,35 +55,29 @@ const Mypage = (props) => {
     });
     setOpen(true);
   };
-
+  const [delData, setDelData] = React.useState([]);
   const deletePostDB = () => {
-    dispatch(postActions.deletePostDB(props.id));
-    window.alert("포스트가 정상적으로 삭제되었습니다.");
-    window.location.reload();
+    console.log(delData);
+    dispatch(postActions.deletePostDB(delData));
+    // window.alert("포스트가 정상적으로 삭제되었습니다.");
+    // window.location.reload();
   };
-
   const user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
   const mypagePost = _post.filter((v, i) =>
     v.userId === user.id ? true : false
   );
-
   console.log("mypagepost", mypagePost);
-
   const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
-
   // ** 프로필 이미지 수정
   const [openProfile, setOpenProfile] = React.useState(false);
-
   React.useEffect(() => {
+    dispatch(postActions.getPostDB());
     dispatch(todoActions.getTodoDB());
     console.log(todoList);
     return () => {};
   }, []);
-
-  const [data, setData] = useState("");
-
   return (
     <Grid width="1200px" margin="auto">
       <UserContainer>
@@ -101,7 +93,6 @@ const Mypage = (props) => {
             오늘도 즐거운 <span>홈트</span>를 응원해요💪💪
           </h5>
         </Title>
-
         <UserInfoContainer>
           <UserDataContainer>
             <ProfileImage
@@ -116,7 +107,7 @@ const Mypage = (props) => {
                 style={{
                   width: "200px",
                   height: "36px",
-                  backgroundColor: "#fee500",
+                  backgroundColor: "#FEE500",
                   borderRadius: "16px",
                   display: "flex",
                   justifyContent: "center",
@@ -162,9 +153,7 @@ const Mypage = (props) => {
           </InviteContainer>
         </UserInfoContainer>
       </UserContainer>
-
       {/* userimg */}
-
       {/* tab영역 */}
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={TabValue}>
@@ -190,7 +179,7 @@ const Mypage = (props) => {
                 sx={{ fontWeight: "bold", fontFamily: "SuncheonR" }}
               />
               <StyledTab
-                label="내가 만든 홈트방"
+                label="내가 만든 방"
                 value="3"
                 sx={{ fontWeight: "bold", fontFamily: "SuncheonR" }}
               />
@@ -252,7 +241,6 @@ const Mypage = (props) => {
               >
                 삭제
               </Button>
-
               <Grid is_flex margin_top="44px" B_bottom="1px solid #C4C4C4">
                 <Text F_size="18px" margin="0px 0px 16px 80px">
                   스토리 리스트(총 {mypagePost.length}개)
@@ -261,15 +249,20 @@ const Mypage = (props) => {
                   작성날짜
                 </Text>
               </Grid>
-
               {/* <Grid B_bottom="1px solid #C4C4C4" marign="px 0px 0px 0px"></Grid> */}
-
               {/* post 목록들 보이기 */}
               {mypagePost &&
                 mypagePost.map((v, i) => (
-                  <MypagePost key={i} {...v} modal={true} setData={setData} />
+                  <MypagePost
+                    key={i}
+                    {...v}
+                    modal={true}
+                    setDelData={setDelData}
+                    delData={delData}
+                  />
                 ))}
             </Grid>
+            <Grid></Grid>
           </TabPanel>
           <TabPanel value="3" sx={{ p: "0px" }}>
             <MyChattingRoom />
@@ -284,14 +277,12 @@ const Mypage = (props) => {
     </Grid>
   );
 };
-
 const UserContainer = styled.div`
   width: 1200px;
   height: 320px;
   margin-top: 120px;
   margin-bottom: 100px;
 `;
-
 const UserInfoContainer = styled.div`
   width: 1200px;
   height: 200px;
@@ -299,25 +290,21 @@ const UserInfoContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `;
-
 const UserDataContainer = styled.div`
   width: 700px;
   height: 200px;
   display: flex;
   flex-direction: row;
 `;
-
 const UserNameContainer = styled.div`
   width: 440px;
   height: 176px;
 `;
-
 const InviteContainer = styled.div`
   width: 252px;
   height: 88px;
   margin-top: 76px;
 `;
-
 const CreateButton = styled.button`
   display: block;
   /* margin: auto; */
@@ -341,7 +328,6 @@ const CreateButton = styled.button`
     color: white;
   }
 `;
-
 const Title = styled.div`
   h3 {
     font-size: 32px;
@@ -356,5 +342,4 @@ const Title = styled.div`
     font-family: "GmarketSansMedium";
   }
 `;
-
 export default Mypage;

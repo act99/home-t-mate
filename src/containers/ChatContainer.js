@@ -101,7 +101,7 @@ const ChatContainer = (props) => {
       >
         {subscribers.map((item, index) => (
           <>
-            <ListItem key={index}>
+            <ListItem key={index + item.nickname}>
               <ListItemAvatar>
                 <Avatar alt={item.nickname} src={item.profileImg} />
               </ListItemAvatar>

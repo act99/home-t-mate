@@ -34,7 +34,8 @@ const VideoChatRoom = () => {
   // ** params 로 받은 roomId 와 roomName
   const location = useLocation();
   const locationState = location.state;
-  const { roomName, roomId, video, audio, password } = locationState;
+  const { roomName, roomId, video, audio, password, host, hostImg } =
+    locationState;
 
   console.log(roomName, roomId, video, audio);
 
@@ -162,6 +163,10 @@ const VideoChatRoom = () => {
             token={token}
             roomId={roomId}
             workOut={workOut}
+            password={locationState.password}
+            roomName={roomName}
+            host={host}
+            hostImg={hostImg}
           />
         </YoutubeTest>
         <VideoTest height={height}>

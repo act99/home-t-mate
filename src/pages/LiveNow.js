@@ -120,13 +120,15 @@ const LiveNow = () => {
                   value={searchInput}
                   onChange={searchInputHandler}
                 />
-                <BsSearch
-                  style={{
-                    fontSize: "24px",
-                    marginLeft: "16px",
-                    marginRight: "16px",
-                  }}
-                />
+                <SearchButton>
+                  <BsSearch
+                    style={{
+                      fontSize: "24px",
+                      marginLeft: "16px",
+                      marginRight: "16px",
+                    }}
+                  />
+                </SearchButton>
               </SearchBarWrap>
             </form>
             <Grid container spacing={2}>
@@ -410,6 +412,12 @@ const SearchBarInput = styled.input`
     outline: none;
     border: solid 2px #e2e2e2;
   }
+`;
+
+const SearchButton = styled.button`
+  background-color: rgb(0, 0, 0, 0);
+  border: solid 0px;
+  cursor: pointer;
 `;
 
 export default LiveNow;

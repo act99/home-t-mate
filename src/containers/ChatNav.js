@@ -40,9 +40,8 @@ const ChatNav = (props) => {
               {roomName.length > 8 ? roomName.slice(0, 8) + "..." : roomName}
             </TitleText>
           )}
-          <PersonOutlineIcon sx={{ fontSize: 28, ml: 3, mr: 1 }} />
-
-          <MemberText>({subscribers.length}/5)</MemberText>
+          <PersonOutlineIcon sx={{ fontSize: 32, ml: 3, mr: 1 }} />
+          <MemberText>( {subscribers.length} / 5 )</MemberText>
         </TitleWrap>
         <IconButton color="inherit" onClick={handleOut}>
           <LogoutIcon sx={{ fontSize: 36, mr: 4 }} />
@@ -65,11 +64,13 @@ const NavBar = styled.div`
 const TitleText = styled.h3`
   font-weight: bold;
   font-size: 20px;
+  font-family: "GmarketSansMedium";
 `;
 
 const MemberText = styled.h5`
   font-weight: bold;
   font-size: 16px;
+  font-family: "GmarketSansMedium";
 `;
 
 const TitleWrap = styled.div`
