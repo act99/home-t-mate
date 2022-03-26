@@ -84,7 +84,7 @@ export default function Detail(props) {
         />
         <div
           className="commentlist"
-          style={{ height: `${width * 0.295}px`, overflow: "auto" }}
+          style={{ height: `${width * 0.29}px`, overflow: "auto" }}
         >
           {/* 글 내용 */}
           <Typography
@@ -125,12 +125,12 @@ export default function Detail(props) {
             />
             <Grid is_flex position="relative" left="-40px" width={width * 0.3 + "px"} >
             {thisPost.likeUserDto && thisPost.likeUserDto.length > 0 ? (
-              <Text F_size="1vmax" margin_top="10px">
+              <Text F_size="1vmax" F_family="SuncheonR" margin_top="10px">
                 {thisPost.likeUserDto[0].nickname}님 외{" "}
                 {thisPost.likeUserDto.length - 1}명이 이 스토리를 좋아해요
               </Text>
             ) : (
-              <Text F_size="1vmax" margin_top="8px">
+              <Text F_size="1vmax" F_family="SuncheonR" margin_top="8px">
                 좋아요를 처음 누른 친구가 되어봐요 :)
               </Text>
             )}</Grid>

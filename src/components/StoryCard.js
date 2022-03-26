@@ -154,11 +154,9 @@ export default function StoryCard(props) {
               F_color="#757575"
               margin_top="8px"
             >
-              <p>
                 {commentState && commentState[0].nickname}님 외
-                <span>{commentState && commentState.length - 1}개</span>의
-                댓글
-              </p>
+                {commentState && commentState.length - 1}개의댓글
+
             </Text>
           )}
         </Card>
