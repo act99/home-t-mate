@@ -1,16 +1,15 @@
 //import Library
 //react-icons, mui/icons-material
 import React from "react";
-
-import { CardHeader, Avatar, IconButton } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Backdrop from "@mui/material/Backdrop";
+import Fade from "@mui/material/Fade";
+import Box from "@mui/material/Box";
+import { history } from "../redux/store";
 import { FaRegComment } from "react-icons/fa";
 import { Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postAcions } from "../redux/modules/postReducer";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import { Grid, Text, Button } from "../elements";
@@ -19,6 +18,7 @@ import { Grid, Text, Button } from "../elements";
 
 // impot Component
 import Detail from "./Detail";
+import { RestaurantRounded } from "@mui/icons-material";
 //import Actions
 
 //import axios
@@ -55,17 +55,13 @@ export default function LikeComment(props) {
   // user가 좋아요 눌렀는지 안눌렀는지 판단
 
   const likePost = () => {
-    if (!_user.is_login) {
-      alert("로그인을 해주세요");
-      return;
-    } else {
       dispatch(postAcions.likePostDB(thisPost.id, _user.id, _user.nickname));
       if (like === true) {
         setLike(false);
       } else {
         setLike(true);
       }
-    }
+      return;
   };
 
   //detail modal open,close
@@ -74,6 +70,12 @@ export default function LikeComment(props) {
     return props.modal ? setOpen(true) : setOpen(false);
   };
   const handleClose = () => setOpen(false);
+
+  //좋아요눌렀을때 로그인 안했으면 로그인modal창 open, close
+  const [loginOpen, setLoginOpen] = React.useState(false);
+  const handleLoginOpen = () => setLoginOpen(true);
+  const handleLoginClose = () => setLoginOpen(false);
+
   return (
     <>
       <Grid
@@ -85,7 +87,7 @@ export default function LikeComment(props) {
         <Grid is_flex flex_wrap="nowrap">
           {/* 좋아요버튼 */}
           <Button
-            _onClick={likePost}
+            _onClick={_user.is_login? likePost : handleLoginOpen}
             border="0px"
             BG_color="white"
             padding="0px"
@@ -140,6 +142,92 @@ export default function LikeComment(props) {
           </Grid>
         </div>
       </Modal>
+
+
+      {/* login modal */}
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={loginOpen}
+        onClose={handleLoginClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={loginOpen}>
+        <Box sx={stylenoborder}>
+        <Grid
+                  width="420px"
+                  height="220px"
+                  is_flex
+                  flex_direction="column"
+                  justify_content="center"
+                  align_items="center"
+                >
+                  <Text
+                    F_size="24px"
+                    F_align="center"
+                    margin="0px 70px 12px 70px"
+                  >
+                    홈트메이트를 즐기기 위해 로그인이 필요해요
+                  </Text>
+                  <Text F_size="16px" margin_bottom="32px">
+                    로그인 후 더 재미있게 놀아볼까요?
+                  </Text>
+
+                  <Grid is_flex>
+                    <Button
+                      _onClick={handleLoginClose}
+                      font_size="20px"
+                      font_color="#757575"
+                      font_weight="400"
+                      B_radius="20px"
+                      border="2px solid #757575"
+                      width="120px"
+                      height="50px"
+                      BG_color="white"
+                      margin="0px 30px 0px 0px"
+                    >
+                      취소하기
+                    </Button>
+                    <Button
+                      _onClick={() => {
+                        history.push("/login");
+                      }}
+                      font_size="20px"
+                      font_color="#587730"
+                      font_weight="400"
+                      B_radius="20px"
+                      border="2px solid #587730"
+                      width="120px"
+                      height="50px"
+                      BG_color="white"
+                    >
+                      로그인하기
+                    </Button>
+                  </Grid>
+                </Grid>
+          
+        </Box>
+
+        </Fade>
+
+      </Modal>
     </>
   );
 }
+
+const stylenoborder = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  zIndex: 13000,
+  padding: 0,
+  outline: "none",
+};

@@ -47,7 +47,7 @@ function Edit(props) {
 
   const editPost = () => {
     if (tempFile.length <= 0 || tempFile[0] === undefined) {
-      alert("사진을 선택해주세요.");
+      alert("수정할 사진을 골라주세요.");
     } else {
       // const imgData = new FormData();
       const contentData = new FormData();
@@ -61,11 +61,6 @@ function Edit(props) {
   };
   React.useEffect(() => {
     setContents(content);
-    // photoResponseDto.map((item, index) =>
-    //   setPreview([...preview, item.postImg])
-    // );
-    // setPreview([...item])
-
     return () => {};
   }, [content]);
 

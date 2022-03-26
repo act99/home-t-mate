@@ -42,7 +42,6 @@ const getPostDB = () => {
         dispatch(setPost(res.data));
       })
       .catch((error) => {
-        window.alert("게시글 불러오기 실패!");
       });
   };
 };
@@ -52,11 +51,9 @@ const addPostDB = (postData) => {
     imageApis
       .addPost(postData)
       .then((res) => {
-        alert("게시물 작성 성공!");
         history.go(0);
       })
       .catch((error) => {
-        alert("게시물 작성 실패!");
       });
   };
 };
@@ -69,10 +66,9 @@ const editPostDB = (postId, content) => {
       .then((res) => {
         history.replace("/story");
         history.go(0);
-        alert("게시글 수정 성공!");
       })
       .catch((error) => {
-        alert("게시글 수정에 실패했습니다.");
+        alert("게시글 수정에 실패했습니다 :(");
         console.log(error);
       });
   };
@@ -85,11 +81,10 @@ const deletePostDB = (postId) => {
       .then((res) => {
         dispatch(deletePost(postId));
         alert("게시글이 삭제되었습니다.");
-        // history.replace("/story");
       })
       .catch((error) => {
         console.log(error);
-        alert("게시글이 삭제되지 않았습니다.");
+        alert("게시글 삭제를 실패했습니다 :(");
       });
   };
 };

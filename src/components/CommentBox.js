@@ -25,13 +25,7 @@ export default function CommentBox(props) {
     setComment(e.target.value);
   };
 
-  console.log(_user);
   const addComment = () => {
-    if (!_user.is_login) {
-      alert("로그인 해주세요");
-      return;
-    }
-
     dispatch(commentActions.addCommentDB(props.id, comment, _user));
     setComment("");
   };
@@ -123,15 +117,6 @@ export default function CommentBox(props) {
             댓글달기
           </Button>
         </Grid>
-
-        {/* <Picker
-          onEmojiClick={onEmojiClick}
-          disableAutoFocus={true}
-          skinTone={SKIN_TONE_MEDIUM_DARK}
-          groupNames={{ smileys_people: "PEOPLE" }}
-          native
-        />
-        {chosenEmoji && <EmojiData chosenEmoji={chosenEmoji} />} */}
       </>
     );
   }

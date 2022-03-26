@@ -34,9 +34,12 @@ export default function StoryCard(props) {
 
   React.useEffect(() => {
     if (likeUserDto && likeUserDto.length > 0) {
-      console.log(props.likeUserDto[0]);
+      console.log(likeUserDto)
     }
-    console.log(commentUserDto, likeUserDto);
+
+    if (commentUserDto && commentUserDto.length > 0){
+      console.log(commentUserDto)
+    }
   }, [commentUserDto, likeUserDto]);
 
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
@@ -56,7 +59,7 @@ export default function StoryCard(props) {
           >
             {photoResponseDto &&
               photoResponseDto.map((v, i) => (
-                <Img key={i} {...v} size="620px" />
+                <Img key={i} {...v} size="620px" modal={true} />
               ))}
           </Carousel>
 
@@ -112,8 +115,8 @@ export default function StoryCard(props) {
               margin_top="8px"
             >
               <p>
-                {commentUserDto[0].nickname}님 외
-                <span>{commentUserDto.length - 1}개</span>의 댓글
+                {commentUserDto && commentUserDto[0].nickname}님 외
+                <span>{commentUserDto && commentUserDto.length - 1}개</span>의 댓글
               </p>
             </Text>
           )}

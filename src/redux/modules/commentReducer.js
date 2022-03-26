@@ -40,7 +40,6 @@ const getCommentDB = (postId) => {
       })
       .catch((error) => {
         console.log(error);
-        alert("댓글 불러오기 실패");
       });
   };
 };
@@ -69,7 +68,7 @@ const addCommentDB = (postId, comment, user) => {
       })
       .catch((error) => {
         console.log(error);
-        alert("댓글작성 실패");
+        alert("댓글작성을 실패했습니다 :(");
       });
   };
 };
@@ -80,11 +79,10 @@ const delCommentDB = (postId, commentId) => {
       .delComment(postId, commentId)
       .then((response) => {
         dispatch(delComment(postId, commentId));
-        alert("댓글삭제 성공");
       })
       .catch((error) => {
         console.log(error);
-        alert("댓글삭제 실패");
+        alert("댓글삭제를 실패했습니다 :(");
       });
   };
 };

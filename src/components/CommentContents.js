@@ -25,7 +25,7 @@ export default function CommentContents(props) {
         flex_direction="row"
         width="545px"
         padding_left="16px"
-        margin="0px"
+        margin="0px 0px 15px 0px"
       >
         <Grid
           margin="0px"
@@ -37,10 +37,10 @@ export default function CommentContents(props) {
           <Image margin="0" shape="circle" src={props.profileImg} size="35" />
         </Grid>
 
-        <Grid width="297px" margin_left="16px">
-          <Grid height="auto" is_flex flex_wrap="wrap">
+        <Grid width="450px" margin_left="16px">
+          <Grid height="auto" is_flex>
             <Text margin="7px 10px 0px 0px" F_size="16px">
-              <b width="auto" margin="5px 10px 5px 5px">
+              <b width="auto" style={{marginRight:"10px"}}>
                 {props.nickname}
               </b>
               {props.comment}

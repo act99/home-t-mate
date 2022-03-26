@@ -74,6 +74,7 @@ export default function Detail(props) {
           id={thisPost.id}
           username={thisPost.nickname}
           userImg={thisPost.userImg}
+          createdAt={thisPost.createdAt}
         />
         <div
           className="commentlist"
