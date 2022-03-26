@@ -24,6 +24,8 @@ const VideoComponent = (props) => {
   React.useEffect(() => {
     if (streamManager && !!videoRef) {
       streamManager.addVideoElement(videoRef.current);
+      // setMic(videoReducer.audio);
+      // setVid(videoReducer.video);
     }
     if (session) {
       session.on("signal:userChanged", (event) => {

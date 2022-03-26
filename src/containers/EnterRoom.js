@@ -137,13 +137,15 @@ class VideoContainer extends Component {
           var subscriber = mySession.subscribe(event.stream, undefined);
           var subscribers = this.state.subscribers;
           subscribers.push(subscriber);
-          this.sendSignalUserVideo(this.props.video);
-          this.sendSignalUserAudio(this.props.audio);
+
           this.setState(
             {
               subscribers: subscribers,
             },
-            () => {}
+            () => {
+              this.sendSignalUserVideo(this.props.video);
+              this.sendSignalUserAudio(this.props.audio);
+            }
           );
         });
 
