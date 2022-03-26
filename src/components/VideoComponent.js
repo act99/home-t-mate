@@ -101,23 +101,6 @@ const VideoComponent = (props) => {
             </IconButton>
           </ButtonTag>
         )}
-        {/* <ButtonTag id="buttondiv">
-          <IconButton onClick={handleVideo}>
-            {vid === true ? (
-              <VideocamIcon sx={{ color: "white" }} />
-            ) : (
-              <VideocamOffIcon sx={{ color: "red" }} />
-            )}
-          </IconButton>
-          <IconButton onClick={handleMic}>
-            {mic === true ? (
-              <MicIcon sx={{ color: "white" }} />
-            ) : (
-              <MicOffIcon sx={{ color: "red" }} />
-            )}
-          </IconButton>
-        </ButtonTag> */}
-
         <video autoPlay={true} ref={videoRef} muted={!mic} hidden={!vid} />
         <div
           style={{
