@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import {
   Avatar,
-  ButtonGroup,
   Divider,
   Grid,
   IconButton,
@@ -13,15 +12,10 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
-import useStyle from "../styles/chattingStyle";
 import SendIcon from "@mui/icons-material/Send";
 import { useLocation } from "react-router-dom";
 import { sendingMessage } from "../shared/SocketFunc";
 
-import VideocamIcon from "@mui/icons-material/Videocam";
-import VideocamOffIcon from "@mui/icons-material/VideocamOff";
-import MicOffIcon from "@mui/icons-material/MicOff";
-import MicIcon from "@mui/icons-material/Mic";
 import useWindowSize from "../hooks/useWindowSize";
 import LogoImage from "../assets/loading_image.png";
 
@@ -106,14 +100,6 @@ const ChatContainer = (props) => {
                 <Avatar alt={item.nickname} src={item.profileImg} />
               </ListItemAvatar>
               <ListItemText primary={item.nickname} />
-              <ButtonGroup size="large" aria-label="large button group">
-                <IconButton>
-                  <VideocamIcon />
-                </IconButton>
-                <IconButton>
-                  <MicIcon />
-                </IconButton>
-              </ButtonGroup>
             </ListItem>
           </>
         ))}

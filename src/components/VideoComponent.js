@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useRef } from "react";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicOffIcon from "@mui/icons-material/MicOff";
@@ -11,6 +11,7 @@ import { actionCreators as videoActions } from "../redux/modules/videoReducer";
 const VideoComponent = (props) => {
   const dispatch = useDispatch();
   const videoReducer = useSelector((state) => state.videoReducer.video);
+  const userReducer = useSelector((state) => state.userReducer.user);
   const videoRef = React.useRef();
   const { streamManager, nickname, host, OV, me, session } = props;
   const size = useWindowSize();
@@ -18,57 +19,99 @@ const VideoComponent = (props) => {
 
   const [mic, setMic] = React.useState(true);
   const [vid, setVid] = React.useState(true);
-
+  const [myMic, setMyMic] = React.useState(true);
+  const [myVid, setMyVid] = React.useState(true);
   React.useEffect(() => {
-    // if (me === true) {
-    //   setMic(videoReducer.audio);
-    //   setVid(videoReducer.video);
-    // }
     if (streamManager && !!videoRef) {
       streamManager.addVideoElement(videoRef.current);
     }
-    // if (session) {
-    //   session.on("signal:userChanged", (event) => {
-    //     const data = JSON.parse(event.data);
-    //     if (nickname === data.nickname) {
-    //       if (data.audio !== undefined) {
-    //         setMic(data.audio);
-    //       } else if (data.video !== undefined) {
-    //         setVid(data.video);
-    //       }
-    //     }
-    //   });
-    // }
+    if (session) {
+      session.on("signal:userChanged", (event) => {
+        const data = JSON.parse(event.data);
+        console.log(nickname, data.nickname);
+        if (nickname === data.nickname) {
+          if (data.audio !== undefined) {
+            setMyMic(data.audio);
+            setMic(data.audio);
+          }
+          if (data.video !== undefined) {
+            setMyVid(data.video);
+            setVid(data.video);
+          }
+        }
+      });
+    }
+    if (myVid === false) {
+      setMic(false);
+    }
+    if (myMic === false) {
+      setVid(false);
+    }
+
     return () => {};
-  }, [streamManager, nickname, mic, vid]);
+  }, [streamManager, nickname, mic, vid, myVid, myMic, session]);
 
   const handleVideo = () => {
-    // if (me === true) {
-    //   if (vid === true) {
-    //     dispatch(videoActions.setVideo({ ...videoReducer, video: false }));
-    //   } else {
-    //     dispatch(videoActions.setVideo({ ...videoReducer, video: true }));
-    //   }
-    //   setVid(!vid);
-    // } else {
-    //   setVid(!vid);
-    // }
-    setVid(!vid);
+    console.log("비디오");
+    if (vid === false) {
+      if (nickname === userReducer.nickname) {
+        dispatch(
+          videoActions.setVideo({ audio: videoReducer.audio, video: true })
+        );
+        setMyVid(true);
+        setVid(true);
+      }
+      if (myVid === false) {
+      } else {
+        setVid(true);
+      }
+    } else {
+      if (nickname === userReducer.nickname) {
+        dispatch(
+          videoActions.setVideo({ audio: videoReducer.audio, video: false })
+        );
+        setMyVid(false);
+        setVid(false);
+      }
+      if (myVid === false) {
+      } else {
+        setVid(false);
+      }
+    }
   };
 
   const handleMic = () => {
-    // if (me === true) {
-    //   if (mic === true) {
-    //     dispatch(videoActions.setVideo({ ...videoReducer, audio: false }));
-    //   } else {
-    //     dispatch(videoActions.setVideo({ ...videoReducer, audio: true }));
-    //   }
-    //   setMic(!mic);
-    // } else {
-    //   setMic(!mic);
-    // }
-    setMic(!mic);
+    console.log("마이크");
+    if (mic === false) {
+      if (nickname === userReducer.nickname) {
+        dispatch(
+          videoActions.setVideo({ video: videoReducer.video, audio: true })
+        );
+        setMyMic(true);
+        setMic(true);
+      }
+      if (myMic === false) {
+      } else {
+        setMic(true);
+      }
+    } else {
+      if (nickname === userReducer.nickname) {
+        dispatch(
+          videoActions.setVideo({ video: videoReducer.video, audio: false })
+        );
+        setMyMic(false);
+        setMic(false);
+      }
+      if (myMic === false) {
+      } else {
+        setMic(false);
+      }
+    }
   };
+  if (!session) {
+    return <VideoWrap></VideoWrap>;
+  }
+
   return (
     <>
       <VideoWrap height={height}>
@@ -82,7 +125,24 @@ const VideoComponent = (props) => {
             : nickname}
         </NicknameTag>
         {me === true ? (
-          <></>
+          <>
+            <ButtonTag id="buttondiv">
+              <IconButton onClick={handleVideo}>
+                {vid === true ? (
+                  <VideocamIcon sx={{ color: "white" }} />
+                ) : (
+                  <VideocamOffIcon sx={{ color: "red" }} />
+                )}
+              </IconButton>
+              <IconButton onClick={handleMic}>
+                {mic === true ? (
+                  <MicIcon sx={{ color: "white" }} />
+                ) : (
+                  <MicOffIcon sx={{ color: "red" }} />
+                )}
+              </IconButton>
+            </ButtonTag>
+          </>
         ) : (
           <ButtonTag id="buttondiv">
             <IconButton onClick={handleVideo}>
