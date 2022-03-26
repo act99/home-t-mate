@@ -94,7 +94,7 @@ class VideoContainer extends Component {
 
   sendSignalUserAudio(audio) {
     const data = {
-      audio: audio,
+      Saudio: audio,
       nickname: this.state.myUserName,
     };
     const signalOptions = {
@@ -105,7 +105,7 @@ class VideoContainer extends Component {
   }
   sendSignalUserVideo(video) {
     const data = {
-      video: video,
+      Svideo: video,
       nickname: this.state.myUserName,
     };
     const signalOptions = {

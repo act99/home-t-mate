@@ -32,12 +32,12 @@ const VideoComponent = (props) => {
         const data = JSON.parse(event.data);
         console.log(nickname, data.nickname);
         if (nickname === data.nickname) {
-          if (data.audio !== undefined) {
-            setMyMic(data.audio);
-            setMic(data.audio);
-          } else if (data.video !== undefined) {
-            setMyVid(data.video);
-            setVid(data.video);
+          if (data.Saudio !== undefined) {
+            setMyMic(data.Saudio);
+            setMic(data.Saudio);
+          } else if (data.Svideo !== undefined) {
+            setMyVid(data.Svideo);
+            setVid(data.Svideo);
           }
         }
       });
