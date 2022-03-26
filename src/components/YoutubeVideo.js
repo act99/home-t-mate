@@ -195,7 +195,7 @@ const YoutubeVideo = (props) => {
               <h3>{host}</h3>
             </HostText>
           </WrapRoomInfo>
-          <Banner width={width}></Banner>
+          {/* <Banner width={width}></Banner> */}
         </BottomTop>
         <WrapFromStyle width={width}>
           <FormBox onSubmit={handleUrlSubmit}>

@@ -15,10 +15,11 @@ import useWindowSize from "../hooks/useWindowSize";
 import { apis } from "../shared/api";
 import FullErrorContainer from "../containers/FullErrorContainer";
 import LoadingImage from "../assets/loading_image.png";
-
+import CameraLogo from "../assets/cameraoff2.png";
 const CheckVideo = () => {
   const dispatch = useDispatch();
   const videoReducer = useSelector((state) => state.videoReducer.video);
+  const { video, audio } = videoReducer;
 
   // ** roomID, roomName 가져오기
   const location = useLocation();
@@ -40,6 +41,8 @@ const CheckVideo = () => {
   const size = useWindowSize();
   const height = size.height;
   const width = size.width;
+
+  const [myStatus, setMyStatus] = React.useState({ video: true, audio: true });
 
   const getWebcam = (callback) => {
     try {
@@ -66,6 +69,7 @@ const CheckVideo = () => {
             password: password,
             host: host,
             hostImg: hostImg,
+            myStatus: myStatus,
           },
         });
         // dispatch(videoActions.setVideo({ video: video, audio: audio }));
@@ -78,15 +82,22 @@ const CheckVideo = () => {
 
   React.useEffect(() => {
     // **  ㄱㄱ
+    // setTimeout(() => {
+    //   if (videoReducer.video === true) {
+    //     getWebcam((stream) => {
+    //       videoRef.current.srcObject = stream;
+    //     });
+    //   }
+    //   setLoading(false);
+    // }, 1000);
+
     setTimeout(() => {
-      if (videoReducer.video === true) {
-        getWebcam((stream) => {
-          videoRef.current.srcObject = stream;
-        });
-      }
+      getWebcam((stream) => {
+        videoRef.current.srcObject = stream;
+      });
+
       setLoading(false);
     }, 1000);
-    // scrollRef.current.scrollIntoView({ behavior: "smooth" });
 
     return () => {
       apis
@@ -117,6 +128,7 @@ const CheckVideo = () => {
         audio: videoReducer.audio,
       })
     );
+    setMyStatus({ ...myStatus, video: !myStatus.video });
   };
   const audioOnOff = () => {
     dispatch(
@@ -125,6 +137,7 @@ const CheckVideo = () => {
         audio: !videoReducer.audio,
       })
     );
+    setMyStatus({ ...myStatus, audio: !myStatus.audio });
   };
 
   if (fullPeople) {
@@ -146,17 +159,27 @@ const CheckVideo = () => {
           <h3>홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인해주세요.</h3>
         </VideoTitle>
         <VideoWrap>
-          <div id="back">
-            <h3>카메라가 없습니다.</h3>
-          </div>
           <video
             ref={videoRef}
             autoPlay
             style={Styles.Video}
             muted={!videoReducer.audio}
           />
+
+          {/* {video ? (
+            <video
+              ref={videoRef}
+              autoPlay
+              style={Styles.Video}
+              muted={!videoReducer.audio}
+            />
+          ) : (
+            <div id="back">
+              <img src={CameraLogo} alt="" />
+            </div>
+          )} */}
           <div>
-            <ButtonGroup
+            {/* <ButtonGroup
               disableElevation
               variant="contained"
               sx={{
@@ -177,7 +200,7 @@ const CheckVideo = () => {
                   <MicOffIcon sx={{ fontSize: "40px", color: "red" }} />
                 )}
               </IconButton>
-            </ButtonGroup>
+            </ButtonGroup> */}
           </div>
         </VideoWrap>
         <EnterButton>
@@ -236,6 +259,7 @@ const VideoWrap = styled.div`
   align-items: center;
   align-content: center;
   background-color: #f9f9f9;
+
   video {
     width: 100%;
     max-width: 600px;
@@ -245,15 +269,20 @@ const VideoWrap = styled.div`
   #back {
     width: 100%;
     max-width: 600px;
-    height: 330px;
-    background-color: #000000;
-    position: absolute;
+    height: 337px;
+    background-color: #1c1c1c;
     display: flex;
     justify-content: center;
     align-items: center;
     h3 {
       font-size: 16px;
       color: white;
+    }
+    img {
+      width: auto;
+      /* max-width: 337px; */
+      height: 337px;
+      margin: 0px;
     }
   }
   div {

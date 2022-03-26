@@ -29,15 +29,15 @@ const App = () => {
   const dispatch = useDispatch();
   const videoReducer = useSelector((state) => state.videoReducer.video);
   React.useEffect(() => {
-    if (videoReducer !== undefined) {
-      if (videoReducer.video === undefined) {
-        dispatch(videoActions.setVideo({ ...videoReducer, video: true }));
-      } else if (videoReducer.audio === undefined) {
-        dispatch(videoActions.setVideo({ ...videoReducer, audio: true }));
-      }
-    } else {
-      dispatch(videoActions.setVideo({ video: true, audio: true }));
-    }
+    // if (videoReducer !== undefined) {
+    //   if (videoReducer.video === undefined) {
+    //     dispatch(videoActions.setVideo({ ...videoReducer, video: true }));
+    //   } else if (videoReducer.audio === undefined) {
+    //     dispatch(videoActions.setVideo({ ...videoReducer, audio: true }));
+    //   }
+    // } else {
+    //   dispatch(videoActions.setVideo({ video: true, audio: true }));
+    // }
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }

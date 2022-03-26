@@ -44,14 +44,18 @@ class VideoContainer extends Component {
     window.removeEventListener("beforeunload", this.onbeforeunload);
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log(prevProps, prevState);
-  //   if (prevProps.video !== this.props.video) {
-  //     this.sendSignalUserVideo(this.props.video);
-  //   } else if (prevProps.audio !== this.props.audio) {
-  //     this.sendSignalUserAudio(this.props.audio);
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps, prevState);
+    if (prevProps.video !== this.props.video) {
+      this.sendSignalUserVideo(this.props.video);
+    }
+    if (prevProps.audio !== this.props.audio) {
+      this.sendSignalUserAudio(this.props.audio);
+    }
+    if (prevState.subscribers.length !== this.state.subscribers.length) {
+      console.log("하이!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+  }
 
   onbeforeunload(event) {
     this.leaveSession();
@@ -88,53 +92,9 @@ class VideoContainer extends Component {
     }
   }
 
-  async changeVideo(prevProps) {
-    try {
-      var mySession = this.state.session;
-      // ** 첫 번째 param은 OV Server 에서 오는 토큰 값이며, 두 번째 param은 모든 유저가 "streamCreated"를 통해
-      // ** 받는 정보들이다. 그리고 이것은 유저 닉네임으로 DOM 에 추가된다.
-
-      // ** 본인의 카메라 stream (sdp 정보 등과 함께) 을 가져온다.
-      let publisher = this.OV.initPublisher(undefined, {
-        audioSource: undefined, // The source of audio. If undefined default microphone
-        videoSource: undefined, // The source of video. If undefined default webcam
-        publishAudio: prevProps.audio, // Whether you want to start publishing with your audio unmuted or not
-        publishVideo: prevProps.video, // Whether you want to start publishing with your video enabled or not
-        resolution: "240x180", // The resolution of your video "640x480", "1280x720"
-        // frameRate: 30, // The frame rate of your video
-        frameRate: 16, // The frame rate of your video
-        insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-        mirror: false, // Whether to mirror your local video or not
-      });
-      let newPublisher = this.OV.initPublisher(undefined, {
-        audioSource: undefined, // The source of audio. If undefined default microphone
-        videoSource: undefined, // The source of video. If undefined default webcam
-        publishAudio: this.props.audio, // Whether you want to start publishing with your audio unmuted or not
-        publishVideo: this.props.video, // Whether you want to start publishing with your video enabled or not
-        resolution: "240x180", // The resolution of your video "640x480", "1280x720"
-        // frameRate: 30, // The frame rate of your video
-        frameRate: 16, // The frame rate of your video
-        insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-        mirror: false, // Whether to mirror your local video or not
-      });
-
-      // ** 본인의 정보를 publishing 한다.
-      await mySession.unpublish(publisher);
-      await mySession.publish(newPublisher);
-      // ** 첫 번째 메인 카메라를 본인의 웹캠으로 설정시키는 것
-      // ** 추후에 방장으로 바꾸면 됨.
-      this.setState({
-        mainStreamManager: newPublisher,
-        publisher: newPublisher,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   sendSignalUserAudio(audio) {
     const data = {
-      audio: audio,
+      Saudio: audio,
       nickname: this.state.myUserName,
     };
     const signalOptions = {
@@ -145,7 +105,7 @@ class VideoContainer extends Component {
   }
   sendSignalUserVideo(video) {
     const data = {
-      video: video,
+      Svideo: video,
       nickname: this.state.myUserName,
     };
     const signalOptions = {
@@ -177,9 +137,16 @@ class VideoContainer extends Component {
           var subscriber = mySession.subscribe(event.stream, undefined);
           var subscribers = this.state.subscribers;
           subscribers.push(subscriber);
-          this.setState({
-            subscribers: subscribers,
-          });
+
+          this.setState(
+            {
+              subscribers: subscribers,
+            },
+            () => {
+              this.sendSignalUserVideo(this.props.video);
+              this.sendSignalUserAudio(this.props.audio);
+            }
+          );
         });
 
         // ** 구독자 삭제
@@ -204,8 +171,8 @@ class VideoContainer extends Component {
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
-                publishAudio: this.state.audio, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: this.state.video, // Whether you want to start publishing with your video enabled or not
+                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: true, // Whether you want to start publishing with your video enabled or not
                 resolution: "240x180", // The resolution of your video "640x480", "1280x720"
                 // frameRate: 30, // The frame rate of your video
                 frameRate: 16, // The frame rate of your video
@@ -221,6 +188,8 @@ class VideoContainer extends Component {
                 mainStreamManager: publisher,
                 publisher: publisher,
               });
+              // this.sendSignalUserVideo(this.props.video);
+              // this.sendSignalUserAudio(this.props.audio);
             })
             .catch((error) => {
               console.log(
@@ -228,6 +197,8 @@ class VideoContainer extends Component {
                 error.code,
                 error.message
               );
+              this.sendSignalUserVideo(this.props.video);
+              this.sendSignalUserAudio(this.props.audio);
             });
         });
       }
@@ -259,7 +230,7 @@ class VideoContainer extends Component {
         <></>
         {this.state.session === undefined ? (
           <div id="join">
-            <div id="join-dialog" className="jumbotron vertical-center">
+            {/* <div id="join-dialog" className="jumbotron vertical-center">
               <h1> Join a video session </h1>
               <form className="form-group" onSubmit={this.joinSession}>
                 <p>
@@ -293,7 +264,7 @@ class VideoContainer extends Component {
                   />
                 </p>
               </form>
-            </div>
+            </div> */}
           </div>
         ) : null}
 

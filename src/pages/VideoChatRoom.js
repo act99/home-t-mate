@@ -15,7 +15,6 @@ import { apis } from "../shared/api";
 import ChatNav from "../containers/ChatNav";
 import { actionCreators as subscribersActions } from "../redux/modules/subscriberReducer";
 import { sendQuitRoom } from "../shared/SocketFunc";
-import { actionCreators as videoActions } from "../redux/modules/videoReducer";
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 const VideoChatRoom = () => {
@@ -34,10 +33,9 @@ const VideoChatRoom = () => {
   // ** params 로 받은 roomId 와 roomName
   const location = useLocation();
   const locationState = location.state;
-  const { roomName, roomId, password, host, hostImg } = locationState;
+  const { roomName, roomId, password, host, hostImg, myStatus } = locationState;
   const myVideo = useSelector((state) => state.videoReducer.video);
   const { audio, video } = myVideo;
-  console.log(myVideo);
 
   // ** SockJS 설정
   let options = {
@@ -47,9 +45,6 @@ const VideoChatRoom = () => {
   };
   const sock = new SockJS(url.WEB_SOCKET);
   const ws = Stomp.over(sock, options);
-
-  // ** session 값들을 가져오기 위한 state (유저 정보용)
-  const [session, setSession] = React.useState({});
 
   // ** 유튜브 재생 시 운동 중
   const [workOut, setWorkOut] = React.useState(false);
@@ -178,6 +173,7 @@ const VideoChatRoom = () => {
             audio={audio}
             password={locationState.password}
             host={host}
+            myStatus={myStatus}
           />
         </VideoTest>
         <ChattingTest height={height}>

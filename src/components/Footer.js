@@ -30,11 +30,19 @@ const Footer = () => {
           <TitleWrap onClick={() => history.push("/privacy")}>
             <h3>개인정보보호</h3>
           </TitleWrap>
-          <TitleWrap>
+          <TitleWrap
+            onClick={() =>
+              window.open("https://forms.gle/KjiKSmjvokFLQNPV9", "_black")
+            }
+          >
             <h3>오류제보</h3>
           </TitleWrap>
-          <TitleWrap>
-            <h3>설문조사</h3>
+          <TitleWrap
+            onClick={() =>
+              window.open("https://forms.gle/w6vL5DUyokPE9PtR8", "_black")
+            }
+          >
+            <h3>만족도 평가</h3>
           </TitleWrap>
         </FooterList>
         <Divider sx={{ width: "70%" }} />
@@ -73,6 +81,19 @@ const FooterList = styled.div`
 `;
 
 const TitleWrap = styled.div`
+  width: 130px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  h3 {
+    font-size: 16px;
+    font-family: "GmarketSansLight";
+  }
+`;
+
+const AHref = styled.a`
   width: 130px;
   height: 70px;
   display: flex;
