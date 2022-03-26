@@ -53,8 +53,7 @@ class VideoContainer extends Component {
       this.sendSignalUserAudio(this.props.audio);
     }
     if (prevState.subscribers.length !== this.state.subscribers.length) {
-      this.sendSignalUserVideo(this.props.video);
-      this.sendSignalUserAudio(this.props.audio);
+      console.log("하이!!!!!!!!!!!!!!!!!!!!!!!");
     }
   }
 
@@ -138,7 +137,8 @@ class VideoContainer extends Component {
           var subscriber = mySession.subscribe(event.stream, undefined);
           var subscribers = this.state.subscribers;
           subscribers.push(subscriber);
-
+          this.sendSignalUserVideo(this.props.video);
+          this.sendSignalUserAudio(this.props.audio);
           this.setState(
             {
               subscribers: subscribers,
