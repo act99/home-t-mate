@@ -18,8 +18,8 @@ export default function Cardheader(props) {
 
   const deletePostDB = () => {
     dispatch(postActions.deletePostDB(props.id));
-    window.alert("포스트가 정상적으로 삭제되었습니다.");
-    window.location.reload();
+    // window.alert("포스트가 정상적으로 삭제되었습니다.");
+    // window.location.reload();
   };
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x));
 
@@ -43,7 +43,7 @@ export default function Cardheader(props) {
   return _user.id === thisPost.userId ? (
     <CardHeader
       style={{
-        backgroundColor: "#587730",
+        backgroundColor: "white",
         borderTopRightRadius: "20px",
         padding: "0px",
         paddingLeft: "32px",
@@ -117,7 +117,7 @@ export default function Cardheader(props) {
       }
       titleTypographyProps={{
         fontSize: 18,
-        color: "#ffffff",
+        color: "black",
         fontFamily: "GmarketSansMedium",
       }}
       title={props.username}

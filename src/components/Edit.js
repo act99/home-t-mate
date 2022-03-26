@@ -162,7 +162,7 @@ function Edit(props) {
                       src={_user.profileImg ? _user.profileImg : ""}
                       sx={{ margin: "10px 20px", width: 50, height: 50 }}
                     />
-                    <Text F_size="20px">
+                    <Text F_size="20px" F_family="GmarketSansMedium">
                       {_user.nickname ? _user.nickname : ""}
                     </Text>
                   </Grid>

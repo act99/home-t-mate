@@ -98,7 +98,7 @@ const likePostDB = (postId, userId, nickname) => {
       })
       .catch((error) => {
         console.log(error);
-        alert("좋아요 실패");
+        alert("좋아요를 실패했습니다 :(");
       });
   };
 };
@@ -115,7 +115,7 @@ const deleteManyPostDB = (postId) => {
       })
       .catch((error) => {
         console.log(error);
-        alert("게시글이 삭제되지 않았습니다.");
+        alert("게시글 삭제를 실패했습니다 :(");
       });
   };
 };

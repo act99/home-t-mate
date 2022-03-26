@@ -10,11 +10,12 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../App.css";
 
-import { Card, Typography } from "@mui/material";
+import { Card } from "@mui/material";
 import Text from "../elements/Text";
+import { Modal } from "@mui/material";
+import Detail from "./Detail";
+import CloseIcon from "@mui/icons-material/Close";
 
-import { useDispatch, useSelector } from "react-redux";
-// import  style  from "@mui/styles";
 
 export default function StoryCard(props) {
   const classes = storyCard();
@@ -30,17 +31,20 @@ export default function StoryCard(props) {
     content,
   } = props;
 
-  // const commentlist = useSelector((state)=>state.commentReducer.)
-
   React.useEffect(() => {
     if (likeUserDto && likeUserDto.length > 0) {
-      console.log(likeUserDto)
+      console.log(likeUserDto);
     }
 
-    if (commentUserDto && commentUserDto.length > 0){
-      console.log(commentUserDto)
+    if (commentUserDto && commentUserDto.length > 0) {
+      console.log(commentUserDto);
     }
   }, [commentUserDto, likeUserDto]);
+
+  // datail modal open,close
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
     return (
@@ -59,11 +63,39 @@ export default function StoryCard(props) {
           >
             {photoResponseDto &&
               photoResponseDto.map((v, i) => (
-                <Img key={i} {...v} size="620px" modal={true} />
+                <Img
+                  key={i}
+                  {...v}
+                  size="620px"
+                  commentUserDto={commentUserDto}
+                  likeUserDto={likeUserDto}
+                  likeCount={likeCount}
+                  id={id}
+                  _onClick={handleOpen}
+                />
               ))}
           </Carousel>
 
-          {/* <Img postImg={props.photoResponseDto} size="620px" /> */}
+          <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <div>
+            <Detail
+              id={id}
+              commentUserDto={commentUserDto}
+              likeUserDto={likeUserDto}
+            />
+            <Grid position="absolute" right="0">
+              <CloseIcon
+                sx={{ color: "white", fontSize: 40 }}
+                onClick={handleClose}
+              />
+            </Grid>
+          </div>
+        </Modal>
 
           {/* id는 post id */}
           <LikeComment
@@ -72,6 +104,7 @@ export default function StoryCard(props) {
             likeCount={likeCount}
             id={id}
             modal={true}
+            size="32"
           />
 
           <CardContent sx={{ p: 0, pl: "16px" }}>
@@ -116,7 +149,8 @@ export default function StoryCard(props) {
             >
               <p>
                 {commentUserDto && commentUserDto[0].nickname}님 외
-                <span>{commentUserDto && commentUserDto.length - 1}개</span>의 댓글
+                <span>{commentUserDto && commentUserDto.length - 1}개</span>의
+                댓글
               </p>
             </Text>
           )}
@@ -135,5 +169,6 @@ const storyCard = makeStyles({
   root: {
     borderRadius: 20,
     boxShadow: "2px 5px 12px 6px rgba(240, 240, 240);",
+    border: "1px solid #D3D3D3"
   },
 });

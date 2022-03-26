@@ -18,7 +18,6 @@ import { Grid, Text, Button } from "../elements";
 
 // impot Component
 import Detail from "./Detail";
-import { RestaurantRounded } from "@mui/icons-material";
 //import Actions
 
 //import axios
@@ -92,13 +91,13 @@ export default function LikeComment(props) {
             BG_color="white"
             padding="0px"
             margin="0px 15px 0px 0px"
-            width="28px"
-            height="28px"
+            width="1%"
+            height="1%"
           >
             {like ? (
-              <AiFillHeart size="32" color="red" />
+              <AiFillHeart size={props.size} color="red" />
             ) : (
-              <AiOutlineHeart size="32" />
+              <AiOutlineHeart size={props.size} />
             )}
           </Button>
 
