@@ -1,6 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "@mui/styles";
-
+import { useDispatch, useSelector } from "react-redux";
 import Cardheader from "../components/Cardheader";
 import LikeComment from "./LikeComment";
 import Img from "../components/Img";
@@ -9,7 +9,7 @@ import CardContent from "@mui/material/CardContent";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../App.css";
-
+import { actionCreators as commentActions } from "../redux/modules/commentReducer";
 import { Card } from "@mui/material";
 import Text from "../elements/Text";
 import { Modal } from "@mui/material";
@@ -31,12 +31,19 @@ export default function StoryCard(props) {
     content,
   } = props;
 
+  const commentState = useSelector((state) => state.commentReducer.list)[
+    `${props.id}`
+  ];
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
+      // dispatch(commentActions.getCommentDB(props.id));
+
     if (likeUserDto && likeUserDto.length > 0) {
       console.log(likeUserDto);
     }
 
-    if (commentUserDto && commentUserDto.length > 0) {
+    if (commentState && commentState.length > 0) {
       console.log(commentUserDto);
     }
   }, [commentUserDto, likeUserDto]);
@@ -131,7 +138,7 @@ export default function StoryCard(props) {
               스토리를 좋아해요
             </Text>
           )}
-          {commentUserDto <= 0 ? (
+          {commentState <= 0 ? (
             <Text
               margin_left="16px"
               margin_bottom="8px"
@@ -148,8 +155,8 @@ export default function StoryCard(props) {
               margin_top="8px"
             >
               <p>
-                {commentUserDto && commentUserDto[0].nickname}님 외
-                <span>{commentUserDto && commentUserDto.length - 1}개</span>의
+                {commentState && commentState[0].nickname}님 외
+                <span>{commentState && commentState.length - 1}개</span>의
                 댓글
               </p>
             </Text>
