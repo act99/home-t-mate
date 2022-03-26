@@ -33,7 +33,7 @@ const VideoChatRoom = () => {
   // ** params 로 받은 roomId 와 roomName
   const location = useLocation();
   const locationState = location.state;
-  const { roomName, roomId, password, host, hostImg } = locationState;
+  const { roomName, roomId, password, host, hostImg, myStatus } = locationState;
   const myVideo = useSelector((state) => state.videoReducer.video);
   const { audio, video } = myVideo;
 
@@ -173,6 +173,7 @@ const VideoChatRoom = () => {
             audio={audio}
             password={locationState.password}
             host={host}
+            myStatus={myStatus}
           />
         </VideoTest>
         <ChattingTest height={height}>

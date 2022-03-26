@@ -14,13 +14,16 @@ import styled from "@emotion/styled";
 import { AiOutlineLock } from "react-icons/ai";
 import RoomCardModal from "../containers/RoomCardModal";
 import BxSlide from "../assets/bxslide.png";
-import HowToUse from "../assets/howtouse.png";
 import { useHistory } from "react-router-dom";
 import HomeImg from "../components/HomeImg";
 import { Text } from "../elements";
-import { Grid } from "../elements";
 import { BsSearch } from "react-icons/bs";
 import useScrollFadeIn from "../hooks/useScrollFadeIn";
+import Whatis from "../assets/whatis.png";
+import SetImage from "../assets/set.png";
+import GroupImage from "../assets/group.png";
+import RunningImage from "../assets/running.png";
+import StretchImage from "../assets/stretch.png";
 
 const Home = () => {
   const history = useHistory();
@@ -104,8 +107,10 @@ const Home = () => {
   const animatedStoryTitle = useScrollFadeIn("up", 2, 0);
   const animatedStory = useScrollFadeIn("right", 4, 0);
   const animatedAboutTitle = useScrollFadeIn("up", 2, 0);
-  const animatedAboutContent = useScrollFadeIn("up", 2, 0);
-  const animatedAboutSubContent = useScrollFadeIn("up", 2, 0);
+  const animatedHowToTitle = useScrollFadeIn("up", 2, 0);
+  const animatedWhatIs = useScrollFadeIn("up", 5, 0);
+  const animatedGroup1 = useScrollFadeIn("up", 2, 0);
+  const animatedGroup2 = useScrollFadeIn("up", 2, 0);
   React.useEffect(() => {
     dispatch(roomCreators.getMainRoomDB());
   }, []);
@@ -360,43 +365,67 @@ const Home = () => {
                   홈트레이닝 하는 공간입니다.
                 </Text>
               </div>
-              <Grid
-                is_flex
-                width="1200px"
-                justify_content="space-between"
-                margin_top="0px"
-              >
-                <Grid
-                  width="353px"
-                  height="390px"
-                  BG_c="black"
-                  margin_top="300px"
-                ></Grid>
-                <Grid width="353px" height="390px" BG_c="black"></Grid>
-                <Grid
-                  width="353px"
-                  height="390px"
-                  BG_c="black"
-                  margin_top="300px"
-                ></Grid>
-              </Grid>
             </Wrap>
           </>
+          <FooterBxSlideCon {...animatedWhatIs}>
+            <img
+              alt=""
+              src={Whatis}
+              width="100%"
+              // height="30vw"
+              style={{ margin: "0px" }}
+            />
+          </FooterBxSlideCon>
+
+          <div {...animatedHowToTitle}>
+            <Text F_size="42px" F_align="center" margin_top="80px">
+              어떻게 운동하면 좋을까요?
+            </Text>
+            <Text F_size="18px" F_align="center" margin_top="24px">
+              홈트메이트는 홈트 친구들과 실시간으로 유튜브 영상을 보며 함께
+              홈트레이닝 하는 공간입니다.
+            </Text>
+          </div>
+          <ImageGroup {...animatedGroup1}>
+            <img
+              alt=""
+              src={SetImage}
+              width="45%"
+              // height="30vw"
+              style={{ margin: "12px" }}
+            />
+            <img
+              alt=""
+              src={StretchImage}
+              width="45%"
+              // height="30vw"
+              style={{ margin: "12px" }}
+            />
+          </ImageGroup>
+          <ImageGroup2 {...animatedGroup2}>
+            <img
+              alt=""
+              src={RunningImage}
+              width="45%"
+              // height="30vw"
+              style={{ margin: "12px" }}
+            />
+
+            <img
+              alt=""
+              src={GroupImage}
+              width="45%"
+              // height="30vw"
+              style={{ margin: "12px" }}
+            />
+          </ImageGroup2>
         </Container>
+
         <RoomCardModal
           clickCard={clickCard}
           setClickCard={setClickCard}
           data={modalData}
         />
-        <FooterBxSlideCon>
-          <img
-            alt=""
-            src={HowToUse}
-            width="100%"
-            // height="30vw"
-            style={{ margin: "0px" }}
-          />
-        </FooterBxSlideCon>
       </Wrap>
     </>
   );
@@ -410,7 +439,6 @@ const BxSlideCon = styled.div`
 
 const FooterBxSlideCon = styled.div`
   width: 100%;
-  background-color: #e2f7de;
   padding-bottom: 96px;
 `;
 
@@ -571,6 +599,17 @@ const SearchButton = styled.button`
   background-color: rgb(0, 0, 0, 0);
   border: solid 0px;
   cursor: pointer;
+`;
+
+const ImageGroup = styled.div`
+  width: 100%;
+  margin-top: 80px;
+`;
+
+const ImageGroup2 = styled.div`
+  width: 100%;
+  margin-top: 80px;
+  margin-bottom: 160px;
 `;
 
 export default Home;

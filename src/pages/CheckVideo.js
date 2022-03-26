@@ -42,6 +42,8 @@ const CheckVideo = () => {
   const height = size.height;
   const width = size.width;
 
+  const [myStatus, setMyStatus] = React.useState({ video: true, audio: true });
+
   const getWebcam = (callback) => {
     try {
       const constraints = {
@@ -67,6 +69,7 @@ const CheckVideo = () => {
             password: password,
             host: host,
             hostImg: hostImg,
+            myStatus: myStatus,
           },
         });
         // dispatch(videoActions.setVideo({ video: video, audio: audio }));
@@ -79,15 +82,22 @@ const CheckVideo = () => {
 
   React.useEffect(() => {
     // **  ㄱㄱ
+    // setTimeout(() => {
+    //   if (videoReducer.video === true) {
+    //     getWebcam((stream) => {
+    //       videoRef.current.srcObject = stream;
+    //     });
+    //   }
+    //   setLoading(false);
+    // }, 1000);
+
     setTimeout(() => {
-      if (videoReducer.video === true) {
-        getWebcam((stream) => {
-          videoRef.current.srcObject = stream;
-        });
-      }
+      getWebcam((stream) => {
+        videoRef.current.srcObject = stream;
+      });
+
       setLoading(false);
     }, 1000);
-    // scrollRef.current.scrollIntoView({ behavior: "smooth" });
 
     return () => {
       apis
@@ -118,6 +128,7 @@ const CheckVideo = () => {
         audio: videoReducer.audio,
       })
     );
+    setMyStatus({ ...myStatus, video: !myStatus.video });
   };
   const audioOnOff = () => {
     dispatch(
@@ -126,6 +137,7 @@ const CheckVideo = () => {
         audio: !videoReducer.audio,
       })
     );
+    setMyStatus({ ...myStatus, audio: !myStatus.audio });
   };
 
   if (fullPeople) {
@@ -147,7 +159,14 @@ const CheckVideo = () => {
           <h3>홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인해주세요.</h3>
         </VideoTitle>
         <VideoWrap>
-          {video ? (
+          <video
+            ref={videoRef}
+            autoPlay
+            style={Styles.Video}
+            muted={!videoReducer.audio}
+          />
+
+          {/* {video ? (
             <video
               ref={videoRef}
               autoPlay
@@ -158,14 +177,9 @@ const CheckVideo = () => {
             <div id="back">
               <img src={CameraLogo} alt="" />
             </div>
-          )}
-          {/* {videoReducer.video ? <></> : }
-          <div id="back" src={CameraLogo}>
-            <img src={CameraLogo} alt="" />
-          </div> */}
-
+          )} */}
           <div>
-            <ButtonGroup
+            {/* <ButtonGroup
               disableElevation
               variant="contained"
               sx={{
@@ -186,7 +200,7 @@ const CheckVideo = () => {
                   <MicOffIcon sx={{ fontSize: "40px", color: "red" }} />
                 )}
               </IconButton>
-            </ButtonGroup>
+            </ButtonGroup> */}
           </div>
         </VideoWrap>
         <EnterButton>
