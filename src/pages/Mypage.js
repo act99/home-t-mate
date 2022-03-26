@@ -58,7 +58,7 @@ const Mypage = (props) => {
   const [delData, setDelData] = React.useState([]);
   const deletePostDB = () => {
     console.log(delData);
-    dispatch(postActions.deletePostDB(delData));
+    dispatch(postActions.deleteManyPostDB(delData));
     // window.alert("포스트가 정상적으로 삭제되었습니다.");
     // window.location.reload();
   };

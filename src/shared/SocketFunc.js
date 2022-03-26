@@ -43,10 +43,11 @@ export const sendYoutubeStop = (ws, token, youtubeStop) => {
 };
 
 export const sendQuitRoom = (ws, token, quit) => {
+  console.log(quit);
   ws.send(
     `/pub/chat/message`,
     { Authorization: token },
-    JSON.stringify({ ...quit })
+    JSON.stringify({ type: "QUIT", ...quit })
   );
 };
 

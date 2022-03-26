@@ -28,8 +28,8 @@ const CheckVideo = () => {
   const host = location.state.host;
   const hostImg = location.state.hostImg;
   // ** 비디오 세팅
-  const [video, setVideo] = React.useState(videoReducer.video);
-  const [audio, setAudio] = React.useState(videoReducer.audio);
+  // const [video, setVideo] = React.useState(videoReducer.video);
+  // const [audio, setAudio] = React.useState(videoReducer.audio);
   const [loading, setLoading] = React.useState(true);
   const videoRef = React.useRef(null);
 
@@ -63,14 +63,12 @@ const CheckVideo = () => {
           state: {
             roomId: roomId,
             roomName: roomName,
-            video: video,
-            audio: audio,
             password: password,
             host: host,
             hostImg: hostImg,
           },
         });
-        dispatch(videoActions.setVideo({ video: video, audio: audio }));
+        // dispatch(videoActions.setVideo({ video: video, audio: audio }));
       })
       .catch((error) => console.log(error.response));
 
@@ -81,7 +79,7 @@ const CheckVideo = () => {
   React.useEffect(() => {
     // **  ㄱㄱ
     setTimeout(() => {
-      if (video === true) {
+      if (videoReducer.video === true) {
         getWebcam((stream) => {
           videoRef.current.srcObject = stream;
         });
@@ -102,7 +100,7 @@ const CheckVideo = () => {
   }, []);
 
   const videoOnOff = () => {
-    if (video) {
+    if (videoReducer.video) {
       const s = videoRef.current.srcObject;
       s.getTracks().forEach((track) => {
         console.log(track);
@@ -113,10 +111,20 @@ const CheckVideo = () => {
         videoRef.current.srcObject = stream;
       });
     }
-    setVideo(!video);
+    dispatch(
+      videoActions.setVideo({
+        video: !videoReducer.video,
+        audio: videoReducer.audio,
+      })
+    );
   };
   const audioOnOff = () => {
-    setAudio(!audio);
+    dispatch(
+      videoActions.setVideo({
+        video: videoReducer.video,
+        audio: !videoReducer.audio,
+      })
+    );
   };
 
   if (fullPeople) {
@@ -138,7 +146,15 @@ const CheckVideo = () => {
           <h3>홈트를 시작하기 전 먼저 비디오와 마이크 상태를 확인해주세요.</h3>
         </VideoTitle>
         <VideoWrap>
-          <video ref={videoRef} autoPlay style={Styles.Video} muted={!audio} />
+          <div id="back">
+            <h3>카메라가 없습니다.</h3>
+          </div>
+          <video
+            ref={videoRef}
+            autoPlay
+            style={Styles.Video}
+            muted={!videoReducer.audio}
+          />
           <div>
             <ButtonGroup
               disableElevation
@@ -148,14 +164,14 @@ const CheckVideo = () => {
               }}
             >
               <IconButton onClick={videoOnOff}>
-                {video ? (
+                {videoReducer.video ? (
                   <VideocamIcon sx={{ fontSize: "40px", color: "black" }} />
                 ) : (
                   <VideocamOffIcon sx={{ fontSize: "40px", color: "red" }} />
                 )}
               </IconButton>
               <IconButton onClick={audioOnOff}>
-                {audio ? (
+                {videoReducer.audio ? (
                   <MicIcon sx={{ fontSize: "40px", color: "black" }} />
                 ) : (
                   <MicOffIcon sx={{ fontSize: "40px", color: "red" }} />
@@ -215,6 +231,7 @@ const VideoWrap = styled.div`
   height: auto;
   max-height: 600px;
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   align-content: center;
@@ -223,6 +240,21 @@ const VideoWrap = styled.div`
     width: 100%;
     max-width: 600px;
     height: auto;
+    z-index: 13000;
+  }
+  #back {
+    width: 100%;
+    max-width: 600px;
+    height: 330px;
+    background-color: #000000;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h3 {
+      font-size: 16px;
+      color: white;
+    }
   }
   div {
     width: 100%;

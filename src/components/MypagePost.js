@@ -20,7 +20,10 @@ function MypagePost(props) {
         <Grid>
           <input
             onClick={(e) => {
-              props.setDelData(...props.delData, e.target.value);
+              props.setDelData([
+                ...props.delData,
+                { postId: e.target.value * 1 },
+              ]);
             }}
             type="checkbox"
             id="horns"

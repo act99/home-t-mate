@@ -22,6 +22,9 @@ class VideoContainer extends Component {
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
+      sessionToken: undefined,
+      audio: this.props.audio,
+      video: this.props.video,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -33,7 +36,6 @@ class VideoContainer extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     window.addEventListener("beforeunload", this.onbeforeunload);
     this.joinSession();
   }
@@ -41,6 +43,15 @@ class VideoContainer extends Component {
   componentWillUnmount() {
     window.removeEventListener("beforeunload", this.onbeforeunload);
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log(prevProps, prevState);
+  //   if (prevProps.video !== this.props.video) {
+  //     this.sendSignalUserVideo(this.props.video);
+  //   } else if (prevProps.audio !== this.props.audio) {
+  //     this.sendSignalUserAudio(this.props.audio);
+  //   }
+  // }
 
   onbeforeunload(event) {
     this.leaveSession();
@@ -75,6 +86,73 @@ class VideoContainer extends Component {
         subscribers: subscribers,
       });
     }
+  }
+
+  async changeVideo(prevProps) {
+    try {
+      var mySession = this.state.session;
+      // ** 첫 번째 param은 OV Server 에서 오는 토큰 값이며, 두 번째 param은 모든 유저가 "streamCreated"를 통해
+      // ** 받는 정보들이다. 그리고 이것은 유저 닉네임으로 DOM 에 추가된다.
+
+      // ** 본인의 카메라 stream (sdp 정보 등과 함께) 을 가져온다.
+      let publisher = this.OV.initPublisher(undefined, {
+        audioSource: undefined, // The source of audio. If undefined default microphone
+        videoSource: undefined, // The source of video. If undefined default webcam
+        publishAudio: prevProps.audio, // Whether you want to start publishing with your audio unmuted or not
+        publishVideo: prevProps.video, // Whether you want to start publishing with your video enabled or not
+        resolution: "240x180", // The resolution of your video "640x480", "1280x720"
+        // frameRate: 30, // The frame rate of your video
+        frameRate: 16, // The frame rate of your video
+        insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+        mirror: false, // Whether to mirror your local video or not
+      });
+      let newPublisher = this.OV.initPublisher(undefined, {
+        audioSource: undefined, // The source of audio. If undefined default microphone
+        videoSource: undefined, // The source of video. If undefined default webcam
+        publishAudio: this.props.audio, // Whether you want to start publishing with your audio unmuted or not
+        publishVideo: this.props.video, // Whether you want to start publishing with your video enabled or not
+        resolution: "240x180", // The resolution of your video "640x480", "1280x720"
+        // frameRate: 30, // The frame rate of your video
+        frameRate: 16, // The frame rate of your video
+        insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+        mirror: false, // Whether to mirror your local video or not
+      });
+
+      // ** 본인의 정보를 publishing 한다.
+      await mySession.unpublish(publisher);
+      await mySession.publish(newPublisher);
+      // ** 첫 번째 메인 카메라를 본인의 웹캠으로 설정시키는 것
+      // ** 추후에 방장으로 바꾸면 됨.
+      this.setState({
+        mainStreamManager: newPublisher,
+        publisher: newPublisher,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  sendSignalUserAudio(audio) {
+    const data = {
+      audio: audio,
+      nickname: this.state.myUserName,
+    };
+    const signalOptions = {
+      data: JSON.stringify(data),
+      type: "userChanged",
+    };
+    this.state.session.signal(signalOptions);
+  }
+  sendSignalUserVideo(video) {
+    const data = {
+      video: video,
+      nickname: this.state.myUserName,
+    };
+    const signalOptions = {
+      data: JSON.stringify(data),
+      type: "userChanged",
+    };
+    this.state.session.signal(signalOptions);
   }
 
   joinSession() {
@@ -114,6 +192,9 @@ class VideoContainer extends Component {
         // ** 토큰 가져오는 과정에서 session 과 token 이 생성되며 return  된다.
         // ** 그 후, 가져온 세션과 토큰을 이용해 WebScoket과 통신을 시도하며, sdp 정보를 보내준다.
         this.getToken().then((token) => {
+          this.setState({
+            sessionToken: token,
+          });
           // ** 첫 번째 param은 OV Server 에서 오는 토큰 값이며, 두 번째 param은 모든 유저가 "streamCreated"를 통해
           // ** 받는 정보들이다. 그리고 이것은 유저 닉네임으로 DOM 에 추가된다.
           mySession
@@ -123,11 +204,11 @@ class VideoContainer extends Component {
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
-                publishAudio: this.props.audio, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: this.props.video, // Whether you want to start publishing with your video enabled or not
+                publishAudio: this.state.audio, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: this.state.video, // Whether you want to start publishing with your video enabled or not
                 resolution: "240x180", // The resolution of your video "640x480", "1280x720"
                 // frameRate: 30, // The frame rate of your video
-                frameRate: 8, // The frame rate of your video
+                frameRate: 16, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
               });
@@ -224,6 +305,7 @@ class VideoContainer extends Component {
             session={this.state.session}
             OV={this.state.OV}
             mySessionId={this.state.mySessionId}
+            host={this.props.host}
           />
         ) : null}
       </BodyWrap>

@@ -5,7 +5,6 @@ import YoutubeVideo from "../components/YoutubeVideo";
 import useWindowSize from "../hooks/useWindowSize";
 import EnterRoom from "../containers/EnterRoom";
 import { useDispatch, useSelector } from "react-redux";
-import useStyle from "../styles/chattingStyle";
 import { useHistory, useLocation } from "react-router-dom";
 import SockJS from "sockjs-client";
 import url from "../shared/url";
@@ -16,6 +15,7 @@ import { apis } from "../shared/api";
 import ChatNav from "../containers/ChatNav";
 import { actionCreators as subscribersActions } from "../redux/modules/subscriberReducer";
 import { sendQuitRoom } from "../shared/SocketFunc";
+import { actionCreators as videoActions } from "../redux/modules/videoReducer";
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 const VideoChatRoom = () => {
@@ -34,10 +34,10 @@ const VideoChatRoom = () => {
   // ** params 로 받은 roomId 와 roomName
   const location = useLocation();
   const locationState = location.state;
-  const { roomName, roomId, video, audio, password, host, hostImg } =
-    locationState;
-
-  console.log(roomName, roomId, video, audio);
+  const { roomName, roomId, password, host, hostImg } = locationState;
+  const myVideo = useSelector((state) => state.videoReducer.video);
+  const { audio, video } = myVideo;
+  console.log(myVideo);
 
   // ** SockJS 설정
   let options = {
@@ -122,6 +122,7 @@ const VideoChatRoom = () => {
   };
   const onbeforeunload = () => {
     disconnected();
+    handleQuit();
   };
 
   React.useEffect(() => {
@@ -156,7 +157,7 @@ const VideoChatRoom = () => {
   return (
     <>
       <Wrap>
-        <ChatNav roomName={roomName} roomId={roomId} />
+        <ChatNav roomName={roomName} roomId={roomId} handleQuit={handleQuit} />
         <YoutubeTest height={height}>
           <YoutubeVideo
             ws={ws}
@@ -176,6 +177,7 @@ const VideoChatRoom = () => {
             video={video}
             audio={audio}
             password={locationState.password}
+            host={host}
           />
         </VideoTest>
         <ChattingTest height={height}>

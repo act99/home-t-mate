@@ -48,7 +48,7 @@ export const apis = {
     api.put(`/api/posts/${postId}`, { content: contents, image: images }),
   deletePost: (postId) => api.delete(`/api/posts/${postId}`),
   likePost: (postId) => api.post(`/api/like/${postId}`),
-
+  deleteManyPost: (postId) => api.delete(`/api/posts`, postId),
   //댓글
   getComment: (postId) => api.get(`api/comments/${postId}`),
   addComment: (postId, comment) =>

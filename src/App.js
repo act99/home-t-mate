@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import KakaoOauth from "./components/KakaoOauth";
 import LiveNow from "./pages/LiveNow";
 import { actionCreators as userActions } from "./redux/modules/userReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
 import NotFound from "./pages/NotFound";
 import Mypage from "./pages/Mypage";
@@ -23,14 +23,36 @@ import Privacy from "./pages/Privacy";
 import SearchingLiveNow from "./pages/SearchingLiveNow";
 import ReEnterKeyword from "./pages/ReEnterKeyword";
 import ScrollToTop from "./hooks/scrollToTop";
+import { deleteCookie } from "./shared/Cookie";
+import { actionCreators as videoActions } from "./redux/modules/videoReducer";
 const App = () => {
   const dispatch = useDispatch();
-
+  const videoReducer = useSelector((state) => state.videoReducer.video);
   React.useEffect(() => {
+    if (videoReducer !== undefined) {
+      if (videoReducer.video === undefined) {
+        dispatch(videoActions.setVideo({ ...videoReducer, video: true }));
+      } else if (videoReducer.audio === undefined) {
+        dispatch(videoActions.setVideo({ ...videoReducer, audio: true }));
+      }
+    } else {
+      dispatch(videoActions.setVideo({ video: true, audio: true }));
+    }
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
-    return () => {};
+    // if ()
+    // window.addEventListener("beforeunload", dispatch(userActions.logout()));
+    // window.addEventListener("beforeunload", alert("종료!!"));
+    return () => {
+      // if (window.location.reload) {
+      // } else {
+      //   window.removeEventListener(
+      //     "beforeunload",
+      //     dispatch(userActions.logout())
+      //   );
+      // }
+    };
   }, [dispatch]);
 
   return (

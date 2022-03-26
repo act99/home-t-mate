@@ -284,6 +284,7 @@ const NavBar = (props) => {
               >
                 <Avatar alt="Remy Sharp" src={profileImg} />
               </AvatarButton>
+              {user.nickname}
               <CreateButton
                 onClick={() => {
                   setCreateRoomOpen(true);

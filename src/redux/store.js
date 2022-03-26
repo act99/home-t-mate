@@ -38,10 +38,10 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userReducer", "selectedRoomReducer"],
+  whitelist: ["userReducer", "selectedRoomReducer", "videoReducer"],
   blacklist: [
     "youtubeReducer",
-    "videoReducer",
+    // "videoReducer",
     "webrtcReducer",
     "postReducer",
     "todoReducer",

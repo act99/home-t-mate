@@ -210,33 +210,6 @@ const YoutubeVideo = (props) => {
             <CreateButton type="submit" width={width}>
               유튜브 url 제출
             </CreateButton>
-            {/* {user.nickname === host ? (
-              <>
-                <UrlInput
-                  type="text"
-                  value={urlIntput.message}
-                  onChange={handleUrlChange}
-                  required
-                  placeholder="유튜브 Url"
-                  dwidth={width}
-                />
-                <CreateButton type="submit" width={width}>
-                  유튜브 url 제출
-                </CreateButton>
-              </>
-            ) : (
-              <>
-                <UrlInput
-                  type="text"
-                  value={urlIntput.message}
-                  onChange={handleUrlChange}
-                  required
-                  disabled
-                  placeholder="호스트만 입력 가능합니다."
-                  dwidth={width}
-                />
-              </>
-            )} */}
           </FormBox>
           {workOut ? (
             <WorkOutWrap width={width} src={WorkoutImage}>
