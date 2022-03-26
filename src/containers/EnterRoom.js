@@ -23,8 +23,8 @@ class VideoContainer extends Component {
       publisher: undefined,
       subscribers: [],
       sessionToken: undefined,
-      audio: true,
-      video: true,
+      audio: this.props.audio,
+      video: this.props.video,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -169,8 +169,8 @@ class VideoContainer extends Component {
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
-                publishAudio: this.state.audio, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: this.state.video, // Whether you want to start publishing with your video enabled or not
+                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: true, // Whether you want to start publishing with your video enabled or not
                 resolution: "240x180", // The resolution of your video "640x480", "1280x720"
                 // frameRate: 30, // The frame rate of your video
                 frameRate: 16, // The frame rate of your video

@@ -33,21 +33,13 @@ const VideoComponent = (props) => {
           if (data.audio !== undefined) {
             setMyMic(data.audio);
             setMic(data.audio);
-          }
-          if (data.video !== undefined) {
+          } else if (data.video !== undefined) {
             setMyVid(data.video);
             setVid(data.video);
           }
         }
       });
     }
-    if (myVid === false) {
-      setMic(false);
-    }
-    if (myMic === false) {
-      setVid(false);
-    }
-
     return () => {};
   }, [streamManager, nickname, mic, vid, myVid, myMic, session]);
 
