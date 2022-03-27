@@ -18,6 +18,7 @@ export default function Cardheader(props) {
 
   const deletePostDB = () => {
     dispatch(postActions.deletePostDB(props.id));
+    setAnchorEl(null);
     // window.alert("포스트가 정상적으로 삭제되었습니다.");
     // window.location.reload();
   };

@@ -37,16 +37,16 @@ export default function StoryCard(props) {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-      dispatch(commentActions.getCommentDB(props.id));
+    dispatch(commentActions.getCommentDB(props.id));
 
-    // if (likeUserDto && likeUserDto.length > 0) {
-    //   console.log(likeUserDto);
-    // }
+  if (likeUserDto && likeUserDto.length > 0) {
+    console.log(likeUserDto);
+  }
+  if (commentState && commentState.length > 0) {
+    console.log(commentUserDto);
+  }
+}, [commentUserDto, likeUserDto]);
 
-    // if (commentState && commentState.length > 0) {
-    //   console.log(commentUserDto);
-    // }
-  }, []);
 
   // datail modal open,close
   const [open, setOpen] = React.useState(false);
