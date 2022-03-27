@@ -37,16 +37,16 @@ export default function StoryCard(props) {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-      // dispatch(commentActions.getCommentDB(props.id));
+      dispatch(commentActions.getCommentDB(props.id));
 
-    if (likeUserDto && likeUserDto.length > 0) {
-      console.log(likeUserDto);
-    }
+    // if (likeUserDto && likeUserDto.length > 0) {
+    //   console.log(likeUserDto);
+    // }
 
-    if (commentState && commentState.length > 0) {
-      console.log(commentUserDto);
-    }
-  }, [commentUserDto, likeUserDto]);
+    // if (commentState && commentState.length > 0) {
+    //   console.log(commentUserDto);
+    // }
+  }, []);
 
   // datail modal open,close
   const [open, setOpen] = React.useState(false);
@@ -128,17 +128,17 @@ export default function StoryCard(props) {
               </div>
             </Grid>
           </CardContent>
-          {likeUserDto.length <= 0 ? (
+          {likeUserDto && likeUserDto.length <= 0 ? (
             <Text margin_left="16px" margin_top="8px">
               좋아요를 처음 누른 친구가 되어봐요 :)
             </Text>
           ) : (
             <Text margin_left="16px" margin_top="8px">
-              {likeUserDto[0].nickname}님 외 {likeUserDto.length - 1}명이 이
+              {likeUserDto && likeUserDto[0].nickname}님 외 {likeUserDto && likeUserDto.length - 1}명이 이
               스토리를 좋아해요
             </Text>
           )}
-          {commentState <= 0 ? (
+          {commentState && commentState.length <= 0 ? (
             <Text
               margin_left="16px"
               margin_bottom="8px"
