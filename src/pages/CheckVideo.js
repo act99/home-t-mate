@@ -114,7 +114,6 @@ const CheckVideo = () => {
     if (videoReducer.video) {
       const s = videoRef.current.srcObject;
       s.getTracks().forEach((track) => {
-        console.log(track);
         track.stop();
       });
     } else {

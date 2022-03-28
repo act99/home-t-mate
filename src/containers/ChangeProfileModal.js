@@ -22,10 +22,8 @@ const ChangeProfileModal = (props) => {
   const selectFile = () => {
     const reader = new FileReader();
     const previewFile = fileInputRef.current.files[0];
-    console.log(previewFile);
     reader.readAsDataURL(previewFile);
     reader.onloadend = () => {
-      // console.log(reader.result);
       setPreview(reader.result);
     };
   };
@@ -35,13 +33,10 @@ const ChangeProfileModal = (props) => {
     let formData = new FormData();
     const file = fileInputRef.current.files[0];
     formData.append("profileImg", file);
-    console.log(file);
     imageApis
       .editProfile(formData)
       .then((res) => {
-        console.log(res.data);
         dispatch(userActions.login({ ...res.data, is_login: true }));
-        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -107,14 +102,38 @@ const ChangeProfileModal = (props) => {
             </button>
           </Grid>
 
-{/* 이미지 선택하는부분 */}
-          <Grid is_flex width="200px" height="350px" margin="auto" align_items="center">
+          {/* 이미지 선택하는부분 */}
+          <Grid
+            is_flex
+            width="200px"
+            height="350px"
+            margin="auto"
+            align_items="center"
+          >
             <FileInput type="file" ref={fileInputRef} onChange={selectFile} />
             <ProfileImage src={preview ? preview : profileImg} />
           </Grid>
           <Grid is_flex position="absolute" bottom="0px" margin_left="33%">
-          {preview===null? <Text F_size="16px" F_align="center" margin_bottom="90px" F_family="SuncheonB">이미지를 넣어주세요.</Text> : <Text F_size="16px" F_align="center" margin_bottom="90px" F_family="SuncheonB">이미지가 등록되었어요.</Text>}
-        </Grid>
+            {preview === null ? (
+              <Text
+                F_size="16px"
+                F_align="center"
+                margin_bottom="90px"
+                F_family="SuncheonB"
+              >
+                이미지를 넣어주세요.
+              </Text>
+            ) : (
+              <Text
+                F_size="16px"
+                F_align="center"
+                margin_bottom="90px"
+                F_family="SuncheonB"
+              >
+                이미지가 등록되었어요.
+              </Text>
+            )}
+          </Grid>
         </Box>
       </Fade>
     </Modal>

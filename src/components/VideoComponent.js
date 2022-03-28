@@ -24,7 +24,6 @@ const VideoComponent = (props) => {
   const [myVid, setMyVid] = React.useState(true);
 
   React.useEffect(() => {
-    console.log(youtubeReducer.on);
     if (streamManager && !!videoRef) {
       streamManager.addVideoElement(videoRef.current);
       // setMic(videoReducer.audio);
@@ -33,7 +32,6 @@ const VideoComponent = (props) => {
     if (session) {
       session.on("signal:userChanged", (event) => {
         const data = JSON.parse(event.data);
-        console.log(nickname, data.nickname);
         if (nickname + "OV" === data.nickname) {
           if (data.Saudio !== undefined) {
             setMyMic(data.Saudio);
@@ -49,7 +47,6 @@ const VideoComponent = (props) => {
   }, [streamManager, nickname, mic, vid, myVid, myMic, session]);
 
   const handleVideo = () => {
-    console.log("비디오", console.log(videoRef.current));
     if (vid === false) {
       if (nickname === userReducer.nickname) {
         dispatch(
@@ -78,7 +75,6 @@ const VideoComponent = (props) => {
   };
 
   const handleMic = () => {
-    console.log("마이크", console.log(videoRef));
     if (mic === false) {
       if (nickname === userReducer.nickname) {
         dispatch(

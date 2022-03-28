@@ -33,7 +33,6 @@ const CreateRoomModal = (props) => {
   const selectFile = () => {
     const reader = new FileReader();
     const previewFile = fileInputRef.current.files[0];
-    console.log(previewFile);
     reader.readAsDataURL(previewFile);
     reader.onloadend = () => {
       // console.log(reader.result);
@@ -47,7 +46,6 @@ const CreateRoomModal = (props) => {
     const data = new FormData(event.currentTarget);
     const file = fileInputRef.current.files[0];
     formData.append("file", file);
-    console.log(file);
     if (file === undefined) {
       roomCreators.createRoomDB(
         data.get("title"),
@@ -59,12 +57,6 @@ const CreateRoomModal = (props) => {
     imageApis
       .postImage(formData)
       .then((res) => {
-        console.log(
-          data.get("title"),
-          data.get("password"),
-          data.get("content"),
-          res.data.file[0]
-        );
         dispatch(
           roomCreators.createRoomDB(
             data.get("title"),

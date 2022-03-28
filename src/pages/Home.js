@@ -78,7 +78,6 @@ const Home = () => {
   // ** 검색기능
   const [searchInput, setSearchInput] = React.useState("");
   const submitSearchHandler = (e) => {
-    console.log(searchInput.length);
     e.preventDefault();
     if (searchInput.length === 0) {
       history.push("/reenterkeyword");

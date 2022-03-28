@@ -9,7 +9,6 @@ import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 function MypagePost(props) {
-  console.log("mypagepost props확인용", props);
   const dispatch = useDispatch();
   const time = moment(props.createdAt).format("YYYY.MM.DD a h:mm");
   //detail modal open,close

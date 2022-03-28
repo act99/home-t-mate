@@ -17,7 +17,6 @@ import RoomCardModal from "./RoomCardModal";
 const MyChattingRoom = () => {
   const roomList = useSelector((state) => state.roomReducer.room_list);
   const dispatch = useDispatch();
-  console.log(roomList);
   const [clickCard, setClickCard] = React.useState(false);
   const [modalData, setModalData] = React.useState({
     userCount: null,

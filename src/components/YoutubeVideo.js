@@ -98,7 +98,6 @@ const YoutubeVideo = (props) => {
   // ** 유튜브 pause websocket
   const handlePause = (e) => {
     console.log("pause");
-    console.log(youtubeRef.current);
     sendYoutubeOff(ws, token, youtubeOff);
   };
   const handleStop = () => {

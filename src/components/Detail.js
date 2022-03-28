@@ -46,7 +46,6 @@ export default function Detail(props) {
 
   const comment = useSelector((state) => state.commentReducer.list);
   const thisComment = comment[`${props.id}`];
-  console.log(thisPost.likeUserDto);
 
   React.useEffect(() => {
     if (!commentState) {

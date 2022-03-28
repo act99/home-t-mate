@@ -38,7 +38,6 @@ const Mypage = (props) => {
       end: e.event.end,
       time: e.event.time,
     });
-    console.log(e.event.title);
     setOpen(true);
   };
   const handleClose = () => {
@@ -71,7 +70,6 @@ const Mypage = (props) => {
   // ** 프로필 이미지 수정
   const [openProfile, setOpenProfile] = React.useState(false);
   React.useEffect(() => {
-    console.log(delData);
     dispatch(postActions.getPostDB());
     dispatch(todoActions.getTodoDB());
     return () => {};

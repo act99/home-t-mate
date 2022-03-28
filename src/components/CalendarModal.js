@@ -44,18 +44,12 @@ const style = {
 export default function TransitionsModal(props) {
   const dispatch = useDispatch();
   const { open, handleClose, events } = props;
-  console.log(events.id);
   // ** 달력 세팅
   const [changeStart, setChangeStart] = React.useState(new Date());
   const [changeEnd, setChangeEnd] = React.useState(new Date());
   const [changeTitle, setChangeTitle] = React.useState("");
   const [changeTime, setChangeTime] = React.useState("00:00");
   const addClickHandler = () => {
-    console.log(
-      moment(changeStart).format().split("T")[0] + "T" + changeTime + ":00",
-      moment(changeEnd).format().split("T")[0] + "T" + changeTime + ":00",
-      changeTime
-    );
     dispatch(
       todoActions.addTodoDB({
         title: changeTitle,
@@ -69,7 +63,6 @@ export default function TransitionsModal(props) {
     closeModal();
   };
   const editClickHandler = () => {
-    console.log(events.id);
     dispatch(
       todoActions.editTodoDB(events.id, {
         id: events.id,

@@ -23,7 +23,6 @@ import { deleteCookie } from "../shared/Cookie";
 const NavBar = (props) => {
   // ** 채팅방 이동 시 네비게이션 바 변경
   const pathname = window.location.pathname;
-  console.log(pathname);
 
   // ** 채팅방 이동 시 네비게이션 바 변경 끝
 
@@ -35,7 +34,6 @@ const NavBar = (props) => {
   const size = useWindowSize();
   const width = size.width;
   const height = size.height;
-  console.log(width);
   const logout = () => {
     dispatch(userActions.logout());
     history.replace("/");
