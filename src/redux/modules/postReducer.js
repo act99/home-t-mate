@@ -41,8 +41,7 @@ const getPostDB = () => {
       .then((res) => {
         dispatch(setPost(res.data));
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 };
 
@@ -53,8 +52,7 @@ const addPostDB = (postData) => {
       .then((res) => {
         history.go(0);
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 };
 
@@ -106,15 +104,18 @@ const likePostDB = (postId, userId, nickname) => {
 const deleteManyPostDB = (postId) => {
   return function (dispatch, getState, { history }) {
     console.log(postId);
+    console.log("삭제하기 콘솔", postId);
     apis
-      .deleteManyPost(postId)
+      .deleteManyPost({ postId: postId })
       .then((res) => {
+        console.log({ postId: postId });
         // dispatch(deletePost(postId));
         alert("게시글이 삭제되었습니다.");
         // history.replace("/story");
       })
       .catch((error) => {
-        console.log(error);
+        console.log({ postId: postId });
+        console.log(error.response.data);
         alert("게시글 삭제를 실패했습니다 :(");
       });
   };

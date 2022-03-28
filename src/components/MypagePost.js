@@ -14,17 +14,25 @@ function MypagePost(props) {
     return props.modal ? setOpen(true) : setOpen(false);
   };
   const handleClose = () => setOpen(false);
+
+  const handleDeleteData = (e) => {
+    const filtering = props.delData.filter(
+      (item) => item.postId === e.target.value * 1
+    );
+    if (filtering.length === 0) {
+      props.setDelData([...props.delData, { postId: e.target.value * 1 }]);
+    } else {
+      props.setDelData([
+        ...props.delData.filter((item) => item.postId !== e.target.value * 1),
+      ]);
+    }
+  };
   return (
     <Grid margin_top="24px">
       <Grid is_flex>
         <Grid>
           <input
-            onClick={(e) => {
-              props.setDelData([
-                ...props.delData,
-                { postId: e.target.value * 1 },
-              ]);
-            }}
+            onClick={handleDeleteData}
             type="checkbox"
             id="horns"
             name="horns"
