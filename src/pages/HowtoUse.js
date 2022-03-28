@@ -7,6 +7,8 @@ import CreateImage from "../assets/createimage.png";
 import EnterRoomImage from "../assets/enterroomimage.png";
 import AcceptCam from "../assets/acceptcam.png";
 import CheckCam from "../assets/checkcam.png";
+import Waiting from "../assets/waiting.png";
+import Working from "../assets/working.png";
 const HowtoUse = () => {
   return (
     <>
@@ -106,7 +108,7 @@ const HowtoUse = () => {
             <strong>5. 유튜브 url 넣고 운동 시작하기</strong>
             <br />
             <br />
-            <img src={AcceptCam} alt="" width="70%" />
+            <img src={Waiting} alt="" width="70%" />
             <br /> <br />
             방에 입장하시면 카메라 또는 마이크 설정을 하신 후, <br /> 모든
             참여자들이 접속할 때 까지 기다려주세요.
@@ -128,7 +130,7 @@ const HowtoUse = () => {
               카메라 또는 마이크를 다시 설정해주세요.
             </storng>
             <br />
-            <img src={CheckCam} alt="" width="70%" />
+            <img src={Working} alt="" width="70%" />
             <br /> 모든 참여자들이 접속하면 유튜브 url 을 넣고 유튜브 url
             제출버튼을 눌러주세요.
             <br />
