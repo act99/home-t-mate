@@ -95,7 +95,7 @@ class VideoContainer extends Component {
   sendSignalUserAudio(audio) {
     const data = {
       Saudio: audio,
-      nickname: this.state.myUserName,
+      nickname: this.state.myUserName + "OV",
     };
     const signalOptions = {
       data: JSON.stringify(data),
@@ -106,7 +106,7 @@ class VideoContainer extends Component {
   sendSignalUserVideo(video) {
     const data = {
       Svideo: video,
-      nickname: this.state.myUserName,
+      nickname: this.state.myUserName + "OV",
     };
     const signalOptions = {
       data: JSON.stringify(data),

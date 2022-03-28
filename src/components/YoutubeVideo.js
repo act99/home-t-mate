@@ -96,16 +96,17 @@ const YoutubeVideo = (props) => {
     console.log("play");
   };
   // ** 유튜브 pause websocket
-  const handlePause = () => {
-    sendYoutubeOff(ws, token, youtubeOff);
+  const handlePause = (e) => {
     console.log("pause");
+    console.log(youtubeRef.current);
+    sendYoutubeOff(ws, token, youtubeOff);
   };
   const handleStop = () => {
     sendYoutubeStop(ws, token, youtubeStop);
     console.log("stop");
   };
   // const roomData = useSelector((state) => state.selectedRoomReducer.room);
-
+  const youtubeRef = React.useRef();
   // ** 유튜브 on Off controller
   React.useEffect(() => {
     if (url !== "") {
@@ -116,25 +117,25 @@ const YoutubeVideo = (props) => {
     setUrlIntput({
       ...urlIntput,
       roomId: roomId,
-      sender: user.nickname,
+      sender: user.nickname + "Youtube",
       type: "YOUTUBEURL",
     });
     setYoutubeOn({
       ...youtubeOn,
       roomId: roomId,
-      sender: user.nickname,
+      sender: user.nickname + "Youtube",
       type: "YOUTUBEON",
     });
     setYoutubeOff({
       ...youtubeOff,
       roomId: roomId,
-      sender: user.nickname,
+      sender: user.nickname + "Youtube",
       type: "YOUTUBEPAUSE",
     });
     setYoutubeStop({
       ...youtubeStop,
       roomId: roomId,
-      sender: user.nickname,
+      sender: user.nickname + "Youtube",
       type: "YOUTUBESTOP",
     });
     return () => {};
@@ -153,6 +154,7 @@ const YoutubeVideo = (props) => {
           // width={`${width * 0.7}px`}
           // height={`${width * 0.525}px`}
           // height={`${height - 200}px`}
+          ref={youtubeRef}
           playing={on}
           onPlay={handlePlay}
           onPause={handlePause}
@@ -195,7 +197,20 @@ const YoutubeVideo = (props) => {
               <h3>{host}</h3>
             </HostText>
           </WrapRoomInfo>
-          {/* <Banner width={width}></Banner> */}
+          <Banner width={width}>
+            <HostText width={width} style={{ marginTop: width * 0.01 + "px" }}>
+              <h3>💪 공지 💪</h3>
+            </HostText>
+            <HostText width={width} style={{ marginTop: width * 0.01 + "px" }}>
+              <h3>영상 재생 중에는 카메라와 마이크를 설정하실 수 없습니다. </h3>
+            </HostText>
+            <HostText width={width} style={{ marginTop: width * 0.005 + "px" }}>
+              <h3>
+                유튜브 영상을 일시정지 하신 후, 카메라와 마이크를 재설정해주시기
+                바랍니다.
+              </h3>
+            </HostText>
+          </Banner>
         </BottomTop>
         <WrapFromStyle width={width}>
           <FormBox onSubmit={handleUrlSubmit}>
@@ -280,7 +295,7 @@ const WrapRoomInfo = styled.div`
 const Banner = styled.div`
   width: ${(props) => props.width * 0.44 + "px"};
   height: ${(props) => props.width * 0.06 + "px"};
-  background-color: beige;
+  /* background-color: beige; */
 `;
 
 const WrapFromStyle = styled.div`

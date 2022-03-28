@@ -95,12 +95,14 @@ const ChatContainer = (props) => {
       >
         {subscribers.map((item, index) => (
           <>
-            <ListItem key={index + item.nickname}>
-              <ListItemAvatar>
-                <Avatar alt={item.nickname} src={item.profileImg} />
-              </ListItemAvatar>
-              <ListItemText primary={item.nickname} />
-            </ListItem>
+            <div key={index + item.nickname}>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar alt={item.nickname} src={item.profileImg} />
+                </ListItemAvatar>
+                <ListItemText primary={item.nickname} />
+              </ListItem>
+            </div>
           </>
         ))}
       </List>
@@ -117,20 +119,24 @@ const ChatContainer = (props) => {
       >
         {chattingList.map((item, index) =>
           item.sender === nickname ? (
-            <ListItem key={index + "" + (item.id + "")}>
-              <Grid container>
-                <Grid item xs={12}>
-                  <ProfileRight>
-                    {/* <h3>{item.sender}</h3> */}
-                    <h3>나</h3>
-                  </ProfileRight>
-                  <MyText>
-                    <h5>{item.time}</h5>
-                    <h3>{item.message}</h3>
-                  </MyText>
-                </Grid>
-              </Grid>
-            </ListItem>
+            <>
+              <div key={index + "" + (item.id + "")}>
+                <ListItem>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <ProfileRight>
+                        {/* <h3>{item.sender}</h3> */}
+                        <h3>나</h3>
+                      </ProfileRight>
+                      <MyText>
+                        <h5>{item.time}</h5>
+                        <h3>{item.message}</h3>
+                      </MyText>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+              </div>
+            </>
           ) : (
             <ListItem key={index + "" + (item.id + "")}>
               <Grid container>

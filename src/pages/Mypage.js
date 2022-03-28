@@ -178,11 +178,11 @@ const Mypage = (props) => {
                 value="2"
                 sx={{ fontWeight: "bold", fontFamily: "SuncheonR" }}
               />
-              <StyledTab
+              {/* <StyledTab
                 label="내가 만든 방"
                 value="3"
                 sx={{ fontWeight: "bold", fontFamily: "SuncheonR" }}
-              />
+              /> */}
             </StyledTabs>
           </Box>
           <TabPanel value="1" sx={{ p: "0px" }}>
@@ -264,9 +264,9 @@ const Mypage = (props) => {
             </Grid>
             <Grid></Grid>
           </TabPanel>
-          <TabPanel value="3" sx={{ p: "0px" }}>
+          {/* <TabPanel value="3" sx={{ p: "0px" }}>
             <MyChattingRoom />
-          </TabPanel>
+          </TabPanel> */}
         </TabContext>
       </Box>
       <ChangeProfileModal
