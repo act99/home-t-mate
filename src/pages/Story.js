@@ -20,8 +20,6 @@ function Story() {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const _post = useSelector((state) => state.postReducer.list);
-  const test = useSelector((state) => state);
-  console.log("state확인용", test);
 
   return (
     <React.Fragment>

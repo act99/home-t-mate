@@ -36,7 +36,6 @@ const ChatContainer = (props) => {
   const locationState = location.state;
   const roomName = locationState.roomName;
   const roomId = locationState.roomId;
-  console.log(roomName, roomId);
 
   // ** user 정보
   const user = useSelector((state) => state.userReducer.user);
@@ -69,7 +68,6 @@ const ChatContainer = (props) => {
 
   React.useEffect(
     () => {
-      console.log(nickname);
       setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
       // chattingRef.current.scrollIntoView({ behavior: "smooth" });
       return () => {};

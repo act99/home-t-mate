@@ -8,7 +8,6 @@ const KakaoOauth = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     let code = new URL(window.location.href).searchParams.get("code");
-    console.log(code);
     dispatch(userActions.kakaoLoginDB(code));
   }, []);
 

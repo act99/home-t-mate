@@ -45,7 +45,6 @@ class VideoContainer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps, prevState);
     if (prevProps.video !== this.props.video) {
       this.sendSignalUserVideo(this.props.video);
     }
@@ -53,7 +52,6 @@ class VideoContainer extends Component {
       this.sendSignalUserAudio(this.props.audio);
     }
     if (prevState.subscribers.length !== this.state.subscribers.length) {
-      console.log("하이!!!!!!!!!!!!!!!!!!!!!!!");
     }
   }
 
@@ -302,7 +300,6 @@ class VideoContainer extends Component {
           },
         })
         .then((response) => {
-          console.log("CREATE SESION", response);
           resolve(response.data.id);
         })
         .catch((response) => {

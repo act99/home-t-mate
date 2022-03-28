@@ -14,7 +14,6 @@ import Popover from "@mui/material/Popover";
 
 export default function CommentBox(props) {
   const dispatch = useDispatch();
-  // console.log('commentBox', props) id
   const _user = useSelector((state) => state.userReducer.user);
 
   const commentRef = React.useRef();
@@ -31,7 +30,6 @@ export default function CommentBox(props) {
   };
 
   const onEmojiClick = (event, emojiObject) => {
-    console.log(emojiObject.emoji);
     setComment(comment + emojiObject.emoji);
   };
 

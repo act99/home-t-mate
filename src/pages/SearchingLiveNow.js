@@ -83,7 +83,6 @@ const SearchingLiveNow = () => {
     }
   };
   React.useEffect(() => {
-    console.log(searchInput);
     dispatch(roomCreators.searchRoomDB(searchInput));
     return () => {
       dispatch(roomCreators.clearRoom([]));

@@ -16,7 +16,6 @@ import { Modal } from "@mui/material";
 import Detail from "./Detail";
 import CloseIcon from "@mui/icons-material/Close";
 
-
 export default function StoryCard(props) {
   const classes = storyCard();
   const {
@@ -39,14 +38,11 @@ export default function StoryCard(props) {
   React.useEffect(() => {
     dispatch(commentActions.getCommentDB(props.id));
 
-  if (likeUserDto && likeUserDto.length > 0) {
-    console.log(likeUserDto);
-  }
-  if (commentState && commentState.length > 0) {
-    console.log(commentUserDto);
-  }
-}, [commentUserDto, likeUserDto]);
-
+    if (likeUserDto && likeUserDto.length > 0) {
+    }
+    if (commentState && commentState.length > 0) {
+    }
+  }, [commentUserDto, likeUserDto]);
 
   // datail modal open,close
   const [open, setOpen] = React.useState(false);
@@ -84,25 +80,25 @@ export default function StoryCard(props) {
           </Carousel>
 
           <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <div>
-            <Detail
-              id={id}
-              commentUserDto={commentUserDto}
-              likeUserDto={likeUserDto}
-            />
-            <Grid position="absolute" right="0">
-              <CloseIcon
-                sx={{ color: "white", fontSize: 40 }}
-                onClick={handleClose}
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div>
+              <Detail
+                id={id}
+                commentUserDto={commentUserDto}
+                likeUserDto={likeUserDto}
               />
-            </Grid>
-          </div>
-        </Modal>
+              <Grid position="absolute" right="0">
+                <CloseIcon
+                  sx={{ color: "white", fontSize: 40 }}
+                  onClick={handleClose}
+                />
+              </Grid>
+            </div>
+          </Modal>
 
           {/* id는 post id */}
           <LikeComment
@@ -134,8 +130,8 @@ export default function StoryCard(props) {
             </Text>
           ) : (
             <Text margin_left="16px" margin_top="8px">
-              {likeUserDto && likeUserDto[0].nickname}님 외 {likeUserDto && likeUserDto.length - 1}명이 이
-              스토리를 좋아해요
+              {likeUserDto && likeUserDto[0].nickname}님 외{" "}
+              {likeUserDto && likeUserDto.length - 1}명이 이 스토리를 좋아해요
             </Text>
           )}
           {commentState && commentState.length <= 0 ? (
@@ -154,9 +150,8 @@ export default function StoryCard(props) {
               F_color="#757575"
               margin_top="8px"
             >
-                {commentState && commentState[0].nickname}님 외
-                {commentState && commentState.length - 1}개의댓글
-
+              {commentState && commentState[0].nickname}님 외
+              {commentState && commentState.length - 1}개의댓글
             </Text>
           )}
         </Card>
@@ -174,6 +169,6 @@ const storyCard = makeStyles({
   root: {
     borderRadius: 20,
     boxShadow: "2px 5px 12px 6px rgba(240, 240, 240);",
-    border: "1px solid #D3D3D3"
+    border: "1px solid #D3D3D3",
   },
 });

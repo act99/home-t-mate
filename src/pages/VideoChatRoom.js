@@ -57,7 +57,6 @@ const VideoChatRoom = () => {
   });
   const handleQuit = () => {
     sendQuitRoom(ws, token, quit);
-    console.log("유저가 나감");
   };
 
   // ** ws Open
@@ -67,12 +66,10 @@ const VideoChatRoom = () => {
       ws.connect(
         { Authorization: token },
         (frame) => {
-          console.log("hi");
           ws.subscribe(
             `/sub/chat/room/${roomId}`,
             (message) => {
               let recv = JSON.parse(message.body);
-              console.log(recv);
               if (recv.type === "TALK") {
                 dispatch(chatActions.getChat(recv));
                 chattingRef.current.scrollIntoView({ behavior: "smooth" });
@@ -90,7 +87,6 @@ const VideoChatRoom = () => {
               } else if (recv.type === "YOUTUBESTOP") {
                 setWorkOut(false);
               } else if (recv.type === "QUIT") {
-                console.log("나갔음");
                 dispatch(chatActions.getChat(recv));
                 dispatch(subscribersActions.leaveSubscribers(recv));
               }

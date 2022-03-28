@@ -34,7 +34,6 @@ function Write(props) {
   const formData = new FormData();
 
   const selectFile = (e) => {
-    console.log("e", e);
     const files = fileInput.current.files;
 
     setTempFile([...tempFile, files]);
@@ -48,7 +47,6 @@ function Write(props) {
         if (tempData.length === files.length) {
           setPreview([...preview, ...tempData]);
           setFileSelected(true);
-          console.log("selectFile입니다", formData);
         }
       });
     }
@@ -58,8 +56,6 @@ function Write(props) {
     const postData = new FormData();
     for (let i = 0; i < tempFile[0].length; i++) {
       postData.append("imageUrl", tempFile[0][i]);
-      console.log(tempFile[0][i]);
-      console.log(postData);
     }
     postData.append("content", contents.current.value);
 
