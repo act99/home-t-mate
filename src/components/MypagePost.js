@@ -5,8 +5,12 @@ import { Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Detail from "../components/Detail.js";
 import "../App.css";
+import styled from "@emotion/styled";
+import { useDispatch } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/postReducer";
 function MypagePost(props) {
   console.log("mypagepost props확인용", props);
+  const dispatch = useDispatch();
   const time = moment(props.createdAt).format("YYYY.MM.DD a h:mm");
   //detail modal open,close
   const [open, setOpen] = React.useState(false);
@@ -20,35 +24,24 @@ function MypagePost(props) {
       (item) => item.postId === e.target.value * 1
     );
     if (filtering.length === 0) {
-      props.setDelData([...props.delData, { postId: e.target.value * 1 }]);
+      props.setDelData([...props.delData, { postId: e.target.value }]);
     } else {
       props.setDelData([
-        ...props.delData.filter((item) => item.postId !== e.target.value * 1),
+        ...props.delData.filter((item) => item.postId !== e.target.value),
       ]);
     }
+  };
+  const handleDelete = (id) => {
+    dispatch(postActions.deletePostDB(id));
   };
   return (
     <Grid margin_top="24px">
       <Grid is_flex>
-        <Grid>
-          <input
-            onClick={handleDeleteData}
-            type="checkbox"
-            id="horns"
-            name="horns"
-            value={props.id}
-            style={{
-              width: "24px",
-              height: "24px",
-              // marginRight: "48px",
-            }}
-          />
-        </Grid>
         <Grid
           B_radius="20px"
           margin_left="48px"
           is_flex
-          width="580px"
+          width="480px"
           height="160px"
           box_shadow="2px 5px 12px 6px rgba(0,0,0,0.05)"
           _onClick={handleOpen}
@@ -62,14 +55,16 @@ function MypagePost(props) {
             src={props.photoResponseDto[0].postImg}
           ></Image>
           <Grid
-            width="360px"
+            width="280px"
             hegith="112px"
             B_radius="5px"
             Border="2px solid #757575"
             padding="24px"
           >
             <div className="overFlowTextTwo" style={{ cursor: "pointer" }}>
-              {props.content}
+              {props.content.length > 25
+                ? props.content.slice(0, 25) + "..."
+                : props.content}
             </div>
           </Grid>
         </Grid>
@@ -77,6 +72,11 @@ function MypagePost(props) {
           <Text F_size="18px" F_color="#555555" margin_left="92px">
             {time}에 작성됨
           </Text>
+        </Grid>
+        <Grid>
+          <DeleteButton onClick={() => handleDelete(props.id)}>
+            <h3>삭제</h3>
+          </DeleteButton>
         </Grid>
       </Grid>
       <Modal
@@ -102,4 +102,16 @@ function MypagePost(props) {
     </Grid>
   );
 }
+
+const DeleteButton = styled.div`
+  width: 100%;
+  height: auto;
+  margin-left: 92px;
+  text-align: center;
+  cursor: pointer;
+  h3 {
+    font-size: 18px;
+    color: #555555;
+  }
+`;
 export default MypagePost;

@@ -224,7 +224,7 @@ const Mypage = (props) => {
               B_radius="20px"
               Border="2px solid #587730"
             >
-              <Button
+              {/* <Button
                 _onClick={deletePostDB}
                 position="absolute"
                 right="20px"
@@ -238,7 +238,7 @@ const Mypage = (props) => {
                 margin="32px 0px 0px 0px"
               >
                 삭제
-              </Button>
+              </Button> */}
               <Grid is_flex margin_top="44px" B_bottom="1px solid #C4C4C4">
                 <Text F_size="18px" margin="0px 0px 16px 80px">
                   스토리 리스트(총 {mypagePost.length}개)
