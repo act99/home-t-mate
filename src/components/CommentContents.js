@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { actionCreators as commentActions } from "../redux/modules/commentReducer";
 import { useDispatch } from "react-redux";
 import { Text } from "../elements";
+import useWindowSize from "../hooks/useWindowSize";
 
 export default function CommentContents(props) {
   const dispatch = useDispatch();
@@ -16,6 +17,9 @@ export default function CommentContents(props) {
     dispatch(commentActions.delCommentDB(props.id, props.commentId));
   };
 
+  const size = useWindowSize();
+  const { width, height } = size;
+
   return (
     <Grid is_flex flex_direction="column">
       <Grid
@@ -23,30 +27,31 @@ export default function CommentContents(props) {
         flex_wrap="wrap"
         align_items="stretch"
         flex_direction="row"
-        width="545px"
+        width={width * 0.3 + "px"}
+        
         padding_left="16px"
-        margin="0px"
+        margin="0px 0px 15px 0px"
       >
         <Grid
           margin="0px"
-          height="50px"
+          // height={width * 0.1 + "px"}
           is_flex
           flex_direction="column"
           justify_content="start"
         >
-          <Image margin="0" shape="circle" src={props.profileImg} size="35" />
+          <Image margin="0" shape="circle" src={props.profileImg} size="34" />
         </Grid>
 
-        <Grid width="297px" margin_left="16px">
-          <Grid height="auto" is_flex flex_wrap="wrap">
-            <Text margin="7px 10px 0px 0px" F_size="16px">
-              <b width="auto" margin="5px 10px 5px 5px">
+        <Grid width={width * 0.25 + "px"} margin_left="10px">
+          <Grid height="auto" is_flex>
+            <Text margin="1vh 0.5vw 0px 0px" F_size="0.9vmax">
+              <b width="auto" style={{marginRight:"1vmin"}}>
                 {props.nickname}
               </b>
               {props.comment}
             </Text>
             <CloseIcon
-              sx={{ color: "#757575", fontSize: "13px", cursor: "pointer" }}
+              sx={{ color: "#757575", fontSize: "1.4vmin", cursor: "pointer", marginTop:"8px"}}
               onClick={delComment}
             />
           </Grid>

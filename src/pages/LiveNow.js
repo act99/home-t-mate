@@ -16,6 +16,7 @@ import RoomCardModal from "../containers/RoomCardModal";
 import { BsSearch } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import InfinityScroll from "../shared/InfinityScroll";
+import useScrollFadeIn from "../hooks/useScrollFadeIn";
 const LiveNow = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -94,6 +95,8 @@ const LiveNow = () => {
     // setPaging(paging + 1);
     dispatch(roomCreators.getRoomDB());
   };
+  const animatedItem = useScrollFadeIn("up", 2, 0);
+
   React.useEffect(() => {
     dispatch(roomCreators.getRoomDB());
     return () => {
@@ -108,27 +111,31 @@ const LiveNow = () => {
       <InfinityScroll callNext={handleNext} loading={is_loading}>
         <Wrap>
           <Container sx={{ py: 16, width: "100%" }}>
-            <MainTitle>
-              <h3>친구들과 함께하는 화상 홈트레이닝</h3>
-              <h5>오늘도 여러분의 운동을 응원합니다</h5>
-            </MainTitle>
-            <form onSubmit={submitSearchHandler}>
-              <SearchBarWrap>
-                <SearchBarInput
-                  placeholder="원하시는 방 제목 또는 호스트 이름을 검색해주세요"
-                  onKeyDown={onEnterPress}
-                  value={searchInput}
-                  onChange={searchInputHandler}
-                />
-                <BsSearch
-                  style={{
-                    fontSize: "24px",
-                    marginLeft: "16px",
-                    marginRight: "16px",
-                  }}
-                />
-              </SearchBarWrap>
-            </form>
+            <div {...animatedItem}>
+              <MainTitle>
+                <h3>친구들과 함께하는 화상 홈트레이닝</h3>
+                <h5>오늘도 여러분의 운동을 응원합니다</h5>
+              </MainTitle>
+              <form onSubmit={submitSearchHandler}>
+                <SearchBarWrap>
+                  <SearchBarInput
+                    placeholder="원하시는 방 제목 또는 호스트 이름을 검색해주세요"
+                    onKeyDown={onEnterPress}
+                    value={searchInput}
+                    onChange={searchInputHandler}
+                  />
+                  <SearchButton>
+                    <BsSearch
+                      style={{
+                        fontSize: "24px",
+                        marginLeft: "16px",
+                        marginRight: "16px",
+                      }}
+                    />
+                  </SearchButton>
+                </SearchBarWrap>
+              </form>
+            </div>
             <Grid container spacing={2}>
               {roomList.map((item, index) => (
                 <Grid
@@ -276,13 +283,13 @@ const MainTitle = styled.div`
   text-align: center;
   flex-direction: column;
   h3 {
-    font-size: 28px;
+    font-size: 36px;
     font-family: "GmarketSansMedium";
     margin: 0px;
     margin-bottom: 8px;
   }
   h5 {
-    font-size: 16px;
+    font-size: 18px;
     font-family: "GmarketSansLight";
     margin: 0px;
   }
@@ -389,7 +396,7 @@ const SearchBarWrap = styled.div`
   border: solid 1px #e2e2e2;
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 96px;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -410,6 +417,12 @@ const SearchBarInput = styled.input`
     outline: none;
     border: solid 2px #e2e2e2;
   }
+`;
+
+const SearchButton = styled.button`
+  background-color: rgb(0, 0, 0, 0);
+  border: solid 0px;
+  cursor: pointer;
 `;
 
 export default LiveNow;

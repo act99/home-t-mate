@@ -5,25 +5,26 @@ import { Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Detail from "../components/Detail.js";
 import "../App.css";
-
 function MypagePost(props) {
   console.log("mypagepost props확인용", props);
-
   const time = moment(props.createdAt).format("YYYY.MM.DD a h:mm");
-
   //detail modal open,close
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     return props.modal ? setOpen(true) : setOpen(false);
   };
   const handleClose = () => setOpen(false);
-
   return (
     <Grid margin_top="24px">
       <Grid is_flex>
         <Grid>
           <input
-          onClick={()=> props.setData(props.id)}
+            onClick={(e) => {
+              props.setDelData([
+                ...props.delData,
+                { postId: e.target.value * 1 },
+              ]);
+            }}
             type="checkbox"
             id="horns"
             name="horns"
@@ -35,7 +36,6 @@ function MypagePost(props) {
             }}
           />
         </Grid>
-
         <Grid
           B_radius="20px"
           margin_left="48px"
@@ -53,7 +53,6 @@ function MypagePost(props) {
             border_radius="20px 0px 0px 20px"
             src={props.photoResponseDto[0].postImg}
           ></Image>
-
           <Grid
             width="360px"
             hegith="112px"
@@ -61,17 +60,17 @@ function MypagePost(props) {
             Border="2px solid #757575"
             padding="24px"
           >
-            <div className="overFlowTextTwo" style={{cursor:"pointer"}}>{props.content}</div>
+            <div className="overFlowTextTwo" style={{ cursor: "pointer" }}>
+              {props.content}
+            </div>
           </Grid>
         </Grid>
-
         <Grid>
           <Text F_size="18px" F_color="#555555" margin_left="92px">
             {time}에 작성됨
           </Text>
         </Grid>
       </Grid>
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -95,5 +94,4 @@ function MypagePost(props) {
     </Grid>
   );
 }
-
 export default MypagePost;

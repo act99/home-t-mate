@@ -10,6 +10,7 @@ const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LIKE_POST = "LIKE_POST";
+const DELETE_MANY_POST = "DELETE_MANY_POST";
 
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const like = createAction(LIKE_POST, (postId, userId, nickname) => ({
@@ -19,6 +20,10 @@ const like = createAction(LIKE_POST, (postId, userId, nickname) => ({
 }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
+const deleteManyPost = createAction(DELETE_MANY_POST, (posts_id) => ({
+  posts_id,
+}));
+
 // const editPost = createAction(EDIT_POST, (post_id, contents, images) => ({
 //   post_id, contents, images
 // }));
@@ -37,7 +42,6 @@ const getPostDB = () => {
         dispatch(setPost(res.data));
       })
       .catch((error) => {
-        window.alert("게시글 불러오기 실패!");
       });
   };
 };
@@ -47,11 +51,9 @@ const addPostDB = (postData) => {
     imageApis
       .addPost(postData)
       .then((res) => {
-        alert("게시물 작성 성공!");
         history.go(0);
       })
       .catch((error) => {
-        alert("게시물 작성 실패!");
       });
   };
 };
@@ -64,10 +66,9 @@ const editPostDB = (postId, content) => {
       .then((res) => {
         history.replace("/story");
         history.go(0);
-        alert("게시글 수정 성공!");
       })
       .catch((error) => {
-        alert("게시글 수정에 실패했습니다.");
+        alert("게시글 수정에 실패했습니다 :(");
         console.log(error);
       });
   };
@@ -78,12 +79,12 @@ const deletePostDB = (postId) => {
     apis
       .deletePost(postId)
       .then((res) => {
+        dispatch(deletePost(postId));
         alert("게시글이 삭제되었습니다.");
-        history.replace("/story");
       })
       .catch((error) => {
         console.log(error);
-        alert("게시글이 삭제되지 않았습니다.");
+        alert("게시글 삭제를 실패했습니다 :(");
       });
   };
 };
@@ -97,7 +98,24 @@ const likePostDB = (postId, userId, nickname) => {
       })
       .catch((error) => {
         console.log(error);
-        alert("좋아요 실패");
+        alert("좋아요를 실패했습니다 :(");
+      });
+  };
+};
+
+const deleteManyPostDB = (postId) => {
+  return function (dispatch, getState, { history }) {
+    console.log(postId);
+    apis
+      .deleteManyPost(postId)
+      .then((res) => {
+        // dispatch(deletePost(postId));
+        alert("게시글이 삭제되었습니다.");
+        // history.replace("/story");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("게시글 삭제를 실패했습니다 :(");
       });
   };
 };
@@ -177,13 +195,14 @@ export default handleActions(
     //     draft.list[index] = { ...draft.list[index], ...action.payload.post };
     //   }),
 
-    // [DELETE_POST]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     let dummyIndex = draft.list.findIndex(
-    //       (item) => item["id"] === action.payload.post_id
-    //     );
-    //     draft.list.splice(dummyIndex, 1);
-    //   }),
+    [DELETE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        let dummyIndex = draft.list.findIndex(
+          (item) => item["id"] === action.payload.post_id
+        );
+        draft.list.splice(dummyIndex, 1);
+      }),
+    [DELETE_MANY_POST]: (state, action) => produce(state, (draft) => {}),
   },
   initialState
 );
@@ -194,6 +213,7 @@ const actionCreators = {
   deletePostDB,
   editPostDB,
   likePostDB,
+  deleteManyPostDB,
 };
 
 export { actionCreators };

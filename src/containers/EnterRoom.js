@@ -22,6 +22,9 @@ class VideoContainer extends Component {
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
+      sessionToken: undefined,
+      audio: this.props.audio,
+      video: this.props.video,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -33,13 +36,25 @@ class VideoContainer extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     window.addEventListener("beforeunload", this.onbeforeunload);
     this.joinSession();
   }
 
   componentWillUnmount() {
     window.removeEventListener("beforeunload", this.onbeforeunload);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps, prevState);
+    if (prevProps.video !== this.props.video) {
+      this.sendSignalUserVideo(this.props.video);
+    }
+    if (prevProps.audio !== this.props.audio) {
+      this.sendSignalUserAudio(this.props.audio);
+    }
+    if (prevState.subscribers.length !== this.state.subscribers.length) {
+      console.log("하이!!!!!!!!!!!!!!!!!!!!!!!");
+    }
   }
 
   onbeforeunload(event) {
@@ -77,6 +92,29 @@ class VideoContainer extends Component {
     }
   }
 
+  sendSignalUserAudio(audio) {
+    const data = {
+      Saudio: audio,
+      nickname: this.state.myUserName + "OV",
+    };
+    const signalOptions = {
+      data: JSON.stringify(data),
+      type: "userChanged",
+    };
+    this.state.session.signal(signalOptions);
+  }
+  sendSignalUserVideo(video) {
+    const data = {
+      Svideo: video,
+      nickname: this.state.myUserName + "OV",
+    };
+    const signalOptions = {
+      data: JSON.stringify(data),
+      type: "userChanged",
+    };
+    this.state.session.signal(signalOptions);
+  }
+
   joinSession() {
     // ** setState 와 동시에 async 로 함수 호출
 
@@ -99,9 +137,16 @@ class VideoContainer extends Component {
           var subscriber = mySession.subscribe(event.stream, undefined);
           var subscribers = this.state.subscribers;
           subscribers.push(subscriber);
-          this.setState({
-            subscribers: subscribers,
-          });
+
+          this.setState(
+            {
+              subscribers: subscribers,
+            },
+            () => {
+              this.sendSignalUserVideo(this.props.video);
+              this.sendSignalUserAudio(this.props.audio);
+            }
+          );
         });
 
         // ** 구독자 삭제
@@ -114,6 +159,9 @@ class VideoContainer extends Component {
         // ** 토큰 가져오는 과정에서 session 과 token 이 생성되며 return  된다.
         // ** 그 후, 가져온 세션과 토큰을 이용해 WebScoket과 통신을 시도하며, sdp 정보를 보내준다.
         this.getToken().then((token) => {
+          this.setState({
+            sessionToken: token,
+          });
           // ** 첫 번째 param은 OV Server 에서 오는 토큰 값이며, 두 번째 param은 모든 유저가 "streamCreated"를 통해
           // ** 받는 정보들이다. 그리고 이것은 유저 닉네임으로 DOM 에 추가된다.
           mySession
@@ -123,11 +171,11 @@ class VideoContainer extends Component {
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
-                publishAudio: this.props.audio, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: this.props.video, // Whether you want to start publishing with your video enabled or not
+                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: true, // Whether you want to start publishing with your video enabled or not
                 resolution: "240x180", // The resolution of your video "640x480", "1280x720"
                 // frameRate: 30, // The frame rate of your video
-                frameRate: 8, // The frame rate of your video
+                frameRate: 16, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
               });
@@ -140,6 +188,8 @@ class VideoContainer extends Component {
                 mainStreamManager: publisher,
                 publisher: publisher,
               });
+              // this.sendSignalUserVideo(this.props.video);
+              // this.sendSignalUserAudio(this.props.audio);
             })
             .catch((error) => {
               console.log(
@@ -147,6 +197,8 @@ class VideoContainer extends Component {
                 error.code,
                 error.message
               );
+              this.sendSignalUserVideo(this.props.video);
+              this.sendSignalUserAudio(this.props.audio);
             });
         });
       }
@@ -178,7 +230,7 @@ class VideoContainer extends Component {
         <></>
         {this.state.session === undefined ? (
           <div id="join">
-            <div id="join-dialog" className="jumbotron vertical-center">
+            {/* <div id="join-dialog" className="jumbotron vertical-center">
               <h1> Join a video session </h1>
               <form className="form-group" onSubmit={this.joinSession}>
                 <p>
@@ -212,7 +264,7 @@ class VideoContainer extends Component {
                   />
                 </p>
               </form>
-            </div>
+            </div> */}
           </div>
         ) : null}
 
@@ -224,6 +276,7 @@ class VideoContainer extends Component {
             session={this.state.session}
             OV={this.state.OV}
             mySessionId={this.state.mySessionId}
+            host={this.props.host}
           />
         ) : null}
       </BodyWrap>

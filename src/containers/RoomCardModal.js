@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { apis } from "../shared/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as selectedRoomActions } from "../redux/modules/selectedRoomReducer";
 import FullErrorContainer from "./FullErrorContainer";
 const style = {
@@ -31,6 +31,8 @@ const style = {
 
 const RoomCardModal = (props) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.userReducer.user);
+  const is_login = user.is_login;
   const { clickCard, setClickCard, data } = props;
   const {
     roomId,
@@ -49,24 +51,33 @@ const RoomCardModal = (props) => {
   const [errorGenerate, setErrorGenerate] = React.useState(false);
   const handleEnterRoom = (e) => {
     e.preventDefault();
-    apis
-      .enterRoom(roomId, password)
-      .then((res) => {
-        history.push({
-          pathname: `/checkvideo`,
-          state: {
-            roomId: roomId,
-            roomName: roomName,
-            password: password,
-          },
+    if (is_login === false) {
+      alert("로그인 후 입장 가능합니다.");
+      history.replace("/livenow");
+    } else {
+      apis
+        .enterRoom(roomId, password)
+        .then((res) => {
+          history.push({
+            pathname: `/checkvideo`,
+            state: {
+              roomId: roomId,
+              roomName: roomName,
+              password: password,
+              host: nickname,
+              hostImg: profileImg,
+            },
+          });
+          dispatch(
+            selectedRoomActions.setRoom({ ...data, password: password })
+          );
+        })
+        .catch((error) => {
+          setErrorGenerate(true);
+          // alert(error.response.data.message);
+          console.log(error.response.data);
         });
-        dispatch(selectedRoomActions.setRoom({ ...data, password: password }));
-      })
-      .catch((error) => {
-        setErrorGenerate(true);
-        // alert(error.response.data.message);
-        console.log(error.response.data);
-      });
+    }
   };
   const modalOff = () => {
     setClickCard(false);

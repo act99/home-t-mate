@@ -1,6 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "@mui/styles";
-
+import { useDispatch, useSelector } from "react-redux";
 import Cardheader from "../components/Cardheader";
 import LikeComment from "./LikeComment";
 import Img from "../components/Img";
@@ -9,12 +9,13 @@ import CardContent from "@mui/material/CardContent";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../App.css";
-
-import { Card, Typography } from "@mui/material";
+import { actionCreators as commentActions } from "../redux/modules/commentReducer";
+import { Card } from "@mui/material";
 import Text from "../elements/Text";
+import { Modal } from "@mui/material";
+import Detail from "./Detail";
+import CloseIcon from "@mui/icons-material/Close";
 
-import { useDispatch, useSelector } from "react-redux";
-// import  style  from "@mui/styles";
 
 export default function StoryCard(props) {
   const classes = storyCard();
@@ -30,14 +31,27 @@ export default function StoryCard(props) {
     content,
   } = props;
 
-  // const commentlist = useSelector((state)=>state.commentReducer.)
+  const commentState = useSelector((state) => state.commentReducer.list)[
+    `${props.id}`
+  ];
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (likeUserDto && likeUserDto.length > 0) {
-      console.log(props.likeUserDto[0]);
-    }
-    console.log(commentUserDto, likeUserDto);
-  }, [commentUserDto, likeUserDto]);
+    dispatch(commentActions.getCommentDB(props.id));
+
+  if (likeUserDto && likeUserDto.length > 0) {
+    console.log(likeUserDto);
+  }
+  if (commentState && commentState.length > 0) {
+    console.log(commentUserDto);
+  }
+}, [commentUserDto, likeUserDto]);
+
+
+  // datail modal open,close
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
     return (
@@ -56,11 +70,39 @@ export default function StoryCard(props) {
           >
             {photoResponseDto &&
               photoResponseDto.map((v, i) => (
-                <Img key={i} {...v} size="620px" />
+                <Img
+                  key={i}
+                  {...v}
+                  size="620px"
+                  commentUserDto={commentUserDto}
+                  likeUserDto={likeUserDto}
+                  likeCount={likeCount}
+                  id={id}
+                  _onClick={handleOpen}
+                />
               ))}
           </Carousel>
 
-          {/* <Img postImg={props.photoResponseDto} size="620px" /> */}
+          <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <div>
+            <Detail
+              id={id}
+              commentUserDto={commentUserDto}
+              likeUserDto={likeUserDto}
+            />
+            <Grid position="absolute" right="0">
+              <CloseIcon
+                sx={{ color: "white", fontSize: 40 }}
+                onClick={handleClose}
+              />
+            </Grid>
+          </div>
+        </Modal>
 
           {/* id는 post id */}
           <LikeComment
@@ -69,6 +111,7 @@ export default function StoryCard(props) {
             likeCount={likeCount}
             id={id}
             modal={true}
+            size="32"
           />
 
           <CardContent sx={{ p: 0, pl: "16px" }}>
@@ -85,17 +128,17 @@ export default function StoryCard(props) {
               </div>
             </Grid>
           </CardContent>
-          {likeUserDto.length <= 0 ? (
+          {likeUserDto && likeUserDto.length <= 0 ? (
             <Text margin_left="16px" margin_top="8px">
               좋아요를 처음 누른 친구가 되어봐요 :)
             </Text>
           ) : (
             <Text margin_left="16px" margin_top="8px">
-              {likeUserDto[0].nickname}님 외 {likeUserDto.length - 1}명이 이
+              {likeUserDto && likeUserDto[0].nickname}님 외 {likeUserDto && likeUserDto.length - 1}명이 이
               스토리를 좋아해요
             </Text>
           )}
-          {commentUserDto <= 0 ? (
+          {commentState && commentState.length <= 0 ? (
             <Text
               margin_left="16px"
               margin_bottom="8px"
@@ -111,10 +154,9 @@ export default function StoryCard(props) {
               F_color="#757575"
               margin_top="8px"
             >
-              <p>
-                {commentUserDto[0].nickname}님 외
-                <span>{commentUserDto.length - 1}개</span>의 댓글
-              </p>
+                {commentState && commentState[0].nickname}님 외
+                {commentState && commentState.length - 1}개의댓글
+
             </Text>
           )}
         </Card>
@@ -132,5 +174,6 @@ const storyCard = makeStyles({
   root: {
     borderRadius: 20,
     boxShadow: "2px 5px 12px 6px rgba(240, 240, 240);",
+    border: "1px solid #D3D3D3"
   },
 });

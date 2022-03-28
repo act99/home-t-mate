@@ -16,7 +16,8 @@ import WorkoutImage from "../assets/workout.png";
 const YoutubeVideo = (props) => {
   // ** history
   // ** props 가져오기
-  const { ws, token, roomId, workOut } = props;
+  const { ws, token, roomId, workOut, roomName, password, host, hostImg } =
+    props;
 
   // ** 회원정보
   const user = useSelector((state) => state.userReducer.user);
@@ -95,16 +96,17 @@ const YoutubeVideo = (props) => {
     console.log("play");
   };
   // ** 유튜브 pause websocket
-  const handlePause = () => {
-    sendYoutubeOff(ws, token, youtubeOff);
+  const handlePause = (e) => {
     console.log("pause");
+    console.log(youtubeRef.current);
+    sendYoutubeOff(ws, token, youtubeOff);
   };
   const handleStop = () => {
     sendYoutubeStop(ws, token, youtubeStop);
     console.log("stop");
   };
   // const roomData = useSelector((state) => state.selectedRoomReducer.room);
-
+  const youtubeRef = React.useRef();
   // ** 유튜브 on Off controller
   React.useEffect(() => {
     if (url !== "") {
@@ -115,25 +117,25 @@ const YoutubeVideo = (props) => {
     setUrlIntput({
       ...urlIntput,
       roomId: roomId,
-      sender: user.nickname,
+      sender: user.nickname + "Youtube",
       type: "YOUTUBEURL",
     });
     setYoutubeOn({
       ...youtubeOn,
       roomId: roomId,
-      sender: user.nickname,
+      sender: user.nickname + "Youtube",
       type: "YOUTUBEON",
     });
     setYoutubeOff({
       ...youtubeOff,
       roomId: roomId,
-      sender: user.nickname,
+      sender: user.nickname + "Youtube",
       type: "YOUTUBEPAUSE",
     });
     setYoutubeStop({
       ...youtubeStop,
       roomId: roomId,
-      sender: user.nickname,
+      sender: user.nickname + "Youtube",
       type: "YOUTUBESTOP",
     });
     return () => {};
@@ -152,6 +154,7 @@ const YoutubeVideo = (props) => {
           // width={`${width * 0.7}px`}
           // height={`${width * 0.525}px`}
           // height={`${height - 200}px`}
+          ref={youtubeRef}
           playing={on}
           onPlay={handlePlay}
           onPause={handlePause}
@@ -164,63 +167,89 @@ const YoutubeVideo = (props) => {
             alt="yotubeUrl"
             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
           />
-          <YoutubeEmptyText>유튜브 URL을 넣어주세요 :)</YoutubeEmptyText>
+          <YoutubeEmptyText>
+            호스트 님은 유튜브 URL을 넣어주세요 :)
+          </YoutubeEmptyText>
         </Empty>
       )}
-      <WrapFromStyle>
-        <FormStyle>
-          {/* <HostText>
-            <h3>호스트 : </h3>
-            <Avatar
-              alt={roomData.nickname}
-              src={roomData.profileImg}
-              sx={{ width: "28px", height: "28px", mx: 1 }}
+      <WrapBottom width={width}>
+        <BottomTop width={width}>
+          <WrapRoomInfo width={width}>
+            <HostText width={width} style={{ marginTop: width * 0.01 + "px" }}>
+              <h3>방 제목 : </h3>
+              <h3>
+                {roomName.length > 12
+                  ? roomName.slice(0, 12) + "..."
+                  : roomName}
+              </h3>
+            </HostText>
+            <HostText width={width}>
+              <h3>비밀번호 : </h3>
+              <h3>{password === "" ? "X" : password}</h3>
+            </HostText>
+            <HostText width={width}>
+              <h3>호스트 : </h3>
+              <Avatar
+                alt={host}
+                src={hostImg}
+                sx={{ width: "1.5vw", height: "1.5vw", mx: 1 }}
+              />
+              <h3>{host}</h3>
+            </HostText>
+          </WrapRoomInfo>
+          <Banner width={width}>
+            <HostText width={width} style={{ marginTop: width * 0.01 + "px" }}>
+              <h3>💪 공지 💪</h3>
+            </HostText>
+            <HostText width={width} style={{ marginTop: width * 0.01 + "px" }}>
+              <h3>영상 재생 중에는 카메라와 마이크를 설정하실 수 없습니다. </h3>
+            </HostText>
+            <HostText width={width} style={{ marginTop: width * 0.005 + "px" }}>
+              <h3>
+                유튜브 영상을 일시정지 하신 후, 카메라와 마이크를 재설정해주시기
+                바랍니다.
+              </h3>
+            </HostText>
+          </Banner>
+        </BottomTop>
+        <WrapFromStyle width={width}>
+          <FormBox onSubmit={handleUrlSubmit}>
+            <UrlInput
+              type="text"
+              value={urlIntput.message}
+              onChange={handleUrlChange}
+              required
+              placeholder="유튜브 Url"
+              dwidth={width}
             />
-            <h3>{roomData.nickname}</h3>
-          </HostText> */}
+            <CreateButton type="submit" width={width}>
+              유튜브 url 제출
+            </CreateButton>
+          </FormBox>
           {workOut ? (
-            <WorkOutWrap>
-              <img
+            <WorkOutWrap width={width} src={WorkoutImage}>
+              {/* <img
                 src={WorkoutImage}
                 alt=""
-                style={{ width: "320px", height: "100px" }}
-              />
+                style={{ width: "160px", height: "60px" }}
+              /> */}
             </WorkOutWrap>
           ) : (
-            <WorkOutWrap>
-              <img
+            <WorkOutWrap src={RestImage} width={width}>
+              {/* <img
                 src={RestImage}
                 alt=""
-                style={{ width: "320px", height: "100px" }}
-              />
+                style={{ width: "160px", height: "50px" }}
+              /> */}
             </WorkOutWrap>
           )}
-          <WrapFormBox>
-            <FormBox onSubmit={handleUrlSubmit}>
-              <UrlInput
-                type="text"
-                value={urlIntput.message}
-                onChange={handleUrlChange}
-                required
-                placeholder="유튜브 Url"
-              />
-              <CreateButton type="submit">유튜브 url 제출</CreateButton>
-            </FormBox>
-          </WrapFormBox>
-        </FormStyle>
-      </WrapFromStyle>
+        </WrapFromStyle>
+      </WrapBottom>
     </>
   );
 };
 
 //** 유튜브 안넣었을 때 */
-
-const WorkOutWrap = styled.div`
-  width: 320px;
-  height: 100%;
-  margin-left: 30px;
-  margin-bottom: 16px;
-`;
 
 const Empty = styled.div`
   width: 100%;
@@ -242,78 +271,102 @@ const YoutubeEmptyText = styled.h3`
 
 // ** 유튜브 아래
 
+const WrapBottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: ${(props) => props.width * 0.1 + "px"};
+`;
+
+const BottomTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: ${(props) => props.width * 0.8 + "px"};
+  height: ${(props) => props.width * 0.06 + "px"};
+`;
+
+const WrapRoomInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: ${(props) => props.width * 0.2 + "px"};
+  height: ${(props) => props.width * 0.06 + "px"};
+`;
+
+const Banner = styled.div`
+  width: ${(props) => props.width * 0.44 + "px"};
+  height: ${(props) => props.width * 0.06 + "px"};
+  /* background-color: beige; */
+`;
+
 const WrapFromStyle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  height: ${(props) => props.width * 0.04 + "px"};
 `;
-
-const FormStyle = styled.div`
-  width: 100%;
-  height: 144px;
-  background-color: #f9f9f9;
+const FormBox = styled.form`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 32px;
-  /* align-items: center; */
+  flex-direction: row;
+  align-items: center;
 `;
 
 const UrlInput = styled.input`
-  width: 400px;
-  height: 36px;
-  margin-left: 30px;
-  margin-right: 16px;
-  padding-left: 12px;
+  width: ${(props) => props.dwidth * 0.28 + "px"};
+  height: ${(props) => props.dwidth * 0.02 + "px"};
+  margin-left: ${(props) => props.dwidth * 0.02 + "px"};
+  margin-right: ${(props) => props.dwidth * 0.005 + "px"};
+  padding-left: ${(props) => props.dwidth * 0.007 + "px"};
+  font-size: ${(props) => props.dwidth * 0.007 + "px"};
   border-radius: 10px;
   border: solid 1px green;
+  font-family: "GmarketSansLight";
   :focus {
     outline: solid 1px green;
     border: solid 1px green;
   }
 `;
 
-const TitleText = styled.h3`
-  font-size: 20px;
-  font-weight: bold;
-  margin: 4px;
-  margin-bottom: 3px;
-  margin-left: 30px;
+const WorkOutWrap = styled.div`
+  width: ${(props) => props.width * 0.08 + "px"};
+  height: ${(props) => props.width * 0.04 + "px"};
+  margin-right: ${(props) => props.width * 0.01 + "px"};
+  /* margin-bottom: ${(props) => props.width * 0.005 + "px"}; */
+  /* background-color: black; */
+  background-image: url("${(props) => props.src}");
+  background-size: 80% auto;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
-const ContentText = styled.h5`
-  font-size: 16px;
-  margin: 4px;
-  margin-bottom: 15px;
-  margin-left: 30px;
-`;
+
 const HostText = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 4px;
-  margin-bottom: 15px;
-  margin-left: 30px;
+  margin-top: ${(props) => props.width * 0.005 + "px"};
+  margin-left: ${(props) => props.width * 0.02 + "px"};
+  margin-bottom: ${(props) => props.width * 0.003 + "px"};
   align-items: center;
   h3 {
     margin: 0px;
-    font-size: 16px;
+    font-size: ${(props) => props.width * 0.008 + "px"};
+    font-family: "GmarketSansLight";
   }
 `;
 
 const CreateButton = styled.button`
   display: block;
   /* margin: auto; */
-  width: 160px;
-  height: 40px;
+  width: ${(props) => props.width * 0.08 + "px"};
+  height: ${(props) => props.width * 0.02 + "px"};
   margin-top: auto;
   margin-bottom: auto;
   border-radius: 10px;
   border: solid 1px green;
   background-color: white;
-  font-size: 16px;
+  font-size: ${(props) => props.width * 0.008 + "px"};
   color: green;
   font-weight: bold;
   margin-right: 16px;
-  /* font-weight: bold; */
+  font-family: "GmarketSansLight";
   cursor: pointer;
   transition: 0.3s;
   :hover {
@@ -321,19 +374,6 @@ const CreateButton = styled.button`
     background-color: green;
     color: white;
   }
-`;
-
-const FormBox = styled.form`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const WrapFormBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
 `;
 
 export default YoutubeVideo;

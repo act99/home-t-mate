@@ -41,7 +41,7 @@ const persistConfig = {
   whitelist: ["userReducer", "selectedRoomReducer"],
   blacklist: [
     "youtubeReducer",
-    "videoReducer",
+    // "videoReducer",
     "webrtcReducer",
     "postReducer",
     "todoReducer",
@@ -51,6 +51,7 @@ const persistConfig = {
     "sessionReducer",
     "subscriberReducer",
     "commentReducer",
+    "videoReducer",
     // "selectedRoomReducer",
 
     // "userReducer",

@@ -9,7 +9,7 @@ import Popover from "@mui/material/Popover";
 import { Text, Grid } from "../elements";
 import Edit from "./Edit";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
-
+import useWindowSize from "../hooks/useWindowSize";
 import { Image } from "../elements";
 export default function Cardheader(props) {
   const dispatch = useDispatch();
@@ -41,6 +41,9 @@ export default function Cardheader(props) {
   const edithandleOpen = () => setEditOpen(true);
   const edithandleClose = () => setEditOpen(false);
 
+  const size = useWindowSize();
+  const { width, height } = size;
+
   // 글 작성자한테만 ... 아이콘 보이게하기
   return _user.id === thisPost.userId ? (
     <Grid is_flex>
@@ -49,12 +52,14 @@ export default function Cardheader(props) {
           borderTopRightRadius: "20px",
           padding: "0px",
           paddingLeft: "16px",
-          height: "64px",
+          // height: "64px",
+          height: `${width * 0.04}px`,
         }}
         avatar={<Image shape="circle" src={props.userImg} size="40" />}
         titleTypographyProps={{
           fontWeight: 400,
-          fontSize: 20,
+          fontSize: "2vmin",
+          fontFamily: "GmarketSansMedium",
         }}
         title={props.username}
         action={
@@ -63,13 +68,14 @@ export default function Cardheader(props) {
             <Grid
               is_flex
               align_items="center"
-              height="64px"
+              // height="64px"
+              height={width * 0.04 + "px"}
               position="absolute"
               right="0px"
             >
               <MoreHorizIcon
                 onClick={handleClick}
-                style={{ fontSize: "30px", paddingRight: "30px" }}
+                style={{ fontSize: "2vmax", paddingRight: "30px" }}
               />
             </Grid>
             {/* 삭제하기,수정하기,취소하기 dropdown modal부분 */}
@@ -83,30 +89,30 @@ export default function Cardheader(props) {
                 horizontal: "left",
               }}
               PaperProps={{
-                style: { width: "200px", height: "140px" },
+                style: { width: "15vmax", height: "10vmax" },
               }}
             >
               <Grid
                 is_flex
                 flex_direction="column"
                 padding="10px"
-                height="140px"
+                height="10vmax"
                 align_content="space-around"
                 // align_items="center"
                 justify_content="center"
               >
                 <Grid margin="auto" cursor="pointer">
-                  <Text F_size="16px" _onClick={edithandleOpen}>
+                  <Text F_size="1vmax" _onClick={edithandleOpen}>
                     이 스토리 수정하기
                   </Text>
                 </Grid>
                 <Grid margin="auto" cursor="pointer">
-                  <Text F_size="16px" _onClick={deletePostDB}>
+                  <Text F_size="1vmax" _onClick={deletePostDB}>
                     이 스토리 삭제하기
                   </Text>
                 </Grid>
                 <Grid margin="auto" cursor="pointer">
-                  <Text F_size="16px" _onClick={handleClose}>
+                  <Text F_size="1vmax" _onClick={handleClose}>
                     취소하기
                   </Text>
                 </Grid>
@@ -122,19 +128,31 @@ export default function Cardheader(props) {
           </>
         }
       />
-      <Text margin_left="20px" F_size="14px" F_color="#757575">
+      <Text margin_left="20px" F_size="0.9vmax" F_color="#757575">
         {time}에 작성됨
       </Text>
     </Grid>
   ) : (
-    // 글 작성자가 아니면 ... 아이콘 안보이게하기
-    <CardHeader
-      style={{ backgroundColor: "#587730", borderTopRightRadius: "20px" }}
-      avatar={<Image shape="circle" src={props.userImg} size="40" margin="0" />}
-      titleTypographyProps={{
-        fontWeight: 600,
-      }}
-      title={props.username}
-    />
+    // 글 작성자가 아니면 ... 아이콘 안보이게하
+    <Grid is_flex>
+      <CardHeader
+        style={{
+          borderTopRightRadius: "20px",
+          padding: "0px",
+          paddingLeft: "16px",
+          height: `${width * 0.04}px`,
+        }}
+        avatar={<Image shape="circle" src={props.userImg} size="40" />}
+        titleTypographyProps={{
+          fontWeight: 400,
+          fontSize: "2vmin",
+          fontFamily: "GmarketSansMedium",
+        }}
+        title={props.username}
+      />
+      <Text margin_left="20px" F_size="0.9vmax" F_color="#757575">
+        {time}에 작성됨
+      </Text>
+    </Grid>
   );
 }

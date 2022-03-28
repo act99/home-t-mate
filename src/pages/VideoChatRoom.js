@@ -5,7 +5,6 @@ import YoutubeVideo from "../components/YoutubeVideo";
 import useWindowSize from "../hooks/useWindowSize";
 import EnterRoom from "../containers/EnterRoom";
 import { useDispatch, useSelector } from "react-redux";
-import useStyle from "../styles/chattingStyle";
 import { useHistory, useLocation } from "react-router-dom";
 import SockJS from "sockjs-client";
 import url from "../shared/url";
@@ -34,9 +33,9 @@ const VideoChatRoom = () => {
   // ** params 로 받은 roomId 와 roomName
   const location = useLocation();
   const locationState = location.state;
-  const { roomName, roomId, video, audio, password } = locationState;
-
-  console.log(roomName, roomId, video, audio);
+  const { roomName, roomId, password, host, hostImg, myStatus } = locationState;
+  const myVideo = useSelector((state) => state.videoReducer.video);
+  const { audio, video } = myVideo;
 
   // ** SockJS 설정
   let options = {
@@ -46,9 +45,6 @@ const VideoChatRoom = () => {
   };
   const sock = new SockJS(url.WEB_SOCKET);
   const ws = Stomp.over(sock, options);
-
-  // ** session 값들을 가져오기 위한 state (유저 정보용)
-  const [session, setSession] = React.useState({});
 
   // ** 유튜브 재생 시 운동 중
   const [workOut, setWorkOut] = React.useState(false);
@@ -121,6 +117,7 @@ const VideoChatRoom = () => {
   };
   const onbeforeunload = () => {
     disconnected();
+    handleQuit();
   };
 
   React.useEffect(() => {
@@ -155,13 +152,17 @@ const VideoChatRoom = () => {
   return (
     <>
       <Wrap>
-        <ChatNav roomName={roomName} roomId={roomId} />
+        <ChatNav roomName={roomName} roomId={roomId} handleQuit={handleQuit} />
         <YoutubeTest height={height}>
           <YoutubeVideo
             ws={ws}
             token={token}
             roomId={roomId}
             workOut={workOut}
+            password={locationState.password}
+            roomName={roomName}
+            host={host}
+            hostImg={hostImg}
           />
         </YoutubeTest>
         <VideoTest height={height}>
@@ -171,6 +172,8 @@ const VideoChatRoom = () => {
             video={video}
             audio={audio}
             password={locationState.password}
+            host={host}
+            myStatus={myStatus}
           />
         </VideoTest>
         <ChattingTest height={height}>

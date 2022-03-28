@@ -43,10 +43,11 @@ export default handleActions(
     [LEAVE_SUBSCRIBERS]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload);
-        // let dummyIndex = draft.subscribers.findIndex(
-        //   (item) => item === action.payload
-        // );
-        // draft.subscribers.splice(dummyIndex, 1);
+        let dummyIndex = draft.subscribers.findIndex(
+          (item) =>
+            item.nickname === action.payload.subscriber.message.split("님이")[0]
+        );
+        draft.subscribers.splice(dummyIndex, 1);
       }),
   },
   initialState

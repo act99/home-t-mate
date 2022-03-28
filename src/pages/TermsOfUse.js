@@ -4,16 +4,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 export default function TermsOfUse() {
-  const scrollRef = React.useRef();
   React.useEffect(() => {
-    scrollRef.current.scrollIntoView({ behavior: "smooth" });
     return () => {};
   }, []);
   return (
     <>
-      <div ref={scrollRef}></div>
       <Container maxWidth="lg">
-        <Box sx={{ width: "100%", maxWidth: 1200 }}>
+        <Box sx={{ width: "100%", maxWidth: 1200, mb: 16 }}>
           <Typography
             variant="h4"
             gutterBottom

@@ -47,7 +47,7 @@ function Edit(props) {
 
   const editPost = () => {
     if (tempFile.length <= 0 || tempFile[0] === undefined) {
-      alert("사진을 선택해주세요.");
+      alert("수정할 사진을 골라주세요.");
     } else {
       // const imgData = new FormData();
       const contentData = new FormData();
@@ -61,11 +61,6 @@ function Edit(props) {
   };
   React.useEffect(() => {
     setContents(content);
-    // photoResponseDto.map((item, index) =>
-    //   setPreview([...preview, item.postImg])
-    // );
-    // setPreview([...item])
-
     return () => {};
   }, [content]);
 
@@ -167,7 +162,7 @@ function Edit(props) {
                       src={_user.profileImg ? _user.profileImg : ""}
                       sx={{ margin: "10px 20px", width: 50, height: 50 }}
                     />
-                    <Text F_size="20px">
+                    <Text F_size="20px" F_family="GmarketSansMedium">
                       {_user.nickname ? _user.nickname : ""}
                     </Text>
                   </Grid>
