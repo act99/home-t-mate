@@ -58,10 +58,12 @@ const NavBar = (props) => {
   React.useEffect(() => {
     if (routeUrl === "/") {
       setValue("1");
-    } else if (routeUrl.includes("/story")) {
+    } else if (routeUrl.includes("/howtouse")) {
       setValue("2");
-    } else if (routeUrl.includes("/livenow")) {
+    } else if (routeUrl.includes("/story")) {
       setValue("3");
+    } else if (routeUrl.includes("/livenow")) {
+      setValue("4");
     }
   }, [routeUrl, pathname, width]);
 
@@ -143,8 +145,19 @@ const NavBar = (props) => {
                           fontSize: 8,
                           fontFamily: "GmarketSansMedium",
                         }}
-                        label="스토리"
+                        label="사용법"
                         value="2"
+                        onClick={() => history.push("/howtouse")}
+                      />
+                      <Tab
+                        style={{
+                          color: "#000000",
+                          fontWeight: "bold",
+                          fontSize: 8,
+                          fontFamily: "GmarketSansMedium",
+                        }}
+                        label="스토리"
+                        value="3"
                         onClick={() => history.push("/story")}
                       />
                       <Tab
@@ -155,7 +168,7 @@ const NavBar = (props) => {
                           fontFamily: "GmarketSansMedium",
                         }}
                         label="LIVE NOW"
-                        value="3"
+                        value="4"
                         onClick={() => history.push("/livenow")}
                       />
                     </TabList>
@@ -248,8 +261,18 @@ const NavBar = (props) => {
                         fontWeight: "bold",
                         fontFamily: "GmarketSansMedium",
                       }}
-                      label="스토리"
+                      label="사용 방법"
                       value="2"
+                      onClick={() => history.push("/howtouse")}
+                    />
+                    <Tab
+                      style={{
+                        color: "#000000",
+                        fontWeight: "bold",
+                        fontFamily: "GmarketSansMedium",
+                      }}
+                      label="스토리"
+                      value="3"
                       onClick={() => history.push("/story")}
                     />
                     <Tab
@@ -259,7 +282,7 @@ const NavBar = (props) => {
                         fontFamily: "GmarketSansMedium",
                       }}
                       label="LIVE NOW 🔥"
-                      value="3"
+                      value="4"
                       onClick={() => history.push("/livenow")}
                     />
                   </TabList>
