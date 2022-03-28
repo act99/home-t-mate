@@ -27,11 +27,10 @@ const style = {
   boxShadow: 24,
   p: 4,
   display: "flex",
-  padding: 0, 
+  padding: 0,
 
   // paddingTop: "200%",
 };
-
 
 export default function Detail(props) {
   const dispatch = useDispatch();
@@ -60,20 +59,19 @@ export default function Detail(props) {
 
   return (
     <Box sx={style}>
-        <Carousel
-          showThumbs={false}
-          infiniteLoop={true}
-          height={width * 0.4 + "px"}
-          minHeight="557px"
-          width={width * 0.4 + "px"}
-          minWidth="975px"
-        >
-          {thisPostPhoto &&
-            thisPostPhoto.map((v, i) => (
-              <Img key={i} {...v} size={width * 0.4 + "px"} border="20px" />
-            ))}
-        </Carousel>
-
+      <Carousel
+        showThumbs={false}
+        infiniteLoop={true}
+        height={width * 0.4 + "px"}
+        minHeight="557px"
+        width={width * 0.4 + "px"}
+        minWidth="975px"
+      >
+        {thisPostPhoto &&
+          thisPostPhoto.map((v, i) => (
+            <Img key={i} {...v} size={width * 0.4 + "px"} border="20px" />
+          ))}
+      </Carousel>
 
       <Grid width={width * 0.3 + "px"}>
         <DetailCardheader
@@ -103,7 +101,9 @@ export default function Detail(props) {
           {/* 댓글몇개인지 보이기 */}
           <Grid is_flex B_top="1px solid #D3D3D3" margin_bottom="0.5vh">
             <BsChat size="2.5vmin" style={{ margin: "1vh 10px 17px 16px" }} />
-            <Text F_size="1.5vmin" margin_bottom="1vh">총 {commentState && commentState.length}개의 댓글</Text>
+            <Text F_size="1.5vmin" margin_bottom="1vh">
+              총 {commentState && commentState.length}개의 댓글
+            </Text>
           </Grid>
 
           {/* 댓글 보이기 */}
@@ -114,7 +114,7 @@ export default function Detail(props) {
         </div>
 
         {/* 댓글작성부분 */}
-        <Grid  position="absolute" bottom="0px" width={width * 0.3 + "px"}>
+        <Grid position="absolute" bottom="0px" width={width * 0.3 + "px"}>
           <Grid is_flex>
             <LikeComment
               id={props.id}
@@ -123,17 +123,31 @@ export default function Detail(props) {
               default="default"
               size="2vmax"
             />
-            <Grid is_flex position="relative" left="-40px" width={width * 0.3 + "px"} >
-            {thisPost.likeUserDto && thisPost.likeUserDto.length > 0 ? (
-              <Text F_size="1vmax" F_family="SuncheonR" margin_top="10px">
-                {thisPost.likeUserDto[0].nickname}님 외{" "}
-                {thisPost.likeUserDto.length - 1}명이 이 스토리를 좋아해요
-              </Text>
-            ) : (
-              <Text F_size="1vmax" F_family="SuncheonR" margin_top="8px">
-                좋아요를 처음 누른 친구가 되어봐요 :)
-              </Text>
-            )}</Grid>
+            <Grid
+              is_flex
+              position="relative"
+              left="-40px"
+              width={width * 0.3 + "px"}
+            >
+              {thisPost.likeUserDto && thisPost.likeUserDto.length > 0 ? (
+                <Text
+                  F_size="1vmax"
+                  F_family="GmarketSansLight"
+                  margin_top="10px"
+                >
+                  {thisPost.likeUserDto[0].nickname}님 외{" "}
+                  {thisPost.likeUserDto.length - 1}명이 이 스토리를 좋아해요
+                </Text>
+              ) : (
+                <Text
+                  F_size="1vmax"
+                  F_family="GmarketSansLight"
+                  margin_top="8px"
+                >
+                  좋아요를 처음 누른 친구가 되어봐요 :)
+                </Text>
+              )}
+            </Grid>
           </Grid>
           <CommentBox id={props.id} />
         </Grid>

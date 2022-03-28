@@ -12,6 +12,7 @@ const VideoComponent = (props) => {
   const dispatch = useDispatch();
   const videoReducer = useSelector((state) => state.videoReducer.video);
   const userReducer = useSelector((state) => state.userReducer.user);
+  const youtubeReducer = useSelector((state) => state.youtubeReducer.youtube);
   const videoRef = React.useRef();
   const { streamManager, nickname, host, OV, me, session } = props;
   const size = useWindowSize();
@@ -21,7 +22,9 @@ const VideoComponent = (props) => {
   const [vid, setVid] = React.useState(true);
   const [myMic, setMyMic] = React.useState(true);
   const [myVid, setMyVid] = React.useState(true);
+
   React.useEffect(() => {
+    console.log(youtubeReducer.on);
     if (streamManager && !!videoRef) {
       streamManager.addVideoElement(videoRef.current);
       // setMic(videoReducer.audio);
@@ -31,7 +34,7 @@ const VideoComponent = (props) => {
       session.on("signal:userChanged", (event) => {
         const data = JSON.parse(event.data);
         console.log(nickname, data.nickname);
-        if (nickname === data.nickname) {
+        if (nickname + "OV" === data.nickname) {
           if (data.Saudio !== undefined) {
             setMyMic(data.Saudio);
             setMic(data.Saudio);
@@ -46,7 +49,7 @@ const VideoComponent = (props) => {
   }, [streamManager, nickname, mic, vid, myVid, myMic, session]);
 
   const handleVideo = () => {
-    console.log("비디오");
+    console.log("비디오", console.log(videoRef.current));
     if (vid === false) {
       if (nickname === userReducer.nickname) {
         dispatch(
@@ -75,7 +78,7 @@ const VideoComponent = (props) => {
   };
 
   const handleMic = () => {
-    console.log("마이크");
+    console.log("마이크", console.log(videoRef));
     if (mic === false) {
       if (nickname === userReducer.nickname) {
         dispatch(
@@ -119,24 +122,28 @@ const VideoComponent = (props) => {
             : nickname}
         </NicknameTag>
         {me === true ? (
-          <>
-            <ButtonTag id="buttondiv">
-              <IconButton onClick={handleVideo}>
-                {vid === true ? (
-                  <VideocamIcon sx={{ color: "white" }} />
-                ) : (
-                  <VideocamOffIcon sx={{ color: "red" }} />
-                )}
-              </IconButton>
-              <IconButton onClick={handleMic}>
-                {mic === true ? (
-                  <MicIcon sx={{ color: "white" }} />
-                ) : (
-                  <MicOffIcon sx={{ color: "red" }} />
-                )}
-              </IconButton>
-            </ButtonTag>
-          </>
+          youtubeReducer.on === true ? (
+            <></>
+          ) : (
+            <>
+              <ButtonTag id="buttondiv">
+                <IconButton onClick={handleVideo}>
+                  {vid === true ? (
+                    <VideocamIcon sx={{ color: "white" }} />
+                  ) : (
+                    <VideocamOffIcon sx={{ color: "red" }} />
+                  )}
+                </IconButton>
+                <IconButton onClick={handleMic}>
+                  {mic === true ? (
+                    <MicIcon sx={{ color: "white" }} />
+                  ) : (
+                    <MicOffIcon sx={{ color: "red" }} />
+                  )}
+                </IconButton>
+              </ButtonTag>
+            </>
+          )
         ) : (
           <ButtonTag id="buttondiv">
             <IconButton onClick={handleVideo}>
