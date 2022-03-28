@@ -105,45 +105,45 @@ const LiveNow = () => {
     }
 
     return () => {
-      // if (window.location.pathname !== "/livenow") {
-      dispatch(roomCreators.clearRoom([]));
-      // }
+      if (window.location.pathname !== "/livenow") {
+        dispatch(roomCreators.clearRoom([]));
+      }
     };
   }, []);
-  // if (user.is_login === false) {
-  //   return (
-  //     <>
-  //       <Wrap>
-  //         <Container sx={{ py: 16, width: "100%" }}>
-  //           <div {...animatedItem}>
-  //             <div
-  //               style={{
-  //                 margin: "120px auto 16px auto",
-  //                 display: "flex",
-  //                 flexDirection: "row",
-  //                 justifyContent: "center",
-  //               }}
-  //             >
-  //               <img alt="" src={LoadingImage} width="300px" />
-  //             </div>
-  //             <MainTitle>
-  //               <h3>로그인 후 이용해주세요.</h3>
-  //               <h5>
-  //                 로그인을 하시면 홈트메이트의 다양한 홈트레이닝 서비스를
-  //                 이용하실 수 있습니다.
-  //               </h5>
-  //             </MainTitle>
-  //           </div>
-  //         </Container>
-  //         <RoomCardModal
-  //           clickCard={clickCard}
-  //           setClickCard={setClickCard}
-  //           data={modalData}
-  //         />
-  //       </Wrap>
-  //     </>
-  //   );
-  // }
+  if (user.is_login === false) {
+    return (
+      <>
+        <Wrap>
+          <Container sx={{ py: 16, width: "100%" }}>
+            <div {...animatedItem}>
+              <div
+                style={{
+                  margin: "120px auto 16px auto",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                <img alt="" src={LoadingImage} width="300px" />
+              </div>
+              <MainTitle>
+                <h3>로그인 후 이용해주세요.</h3>
+                <h5>
+                  로그인을 하시면 홈트메이트의 다양한 홈트레이닝 서비스를
+                  이용하실 수 있습니다.
+                </h5>
+              </MainTitle>
+            </div>
+          </Container>
+          <RoomCardModal
+            clickCard={clickCard}
+            setClickCard={setClickCard}
+            data={modalData}
+          />
+        </Wrap>
+      </>
+    );
+  }
 
   return (
     <>
