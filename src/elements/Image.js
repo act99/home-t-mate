@@ -60,7 +60,7 @@ const Image = (props) => {
 
 Image.defaultProps = {
   shape: null,
-  src: "https://thumb.mt.co.kr/06/2021/03/2021030521582049015_1.jpg/dims/optimize/",
+  src: "https://static.wtable.co.kr/image/production/service/recipe/588/63707c42-8cb7-4268-b5e2-8221ada9040b.jpg",
   size: null,
   width: null,
   height: null,

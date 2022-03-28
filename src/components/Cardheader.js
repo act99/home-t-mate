@@ -128,7 +128,7 @@ export default function Cardheader(props) {
     <CardHeader
       // style={{ backgroundColor: "#587730", borderTopRightRadius: "20px" }}
       style={{
-        backgroundColor: "#587730",
+        backgroundColor: "white",
         borderTopRightRadius: "20px",
         padding: "0px",
         paddingLeft: "32px",
@@ -140,7 +140,7 @@ export default function Cardheader(props) {
       avatar={<Image shape="circle" src={props.userImg} size="40" />}
       titleTypographyProps={{
         fontSize: 18,
-        color: "#ffffff",
+        color: "black",
         fontFamily: "GmarketSansMedium",
       }}
       title={props.username}

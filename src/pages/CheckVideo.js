@@ -203,6 +203,13 @@ const CheckVideo = () => {
             </ButtonGroup> */}
           </div>
         </VideoWrap>
+        <WarningWrap>
+          <h3>
+            ⚠ 경고! <br />
+            <br /> 입장하시면 카메라와 오디오가 자동으로 켜지게 됩니다. <br />
+            입장 후 카메라와 오디오 설정해주시기 바랍니다.
+          </h3>
+        </WarningWrap>
         <EnterButton>
           <JoinButton type="button" onClick={handleEnter}>
             입장하기
@@ -232,6 +239,17 @@ const JoinButton = styled.button`
     transition: 0.3s;
     background-color: green;
     color: white;
+  }
+`;
+
+const WarningWrap = styled.div`
+  width: 100%;
+  height: 92px;
+  text-align: center;
+  h3 {
+    font-size: 16px;
+    font-family: GmarketSansLight;
+    color: red;
   }
 `;
 

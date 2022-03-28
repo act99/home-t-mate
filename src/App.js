@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import KakaoOauth from "./components/KakaoOauth";
 import LiveNow from "./pages/LiveNow";
-import { actionCreators as userActions } from "./redux/modules/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
 import NotFound from "./pages/NotFound";
@@ -23,35 +22,22 @@ import Privacy from "./pages/Privacy";
 import SearchingLiveNow from "./pages/SearchingLiveNow";
 import ReEnterKeyword from "./pages/ReEnterKeyword";
 import ScrollToTop from "./hooks/scrollToTop";
-import { deleteCookie } from "./shared/Cookie";
-import { actionCreators as videoActions } from "./redux/modules/videoReducer";
+import { actionCreators as userActions } from "./redux/modules/userReducer";
+import HowtoUse from "./pages/HowtoUse";
 const App = () => {
   const dispatch = useDispatch();
   const videoReducer = useSelector((state) => state.videoReducer.video);
+  const beforeunload = () => {
+    dispatch(userActions.logout());
+  };
   React.useEffect(() => {
-    // if (videoReducer !== undefined) {
-    //   if (videoReducer.video === undefined) {
-    //     dispatch(videoActions.setVideo({ ...videoReducer, video: true }));
-    //   } else if (videoReducer.audio === undefined) {
-    //     dispatch(videoActions.setVideo({ ...videoReducer, audio: true }));
-    //   }
-    // } else {
-    //   dispatch(videoActions.setVideo({ video: true, audio: true }));
-    // }
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
-    // if ()
-    // window.addEventListener("beforeunload", dispatch(userActions.logout()));
-    // window.addEventListener("beforeunload", alert("종료!!"));
+    window.addEventListener("unload", beforeunload);
+    console.log(window.location.href);
     return () => {
-      // if (window.location.reload) {
-      // } else {
-      //   window.removeEventListener(
-      //     "beforeunload",
-      //     dispatch(userActions.logout())
-      //   );
-      // }
+      window.removeEventListener("unload", beforeunload);
     };
   }, [dispatch]);
 
@@ -65,6 +51,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
             <Route path="/mypage" exact component={Mypage} />
+            <Route path="/howtouse" exact component={HowtoUse} />
             <Route path="/user/kakao/callback" exact component={KakaoOauth} />
             <Route path="/story" exact component={Story} />
             <Route path="/livenow" exact component={LiveNow} />

@@ -18,6 +18,7 @@ import Logo from "../assets/mainlogo.png";
 import "../App.css";
 import styled from "@emotion/styled";
 import { Avatar } from "@mui/material";
+import { deleteCookie } from "../shared/Cookie";
 
 const NavBar = (props) => {
   // ** 채팅방 이동 시 네비게이션 바 변경
