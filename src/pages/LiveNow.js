@@ -17,6 +17,8 @@ import { BsSearch } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import InfinityScroll from "../shared/InfinityScroll";
 import useScrollFadeIn from "../hooks/useScrollFadeIn";
+import LoadingImage from "../assets/loading_image.png";
+
 const LiveNow = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -24,7 +26,7 @@ const LiveNow = () => {
   const roomList = useSelector((state) => state.roomReducer.room_list);
   const is_loading = useSelector((state) => state.roomReducer.is_loading);
   const paging = useSelector((state) => state.roomReducer.paging);
-
+  const user = useSelector((state) => state.userReducer.user);
   // ** 모달 생성
   const [clickCard, setClickCard] = React.useState(false);
   // ** 모달 props 전달
@@ -98,13 +100,50 @@ const LiveNow = () => {
   const animatedItem = useScrollFadeIn("up", 2, 0);
 
   React.useEffect(() => {
-    dispatch(roomCreators.getRoomDB());
+    if (user.is_login === true) {
+      dispatch(roomCreators.getRoomDB());
+    }
+
     return () => {
-      if (window.location.pathname !== "/livenow") {
-        dispatch(roomCreators.clearRoom([]));
-      }
+      // if (window.location.pathname !== "/livenow") {
+      dispatch(roomCreators.clearRoom([]));
+      // }
     };
   }, []);
+  // if (user.is_login === false) {
+  //   return (
+  //     <>
+  //       <Wrap>
+  //         <Container sx={{ py: 16, width: "100%" }}>
+  //           <div {...animatedItem}>
+  //             <div
+  //               style={{
+  //                 margin: "120px auto 16px auto",
+  //                 display: "flex",
+  //                 flexDirection: "row",
+  //                 justifyContent: "center",
+  //               }}
+  //             >
+  //               <img alt="" src={LoadingImage} width="300px" />
+  //             </div>
+  //             <MainTitle>
+  //               <h3>로그인 후 이용해주세요.</h3>
+  //               <h5>
+  //                 로그인을 하시면 홈트메이트의 다양한 홈트레이닝 서비스를
+  //                 이용하실 수 있습니다.
+  //               </h5>
+  //             </MainTitle>
+  //           </div>
+  //         </Container>
+  //         <RoomCardModal
+  //           clickCard={clickCard}
+  //           setClickCard={setClickCard}
+  //           data={modalData}
+  //         />
+  //       </Wrap>
+  //     </>
+  //   );
+  // }
 
   return (
     <>
@@ -282,6 +321,7 @@ const MainTitle = styled.div`
   justify-content: center;
   text-align: center;
   flex-direction: column;
+  color: #2f5b27;
   h3 {
     font-size: 36px;
     font-family: "GmarketSansMedium";

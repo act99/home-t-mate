@@ -57,7 +57,6 @@ const Mypage = (props) => {
   };
   const [delData, setDelData] = React.useState([]);
   const deletePostDB = () => {
-    console.log(delData);
     dispatch(postActions.deleteManyPostDB(delData));
     // window.alert("포스트가 정상적으로 삭제되었습니다.");
     // window.location.reload();
@@ -67,17 +66,16 @@ const Mypage = (props) => {
   const mypagePost = _post.filter((v, i) =>
     v.userId === user.id ? true : false
   );
-  console.log("mypagepost", mypagePost);
   const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
   // ** 프로필 이미지 수정
   const [openProfile, setOpenProfile] = React.useState(false);
   React.useEffect(() => {
+    console.log(delData);
     dispatch(postActions.getPostDB());
     dispatch(todoActions.getTodoDB());
-    console.log(todoList);
     return () => {};
-  }, []);
+  }, [delData]);
   return (
     <Grid width="1200px" margin="auto">
       <UserContainer>

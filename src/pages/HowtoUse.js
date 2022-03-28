@@ -2,11 +2,11 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import LoginImage from "../assets/loginimage.PNG";
-import CreateImage from "../assets/createimage.PNG";
-import EnterRoomImage from "../assets/enterroomimage.PNG";
-import AcceptCam from "../assets/acceptcam.PNG";
-import CheckCam from "../assets/checkcam.PNG";
+import LoginImage from "../assets/loginimage.png";
+import CreateImage from "../assets/createimage.png";
+import EnterRoomImage from "../assets/enterroomimage.png";
+import AcceptCam from "../assets/acceptcam.png";
+import CheckCam from "../assets/checkcam.png";
 const HowtoUse = () => {
   return (
     <>
