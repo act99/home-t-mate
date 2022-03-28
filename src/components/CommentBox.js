@@ -25,13 +25,7 @@ export default function CommentBox(props) {
     setComment(e.target.value);
   };
 
-  console.log(_user);
   const addComment = () => {
-    if (!_user.is_login) {
-      alert("로그인 해주세요");
-      return;
-    }
-
     dispatch(commentActions.addCommentDB(props.id, comment, _user));
     setComment("");
   };
@@ -63,19 +57,20 @@ export default function CommentBox(props) {
       <>
         <Grid
           is_flex
-          margin="0px 16px 20px 16px"
+          margin="0px 16px 1.3vh 16px"
           justify_content="space-between"
           B_radius="20px"
           Border="2px solid #757575"
           width="auto"
-          height="58px"
+          height="5vh"
         >
+          {/* 웃는 아이콘 (이모지 아이콘) */}
           <AiOutlineSmile
             onClick={handleClick}
             style={{
               color: "#757575",
               marginRight: "8px",
-              fontSize: "36",
+              fontSize: "2em",
               marginLeft: "8px",
             }}
           />
@@ -117,21 +112,13 @@ export default function CommentBox(props) {
             BG_color="white"
             border="none"
             B_radius="20px"
-            F_size="18px"
+            width="8vmin"
             font_color="#587730"
+            font_size="1.5vmin"
           >
             댓글달기
           </Button>
         </Grid>
-
-        {/* <Picker
-          onEmojiClick={onEmojiClick}
-          disableAutoFocus={true}
-          skinTone={SKIN_TONE_MEDIUM_DARK}
-          groupNames={{ smileys_people: "PEOPLE" }}
-          native
-        />
-        {chosenEmoji && <EmojiData chosenEmoji={chosenEmoji} />} */}
       </>
     );
   }

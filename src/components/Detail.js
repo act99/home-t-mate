@@ -14,22 +14,24 @@ import "../App.css";
 import { actionCreators as commentActions } from "../redux/modules/commentReducer";
 import { BsChat } from "react-icons/bs";
 import { Text } from "../elements";
+import useWindowSize from "../hooks/useWindowSize";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 1345,
-  height: 800,
   bgcolor: "background.paper",
   border: "none",
   borderRadius: "20px",
   boxShadow: 24,
   p: 4,
   display: "flex",
-  padding: 0,
+  padding: 0, 
+
+  // paddingTop: "200%",
 };
+
 
 export default function Detail(props) {
   const dispatch = useDispatch();
@@ -53,31 +55,36 @@ export default function Detail(props) {
     }
   }, []);
 
+  const size = useWindowSize();
+  const { width, height } = size;
+
   return (
     <Box sx={style}>
-      <div style={{ width: "800px" }}>
         <Carousel
           showThumbs={false}
           infiniteLoop={true}
-          height={props.size}
-          width={props.size}
+          height={width * 0.4 + "px"}
+          minHeight="557px"
+          width={width * 0.4 + "px"}
+          minWidth="975px"
         >
           {thisPostPhoto &&
             thisPostPhoto.map((v, i) => (
-              <Img key={i} {...v} size="800px" border="20px" />
+              <Img key={i} {...v} size={width * 0.4 + "px"} border="20px" />
             ))}
         </Carousel>
-      </div>
 
-      <Grid width="545px">
+
+      <Grid width={width * 0.3 + "px"}>
         <DetailCardheader
           id={thisPost.id}
           username={thisPost.nickname}
           userImg={thisPost.userImg}
+          createdAt={thisPost.createdAt}
         />
         <div
           className="commentlist"
-          style={{ height: "592px", overflow: "auto" }}
+          style={{ height: `${width * 0.29}px`, overflow: "auto" }}
         >
           {/* 글 내용 */}
           <Typography
@@ -86,17 +93,17 @@ export default function Detail(props) {
             align="justify"
             marginLeft="16px"
             marginRight="16px"
-            marginBottom="13px"
+            marginBottom="1vh"
             fontFamily="GmarketSansMedium"
-            fontSize="18px"
+            fontSize="1.1vw"
           >
             {thisPost.content}
           </Typography>
 
           {/* 댓글몇개인지 보이기 */}
-          <Grid is_flex B_top="2px solid #D3D3D3" margin_bottom="10px">
-            <BsChat size="24" style={{ margin: "15px 10px 17px 16px" }} />
-            <Text>총 {commentState && commentState.length}개의 댓글</Text>
+          <Grid is_flex B_top="1px solid #D3D3D3" margin_bottom="0.5vh">
+            <BsChat size="2.5vmin" style={{ margin: "1vh 10px 17px 16px" }} />
+            <Text F_size="1.5vmin" margin_bottom="1vh">총 {commentState && commentState.length}개의 댓글</Text>
           </Grid>
 
           {/* 댓글 보이기 */}
@@ -107,22 +114,23 @@ export default function Detail(props) {
         </div>
 
         {/* 댓글작성부분 */}
-        <Grid position="absolute" bottom="0px" width="545px">
+        <Grid  position="absolute" bottom="0px" width={width * 0.3 + "px"}>
           <Grid is_flex>
             <LikeComment
               id={props.id}
               modal={false}
               none="none"
               default="default"
+              size="2vmax"
             />
-            <Grid is_flex position="relative" left="-40px">
+            <Grid is_flex position="relative" left="-40px" width={width * 0.3 + "px"} >
             {thisPost.likeUserDto && thisPost.likeUserDto.length > 0 ? (
-              <Text margin_top="8px">
+              <Text F_size="1vmax" F_family="SuncheonR" margin_top="10px">
                 {thisPost.likeUserDto[0].nickname}님 외{" "}
                 {thisPost.likeUserDto.length - 1}명이 이 스토리를 좋아해요
               </Text>
             ) : (
-              <Text margin_top="8px">
+              <Text F_size="1vmax" F_family="SuncheonR" margin_top="8px">
                 좋아요를 처음 누른 친구가 되어봐요 :)
               </Text>
             )}</Grid>
