@@ -116,6 +116,10 @@ const VideoChatRoom = () => {
     }
   };
   const onbeforeunload = () => {
+    apis
+      .leaveRoom(roomId)
+      .then((res) => {})
+      .catch((error) => console.log(error));
     disconnected();
     handleQuit();
   };
@@ -132,10 +136,11 @@ const VideoChatRoom = () => {
     setQuit({ roomId: roomId, sender: user.nickname });
     // created();
     return () => {
+      window.removeEventListener("beforeunload", onbeforeunload);
+
       apis
         .leaveRoom(roomId)
         .then((res) => {
-          window.removeEventListener("beforeunload", onbeforeunload);
           disconnected();
         })
         .catch((error) => console.log(error));
