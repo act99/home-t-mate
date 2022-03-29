@@ -29,7 +29,7 @@ const HowtoUse = () => {
             component="div"
             sx={{ fontFamily: "GmarketSansLight" }}
           >
-            <strong>여러분을 환영합니다.</strong>
+            여러분을 환영합니다.
             <br />
             <br />
             홈트메이트 서비스를 이용해주시는 여러분 환영합니다! 지금부터
@@ -43,7 +43,7 @@ const HowtoUse = () => {
             component="div"
             sx={{ fontFamily: "GmarketSansLight" }}
           >
-            <strong>1. 로그인 하기</strong>
+            1. 로그인 하기
             <br />
             <br />
             <img src={LoginImage} alt="" width="70%" />
@@ -58,7 +58,7 @@ const HowtoUse = () => {
             component="div"
             sx={{ marginTop: "96px", fontFamily: "GmarketSansLight" }}
           >
-            <strong>2. 방 만들기</strong>
+            2. 방 만들기
             <br />
             <br />
             <img src={CreateImage} alt="" width="70%" />
@@ -73,7 +73,7 @@ const HowtoUse = () => {
             component="div"
             sx={{ marginTop: "96px", fontFamily: "GmarketSansLight" }}
           >
-            <strong>3. 방 들어가기</strong>
+            3. 방 들어가기
             <br />
             <br />
             <img src={EnterRoomImage} alt="" width="70%" />
@@ -87,7 +87,7 @@ const HowtoUse = () => {
             component="div"
             sx={{ marginTop: "96px", fontFamily: "GmarketSansLight" }}
           >
-            <strong>4. 카메라 체크하기</strong>
+            4. 카메라 체크하기
             <br />
             <br />
             <img src={AcceptCam} alt="" width="70%" />
@@ -105,7 +105,7 @@ const HowtoUse = () => {
             component="div"
             sx={{ marginTop: "96px", fontFamily: "GmarketSansLight" }}
           >
-            <strong>5. 유튜브 url 넣고 운동 시작하기</strong>
+            5. 유튜브 url 넣고 운동 시작하기
             <br />
             <br />
             <img src={Waiting} alt="" width="70%" />
@@ -114,7 +114,7 @@ const HowtoUse = () => {
             참여자들이 접속할 때 까지 기다려주세요.
             <br />
             <br />
-            <storng
+            <p
               style={{
                 fontFamily: "GmarketSansLight",
                 fontWeight: "bold",
@@ -128,13 +128,13 @@ const HowtoUse = () => {
               <br />
               카메라 또는 마이크 설정은 운동 종료 후, 또는 영상을 일시정지 한 후
               카메라 또는 마이크를 다시 설정해주세요.
-            </storng>
+            </p>
             <br />
             <img src={Working} alt="" width="70%" />
             <br /> 모든 참여자들이 접속하면 유튜브 url 을 넣고 유튜브 url
             제출버튼을 눌러주세요.
             <br />
-            <storng
+            <p
               style={{
                 fontFamily: "GmarketSansLight",
                 fontWeight: "bold",
@@ -147,7 +147,7 @@ const HowtoUse = () => {
               재생됩니다.
               <br /> 3. 유튜브 재생 또는 일시정지버튼을 누르면 모든 유저들의
               유튜브 영상이 재생 또는 일시정지 됩니다.
-            </storng>
+            </p>
           </Typography>
         </Box>
       </Container>

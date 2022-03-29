@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import { history } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/userReducer.js";
-import { MCreateRoomButton } from "../elements/BootstrapButton";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -17,10 +16,34 @@ import useWindowSize from "../hooks/useWindowSize";
 import Logo from "../assets/mainlogo.png";
 import "../App.css";
 import styled from "@emotion/styled";
-import { Avatar } from "@mui/material";
-import { deleteCookie } from "../shared/Cookie";
+import {
+  Avatar,
+  Divider,
+  IconButton,
+  ListSubheader,
+  Menu,
+} from "@mui/material";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+import PeopleIcon from "@mui/icons-material/People";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import HomeIcon from "@mui/icons-material/Home";
+import CloseIcon from "@mui/icons-material/Close";
 
 const NavBar = (props) => {
+  // ** 모바일 전용
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   // ** 채팅방 이동 시 네비게이션 바 변경
   const pathname = window.location.pathname;
 
@@ -52,6 +75,11 @@ const NavBar = (props) => {
   // ** 방 만들기 모달
 
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
+
+  const handleMMenu = (url) => {
+    history.push(`/${url}`);
+    handleClose();
+  };
 
   React.useEffect(() => {
     if (routeUrl === "/") {
@@ -85,7 +113,7 @@ const NavBar = (props) => {
   if (pathname.includes("checkvideo") || pathname.includes("/livenow/chat")) {
     return <div> </div>;
   }
-  if (width <= 700) {
+  if (width < height) {
     return (
       <ThemeProvider theme={theme}>
         <AppBar
@@ -100,106 +128,121 @@ const NavBar = (props) => {
         >
           <Container>
             <Toolbar disableGutters>
-              <img
-                alt=""
-                src={Logo}
-                height="35px"
-                onClick={() => history.push("/")}
-                style={{ cursor: "pointer", marginRight: 30 }}
-              />
-              <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
-                <TabContext value={value}>
-                  <Box sx={{}}>
-                    <TabList
-                      indicatorColor="secondary"
-                      onChange={handleChange}
-                      aria-label="lab API tabs example"
+              <div>
+                <IconButton
+                  id="basic-button"
+                  aria-controls={anchorEl ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={anchorEl ? "true" : undefined}
+                  onClick={handleClick}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                  sx={{ mt: 1, ml: 0 }}
+                >
+                  <Box
+                    sx={{
+                      width: "30vh",
+                      height: "50vh",
+                    }}
+                  >
+                    <List
+                      sx={{
+                        width: "100%",
+                        maxWidth: 360,
+                        bgcolor: "background.paper",
+                      }}
+                      component="nav"
+                      aria-labelledby="nested-list-subheader"
                     >
-                      {/* <Tab
-                        style={{
-                          color: "#000000",
-                          fontSize: 8,
-                          fontFamily: "GmarketSansMedium",
-                        }}
-                        label=""
-                        value="0"
-                        onClick={() => history.push("/")}
-                      /> */}
-                      <Tab
-                        style={{
-                          color: "#000000",
-                          fontWeight: "bold",
-                          fontSize: 8,
-                          fontFamily: "GmarketSansMedium",
-                        }}
-                        label="홈"
-                        value="1"
-                        onClick={() => history.push("/")}
-                      />
-                      <Tab
-                        style={{
-                          color: "#000000",
-                          fontWeight: "bold",
-                          fontSize: 8,
-                          fontFamily: "GmarketSansMedium",
-                        }}
-                        label="사용법"
-                        value="2"
-                        onClick={() => history.push("/howtouse")}
-                      />
-                      <Tab
-                        style={{
-                          color: "#000000",
-                          fontWeight: "bold",
-                          fontSize: 8,
-                          fontFamily: "GmarketSansMedium",
-                        }}
-                        label="스토리"
-                        value="3"
-                        onClick={() => history.push("/story")}
-                      />
-                      <Tab
-                        style={{
-                          color: "#ff0000",
-                          fontWeight: "bold",
-                          fontSize: 8,
-                          fontFamily: "GmarketSansMedium",
-                        }}
-                        label="LIVE NOW"
-                        value="4"
-                        onClick={() => history.push("/livenow")}
-                      />
-                    </TabList>
+                      <Top>
+                        <h3>메뉴</h3>
+                        <IconButton onClick={handleClose}>
+                          <CloseIcon sx={{ fontSize: "24px", margin: "0px" }} />
+                        </IconButton>
+                      </Top>
+                      <Divider />
+                      <ListItemButton onClick={() => handleMMenu("")}>
+                        <ListItemIcon>
+                          <HomeIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="홈" />
+                      </ListItemButton>
+                      <Divider />
+                      <ListItemButton onClick={() => handleMMenu("howtouse")}>
+                        <ListItemIcon>
+                          <QuestionMarkIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="사용 방법" />
+                      </ListItemButton>
+                      <Divider />
+                      <ListItemButton onClick={() => handleMMenu("story")}>
+                        <ListItemIcon>
+                          <PeopleIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="스토리" />
+                      </ListItemButton>
+                      <Divider />
+                      <ListItemButton onClick={() => handleMMenu("livenow")}>
+                        <ListItemIcon>
+                          <OndemandVideoIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="LiveNow" />
+                      </ListItemButton>
+                    </List>
                   </Box>
-                </TabContext>
+                  {/* <MenuItem onClick={() => handleMMenu("howtouse")}>
+                    사용 방법
+                  </MenuItem>
+                  <MenuItem onClick={() => handleMMenu("story")}>
+                    스토리
+                  </MenuItem>
+                  <MenuItem onClick={() => handleMMenu("livenow")}>
+                    LiveNow
+                  </MenuItem> */}
+                </Menu>
+              </div>
+              <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
+                <img
+                  alt=""
+                  src={Logo}
+                  height="32px"
+                  onClick={() => history.push("/")}
+                  style={{ cursor: "pointer", marginRight: 30, marginLeft: 8 }}
+                />
               </Box>
               {user.is_login === false ? (
                 <Button
                   color="inherit"
                   onClick={() => handleNavigate("/login")}
-                  sx={{ color: "#000000", fontWeight: "bold" }}
+                  sx={{ color: "#000000", fontWeight: "bold", fontSize: 8 }}
                 >
                   로그인
                 </Button>
               ) : (
                 <>
-                  <MCreateRoomButton
-                    variant="contained"
-                    disableRipple
-                    sx={{ fontSize: 8 }}
+                  <MCreateButton
                     onClick={() => {
                       setCreateRoomOpen(true);
                     }}
                   >
                     지금 방 만들기
-                  </MCreateRoomButton>
+                  </MCreateButton>
                   <CreateRoomModal
                     createRoomOpen={createRoomOpen}
                     setCreateRoomOpen={setCreateRoomOpen}
                   />
                   <Button
                     color="inherit"
-                    onClick={logout}
+                    onClick={() => history.push("/logout")}
                     sx={{ color: "#000000", fontWeight: "bold", fontSize: 8 }}
                   >
                     로그아웃
@@ -383,6 +426,30 @@ const CreateButton = styled.button`
   }
 `;
 
+const MCreateButton = styled.button`
+  display: block;
+  /* margin: auto; */
+  width: 88px;
+  height: 32px;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 8px;
+  border: solid 2px green;
+  background-color: white;
+  font-size: 8px;
+  color: green;
+  font-weight: bold;
+  margin-right: 16px;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
+
 const AvatarButton = styled.button`
   display: block;
   margin: auto;
@@ -406,6 +473,18 @@ const LogoButton = styled.div`
   background-size: 80% auto;
   background-position: center;
   background-repeat: no-repeat;
+`;
+const Top = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  h3 {
+    font-size: 16px;
+    margin-left: 16px;
+  }
 `;
 
 export default NavBar;

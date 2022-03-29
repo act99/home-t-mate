@@ -50,7 +50,6 @@ export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.user = {
           id: action.payload.user.id,
           nickname: action.payload.user.nickname,
@@ -62,7 +61,7 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        // deleteCookie("token");
+        deleteCookie("token");
         draft.user = {
           id: 0,
           nickname: "",

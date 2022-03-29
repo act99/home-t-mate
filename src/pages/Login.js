@@ -1,13 +1,15 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { KAKAO_AUTH_URL } from "../shared/OAuth.js";
-import { actionCreators as userActions } from "../redux/modules/userReducer.js";
 import { useHistory } from "react-router-dom";
 import styled from "@emotion/styled";
 import kakaoImage from "../assets/kakao_login_large_wide.png";
+import useWindowSize from "../hooks/useWindowSize.js";
 const Login = (props) => {
   const history = useHistory();
   const user = useSelector((state) => state.userReducer.user);
+  const size = useWindowSize();
+  const { width, height } = size;
   React.useEffect(() => {
     if (user.is_login) {
       alert("로그인 하신 상태입니다.");
@@ -15,6 +17,29 @@ const Login = (props) => {
     }
     return () => {};
   }, []);
+
+  if (width < height) {
+    return (
+      <Wrap>
+        <MTitle>
+          <span>홈트메이트</span>에 온 걸 환영해요:)
+        </MTitle>
+        <MContent>친구들과 함께 즐거운 홈트해요💪💪</MContent>
+        <div>
+          <a
+            href={KAKAO_AUTH_URL}
+            id="custom-login-btn"
+            // onClick={kakaoLogin}
+          >
+            <img alt="" src={kakaoImage} width="360" />
+          </a>
+        </div>
+        <SmallFont onClick={() => history.push("/")}>
+          먼저 더 둘러볼래요
+        </SmallFont>
+      </Wrap>
+    );
+  }
 
   return (
     <Wrap>
@@ -47,14 +72,22 @@ const Title = styled.h1`
   }
 `;
 
-// const CenterWrap = styled.div`
-//   margin: auto;
-// `;
-
-// FF9234
+const MTitle = styled.h1`
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  span {
+    color: #ff9234;
+  }
+`;
 
 const Content = styled.h3`
   font-size: large;
+  margin-bottom: 10vh;
+`;
+
+const MContent = styled.h3`
+  font-size: 18px;
   margin-bottom: 10vh;
 `;
 

@@ -66,16 +66,10 @@ const ChatContainer = (props) => {
     }
   };
 
-  React.useEffect(
-    () => {
-      setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
-      // chattingRef.current.scrollIntoView({ behavior: "smooth" });
-      return () => {};
-    },
-    []
-
-    // [roomId, sendMessage.sender]
-  );
+  React.useEffect(() => {
+    setSendMessage({ ...sendMessage, roomId: roomId, sender: nickname });
+    return () => {};
+  }, []);
 
   return (
     <>
