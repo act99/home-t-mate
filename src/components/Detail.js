@@ -94,7 +94,9 @@ export default function Detail(props) {
             fontFamily="GmarketSansMedium"
             fontSize="1.1vw"
           >
+            <pre>
             {thisPost.content}
+            </pre>
           </Typography>
 
           {/* 댓글몇개인지 보이기 */}
