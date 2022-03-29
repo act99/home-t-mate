@@ -12,7 +12,7 @@ const RoomImageDefault = styled.div`
   max-height: 240px; */
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
-
+  margin: auto;
   background-image: url("${(props) => props.src}");
   background-size: 80% auto;
   background-position: center;

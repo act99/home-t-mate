@@ -242,7 +242,7 @@ const NavBar = (props) => {
                   />
                   <Button
                     color="inherit"
-                    onClick={logout}
+                    onClick={() => history.push("/logout")}
                     sx={{ color: "#000000", fontWeight: "bold", fontSize: 8 }}
                   >
                     로그아웃

@@ -61,7 +61,7 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        // deleteCookie("token");
+        deleteCookie("token");
         draft.user = {
           id: 0,
           nickname: "",
