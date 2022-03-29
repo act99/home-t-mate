@@ -15,6 +15,7 @@ import Text from "../elements/Text";
 import { Modal } from "@mui/material";
 import Detail from "./Detail";
 import CloseIcon from "@mui/icons-material/Close";
+import useWindowSize from "../hooks/useWindowSize";
 
 export default function StoryCard(props) {
   const classes = storyCard();
@@ -48,6 +49,9 @@ export default function StoryCard(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const sizewindow = useWindowSize();
+  const { width, height } = sizewindow;
 
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
     return (
@@ -117,7 +121,7 @@ export default function StoryCard(props) {
               </Text>
               <div className="overFlowText">
                 <h3
-                  style={{ fontSize: "16px", fontFamily: "GmarketSansLight" }}
+                  style={{ fontSize: "1em", fontFamily: "GmarketSansLight" }}
                 >
                   {content.length > 25 ? content.slice(0, 25) + "..." : content}
                 </h3>

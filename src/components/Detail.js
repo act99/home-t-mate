@@ -90,11 +90,11 @@ export default function Detail(props) {
             align="justify"
             marginLeft="16px"
             marginRight="16px"
-            marginBottom="1vh"
+            // marginBottom="1vh"
             fontFamily="GmarketSansMedium"
             fontSize="1.1vw"
-          >
-            {thisPost.content}
+          ><pre style={{fontFamily:"GmarketSansMedium", marginTop:"0px"}}>{thisPost.content}</pre>
+            
           </Typography>
 
           {/* 댓글몇개인지 보이기 */}
