@@ -117,7 +117,7 @@ const LiveNow = () => {
             <div {...animatedItem}>
               <div
                 style={{
-                  margin: "120px auto 16px auto",
+                  margin: "80px auto 16px auto",
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "center",
@@ -128,8 +128,8 @@ const LiveNow = () => {
               <MainTitle>
                 <h3>로그인 후 이용해주세요.</h3>
                 <h5>
-                  로그인을 하시면 홈트메이트의 다양한 홈트레이닝 서비스를
-                  이용하실 수 있습니다.
+                  로그인을 하시면 다양한 홈트메이트 서비스를 이용하실 수
+                  있습니다.
                 </h5>
               </MainTitle>
             </div>
@@ -157,7 +157,7 @@ const LiveNow = () => {
               <form onSubmit={submitSearchHandler}>
                 <SearchBarWrap>
                   <SearchBarInput
-                    placeholder="원하시는 방 제목 또는 호스트 이름을 검색해주세요"
+                    placeholder="원하시는 방을 검색해주세요"
                     onKeyDown={onEnterPress}
                     value={searchInput}
                     onChange={searchInputHandler}
@@ -322,7 +322,7 @@ const MainTitle = styled.div`
   flex-direction: column;
   color: #2f5b27;
   h3 {
-    font-size: 36px;
+    font-size: 32px;
     font-family: "GmarketSansMedium";
     margin: 0px;
     margin-bottom: 8px;
@@ -451,7 +451,6 @@ const SearchBarInput = styled.input`
   padding-left: 16px;
   font-size: 16px;
   font-family: "GmarketSansLight";
-
   :focus {
     outline: none;
     border: solid 2px #e2e2e2;

@@ -84,7 +84,7 @@ const YoutubeVideo = (props) => {
   const handleUrlSubmit = (e) => {
     e.preventDefault();
     if (youtube_parser(urlIntput.message) === false) {
-      alert("옳바른 주소를 입력해주세요");
+      alert("올바른 주소를 입력해주세요");
     } else {
       sendYoutubeUrl(ws, token, urlIntput);
       setUrlIntput({ ...urlIntput, message: "" });
