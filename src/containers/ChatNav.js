@@ -18,7 +18,7 @@ const ChatNav = (props) => {
       .then((res) => {})
       .catch((error) => console.log(error));
     history.replace("/");
-    handleQuit();
+    // handleQuit();
   };
   React.useEffect(() => {
     return () => {};

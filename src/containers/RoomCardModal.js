@@ -49,11 +49,12 @@ const RoomCardModal = (props) => {
   const passwordRef = React.useRef();
   const [password, setPassword] = React.useState("");
   const [errorGenerate, setErrorGenerate] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const handleEnterRoom = (e) => {
     e.preventDefault();
     if (is_login === false) {
       alert("로그인 후 입장 가능합니다.");
-      history.replace("/livenow");
+      history.replace("/login");
     } else {
       apis
         .enterRoom(roomId, password)
@@ -74,6 +75,7 @@ const RoomCardModal = (props) => {
         })
         .catch((error) => {
           setErrorGenerate(true);
+          setErrorMessage(error.response.data.message);
           // alert(error.response.data.message);
           console.log(error.response.data);
         });
@@ -97,7 +99,7 @@ const RoomCardModal = (props) => {
     >
       {errorGenerate ? (
         <div>
-          <FullErrorContainer modalOff={modalOff} />
+          <FullErrorContainer modalOff={modalOff} errorMessage={errorMessage} />
         </div>
       ) : (
         <Box sx={style}>

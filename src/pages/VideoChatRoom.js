@@ -114,41 +114,33 @@ const VideoChatRoom = () => {
   const onbeforeunload = () => {
     apis
       .leaveRoom(roomId)
-      .then((res) => {})
+      .then((res) => {
+        disconnected();
+        handleQuit();
+      })
       .catch((error) => console.log(error));
-    disconnected();
-    handleQuit();
   };
 
   React.useEffect(() => {
+    setQuit({ roomId: roomId, sender: user.nickname });
     apis
       .enterRoom(roomId, password)
       .then((res) => {
         dispatch(subscribersActions.getSubscribers(res.data));
         window.addEventListener("beforeunload", onbeforeunload);
+        // window.addEventListener("unload", onbeforeunload);
         created();
       })
       .catch((error) => console.log(error.response.message));
-    setQuit({ roomId: roomId, sender: user.nickname });
+
     // created();
     return () => {
       window.removeEventListener("beforeunload", onbeforeunload);
-
-      apis
-        .leaveRoom(roomId)
-        .then((res) => {
-          disconnected();
-        })
-        .catch((error) => console.log(error));
-      handleQuit();
+      // window.addEventListener("unload", onbeforeunload);
       history.replace("/");
       history.go(0);
     };
   }, []);
-
-  // if (width <= 600) {
-  //   <TabletWrap></TabletWrap>;
-  // }
 
   return (
     <>

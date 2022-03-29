@@ -23,19 +23,13 @@ const CheckVideo = () => {
 
   // ** roomID, roomName 가져오기
   const location = useLocation();
-  const roomId = location.state.roomId;
-  const roomName = location.state.roomName;
-  const password = location.state.password;
-  const host = location.state.host;
-  const hostImg = location.state.hostImg;
+  const locationState = location.state;
+  const { roomId, roomName, password, host, hostImg } = locationState;
+
   // ** 비디오 세팅
-  // const [video, setVideo] = React.useState(videoReducer.video);
-  // const [audio, setAudio] = React.useState(videoReducer.audio);
   const [loading, setLoading] = React.useState(true);
   const videoRef = React.useRef(null);
 
-  // ** 방 인원 체크
-  const [fullPeople, setFullPeople] = React.useState(false);
   // ** 사이즈
 
   const size = useWindowSize();
@@ -72,30 +66,15 @@ const CheckVideo = () => {
             myStatus: myStatus,
           },
         });
-        // dispatch(videoActions.setVideo({ video: video, audio: audio }));
       })
       .catch((error) => console.log(error.response));
-
-    // dispatch(videoActions.setVideo({ video: video, audio: audio }));
   };
-  // const scrollRef = React.useRef();
 
   React.useEffect(() => {
-    // **  ㄱㄱ
-    // setTimeout(() => {
-    //   if (videoReducer.video === true) {
-    //     getWebcam((stream) => {
-    //       videoRef.current.srcObject = stream;
-    //     });
-    //   }
-    //   setLoading(false);
-    // }, 1000);
-
     setTimeout(() => {
       getWebcam((stream) => {
         videoRef.current.srcObject = stream;
       });
-
       setLoading(false);
     }, 1000);
 
@@ -129,6 +108,7 @@ const CheckVideo = () => {
     );
     setMyStatus({ ...myStatus, video: !myStatus.video });
   };
+
   const audioOnOff = () => {
     dispatch(
       videoActions.setVideo({
@@ -139,9 +119,6 @@ const CheckVideo = () => {
     setMyStatus({ ...myStatus, audio: !myStatus.audio });
   };
 
-  if (fullPeople) {
-    return <FullErrorContainer />;
-  }
   if (loading) {
     return (
       <Wrap>

@@ -11,19 +11,24 @@ import styled from "@emotion/styled";
 import CloseIcon from "@mui/icons-material/Close";
 import { imageApis } from "../shared/formApi";
 import Logo from "../assets/imageupload.png";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 540,
-  height: 820,
-  bgcolor: "background.paper",
-  border: "0px solid #000",
-  boxShadow: 24,
-};
+import useWindowSize from "../hooks/useWindowSize";
+import CreateRoomImage from "../elements/CreateRoomImage";
 
 const CreateRoomModal = (props) => {
+  const size = useWindowSize();
+  const { width, height } = size;
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: width * 0.3,
+    height: width * 0.4,
+    bgcolor: "background.paper",
+    border: "0px solid #000",
+    boxShadow: 24,
+  };
+
   const { createRoomOpen, setCreateRoomOpen } = props;
   const dispatch = useDispatch();
 
@@ -103,10 +108,24 @@ const CreateRoomModal = (props) => {
         </Top>
         <ContentWrap>
           <Box
-            sx={{ width: "100%", maxWidth: 320, maxHeight: 240, mx: "auto" }}
+            sx={{
+              width: width * 0.2,
+              height: width * 0.1,
+              mx: "auto",
+            }}
           >
-            <FileInput type="file" ref={fileInputRef} onChange={selectFile} />
-            <RoomImage src={preview ? preview : Logo} />
+            <FileInput
+              type="file"
+              ref={fileInputRef}
+              onChange={selectFile}
+              width={width * 0.2}
+              height={height * 0.15}
+            />
+            <CreateRoomImage
+              src={preview ? preview : Logo}
+              width={width * 0.2}
+              height={height * 0.15}
+            />
           </Box>
           <TitleWrap style={{ marginTop: "56px" }}>
             <Typography
@@ -226,8 +245,8 @@ const FileInput = styled.input`
   width: 100%;
   /* height: 100%; */
   height: 100%;
-  min-height: 240px;
-  max-width: 320px;
+  min-height: ${(props) => props.height}px;
+  max-width: ${(props) => props.width};
   /* min-height: 150px;
   max-height: 150px;
   max-width: 200px; */

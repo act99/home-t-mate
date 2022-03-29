@@ -23,11 +23,9 @@ const FullErrorContainer = (props) => {
           }}
         >
           <AlertTitle sx={{ mx: "auto", textAlign: "center" }}>
-            <h3>방 인원 초과</h3>
+            <h3>{props.errorMessage}</h3>
           </AlertTitle>
           <img src={LoadingImage} width="300px" />
-
-          <h3>방 인원이 꽉 차 입장하실 수 없습니다.</h3>
           <Button
             sx={{
               display: "block",

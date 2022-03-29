@@ -50,7 +50,6 @@ export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.user = {
           id: action.payload.user.id,
           nickname: action.payload.user.nickname,
