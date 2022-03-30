@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { useSelector } from "react-redux";
-import YouTube from "react-youtube";
 import useWindowSize from "../hooks/useWindowSize";
 import {
   sendYoutubeOff,
@@ -28,8 +27,7 @@ const YoutubeVideo = (props) => {
 
   // ** 윈도우 사이즈 규격
   const size = useWindowSize();
-  const width = size.width;
-  const height = size.height;
+  const { width, height } = size;
 
   // ** 유튜브 url 여부 확인
   function youtube_parser(url) {
@@ -139,8 +137,128 @@ const YoutubeVideo = (props) => {
     });
     return () => {};
   }, [on, url]);
-  // console.log(((height - 200) * 16) / 9);
 
+  if (width < height) {
+    return (
+      <>
+        {isYoutube ? (
+          <ReactPlayer
+            url={url}
+            controls
+            width={"100%"}
+            height={`${width * 0.34}px`}
+            // height={"auto"}
+            // width={`${width * 0.7}px`}
+            // height={`${width * 0.525}px`}
+            // height={`${height - 200}px`}
+            ref={youtubeRef}
+            playing={on}
+            onPlay={handlePlay}
+            onPause={handlePause}
+            onEnded={handleStop}
+          />
+        ) : (
+          <Empty width={width} height={height}>
+            <img
+              width={width * 0.2 + "px"}
+              alt="yotubeUrl"
+              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
+            />
+            <YoutubeEmptyText>
+              호스트 님은 유튜브 URL을 넣어주세요 :)
+            </YoutubeEmptyText>
+          </Empty>
+        )}
+        <WrapBottom width={width}>
+          <BottomTop width={width}>
+            <WrapRoomInfo width={width}>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.01 + "px" }}
+              >
+                <h3>방 제목 : </h3>
+                <h3>
+                  {roomName.length > 12
+                    ? roomName.slice(0, 12) + "..."
+                    : roomName}
+                </h3>
+              </HostText>
+              <HostText width={width}>
+                <h3>비밀번호 : </h3>
+                <h3>{password === "" ? "X" : password}</h3>
+              </HostText>
+              <HostText width={width}>
+                <h3>호스트 : </h3>
+                <Avatar
+                  alt={host}
+                  src={hostImg}
+                  sx={{ width: "1.5vw", height: "1.5vw", mx: 1 }}
+                />
+                <h3>{host}</h3>
+              </HostText>
+            </WrapRoomInfo>
+            <Banner width={width}>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.01 + "px" }}
+              >
+                <h3>💪 공지 💪</h3>
+              </HostText>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.01 + "px" }}
+              >
+                <h3>
+                  영상 재생 중에는 카메라와 마이크를 설정하실 수 없습니다.{" "}
+                </h3>
+              </HostText>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.005 + "px" }}
+              >
+                <h3>
+                  유튜브 영상을 일시정지 하신 후, 카메라와 마이크를
+                  재설정해주시기 바랍니다.
+                </h3>
+              </HostText>
+            </Banner>
+          </BottomTop>
+          <WrapFromStyle width={width}>
+            <FormBox onSubmit={handleUrlSubmit}>
+              <UrlInput
+                type="text"
+                value={urlIntput.message}
+                onChange={handleUrlChange}
+                required
+                placeholder="유튜브 Url"
+                dwidth={width}
+              />
+              <CreateButton type="submit" width={width}>
+                유튜브 url 제출
+              </CreateButton>
+            </FormBox>
+            {workOut ? (
+              <WorkOutWrap width={width} src={WorkoutImage}>
+                {/* <img
+                  src={WorkoutImage}
+                  alt=""
+                  style={{ width: "160px", height: "60px" }}
+                /> */}
+              </WorkOutWrap>
+            ) : (
+              <WorkOutWrap src={RestImage} width={width}>
+                {/* <img
+                  src={RestImage}
+                  alt=""
+                  style={{ width: "160px", height: "50px" }}
+                /> */}
+              </WorkOutWrap>
+            )}
+          </WrapFromStyle>
+        </WrapBottom>
+      </>
+    );
+  }
   return (
     <>
       {isYoutube ? (

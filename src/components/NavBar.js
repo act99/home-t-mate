@@ -231,7 +231,7 @@ const NavBar = (props) => {
                 <>
                   <MCreateButton
                     width={width * 0.2}
-                    height={width * 0.08}
+                    height="30"
                     onClick={() => {
                       setCreateRoomOpen(true);
                     }}
@@ -438,7 +438,7 @@ const MCreateButton = styled.button`
   border-radius: 8px;
   border: solid 2px green;
   background-color: white;
-  font-size: ${(props) => props.height * 0.1}px;
+  font-size: 8px;
   color: green;
   font-weight: bold;
   margin-right: 8px;

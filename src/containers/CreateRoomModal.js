@@ -100,7 +100,7 @@ const CreateRoomModal = (props) => {
       >
         <WrapCreateBox
           width={width * 0.8}
-          height={width * 1.2}
+          height={width * 1.4}
           onSubmit={handleSubmit}
         >
           <Top>
