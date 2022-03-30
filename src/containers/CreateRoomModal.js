@@ -16,29 +16,6 @@ import CreateRoomImage from "../elements/CreateRoomImage";
 const CreateRoomModal = (props) => {
   const size = useWindowSize();
   const { width, height } = size;
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: width * 0.3,
-    height: width * 0.45,
-    bgcolor: "background.paper",
-    border: "0px solid #000",
-    boxShadow: 24,
-  };
-
-  const Mstyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: width * 0.6,
-    height: width * 1,
-    bgcolor: "background.paper",
-    border: "0px solid #000",
-    boxShadow: 24,
-  };
 
   const { createRoomOpen, setCreateRoomOpen } = props;
   const dispatch = useDispatch();
@@ -128,7 +105,9 @@ const CreateRoomModal = (props) => {
         >
           <Top>
             <IconButton onClick={handleClose}>
-              <CloseIcon sx={{ height: "100%", fontSize: "40px" }} />
+              <CloseIcon
+                sx={{ height: "100%", fontSize: `${width * 0.1}px` }}
+              />
             </IconButton>
           </Top>
           <MImageWrap>
@@ -145,19 +124,25 @@ const CreateRoomModal = (props) => {
               src={preview ? preview : Logo}
             />
           </MImageWrap>
-          <MInputWrap>
+          <MInputWrap width={width}>
             <h3>방 제목 : </h3>
             <InputStlye
               required
               maxLength={28}
               name="title"
               placeholder="방 이름"
-              style={{ marginLeft: 0, marginTop: 0, width: "282px" }}
+              style={{
+                marginLeft: 0,
+                marginTop: 0,
+                width: `${width * 0.55}px`,
+                height: `${width * 0.07}px`,
+              }}
             />
           </MInputWrap>
-          <MInputWrap>
+          <MInputWrap width={width}>
             <h3>비밀번호 : </h3>
             <MYestButton
+              width={width}
               onClick={() => setPasswordOn(true)}
               type="button"
               password={passwordOn}
@@ -165,6 +150,7 @@ const CreateRoomModal = (props) => {
               Yes
             </MYestButton>
             <MNoButton
+              width={width}
               onClick={handlePassword}
               type="button"
               password={passwordOn}
@@ -182,9 +168,10 @@ const CreateRoomModal = (props) => {
               placeholder="비밀번호"
               maxLength={12}
               style={{
-                marginLeft: "12px",
-                marginTop: "24px",
-                width: "364px",
+                marginLeft: `${width * 0.03}px`,
+                marginTop: `${width * 0.03}px`,
+                width: `${width * 0.69}px`,
+                height: `${width * 0.08}px`,
               }}
             />
           ) : (
@@ -197,14 +184,15 @@ const CreateRoomModal = (props) => {
               placeholder="비밀번호 X"
               maxLength={12}
               style={{
-                marginLeft: "12px",
-                marginTop: "24px",
-                backgroundColor: "#e2e2e2",
-                width: "364px",
+                backgroundColor: "#f2f2f2",
+                marginLeft: `${width * 0.03}px`,
+                marginTop: `${width * 0.03}px`,
+                width: `${width * 0.69}px`,
+                height: `${width * 0.08}px`,
               }}
             />
           )}
-          <MInputWrap>
+          <MInputWrap width={width}>
             <h3>방에 대해 설명해주세요 </h3>
           </MInputWrap>
           <TextAreaStyle
@@ -213,14 +201,17 @@ const CreateRoomModal = (props) => {
             placeholder="하고 싶은 말을 적어주세요. (최대 100자)"
             maxLength={100}
             style={{
-              width: "364px",
-              height: "84px",
-              marginLeft: "12px",
-              marginTop: 0,
-              paddingTop: "8px",
+              marginLeft: `${width * 0.03}px`,
+              marginTop: `${width * 0.01}px`,
+              width: `${width * 0.69}px`,
+              height: `${width * 0.08}px`,
+              fontSize: `${width * 0.02}px`,
+              fontFamily: "GmarketSansMedium",
             }}
           />
-          <MCreateButton type="submit">지금 방 만들기</MCreateButton>
+          <MCreateButton type="submit" width={width}>
+            지금 방 만들기
+          </MCreateButton>
         </WrapCreateBox>
       </Modal>
     );
@@ -232,154 +223,122 @@ const CreateRoomModal = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box component="form" sx={style} onSubmit={handleSubmit}>
+      <WrapCreateBox
+        width={width * 0.3}
+        height={width * 0.45}
+        onSubmit={handleSubmit}
+      >
         <Top>
           <IconButton onClick={handleClose}>
-            <CloseIcon sx={{ height: "100%", fontSize: "40px" }} />
+            <CloseIcon sx={{ height: "100%", fontSize: `${width * 0.05}px` }} />
           </IconButton>
         </Top>
-        <ContentWrap>
-          <Box
-            sx={{ width: "100%", maxWidth: 320, maxHeight: 240, mx: "auto" }}
-          >
-            <FileInput type="file" ref={fileInputRef} onChange={selectFile} />
-            <RoomImage src={preview ? preview : Logo} />
-          </Box>
-          <TitleWrap style={{ marginTop: "56px" }}>
-            <Typography
-              component="h1"
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-                fontSize: 16,
-                my: 0,
-                mr: 2,
-                fontFamily: "SuncheonR",
-              }}
-            >
-              방 제목 :
-            </Typography>
-            <InputStlye
-              required
-              maxLength={28}
-              name="title"
-              placeholder="방 이름"
-              style={{ marginLeft: 0, marginTop: 0, width: "382px" }}
-            />
-          </TitleWrap>
-          <TitleWrap>
-            <Typography
-              component="h1"
-              variant="h5"
-              sx={{ fontWeight: "bold", fontSize: 16, fontFamily: "SuncheonR" }}
-            >
-              비밀번호 설정 :
-            </Typography>
-            <YestButton
-              onClick={() => setPasswordOn(true)}
-              type="button"
-              password={passwordOn}
-            >
-              Yes
-            </YestButton>
-            <NoButton
-              onClick={handlePassword}
-              type="button"
-              password={passwordOn}
-            >
-              No
-            </NoButton>
-          </TitleWrap>
-          {passwordOn === true ? (
-            <InputStlye
-              required
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="비밀번호"
-              maxLength={12}
-              style={{ marginLeft: 0, marginTop: "24px" }}
-            />
-          ) : (
-            <InputStlye
-              required
-              disabled
-              value={password}
-              type="password"
-              name="password"
-              placeholder="비밀번호 X"
-              maxLength={12}
-              style={{
-                marginLeft: 0,
-                marginTop: "24px",
-                backgroundColor: "#e2e2e2",
-              }}
-            />
-          )}
-
-          <TitleWrap
-            style={{ justifyContent: "space-between", width: "456px" }}
-          >
-            <Typography
-              component="h1"
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-                fontSize: 16,
-                mb: 2,
-                fontFamily: "SuncheonR",
-              }}
-            >
-              방에 대해 설명해주세요.{" "}
-            </Typography>
-          </TitleWrap>
-          <TextAreaStyle
+        <MImageWrap>
+          <MImageInputStyle
+            width={width * 0.15}
+            height={width * 0.1125}
+            type="file"
+            ref={fileInputRef}
+            onChange={selectFile}
+          />
+          <CreateRoomImage
+            width={width * 0.15}
+            height={width * 0.1125}
+            src={preview ? preview : Logo}
+          />
+        </MImageWrap>
+        <MInputWrap width={width * 0.3}>
+          <h3>방 제목 : </h3>
+          <InputStlye
             required
-            name="content"
-            placeholder="하고 싶은 말을 적어주세요. (최대 100자)"
-            maxLength={100}
+            maxLength={28}
+            name="title"
+            placeholder="방 이름"
             style={{
               marginLeft: 0,
               marginTop: 0,
-              paddingTop: "8px",
+              width: `${width * 0.22}px`,
+              height: `${width * 0.02}px`,
             }}
           />
-
-          <CreateButton type="submit">지금 방 만들기</CreateButton>
-        </ContentWrap>
-      </Box>
+        </MInputWrap>
+        <MInputWrap width={width * 0.3}>
+          <h3>비밀번호 : </h3>
+          <MYestButton
+            width={width * 0.4}
+            onClick={() => setPasswordOn(true)}
+            type="button"
+            password={passwordOn}
+          >
+            Yes
+          </MYestButton>
+          <MNoButton
+            width={width * 0.4}
+            onClick={handlePassword}
+            type="button"
+            password={passwordOn}
+          >
+            No
+          </MNoButton>
+        </MInputWrap>
+        {passwordOn === true ? (
+          <InputStlye
+            required
+            type="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호"
+            maxLength={12}
+            style={{
+              marginLeft: `${width * 0.01}px`,
+              marginTop: `${width * 0.01}px`,
+              width: `${width * 0.26}px`,
+              height: `${width * 0.02}px`,
+            }}
+          />
+        ) : (
+          <InputStlye
+            required
+            disabled
+            value={password}
+            type="password"
+            name="password"
+            placeholder="비밀번호 X"
+            maxLength={12}
+            style={{
+              backgroundColor: "#f2f2f2",
+              marginLeft: `${width * 0.01}px`,
+              marginTop: `${width * 0.01}px`,
+              width: `${width * 0.26}px`,
+              height: `${width * 0.02}px`,
+            }}
+          />
+        )}
+        <MInputWrap width={width * 0.3}>
+          <h3>방에 대해 설명해주세요 </h3>
+        </MInputWrap>
+        <TextAreaStyle
+          required
+          name="content"
+          placeholder="하고 싶은 말을 적어주세요. (최대 100자)"
+          maxLength={100}
+          style={{
+            marginLeft: `${width * 0.01}px`,
+            marginTop: `${width * 0.001}px`,
+            width: `${width * 0.26}px`,
+            height: `${width * 0.08}px`,
+            fontSize: `${width * 0.008}px`,
+            fontFamily: "GmarketSansMedium",
+          }}
+        />
+        <MCreateButton type="submit" width={width * 0.3}>
+          지금 방 만들기
+        </MCreateButton>
+      </WrapCreateBox>
     </Modal>
   );
 };
-
-const FileInput = styled.input`
-  opacity: 0;
-  position: absolute;
-  /* top: 100px;
-  left: 0;
-  bottom: 0;
-  right: 0;  */
-  width: 100%;
-  /* height: 100%; */
-  height: 100%;
-  min-height: 240px;
-  max-width: 320px;
-  /* min-height: 150px;
-  max-height: 150px;
-  max-width: 200px; */
-  height: auto;
-  cursor: pointer;
-`;
-
-const ContentWrap = styled.div`
-  width: 480px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  margin: auto;
-`;
 
 const Top = styled.div`
   width: 100%;
@@ -388,15 +347,6 @@ const Top = styled.div`
   flex-direction: row;
   justify-content: end;
   background-color: white;
-`;
-
-const TitleWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-  margin-top: 24px;
-  /* margin-bottom: 24px; */
 `;
 
 const InputStlye = styled.input`
@@ -417,79 +367,21 @@ const TextAreaStyle = styled.textarea`
   padding-left: 12px;
   resize: none;
   margin-bottom: 16px;
-`;
-
-const NoButton = styled.button`
-  width: 164px;
-  height: 48px;
-  border-radius: 10px;
-  border: solid 0px green;
-  background-color: ${(props) =>
-    props.password === false ? "green" : "#8f8f8f"};
-  font-size: 16px;
-  color: white;
-  /* font-weight: bold; */
-  cursor: pointer;
-  transition: 0.3s;
-  :hover {
-    transition: 0.3s;
-    background-color: green;
-  }
-`;
-
-const YestButton = styled.button`
-  margin-right: 20px;
-  margin-left: 20px;
-  width: 164px;
-  height: 48px;
-  border-radius: 10px;
-  border: solid 0px green;
-  background-color: ${(props) =>
-    props.password === true ? "green" : "#8f8f8f"};
-  font-size: 16px;
-  color: white;
-  /* font-weight: bold; */
-  cursor: pointer;
-  transition: 0.3s;
-  :hover {
-    transition: 0.3s;
-    background-color: green;
-  }
-`;
-
-const CreateButton = styled.button`
-  display: block;
-  margin: auto;
-  margin-top: 24px;
-  width: 484px;
-  height: 50px;
-  border-radius: 10px;
-  border: solid 2px green;
-  background-color: white;
-  font-size: 16px;
-  color: green;
-  font-weight: bold;
-  /* font-weight: bold; */
-  cursor: pointer;
-  transition: 0.3s;
-  :hover {
-    transition: 0.3s;
-    background-color: green;
-    color: white;
-  }
+  padding-top: 12px;
 `;
 
 const MCreateButton = styled.button`
   display: block;
   margin: auto;
-  width: 320px;
-  height: 40px;
+  width: ${(props) => props.width * 0.5}px;
+  height: ${(props) => props.width * 0.1}px;
   border-radius: 10px;
   border: solid 2px green;
   background-color: white;
-  font-size: 12px;
+  font-size: ${(props) => props.width * 0.03}px;
   color: green;
   font-weight: bold;
+  font-family: "GmarketSansMedium";
   /* font-weight: bold; */
   cursor: pointer;
   transition: 0.3s;
@@ -539,20 +431,21 @@ const MInputWrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: start;
-  margin-top: 16px;
-  margin-left: 16px;
+  align-items: center;
+  margin-top: ${(props) => props.width * 0.02}px;
+  margin-left: ${(props) => props.width * 0.03}px;
   h3 {
-    font-size: 16px;
-    margin-right: 16px;
+    font-size: ${(props) => props.width * 0.03}px;
+    margin-right: ${(props) => props.width * 0.03}px;
     font-family: "GmarketSansLight";
   }
 `;
 
 const MYestButton = styled.button`
-  margin-right: 20px;
-  margin-left: 20px;
-  width: 96px;
-  height: 48px;
+  margin-right: ${(props) => props.width * 0.03}px;
+  margin-left: ${(props) => props.width * 0.03}px;
+  width: ${(props) => props.width * 0.2}px;
+  height: ${(props) => props.width * 0.08}px;
   border-radius: 10px;
   border: solid 0px green;
   background-color: ${(props) =>
@@ -569,8 +462,10 @@ const MYestButton = styled.button`
 `;
 
 const MNoButton = styled.button`
-  width: 96px;
-  height: 48px;
+  margin-right: ${(props) => props.width * 0.03}px;
+  margin-left: ${(props) => props.width * 0.03}px;
+  width: ${(props) => props.width * 0.2}px;
+  height: ${(props) => props.width * 0.08}px;
   border-radius: 10px;
   border: solid 0px green;
   background-color: ${(props) =>

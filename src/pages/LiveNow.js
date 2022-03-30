@@ -18,8 +18,11 @@ import { useHistory } from "react-router-dom";
 import InfinityScroll from "../shared/InfinityScroll";
 import useScrollFadeIn from "../hooks/useScrollFadeIn";
 import LoadingImage from "../assets/loading_image.png";
+import useWindowSize from "../hooks/useWindowSize";
 
 const LiveNow = () => {
+  const size = useWindowSize();
+  const { width, height } = size;
   const dispatch = useDispatch();
   const history = useHistory();
   // ** 방 생성 버튼
@@ -109,6 +112,209 @@ const LiveNow = () => {
       }
     };
   }, []);
+  if (width < height) {
+    if (user.is_login === false) {
+      return (
+        <>
+          <Wrap>
+            <Container sx={{ py: 16, width: "100%" }}>
+              <div {...animatedItem}>
+                <div
+                  style={{
+                    margin: "auto",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img alt="" src={LoadingImage} width={`${width * 0.5}px`} />
+                </div>
+                <MMainTitle width={width}>
+                  <br />
+                  <h3>로그인 후 이용해주세요.</h3>
+                  <h5>
+                    <br />
+                    로그인을 하시면 <br />
+                    다양한 홈트메이트 서비스를 이용하실 수 있습니다.
+                  </h5>
+                </MMainTitle>
+              </div>
+            </Container>
+            <RoomCardModal
+              clickCard={clickCard}
+              setClickCard={setClickCard}
+              data={modalData}
+            />
+          </Wrap>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <InfinityScroll callNext={handleNext} loading={is_loading}>
+          <Wrap>
+            <Container sx={{ py: 8, width: "100%" }}>
+              <div {...animatedItem}>
+                <MMainTitle width={width}>
+                  <h3>친구들과 함께하는 화상 홈트레이닝</h3>
+                  <br />
+                  <h5>오늘도 여러분의 운동을 응원합니다</h5>
+                </MMainTitle>
+                <form onSubmit={submitSearchHandler}>
+                  <MSearchBarWrap width={width}>
+                    <MSearchBarInput
+                      width={width}
+                      placeholder="원하시는 방을 검색해주세요"
+                      onKeyDown={onEnterPress}
+                      value={searchInput}
+                      onChange={searchInputHandler}
+                    />
+                    <MSearchButton width={width}>
+                      <BsSearch
+                        style={{
+                          fontSize: `${width * 0.045}px`,
+                          marginLeft: `${width * 0.02}px`,
+                          marginRight: `${width * 0.04}px`,
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                        }}
+                      />
+                    </MSearchButton>
+                  </MSearchBarWrap>
+                </form>
+              </div>
+              <Grid container spacing={2}>
+                {roomList.map((item, index) => (
+                  <Grid
+                    item
+                    key={item.roomId + item.name + index}
+                    xs={12}
+                    sm={6}
+                    md={3}
+                  >
+                    <Card
+                      onClick={() => {
+                        cardOpenHandler(
+                          item.roomId,
+                          item.name,
+                          item.content,
+                          item.roomImg,
+                          item.passCheck,
+                          item.userCount,
+                          item.profileImg,
+                          item.nickname,
+                          item.workOut
+                        );
+                      }}
+                      sx={{
+                        height: "300px",
+                        display: "flex",
+                        flexDirection: "column",
+                        cursor: "pointer",
+                        borderRadius: "0px",
+                        boxShadow: "none",
+                        backgroundColor: "rgb(0,0,0,0)",
+                      }}
+                    >
+                      <CardMedia
+                        sx={{
+                          maxHeight: "50%",
+                          minHeight: "180px",
+                        }}
+                        component="img"
+                        image={item.roomImg}
+                        alt="random"
+                      />
+                      <CardContent
+                        sx={{
+                          flexGrow: 1,
+                          minHeight: "76px",
+                          py: 1,
+                          px: 1,
+                          maxHeight: "30%",
+                        }}
+                      >
+                        <ContentWrap>
+                          {item.workOut ? (
+                            <WorkOutWrap>
+                              <h3>운동중</h3>
+                            </WorkOutWrap>
+                          ) : (
+                            <RestWrap>
+                              <h3>휴식중</h3>
+                            </RestWrap>
+                          )}
+                          <TitleWrap>
+                            {item.passCheck === true ? (
+                              <AiOutlineLock
+                                style={{
+                                  marginRight: "5px",
+                                }}
+                              />
+                            ) : null}
+                            <TitleText>
+                              {item.name.length > 22
+                                ? item.name.slice(0, 22) + "..."
+                                : item.name}
+                            </TitleText>
+                          </TitleWrap>
+                          <NickANumWrap>
+                            <MemberNum>
+                              <PersonOutlineIcon
+                                style={{ width: "20px", marginRight: "4px" }}
+                              />
+                              <h3>
+                                ({item.userCount === null ? 0 : item.userCount}
+                                /5)
+                              </h3>
+                            </MemberNum>
+                            <NickWrap>
+                              <Avatar
+                                sx={{
+                                  width: 24,
+                                  height: 24,
+                                  zIndex: 1,
+                                  marginRight: 0.5,
+                                }}
+                                alt="Remy Sharp"
+                                src={
+                                  item.profileImg === null ||
+                                  item.profileImg === undefined
+                                    ? null
+                                    : item.profileImg
+                                }
+                              />
+                              <NickText>
+                                {item.nickname === null ||
+                                item.nickname === undefined
+                                  ? null
+                                  : item.nickname.length === undefined
+                                  ? null
+                                  : item.nickname.length > 7
+                                  ? item.nickname.slice(0, 6) + "..."
+                                  : item.nickname}
+                              </NickText>
+                            </NickWrap>
+                          </NickANumWrap>
+                        </ContentWrap>
+                        <RowForDiv></RowForDiv>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
+            <RoomCardModal
+              clickCard={clickCard}
+              setClickCard={setClickCard}
+              data={modalData}
+            />
+          </Wrap>
+        </InfinityScroll>
+      </>
+    );
+  }
   if (user.is_login === false) {
     return (
       <>
@@ -304,6 +510,63 @@ const LiveNow = () => {
     </>
   );
 };
+
+const MMainTitle = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin-bottom: ${(props) => props.width * 0.1}px;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  color: #2f5b27;
+  h3 {
+    font-size: ${(props) => props.width * 0.05}px;
+    font-family: "GmarketSansMedium";
+    margin: 0px;
+  }
+  h5 {
+    font-size: ${(props) => props.width * 0.04}px;
+    font-family: "GmarketSansLight";
+    margin: 0px;
+  }
+`;
+
+const MSearchBarWrap = styled.div`
+  width: 100%;
+  height: ${(props) => props.width * 0.1}px;
+  /* background-color: black; */
+  border-radius: 24px;
+  border: solid 1px #e2e2e2;
+  display: flex;
+  align-items: center;
+  margin-bottom: ${(props) => props.width * 0.2}px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const MSearchBarInput = styled.input`
+  width: 100%;
+  height: ${(props) => props.width * 0.1}px;
+  border: solid 0px;
+  border-right: solid 1px #e2e2e2;
+  background-color: rgb(0, 0, 0, 0);
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+  padding-left: 16px;
+  font-size: ${(props) => props.width * 0.035}px;
+  font-family: "GmarketSansLight";
+  :focus {
+    outline: none;
+    border: solid 2px #e2e2e2;
+  }
+`;
+
+const MSearchButton = styled.button`
+  background-color: rgb(0, 0, 0, 0);
+  border: solid 0px;
+  cursor: pointer;
+`;
 
 const Wrap = styled.div`
   width: 100%;

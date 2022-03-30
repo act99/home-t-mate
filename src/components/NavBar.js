@@ -230,11 +230,13 @@ const NavBar = (props) => {
               ) : (
                 <>
                   <MCreateButton
+                    width={width * 0.2}
+                    height={width * 0.08}
                     onClick={() => {
                       setCreateRoomOpen(true);
                     }}
                   >
-                    지금 방 만들기
+                    방 만들기
                   </MCreateButton>
                   <CreateRoomModal
                     createRoomOpen={createRoomOpen}
@@ -429,17 +431,17 @@ const CreateButton = styled.button`
 const MCreateButton = styled.button`
   display: block;
   /* margin: auto; */
-  width: 88px;
-  height: 32px;
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
   margin-top: auto;
   margin-bottom: auto;
   border-radius: 8px;
   border: solid 2px green;
   background-color: white;
-  font-size: 8px;
+  font-size: ${(props) => props.height * 0.1}px;
   color: green;
   font-weight: bold;
-  margin-right: 16px;
+  margin-right: 8px;
   /* font-weight: bold; */
   cursor: pointer;
   transition: 0.3s;
