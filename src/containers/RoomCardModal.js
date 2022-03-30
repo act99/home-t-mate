@@ -28,7 +28,7 @@ const RoomCardModal = (props) => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 450,
-    height: 752,
+    height: 720,
     bgcolor: "background.paper",
     border: "solid 0px",
     boxShadow: 24,

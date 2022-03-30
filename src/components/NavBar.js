@@ -231,7 +231,7 @@ const NavBar = (props) => {
                 <>
                   <MCreateButton
                     width={width * 0.2}
-                    height={width * 0.08}
+                    height="30"
                     onClick={() => {
                       setCreateRoomOpen(true);
                     }}

@@ -142,6 +142,46 @@ const VideoChatRoom = () => {
     };
   }, []);
 
+  if (width < height) {
+    return (
+      <>
+        <Wrap>
+          <ChatNav
+            roomName={roomName}
+            roomId={roomId}
+            handleQuit={handleQuit}
+          />
+          <MYoutubeTest>
+            <YoutubeVideo
+              ws={ws}
+              token={token}
+              roomId={roomId}
+              workOut={workOut}
+              password={locationState.password}
+              roomName={roomName}
+              host={host}
+              hostImg={hostImg}
+            />
+          </MYoutubeTest>
+          {/* <VideoTest height={height}>
+          <EnterRoom
+            roomId={roomId}
+            nickname={nickname}
+            video={video}
+            audio={audio}
+            password={locationState.password}
+            host={host}
+            myStatus={myStatus}
+          />
+        </VideoTest> */}
+          {/* <ChattingTest height={height}>
+          <ChatContainer chattingRef={chattingRef} ws={ws} />
+        </ChattingTest> */}
+        </Wrap>
+      </>
+    );
+  }
+
   return (
     <>
       <Wrap>
@@ -197,6 +237,11 @@ const YoutubeTest = styled.div`
   width: 65%;
   height: ${(props) => props.height - 56}px;
   position: absolute;
+  background-color: #f9f9f9;
+`;
+
+const MYoutubeTest = styled.div`
+  width: 100%;
   background-color: #f9f9f9;
 `;
 
