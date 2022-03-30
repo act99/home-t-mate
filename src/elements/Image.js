@@ -6,7 +6,7 @@ const Image = (props) => {
   const { src } = props;
 
   //shape, size category
-  const { shape, size, width, height, margin } = props;
+  const { shape, size, width, min_width, max_width, height, margin } = props;
 
   //event category
   const { _onClick } = props;
@@ -41,6 +41,8 @@ const Image = (props) => {
     B_top_left_radius,
     B_top_right_radius,
     cursor,
+    min_width,
+    max_width,
   };
   if (shape === "imageBG") {
     return <ImageBG onClick={_onClick} {...styles}></ImageBG>;
@@ -71,6 +73,8 @@ Image.defaultProps = {
   B_bottom_right_radius: false,
   B_top_left_radius: false,
   B_top_right_radius: false,
+  min_width: null,
+  max_width: null,
 };
 
 const ImageDefault = styled.div`
@@ -88,6 +92,8 @@ const ImageDefault = styled.div`
   border-top-right-radius: ${(props) => props.B_top_right_radius};
   flex: ${(props) => props.flex};
   cursor: pointer;
+  min-width: ${(props) => props.min_width};
+  max-width: ${(props) => props.max_width};
 `;
 
 const ImageCircle = styled.div`

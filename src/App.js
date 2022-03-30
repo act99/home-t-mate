@@ -24,16 +24,6 @@ import ReEnterKeyword from "./pages/ReEnterKeyword";
 import ScrollToTop from "./hooks/scrollToTop";
 import { actionCreators as userActions } from "./redux/modules/userReducer";
 import HowtoUse from "./pages/HowtoUse";
-import ReactGA from "react-ga";
-
-// ReactGA.event({
-//   category: "User",
-//   action: "Created an Account",
-// });
-// ReactGA.exception({
-//   description: "An error ocurred",
-//   fatal: true,
-// });
 
 const App = () => {
   const dispatch = useDispatch();

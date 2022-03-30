@@ -5,6 +5,7 @@ import { actionCreators as commentActions } from "../redux/modules/commentReduce
 import { useDispatch } from "react-redux";
 import { Text } from "../elements";
 import useWindowSize from "../hooks/useWindowSize";
+import { useMediaQuery } from "react-responsive";
 
 export default function CommentContents(props) {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ export default function CommentContents(props) {
 
   const size = useWindowSize();
   const { width, height } = size;
+
+  const isMobile = useMediaQuery({ query: "(max-width: 1209px" });
 
   return (
     <Grid is_flex flex_direction="column">
