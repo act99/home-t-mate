@@ -118,7 +118,11 @@ const VideoChatRoom = () => {
         disconnected();
         handleQuit();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        disconnected();
+        handleQuit();
+      });
   };
 
   React.useEffect(() => {
@@ -138,49 +142,51 @@ const VideoChatRoom = () => {
     };
   }, []);
 
-  // if (width < height) {
-  //   return (
-  //     <>
-  //       <MWrap width={width}>
-  //         <ChatNav
-  //           roomName={roomName}
-  //           roomId={roomId}
-  //           handleQuit={handleQuit}
-  //           width={width}
-  //           height={height}
-  //         />
-  //         <MYoutubeTest>
-  //           <YoutubeVideo
-  //             ws={ws}
-  //             token={token}
-  //             roomId={roomId}
-  //             workOut={workOut}
-  //             password={locationState.password}
-  //             roomName={roomName}
-  //             host={host}
-  //             hostImg={hostImg}
-  //             width={width}
-  //             height={height}
-  //           />
-  //         </MYoutubeTest>
-  //         <MVideoTest width={width}>
-  //           <EnterRoom
-  //             roomId={roomId}
-  //             nickname={nickname}
-  //             video={video}
-  //             audio={audio}
-  //             password={locationState.password}
-  //             host={host}
-  //             myStatus={myStatus}
-  //           />
-  //         </MVideoTest>
-  //         <MChattingTest width={width}>
-  //           <ChatContainer chattingRef={chattingRef} ws={ws} />
-  //         </MChattingTest>
-  //       </MWrap>
-  //     </>
-  //   );
-  // }
+  if (width < height) {
+    return (
+      <>
+        <MWrap width={width}>
+          <ChatNav
+            roomName={roomName}
+            roomId={roomId}
+            handleQuit={handleQuit}
+            width={width}
+            height={height}
+          />
+          <MYoutubeTest>
+            <YoutubeVideo
+              ws={ws}
+              token={token}
+              roomId={roomId}
+              workOut={workOut}
+              password={locationState.password}
+              roomName={roomName}
+              host={host}
+              hostImg={hostImg}
+              width={width}
+              height={height}
+            />
+          </MYoutubeTest>
+          <MVideoTest width={width}>
+            <EnterRoom
+              roomId={roomId}
+              nickname={nickname}
+              video={video}
+              audio={audio}
+              password={locationState.password}
+              host={host}
+              myStatus={myStatus}
+              width={width}
+              height={height}
+            />
+          </MVideoTest>
+          <MChattingTest width={width}>
+            <ChatContainer chattingRef={chattingRef} ws={ws} />
+          </MChattingTest>
+        </MWrap>
+      </>
+    );
+  }
 
   return (
     <>
@@ -207,6 +213,8 @@ const VideoChatRoom = () => {
             password={locationState.password}
             host={host}
             myStatus={myStatus}
+            width={width}
+            height={height}
           />
         </VideoTest>
         <ChattingTest height={height}>
