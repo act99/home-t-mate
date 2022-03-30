@@ -123,18 +123,20 @@ const Home = () => {
     return (
       <>
         <Wrap>
-          <BxSlideCon onClick={() => history.push("/livenow")}>
-            <img alt="" src={BxSlide} width="100%" />
-          </BxSlideCon>
-          <Container sx={{ py: 8, width: "100%" }}>
+          <MBxSlideCon
+            width={width}
+            onClick={() => history.push("/livenow")}
+            src={BxSlide}
+          ></MBxSlideCon>
+          <Container sx={{ py: 1, width: "100%" }}>
             <>
               <div {...animatedItem}>
-                <MMainTitle>
+                <MMainTitle width={width}>
                   <h3>친구들과 함께하는 화상 홈트레이닝</h3>
                   <h5>오늘은 홈트 친구들이 어떤 운동을 하고 있을까요?</h5>
                 </MMainTitle>
                 <form onSubmit={submitSearchHandler}>
-                  <MSearchBarWrap>
+                  <MSearchBarWrap width={width}>
                     <MSearchBarInput
                       placeholder="원하시는 방을 검색해주세요"
                       onKeyDown={onEnterPress}
@@ -367,12 +369,13 @@ const Home = () => {
                   </Text>
                   <Text F_size="12px" F_align="center" margin_top="24px">
                     홈트메이트는 홈트 친구들과 실시간으로 유튜브 영상을 보며
+                    <br />
                     함께 홈트레이닝 하는 공간입니다.
                   </Text>
                 </div>
               </Wrap>
             </>
-            <FooterBxSlideCon {...animatedWhatIs}>
+            <MFooterBxSlideCon {...animatedWhatIs} width={width}>
               <img
                 alt=""
                 src={Whatis}
@@ -380,52 +383,48 @@ const Home = () => {
                 // height="30vw"
                 style={{ margin: "0px" }}
               />
-            </FooterBxSlideCon>
+            </MFooterBxSlideCon>
 
             <div {...animatedHowToTitle}>
               <Text F_size="24px" F_align="center" margin_top="80px">
                 어떻게 운동하면 좋을까요?
               </Text>
               <Text F_size="12px" F_align="center" margin_top="24px">
-                홈트메이트는 홈트 친구들과 실시간으로 유튜브 영상을 보며 함께
-                홈트레이닝 하는 공간입니다.
+                홈트메이트는 아래와 같이 운동하면 좋습니다.
               </Text>
             </div>
             <ImageGroup {...animatedGroup1}>
               <img
                 alt=""
                 src={SetImage}
-                width="45%"
+                width="100%"
                 // height="30vw"
-                style={{ margin: "12px" }}
+                style={{ marginBottom: "12px" }}
+              />
+              <img
+                alt=""
+                src={RunningImage}
+                width="100%"
+                // height="30vw"
+                style={{ marginBottom: "12px" }}
               />
               <img
                 alt=""
                 src={StretchImage}
-                width="45%"
+                width="100%"
                 // height="30vw"
-                style={{ margin: "12px" }}
-              />
-            </ImageGroup>
-            <ImageGroup2 {...animatedGroup2}>
-              <img
-                alt=""
-                src={RunningImage}
-                width="45%"
-                // height="30vw"
-                style={{ margin: "12px" }}
+                style={{ marginBottom: "12px" }}
               />
 
               <img
                 alt=""
                 src={GroupImage}
-                width="45%"
+                width="100%"
                 // height="30vw"
-                style={{ margin: "12px" }}
+                style={{ marginBottom: "36px" }}
               />
-            </ImageGroup2>
+            </ImageGroup>
           </Container>
-
           <RoomCardModal
             clickCard={clickCard}
             setClickCard={setClickCard}
@@ -758,6 +757,23 @@ const BxSlideCon = styled.div`
   cursor: pointer;
 `;
 
+const MBxSlideCon = styled.div`
+  width: 100%;
+  height: ${(props) => props.width * 0.5}px;
+  margin: 0px;
+  cursor: pointer;
+  background-image: url("${(props) => props.src}");
+  background-size: 100% auto;
+  background-position: left;
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+
+const MFooterBxSlideCon = styled.div`
+  width: 100%;
+  padding-bottom: ${(props) => props.width * 0.05}px;
+`;
+
 const FooterBxSlideCon = styled.div`
   width: 100%;
   padding-bottom: 96px;
@@ -889,34 +905,34 @@ const MMainTitle = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  margin-bottom: 64px;
+  margin-bottom: ${(props) => props.width * 0.1}px;
   justify-content: center;
   text-align: center;
   flex-direction: column;
   margin-top: 64px;
 
   h3 {
-    font-size: 24px;
+    font-size: ${(props) => props.width * 0.05}px;
     font-family: "GmarketSansMedium";
     margin: 0px;
     margin-bottom: 16px;
   }
   h5 {
-    font-size: 16px;
+    font-size: ${(props) => props.width * 0.03}px;
     font-family: "GmarketSansLight";
     margin: 0px;
   }
 `;
 
 const MSearchBarWrap = styled.div`
-  width: 70%;
+  width: 100%;
   height: 52px;
   /* background-color: black; */
   border-radius: 24px;
   border: solid 1px #757575;
   display: flex;
   align-items: center;
-  margin-bottom: 48px;
+  margin-bottom: ${(props) => props.width * 0.03}px;
   margin-left: auto;
   margin-right: auto;
 `;

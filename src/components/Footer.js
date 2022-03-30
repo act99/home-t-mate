@@ -21,29 +21,38 @@ const Footer = () => {
     return (
       <>
         <Divider />
-        <MWrap>
+        <MWrap width={width}>
           <FooterList>
             <img
               alt=""
               src={Logo}
-              height="24px"
+              height={`${width * 0.045}px`}
               onClick={() => history.push("/")}
-              style={{ cursor: "pointer", marginRight: 30, marginBottom: 8 }}
+              style={{
+                cursor: "pointer",
+                marginRight: width * 0.03,
+                marginBottom: 8,
+              }}
             />
-            <MTitleWrap onClick={() => history.push("/termsofuse")}>
+            <MTitleWrap
+              onClick={() => history.push("/termsofuse")}
+              width={width}
+            >
               <h3>이용약관</h3>
             </MTitleWrap>
-            <MTitleWrap onClick={() => history.push("/privacy")}>
+            <MTitleWrap onClick={() => history.push("/privacy")} width={width}>
               <h3>개인정보보호</h3>
             </MTitleWrap>
             <MTitleWrap
               onClick={() =>
                 window.open("https://forms.gle/KjiKSmjvokFLQNPV9", "_black")
               }
+              width={width}
             >
               <h3>오류제보</h3>
             </MTitleWrap>
             <MTitleWrap
+              width={width}
               onClick={() =>
                 window.open("https://forms.gle/w6vL5DUyokPE9PtR8", "_black")
               }
@@ -51,12 +60,9 @@ const Footer = () => {
               <h3>만족도 평가</h3>
             </MTitleWrap>
           </FooterList>
-          <Divider sx={{ width: "70%" }} />
-          <FooterList>
-            <MCopyRight>
-              <h3>Copyright ©2022 Hometmate. All rights reserved.</h3>
-            </MCopyRight>
-          </FooterList>
+          <MCopyRight>
+            <h3>Copyright ©2022 Hometmate. All rights reserved.</h3>
+          </MCopyRight>
         </MWrap>
       </>
     );
@@ -118,7 +124,7 @@ const Wrap = styled.div`
 
 const MWrap = styled.div`
   width: 100%;
-  height: 160px;
+  height: ${(props) => props.width * 0.4}px;
   margin: 0px;
   display: flex;
   flex-direction: column;
@@ -167,14 +173,14 @@ const TitleWrap = styled.div`
 `;
 
 const MTitleWrap = styled.div`
-  width: 72px;
-  height: 64px;
+  width: ${(props) => props.width * 0.16}px;
+  height: ${(props) => props.width * 0.1}px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   h3 {
-    font-size: 8px;
+    font-size: ${(props) => props.width * 0.01}px;
     font-family: "GmarketSansLight";
   }
 `;
@@ -193,7 +199,7 @@ const CopyRight = styled.div`
 
 const MCopyRight = styled.div`
   width: 100%;
-  height: 64px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
