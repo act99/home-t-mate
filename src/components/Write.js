@@ -195,8 +195,8 @@ function Write(props) {
                         <WriteButton
                           onClick={addPost}
                           width={width}
-                          height={height}
-                          style={{ minHeight: "30px" }}
+                          // height={height}
+                          // style={{ minHeight: "30px" }}
                         >
                           스토리 작성완료
                         </WriteButton>
@@ -380,8 +380,7 @@ const CreateButton = styled.button`
 const WriteButton = styled.button`
   display: block;
   width: ${(props) => props.width * 0.1 + "px"};
-  height: ${(props) => props.height * 0.03 + "px"};
-  min-height: "100px";
+  height: ${(props) => props.width * 0.03 + "px"};
   margin-left: auto;
   margin-top: ${(props) => props.width * 0.08 + "px"};
   margin-right: ${(props) => props.width * 0.02 + "px"};
