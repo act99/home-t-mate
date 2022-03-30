@@ -128,15 +128,11 @@ const VideoChatRoom = () => {
       .then((res) => {
         dispatch(subscribersActions.getSubscribers(res.data));
         window.addEventListener("beforeunload", onbeforeunload);
-        // window.addEventListener("unload", onbeforeunload);
         created();
       })
       .catch((error) => console.log(error.response.message));
-
-    // created();
     return () => {
       window.removeEventListener("beforeunload", onbeforeunload);
-      // window.addEventListener("unload", onbeforeunload);
       history.replace("/");
       history.go(0);
     };
@@ -145,11 +141,13 @@ const VideoChatRoom = () => {
   if (width < height) {
     return (
       <>
-        <Wrap>
+        <MWrap width={width}>
           <ChatNav
             roomName={roomName}
             roomId={roomId}
             handleQuit={handleQuit}
+            width={width}
+            height={height}
           />
           <MYoutubeTest>
             <YoutubeVideo
@@ -161,23 +159,25 @@ const VideoChatRoom = () => {
               roomName={roomName}
               host={host}
               hostImg={hostImg}
+              width={width}
+              height={height}
             />
           </MYoutubeTest>
-          {/* <VideoTest height={height}>
-          <EnterRoom
-            roomId={roomId}
-            nickname={nickname}
-            video={video}
-            audio={audio}
-            password={locationState.password}
-            host={host}
-            myStatus={myStatus}
-          />
-        </VideoTest> */}
-          {/* <ChattingTest height={height}>
-          <ChatContainer chattingRef={chattingRef} ws={ws} />
-        </ChattingTest> */}
-        </Wrap>
+          <MVideoTest width={width}>
+            <EnterRoom
+              roomId={roomId}
+              nickname={nickname}
+              video={video}
+              audio={audio}
+              password={locationState.password}
+              host={host}
+              myStatus={myStatus}
+            />
+          </MVideoTest>
+          <MChattingTest width={width}>
+            <ChatContainer chattingRef={chattingRef} ws={ws} />
+          </MChattingTest>
+        </MWrap>
       </>
     );
   }
@@ -233,15 +233,36 @@ const Wrap = styled.div`
   background-color: #f9f9f9;
 `;
 
-const YoutubeTest = styled.div`
-  width: 65%;
-  height: ${(props) => props.height - 56}px;
-  position: absolute;
+const MWrap = styled.div`
+  width: ${(props) => props.width}px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+`;
+
+const MChattingTest = styled.div`
+  width: 100%;
+  height: ${(props) => props.width}px;
   background-color: #f9f9f9;
 `;
 
 const MYoutubeTest = styled.div`
   width: 100%;
+  background-color: #f9f9f9;
+`;
+
+const MVideoTest = styled.div`
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.width * 0.4}px;
+  background-color: #f9f9f9;
+  overflow-x: auto;
+  /* background-color: red; */
+`;
+
+const YoutubeTest = styled.div`
+  width: 65%;
+  height: ${(props) => props.height - 56}px;
+  position: absolute;
   background-color: #f9f9f9;
 `;
 
@@ -260,13 +281,6 @@ const ChattingTest = styled.div`
   position: absolute;
   background-color: #f9f9f9;
   left: 80%;
-`;
-
-const TabletWrap = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: #f9f9f9;
-  flex-direction: column;
 `;
 
 export default VideoChatRoom;

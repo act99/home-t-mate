@@ -6,9 +6,10 @@ import { useHistory } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { apis } from "../shared/api";
+import useWindowSize from "../hooks/useWindowSize";
 
 const ChatNav = (props) => {
-  const { roomName, roomId, handleQuit } = props;
+  const { roomName, roomId, handleQuit, width, height } = props;
   const session = useSelector((state) => state.sessionReducer);
   const mySessionId = session.mySessionId;
   const history = useHistory();
@@ -26,6 +27,35 @@ const ChatNav = (props) => {
   const subscribers = useSelector(
     (state) => state.subscriberReducer.subscribers
   );
+
+  if (width < height) {
+    return (
+      <>
+        <MNavBar width={width}>
+          <MTitleWrap width={width}>
+            {roomName === null || roomName === undefined ? (
+              <div></div>
+            ) : (
+              <MTitleText width={width}>
+                {roomName.length > 8 ? roomName.slice(0, 8) + "..." : roomName}
+              </MTitleText>
+            )}
+            <PersonOutlineIcon
+              sx={{ fontSize: width * 0.05, ml: 3, mr: 0.1, mb: 0.5 }}
+            />
+            <MMemberText>( {subscribers.length} / 5 )</MMemberText>
+          </MTitleWrap>
+          <IconButton
+            color="inherit"
+            onClick={handleOut}
+            sx={{ mr: width * 0.005 }}
+          >
+            <LogoutIcon sx={{ fontSize: width * 0.05, margin: 0 }} />
+          </IconButton>
+        </MNavBar>
+      </>
+    );
+  }
 
   return (
     <>
@@ -48,6 +78,38 @@ const ChatNav = (props) => {
     </>
   );
 };
+
+const MNavBar = styled.div`
+  width: 100%;
+  height: ${(props) => props.width * 0.12}px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+`;
+
+const MTitleWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 50%;
+  height: auto;
+  margin-left: ${(props) => props.width * 0.05}px;
+`;
+
+const MTitleText = styled.h3`
+  font-weight: bold;
+  font-size: ${(props) => props.width * 0.03}px;
+  font-family: "GmarketSansMedium";
+`;
+
+const MMemberText = styled.h5`
+  font-weight: bold;
+  font-size: ${(props) => props.width * 0.03}px;
+  font-family: "GmarketSansMedium";
+`;
 
 const NavBar = styled.div`
   width: 100%;

@@ -14,6 +14,8 @@ function useWindowSize() {
       });
     }
     window.addEventListener("resize", throttle(handleResize, 1000));
+    // window.addEventListener("resize", handleResize);
+
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
   }, []);

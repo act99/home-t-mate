@@ -26,12 +26,15 @@ const CreateRoomModal = (props) => {
   const selectFile = () => {
     const reader = new FileReader();
     const previewFile = fileInputRef.current.files[0];
-    console.log(previewFile);
-    reader.readAsDataURL(previewFile);
-    reader.onloadend = () => {
-      // console.log(reader.result);
-      setPreview(reader.result);
-    };
+    if (previewFile.name.includes("jpg") || previewFile.name.includes("png")) {
+      reader.readAsDataURL(previewFile);
+      reader.onloadend = () => {
+        // console.log(reader.result);
+        setPreview(reader.result);
+      };
+    } else {
+      alert("사진(jpg 또는 png)을 넣어주세요");
+    }
   };
   const handleSubmit = (event) => {
     event.preventDefault();

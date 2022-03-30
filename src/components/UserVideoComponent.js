@@ -2,11 +2,14 @@ import React from "react";
 import VideoComponent from "./VideoComponent";
 import "../styles/UserVideo.css";
 import styled from "@emotion/styled";
+import useWindowSize from "../hooks/useWindowSize";
 
 const UserVideoComponent = (props) => {
   const getNicknameTag = () =>
     JSON.parse(props.streamManager.stream.connection.data).clientData;
   const OpenVidu = props.OV ? props.OV : null;
+  const size = useWindowSize();
+  const { width, height } = size;
   return (
     <>
       {props.streamManager !== undefined ? (
@@ -21,7 +24,7 @@ const UserVideoComponent = (props) => {
           session={props.session}
         />
       ) : (
-        <VideoWrap>
+        <VideoWrap height={height}>
           <h3>비디오 없음</h3>
         </VideoWrap>
       )}
