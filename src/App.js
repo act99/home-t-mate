@@ -37,9 +37,9 @@ import ReactGA from "react-ga";
 
 const App = () => {
   const dispatch = useDispatch();
-  const beforeunload = () => {
-    dispatch(userActions.logout());
-  };
+  // const beforeunload = () => {
+  //   dispatch(userActions.logout());
+  // };
   React.useEffect(() => {
     // ReactGA.initialize("G-TT40TC6KP5");
     // history.listen((location) => {
@@ -49,9 +49,9 @@ const App = () => {
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
-    window.addEventListener("unload", beforeunload);
+    // window.addEventListener("unload", beforeunload);
     return () => {
-      window.removeEventListener("unload", beforeunload);
+      // window.removeEventListener("unload", beforeunload);
     };
   }, []);
 
