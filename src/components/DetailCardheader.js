@@ -132,7 +132,7 @@ export default function Cardheader(props) {
         }
       />
       <Text margin_left="20px" F_size="0.9vmax" F_color="#757575">
-        {time}에 작성됨
+      {isMobile? time : (time + "에 작성됨")}
       </Text>
     </Grid>
   ) : (
@@ -143,18 +143,18 @@ export default function Cardheader(props) {
           borderTopRightRadius: "20px",
           padding: "0px",
           paddingLeft: "16px",
-          height: `${width * 0.04}px`,
+          height: isMobile ? "50px" : `${width * 0.04}px`,
         }}
         avatar={<Image shape="circle" src={props.userImg} size="40" />}
         titleTypographyProps={{
           fontWeight: 400,
-          fontSize: "2vmin",
+          fontSize:  isMobile? "16px" : "2vmin",
           fontFamily: "GmarketSansMedium",
         }}
         title={props.username}
       />
       <Text margin_left="20px" F_size="0.9vmax" F_color="#757575">
-        {time}에 작성됨
+        {isMobile? time : (time + "에 작성됨")}
       </Text>
     </Grid>
   );

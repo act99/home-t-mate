@@ -40,6 +40,7 @@ const mobileStyle = {
   minWidth: "280px",
   height: "80%",
   minHeight: "557px",
+  maxHeight: "725px",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   border: "none",
@@ -50,10 +51,13 @@ const mobileStyle = {
 };
 
 export default function Detail(props) {
+
   const dispatch = useDispatch();
   // id={props.id}
 
   const _post = useSelector((state) => state.postReducer.list);
+  const _state = useSelector((state) => state);
+    console.log('state확인용', _state);
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x), "");
   const thisPostPhoto = thisPost.photoResponseDto;
 
@@ -89,7 +93,7 @@ export default function Detail(props) {
             />
             <div
               className="commentlist"
-              style={{ height: `${width * 1.4}px`, overflow: "auto"}}
+              style={{ height:  `${height * 0.62}px`, minHeight:"410px", overflow: "auto", width: "100%"}}
             >
               {/* 글 내용 */}
               <Typography
@@ -101,11 +105,11 @@ export default function Detail(props) {
                 fontFamily="GmarketSansMedium"
                 fontSize="1em"
               >
-                <pre
+                <pre-wrap
                   style={{ fontFamily: "GmarketSansMedium", marginTop: "5px" }}
                 >
                   {thisPost.content}
-                </pre>
+                </pre-wrap>
               </Typography>
 
               {/* 댓글몇개인지 보이기 */}
@@ -127,24 +131,24 @@ export default function Detail(props) {
             </div>
 
             {/* 댓글작성부분 */}
-            <Grid position="absolute" bottom="0px" width={width * 0.3 + "px"}>
+            <Grid position="absolute" bottom="0px" width="100%">
               <Grid is_flex>
                 <LikeComment
                   id={props.id}
                   modal={false}
                   none="none"
                   default="default"
-                  size="2vmax"
+                  size="2em"
                 />
                 <Grid
                   is_flex
                   position="relative"
                   left="-40px"
-                  width={width * 0.3 + "px"}
+                  width="100%"
                 >
                   {thisPost.likeUserDto && thisPost.likeUserDto.length > 0 ? (
                     <Text
-                      F_size="1vmax"
+                      F_size="0.8em"
                       F_family="GmarketSansLight"
                       margin_top="10px"
                     >
@@ -153,9 +157,9 @@ export default function Detail(props) {
                     </Text>
                   ) : (
                     <Text
-                      F_size="1vmax"
+                      F_size="0.8em"
                       F_family="GmarketSansLight"
-                      margin_top="8px"
+                      margin_top="10px"
                     >
                       좋아요를 처음 누른 친구가 되어봐요 :)
                     </Text>

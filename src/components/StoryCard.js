@@ -55,7 +55,7 @@ export default function StoryCard(props) {
   const sizewindow = useWindowSize();
   const { width, height } = sizewindow;
 
-  const isMobile = useMediaQuery({ query: "(max-width: 640px" });
+  const isMobile = useMediaQuery({ query: "max-width: 640px" });
 
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
     return (
@@ -135,7 +135,7 @@ export default function StoryCard(props) {
               </Text>
               <div className="overFlowText">
                 <h3 style={{ fontSize: "1em", fontFamily: "GmarketSansLight" }}>
-                  {content.length > 25 ? content.slice(0, 25) + "..." : content}
+                  {content.length > 20 ? content.slice(0, 20) + "..." : content}
                 </h3>
               </div>
             </Grid>

@@ -24,12 +24,20 @@ import ReEnterKeyword from "./pages/ReEnterKeyword";
 import ScrollToTop from "./hooks/scrollToTop";
 import { actionCreators as userActions } from "./redux/modules/userReducer";
 import HowtoUse from "./pages/HowtoUse";
-
+import ReactGA from "react-ga";
+// ReactGA.event({
+//   category: "User",
+//   action: "Created an Account",
+// });
+// ReactGA.exception({
+//   description: "An error ocurred",
+//   fatal: true,
+// });
 const App = () => {
   const dispatch = useDispatch();
-  const beforeunload = () => {
-    dispatch(userActions.logout());
-  };
+  // const beforeunload = () => {
+  //   dispatch(userActions.logout());
+  // };
   React.useEffect(() => {
     // ReactGA.initialize("G-TT40TC6KP5");
     // history.listen((location) => {
@@ -39,12 +47,11 @@ const App = () => {
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
-    window.addEventListener("unload", beforeunload);
+    // window.addEventListener("unload", beforeunload);
     return () => {
-      window.removeEventListener("unload", beforeunload);
+      // window.removeEventListener("unload", beforeunload);
     };
   }, []);
-
   return (
     <>
       <div className="App">
@@ -65,7 +72,6 @@ const App = () => {
               component={SearchingLiveNow}
             />
             <Route path="/reenterkeyword" exact component={ReEnterKeyword} />
-
             <Route path="/checkvideo" exact component={CheckVideo} />
             <Route
               path="/livenow/chat/:roomId"
@@ -75,7 +81,6 @@ const App = () => {
             <Route path="/logout" exact component={Logout} />
             <Route path="/privacy" exact component={Privacy} />
             <Route path="/termsofuse" exact component={TermsOfUse} />
-
             <Route path="*" exact component={NotFound} />
           </Switch>
         </ConnectedRouter>
@@ -84,7 +89,6 @@ const App = () => {
     </>
   );
 };
-
 const WrapMedium = styled.div`
   margin: auto;
   width: 1200px;
@@ -93,7 +97,6 @@ const WrapMedium = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
 const WrapWide = styled.div`
   margin: auto;
   width: 100vw;
@@ -102,5 +105,4 @@ const WrapWide = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
 export default App;

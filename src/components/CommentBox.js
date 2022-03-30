@@ -55,12 +55,13 @@ export default function CommentBox(props) {
       <>
         <Grid
           is_flex
-          margin="0px 16px 1.3vh 16px"
+          margin="0px 16px 1vh 16px"
           justify_content="space-between"
           B_radius="20px"
           Border="2px solid #757575"
           width="auto"
           height="5vh"
+          min_height="39px"
         >
           {/* 웃는 아이콘 (이모지 아이콘) */}
           <AiOutlineSmile
@@ -109,8 +110,9 @@ export default function CommentBox(props) {
             _onClick={addComment}
             BG_color="white"
             border="none"
-            B_radius="20px"
+            B_radius="40px"
             width="8vmin"
+            min_width="50px"
             font_color="#587730"
             font_size="1.5vmin"
           >

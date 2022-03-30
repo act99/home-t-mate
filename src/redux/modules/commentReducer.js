@@ -50,6 +50,7 @@ const addCommentDB = (postId, comment, user) => {
     apis
       .addComment(postId, comment)
       .then((response) => {
+        console.log('response', response)
         // https://skifriendbucket.s3.ap-northeast-2.amazonaws.com/static/defalt+user+frofile.png
         let userProfileImg = "";
         if (user.profileImg === null) {
@@ -63,7 +64,7 @@ const addCommentDB = (postId, comment, user) => {
           nickname: user.nickname,
           comment: comment,
           profileImg: userProfileImg,
-        };
+        }; //responsive로 안들어와서 임의로 만들었던거. commentId: response.commentId 이렇게 추가해줘야됨.
         dispatch(addComment(postId, dummyComment));
       })
       .catch((error) => {

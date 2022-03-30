@@ -15,6 +15,9 @@ const Img = (props) => {
           height={props.size}
           width={props.size}
           max_width={props.max_width}
+          min_width={props.min_width}
+          min_height={props.min_height}
+          border_radius={props.border_radius}
           B_bottom_left_radius={props.border}
           B_top_left_radius={props.border}
           cursor={props.cursor}
