@@ -375,11 +375,7 @@ const Home = () => {
                 </div>
               </Wrap>
             </>
-            <MFooterBxSlideCon
-              {...animatedWhatIs}
-              width={width}
-              src={Whatis}
-            ></MFooterBxSlideCon>
+            <MFooterBxSlideCon width={width} src={Whatis}></MFooterBxSlideCon>
 
             <div {...animatedHowToTitle}>
               <Text F_size="24px" F_align="center" margin_top="80px">
@@ -389,7 +385,7 @@ const Home = () => {
                 홈트메이트는 아래와 같이 운동하면 좋습니다.
               </Text>
             </div>
-            <ImageGroup {...animatedGroup1}>
+            <ImageGroup>
               <img
                 alt=""
                 src={SetImage}
@@ -759,7 +755,6 @@ const MBxSlideCon = styled.div`
   margin: 0px;
   cursor: pointer;
   background-image: url("${(props) => props.src}");
-  background-size: 100% auto;
   background-position: left;
   background-size: cover;
   background-repeat: no-repeat;
@@ -767,14 +762,12 @@ const MBxSlideCon = styled.div`
 
 const MFooterBxSlideCon = styled.div`
   width: 100%;
-  height: ${(props) => props.width * 0.5}px;
-  padding-bottom: ${(props) => props.width * 0.05}px;
-  margin-top: ${(props) => props.width * 0.05}px;
-  background-size: 100% auto;
-  background-position: left;
+  height: ${(props) => props.width * 0.6}px;
+  margin: 0px;
+  background-image: url("${(props) => props.src}");
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url("${(props) => props.src}");
 `;
 
 const FooterBxSlideCon = styled.div`
