@@ -375,15 +375,11 @@ const Home = () => {
                 </div>
               </Wrap>
             </>
-            <MFooterBxSlideCon {...animatedWhatIs} width={width}>
-              <img
-                alt=""
-                src={Whatis}
-                width="100%"
-                // height="30vw"
-                style={{ margin: "0px" }}
-              />
-            </MFooterBxSlideCon>
+            <MFooterBxSlideCon
+              {...animatedWhatIs}
+              width={width}
+              src={Whatis}
+            ></MFooterBxSlideCon>
 
             <div {...animatedHowToTitle}>
               <Text F_size="24px" F_align="center" margin_top="80px">
@@ -771,7 +767,14 @@ const MBxSlideCon = styled.div`
 
 const MFooterBxSlideCon = styled.div`
   width: 100%;
+  height: ${(props) => props.width * 0.5}px;
   padding-bottom: ${(props) => props.width * 0.05}px;
+  margin-top: ${(props) => props.width * 0.05}px;
+  background-size: 100% auto;
+  background-position: left;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("${(props) => props.src}");
 `;
 
 const FooterBxSlideCon = styled.div`
