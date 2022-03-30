@@ -171,43 +171,6 @@ const CheckVideo = () => {
             style={Styles.Video}
             muted={!videoReducer.audio}
           />
-
-          {/* {video ? (
-            <video
-              ref={videoRef}
-              autoPlay
-              style={Styles.Video}
-              muted={!videoReducer.audio}
-            />
-          ) : (
-            <div id="back">
-              <img src={CameraLogo} alt="" />
-            </div>
-          )} */}
-          <div>
-            {/* <ButtonGroup
-              disableElevation
-              variant="contained"
-              sx={{
-                height: "100px",
-              }}
-            >
-              <IconButton onClick={videoOnOff}>
-                {videoReducer.video ? (
-                  <VideocamIcon sx={{ fontSize: "40px", color: "black" }} />
-                ) : (
-                  <VideocamOffIcon sx={{ fontSize: "40px", color: "red" }} />
-                )}
-              </IconButton>
-              <IconButton onClick={audioOnOff}>
-                {videoReducer.audio ? (
-                  <MicIcon sx={{ fontSize: "40px", color: "black" }} />
-                ) : (
-                  <MicOffIcon sx={{ fontSize: "40px", color: "red" }} />
-                )}
-              </IconButton>
-            </ButtonGroup> */}
-          </div>
         </VideoWrap>
         <WarningWrap>
           <h3>

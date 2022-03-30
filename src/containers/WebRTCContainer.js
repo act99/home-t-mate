@@ -1,6 +1,7 @@
 import React from "react";
 import UserVideoComponent from "../components/UserVideoComponent";
 import styled from "@emotion/styled";
+import useWindowSize from "../hooks/useWindowSize";
 
 const WebRTCContainer = (props) => {
   const {
@@ -16,12 +17,45 @@ const WebRTCContainer = (props) => {
   } = props;
 
   // ** windowSize
+  const size = useWindowSize();
+  const { width, height } = size;
   // ** leaveSession 전달용
   React.useEffect(() => {
-    return () => {
-      leaveSession();
-    };
+    // return () => {
+    //   leaveSession();
+    // };
   }, []);
+
+  if (width < height) {
+    return (
+      <>
+        <MSessionWrap id="session" width={width}>
+          {publisher !== undefined ? (
+            <UserVideoComponent
+              streamManager={publisher}
+              host={host}
+              OV={OV}
+              sessionToken={sessionToken}
+              myUserName={myUserName}
+              me={true}
+              session={session}
+            />
+          ) : (
+            <VideoWrap></VideoWrap>
+          )}
+          {subscribers.map((sub, i) => (
+            <UserVideoComponent
+              streamManager={sub}
+              key={i}
+              host={host}
+              me={false}
+              session={session}
+            />
+          ))}
+        </MSessionWrap>
+      </>
+    );
+  }
 
   return (
     <>
@@ -59,6 +93,15 @@ const SessionWrap = styled.div`
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
+`;
+
+const MSessionWrap = styled.div`
+  width: ${(props) => props.width};
+  height: 100%;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
 `;
 
 const VideoWrap = styled.div`

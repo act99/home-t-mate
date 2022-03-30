@@ -361,7 +361,7 @@ const RoomCardModal = (props) => {
             </Typography>
             <Typography
               id="modal-modal-description"
-              sx={{ fontSize: "12px", fontFamily: "SuncheonR" }}
+              sx={{ fontSize: "16px", fontFamily: "SuncheonR" }}
             >
               {content}
             </Typography>

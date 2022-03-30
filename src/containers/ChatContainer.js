@@ -71,6 +71,125 @@ const ChatContainer = (props) => {
     return () => {};
   }, []);
 
+  if (width < height) {
+    return (
+      <>
+        <ChatTitle>
+          <h3>친구들과 채팅타임</h3>
+        </ChatTitle>
+        <Divider />
+        <List
+          sx={{
+            height: 300,
+            overflowY: "auto",
+            backgroundColor: "white",
+          }}
+        >
+          {chattingList.map((item, index) =>
+            item.sender === nickname ? (
+              <>
+                <div key={index + "" + (item.id + "")}>
+                  <ListItem>
+                    <Grid container>
+                      <Grid item xs={12}>
+                        <ProfileRight>
+                          {/* <h3>{item.sender}</h3> */}
+                          <h3>나</h3>
+                        </ProfileRight>
+                        <MyText>
+                          <h5>{item.time}</h5>
+                          <h3>{item.message}</h3>
+                        </MyText>
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+                </div>
+              </>
+            ) : (
+              <ListItem key={index + "" + (item.id + "")}>
+                <Grid container>
+                  <Grid item xs={12}>
+                    <ProfileLeft>
+                      {item.profileImg !== null ? (
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={item.profileImg}
+                          sx={{ width: 32, height: 32, mr: 1 }}
+                        />
+                      ) : (
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={LogoImage}
+                          sx={{ width: 32, height: 32, mr: 1 }}
+                        />
+                      )}
+
+                      <h3>{item.sender}</h3>
+                    </ProfileLeft>
+                    <OtherText>
+                      <h3>{item.message}</h3>
+                      <h5>{item.time}</h5>
+                    </OtherText>
+                  </Grid>
+                </Grid>
+              </ListItem>
+            )
+          )}
+          <div ref={chattingRef} />
+        </List>
+        <Divider />
+        <Grid container style={{ padding: "10px", height: 72 }}>
+          <Grid item xs={10}>
+            <TextField
+              autoComplete="off"
+              onKeyDown={onEnterPress}
+              // id="outlined-basic-email"
+              label="메시지..."
+              fullWidth
+              value={sendMessage.message}
+              onChange={sendingMessageHandler}
+            />
+          </Grid>
+          <Grid item xs={1} align="right" sx={{ display: "flex" }}>
+            <IconButton
+              onClick={() => {
+                sendingMessage(ws, setSendMessage, sendMessage, token);
+              }}
+            >
+              <SendIcon sx={{ fontSize: 30 }} />
+            </IconButton>
+          </Grid>
+        </Grid>
+        <Divider />
+        <MemberTitle>
+          <h3>지금 나와 함께 홈트하는 친구들</h3>
+        </MemberTitle>
+        <Divider />
+        <List
+          sx={{
+            width: "100%",
+            overflow: "auto",
+            bgcolor: "background.paper",
+            height: "160px",
+          }}
+        >
+          {subscribers.map((item, index) => (
+            <>
+              <div key={index + item.nickname}>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar alt={item.nickname} src={item.profileImg} />
+                  </ListItemAvatar>
+                  <ListItemText primary={item.nickname} />
+                </ListItem>
+              </div>
+            </>
+          ))}
+        </List>
+      </>
+    );
+  }
+
   return (
     <>
       <MemberTitle>

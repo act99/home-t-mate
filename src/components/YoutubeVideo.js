@@ -18,6 +18,9 @@ const YoutubeVideo = (props) => {
   const { ws, token, roomId, workOut, roomName, password, host, hostImg } =
     props;
 
+  const size = useWindowSize();
+  const { width, height } = size;
+
   // ** 회원정보
   const user = useSelector((state) => state.userReducer.user);
 
@@ -26,8 +29,6 @@ const YoutubeVideo = (props) => {
   const { on, pause, url } = youtubeRedux;
 
   // ** 윈도우 사이즈 규격
-  const size = useWindowSize();
-  const { width, height } = size;
 
   // ** 유튜브 url 여부 확인
   function youtube_parser(url) {
@@ -145,12 +146,8 @@ const YoutubeVideo = (props) => {
           <ReactPlayer
             url={url}
             controls
-            width={"100%"}
-            height={`${width * 0.34}px`}
-            // height={"auto"}
-            // width={`${width * 0.7}px`}
-            // height={`${width * 0.525}px`}
-            // height={`${height - 200}px`}
+            width={`${width}px`}
+            height={`${width * 0.5625}px`}
             ref={youtubeRef}
             playing={on}
             onPlay={handlePlay}
@@ -158,74 +155,58 @@ const YoutubeVideo = (props) => {
             onEnded={handleStop}
           />
         ) : (
-          <Empty width={width} height={height}>
+          <MEmpty width={width}>
             <img
-              width={width * 0.2 + "px"}
+              width={width * 0.4 + "px"}
               alt="yotubeUrl"
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
             />
-            <YoutubeEmptyText>
+            <MYoutubeEmptyText width={width}>
               호스트 님은 유튜브 URL을 넣어주세요 :)
-            </YoutubeEmptyText>
-          </Empty>
+            </MYoutubeEmptyText>
+          </MEmpty>
         )}
-        <WrapBottom width={width}>
-          <BottomTop width={width}>
-            <WrapRoomInfo width={width}>
-              <HostText
-                width={width}
-                style={{ marginTop: width * 0.01 + "px" }}
-              >
+        <MWrapBottom width={width}>
+          <MBottomTop width={width}>
+            <MLeftTop>
+              <MHostText width={width}>
                 <h3>방 제목 : </h3>
                 <h3>
                   {roomName.length > 12
                     ? roomName.slice(0, 12) + "..."
                     : roomName}
                 </h3>
-              </HostText>
-              <HostText width={width}>
+              </MHostText>
+              <MHostText width={width}>
                 <h3>비밀번호 : </h3>
                 <h3>{password === "" ? "X" : password}</h3>
-              </HostText>
-              <HostText width={width}>
+              </MHostText>
+              <MHostText width={width}>
                 <h3>호스트 : </h3>
                 <Avatar
                   alt={host}
                   src={hostImg}
-                  sx={{ width: "1.5vw", height: "1.5vw", mx: 1 }}
+                  sx={{
+                    width: `${width * 0.07}px`,
+                    height: `${width * 0.07}px`,
+                    mx: 1,
+                  }}
                 />
                 <h3>{host}</h3>
-              </HostText>
-            </WrapRoomInfo>
-            <Banner width={width}>
-              <HostText
-                width={width}
-                style={{ marginTop: width * 0.01 + "px" }}
-              >
-                <h3>💪 공지 💪</h3>
-              </HostText>
-              <HostText
-                width={width}
-                style={{ marginTop: width * 0.01 + "px" }}
-              >
-                <h3>
-                  영상 재생 중에는 카메라와 마이크를 설정하실 수 없습니다.{" "}
-                </h3>
-              </HostText>
-              <HostText
-                width={width}
-                style={{ marginTop: width * 0.005 + "px" }}
-              >
-                <h3>
-                  유튜브 영상을 일시정지 하신 후, 카메라와 마이크를
-                  재설정해주시기 바랍니다.
-                </h3>
-              </HostText>
-            </Banner>
-          </BottomTop>
-          <WrapFromStyle width={width}>
-            <FormBox onSubmit={handleUrlSubmit}>
-              <UrlInput
+              </MHostText>
+            </MLeftTop>
+            <MRightTop>
+              {workOut ? (
+                <MWorkOutWrap width={width} src={WorkoutImage}></MWorkOutWrap>
+              ) : (
+                <MWorkOutWrap src={RestImage} width={width}></MWorkOutWrap>
+              )}
+            </MRightTop>
+          </MBottomTop>
+
+          <MWrapFromStyle width={width}>
+            <MFormBox onSubmit={handleUrlSubmit}>
+              <MUrlInput
                 type="text"
                 value={urlIntput.message}
                 onChange={handleUrlChange}
@@ -233,29 +214,12 @@ const YoutubeVideo = (props) => {
                 placeholder="유튜브 Url"
                 dwidth={width}
               />
-              <CreateButton type="submit" width={width}>
+              <MCreateButton type="submit" width={width}>
                 유튜브 url 제출
-              </CreateButton>
-            </FormBox>
-            {workOut ? (
-              <WorkOutWrap width={width} src={WorkoutImage}>
-                {/* <img
-                  src={WorkoutImage}
-                  alt=""
-                  style={{ width: "160px", height: "60px" }}
-                /> */}
-              </WorkOutWrap>
-            ) : (
-              <WorkOutWrap src={RestImage} width={width}>
-                {/* <img
-                  src={RestImage}
-                  alt=""
-                  style={{ width: "160px", height: "50px" }}
-                /> */}
-              </WorkOutWrap>
-            )}
-          </WrapFromStyle>
-        </WrapBottom>
+              </MCreateButton>
+            </MFormBox>
+          </MWrapFromStyle>
+        </MWrapBottom>
       </>
     );
   }
@@ -346,18 +310,18 @@ const YoutubeVideo = (props) => {
           {workOut ? (
             <WorkOutWrap width={width} src={WorkoutImage}>
               {/* <img
-                src={WorkoutImage}
-                alt=""
-                style={{ width: "160px", height: "60px" }}
-              /> */}
+              src={WorkoutImage}
+              alt=""
+              style={{ width: "160px", height: "60px" }}
+            /> */}
             </WorkOutWrap>
           ) : (
             <WorkOutWrap src={RestImage} width={width}>
               {/* <img
-                src={RestImage}
-                alt=""
-                style={{ width: "160px", height: "50px" }}
-              /> */}
+              src={RestImage}
+              alt=""
+              style={{ width: "160px", height: "50px" }}
+            /> */}
             </WorkOutWrap>
           )}
         </WrapFromStyle>
@@ -480,6 +444,129 @@ const CreateButton = styled.button`
   border: solid 1px green;
   background-color: white;
   font-size: ${(props) => props.width * 0.008 + "px"};
+  color: green;
+  font-weight: bold;
+  margin-right: 16px;
+  font-family: "GmarketSansLight";
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
+
+// ** 모바일
+const MEmpty = styled.div`
+  width: 100%;
+  height: ${(props) => props.width * 0.5625}px;
+  background-color: aqua;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const MYoutubeEmptyText = styled.h3`
+  font-size: ${(props) => props.width * 0.02}px;
+  font-weight: bold;
+  font-family: "GmarketSansMedium";
+`;
+
+const MWrapBottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: ${(props) => props.width * 0.5}px;
+  width: ${(props) => props.width * 1}px;
+`;
+
+const MBottomTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.width * 0.25}px;
+  margin-top: 16px;
+`;
+
+const MLeftTop = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MRightTop = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MWorkOutWrap = styled.div`
+  width: ${(props) => props.width * 0.5 + "px"};
+  height: ${(props) => props.width * 0.25 + "px"};
+  /* margin-bottom: ${(props) => props.width * 0.005 + "px"}; */
+  /* background-color: black; */
+  background-image: url("${(props) => props.src}");
+  background-size: 80% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+const MHostText = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: ${(props) => props.width * 0.005}px;
+  margin-left: ${(props) => props.width * 0.02}px;
+  margin-bottom: ${(props) => props.width * 0.003}px;
+  height: ${(props) => props.width * 0.07}px;
+  align-items: center;
+  h3 {
+    margin: 0px;
+    font-size: ${(props) => props.width * 0.032}px;
+    font-family: "GmarketSansLight";
+  }
+`;
+
+const MWrapFromStyle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: ${(props) => props.width * 0.2 + "px"};
+  width: ${(props) => props.width + "px"};
+`;
+const MFormBox = styled.form`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const MUrlInput = styled.input`
+  width: ${(props) => props.dwidth * 0.6 + "px"};
+  height: ${(props) => props.dwidth * 0.08 + "px"};
+  margin-left: ${(props) => props.dwidth * 0.02 + "px"};
+  margin-right: ${(props) => props.dwidth * 0.01 + "px"};
+  padding-left: ${(props) => props.dwidth * 0.014 + "px"};
+  font-size: ${(props) => props.dwidth * 0.03 + "px"};
+  border-radius: 10px;
+  border: solid 1px green;
+  font-family: "GmarketSansLight";
+  :focus {
+    outline: solid 1px green;
+    border: solid 1px green;
+  }
+`;
+
+const MCreateButton = styled.button`
+  display: block;
+  /* margin: auto; */
+  width: ${(props) => props.width * 0.28 + "px"};
+  height: ${(props) => props.width * 0.08 + "px"};
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 10px;
+  border: solid 1px green;
+  background-color: white;
+  font-size: ${(props) => props.width * 0.03 + "px"};
   color: green;
   font-weight: bold;
   margin-right: 16px;
