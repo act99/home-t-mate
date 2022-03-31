@@ -77,7 +77,7 @@ export default function Detail(props) {
   const size = useWindowSize();
   const { width, height } = size;
 
-  const isMobile = useMediaQuery({ query: "(max-width: 1209px" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1209px)" });
 
   return (
     <Box sx={isMobile ? mobileStyle : style}>

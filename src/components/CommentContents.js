@@ -24,7 +24,7 @@ export default function CommentContents(props) {
   const size = useWindowSize();
   const { width, height } = size;
 
-  const isMobile = useMediaQuery({ query: "(max-width: 1209px" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1209px)" });
 
   return (
     <>
