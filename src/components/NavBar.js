@@ -69,12 +69,11 @@ const NavBar = (props) => {
   //스크롤 event
   const [scrollPosition, setScrollPosition] = React.useState(0);
   const updateScroll = () => {
-      setScrollPosition(window.scrollY || document.documentElement.scrollTop);
-  }
-  React.useEffect(()=>{
-      window.addEventListener('scroll', updateScroll);
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+  React.useEffect(() => {
+    window.addEventListener("scroll", updateScroll);
   });
-
 
   // ** 방 만들기 모달
 
@@ -123,7 +122,10 @@ const NavBar = (props) => {
         <AppBar
           position="static"
           sx={{
-            backgroundColor: scrollPosition < 500 ? "rgba( 255, 255, 255, 0 )" : "white", //배경 투명하게
+            backgroundColor:
+              pathname === "/" && scrollPosition < 500
+                ? "rgba( 255, 255, 255, 0 )"
+                : "white", //배경 투명하게
             boxShadow: "0px 0px 0px 0px rgba( 255, 255, 255, 0 )", //boxshoadow효과 없애기
             position: "sticky",
             zIndex: 100,
@@ -268,7 +270,8 @@ const NavBar = (props) => {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: scrollPosition < 500 ? "rgba( 255, 255, 255, 0 )" : "white", //배경 투명하게
+          backgroundColor:
+            scrollPosition < 500 ? "rgba( 255, 255, 255, 0 )" : "white", //배경 투명하게
           boxShadow: "0px 0px 0px 0px rgba( 255, 255, 255, 0 )", //boxshoadow효과 없애기
           position: "sticky",
           zIndex: 100,
@@ -396,7 +399,7 @@ const LoginButton = styled.button`
   height: 40px;
   border-radius: 10px;
   border: solid 0px black;
-  background-color: rgba( 255, 255, 255, 0 );
+  background-color: rgba(255, 255, 255, 0);
   font-size: 16px;
   color: black;
   font-weight: bold;
@@ -421,7 +424,7 @@ const CreateButton = styled.button`
   margin-bottom: auto;
   border-radius: 8px;
   border: solid 2px green;
-  background-color: rgba( 255, 255, 255, 0 );
+  background-color: rgba(255, 255, 255, 0);
   font-size: 16px;
   color: green;
   font-weight: bold;
@@ -446,7 +449,7 @@ const MCreateButton = styled.button`
   margin-bottom: auto;
   border-radius: 8px;
   border: solid 2px green;
-  background-color: rgba( 255, 255, 255, 0 );
+  background-color: rgba(255, 255, 255, 0);
   font-size: 8px;
   color: green;
   font-weight: bold;
@@ -468,7 +471,7 @@ const AvatarButton = styled.button`
   width: 56px;
   height: 56px;
   border-radius: 10px;
-  background-color: rgba( 255, 255, 255, 0 );
+  background-color: rgba(255, 255, 255, 0);
   font-size: 16px;
   color: green;
   font-weight: bold;

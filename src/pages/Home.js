@@ -29,7 +29,7 @@ import CreateRoomModal from "../containers/CreateRoomModal";
 import Example from "../assets/example.jpg";
 import Wifi from "../assets/wifi.png";
 import MHomeImg from "../components/MHomeImg";
-import IntroImg from "../assets/introduce.jpg";
+import IntroImg from "../assets/introduce.png";
 const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
