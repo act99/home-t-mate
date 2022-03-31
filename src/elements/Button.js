@@ -12,7 +12,7 @@ const Button = (props) => {
   const { font_color, font_size, font_weight } = props;
 
   //size, position category
-  const { width, height, margin, padding, position, top, right, bottom } =
+  const { width, min_width, height, margin, padding, position, top, right, bottom } =
     props;
 
   //event category
@@ -40,6 +40,7 @@ const Button = (props) => {
     bottom,
 
     width,
+    min_width,
     height,
     margin,
     padding,
@@ -63,6 +64,7 @@ const Button = (props) => {
 Button.defaultProps = {
   height: "30px",
   width: "100px",
+  min_width: null,
   margin: null,
   padding: null,
 
@@ -90,6 +92,7 @@ const Btn = styled.button`
 
   height: ${(props) => props.height};
   width: ${(props) => props.width};
+  min-width: ${(props) => props.min_width};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
 

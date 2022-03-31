@@ -11,6 +11,8 @@ import Edit from "./Edit";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import useWindowSize from "../hooks/useWindowSize";
 import { Image } from "../elements";
+import { useMediaQuery } from "react-responsive";
+
 export default function Cardheader(props) {
   const dispatch = useDispatch();
   const _user = useSelector((state) => state.userReducer.user);
@@ -44,6 +46,8 @@ export default function Cardheader(props) {
   const size = useWindowSize();
   const { width, height } = size;
 
+  const isMobile = useMediaQuery({ query: "(max-width: 1209px" });
+
   // 글 작성자한테만 ... 아이콘 보이게하기
   return _user.id === thisPost.userId ? (
     <Grid is_flex>
@@ -52,13 +56,12 @@ export default function Cardheader(props) {
           borderTopRightRadius: "20px",
           padding: "0px",
           paddingLeft: "16px",
-          // height: "64px",
-          height: `${width * 0.04}px`,
+          height: isMobile? "50px" : `${width * 0.04}px`,
         }}
         avatar={<Image shape="circle" src={props.userImg} size="40" />}
         titleTypographyProps={{
           fontWeight: 400,
-          fontSize: "2vmin",
+          fontSize: isMobile? "16px" : "2vmin",
           fontFamily: "GmarketSansMedium",
         }}
         title={props.username}
@@ -69,13 +72,13 @@ export default function Cardheader(props) {
               is_flex
               align_items="center"
               // height="64px"
-              height={width * 0.04 + "px"}
+              height= {isMobile? "50px" : width * 0.04 + "px"}
               position="absolute"
               right="0px"
             >
               <MoreHorizIcon
                 onClick={handleClick}
-                style={{ fontSize: "2vmax", paddingRight: "30px" }}
+                style={{ fontSize: "1.5em", paddingRight: "1em" }}
               />
             </Grid>
             {/* 삭제하기,수정하기,취소하기 dropdown modal부분 */}
@@ -129,7 +132,7 @@ export default function Cardheader(props) {
         }
       />
       <Text margin_left="20px" F_size="0.9vmax" F_color="#757575">
-        {time}에 작성됨
+      {isMobile? time : (time + "에 작성됨")}
       </Text>
     </Grid>
   ) : (
@@ -140,18 +143,18 @@ export default function Cardheader(props) {
           borderTopRightRadius: "20px",
           padding: "0px",
           paddingLeft: "16px",
-          height: `${width * 0.04}px`,
+          height: isMobile ? "50px" : `${width * 0.04}px`,
         }}
         avatar={<Image shape="circle" src={props.userImg} size="40" />}
         titleTypographyProps={{
           fontWeight: 400,
-          fontSize: "2vmin",
+          fontSize:  isMobile? "16px" : "2vmin",
           fontFamily: "GmarketSansMedium",
         }}
         title={props.username}
       />
       <Text margin_left="20px" F_size="0.9vmax" F_color="#757575">
-        {time}에 작성됨
+        {isMobile? time : (time + "에 작성됨")}
       </Text>
     </Grid>
   );
