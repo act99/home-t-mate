@@ -26,6 +26,7 @@ class VideoContainer extends Component {
       sessionToken: undefined,
       audio: this.props.audio,
       video: this.props.video,
+      userModel: undefined,
     };
 
     this.joinSession = this.joinSession.bind(this);

@@ -29,6 +29,7 @@ import CreateRoomModal from "../containers/CreateRoomModal";
 import Example from "../assets/example.jpg";
 import Wifi from "../assets/wifi.png";
 import MHomeImg from "../components/MHomeImg";
+import IntroImg from "../assets/introduce.jpg";
 const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -475,7 +476,6 @@ const Home = () => {
           setCreateRoomOpen={setCreateRoomOpen}
         />
 
-        {/* <DescribeUse width={width}></DescribeUse> */}
         <Container sx={{ py: 8, width: "100%" }}>
           <>
             <InviteLiveNow width={width} src={Wifi} {...animatedIntro}>
@@ -502,6 +502,10 @@ const Home = () => {
                 <img src={Example} alt="" />
               </div>
             </InviteLiveNow>
+            <DescribeUse width={width}>
+              <img src={IntroImg} alt="" />
+            </DescribeUse>
+
             <div {...animatedItem}>
               <MainTitle>
                 <h3>친구들과 함께하는 화상 홈트레이닝</h3>
@@ -944,9 +948,10 @@ const InviteLiveNow = styled.div`
 `;
 
 const DescribeUse = styled.div`
-  width: ${(props) => props.width}px;
-  height: ${(props) => props.width * 0.5}px;
-  background-color: greenyellow;
+  width: 100%;
+  img {
+    width: 100%;
+  }
 `;
 
 const MBxSlideCon = styled.div`
