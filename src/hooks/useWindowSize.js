@@ -8,18 +8,24 @@ function useWindowSize() {
     height: undefined,
   });
   React.useEffect(() => {
-    const handleResize = debounce(() => {
+    const handleResize = () =>
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
-    }, 1000);
+
+    // const handleResize = debounce(() => {
+    //   setWindowSize({
+    //     width: window.innerWidth,
+    //     height: window.innerHeight,
+    //   });
+    // }, 1000);
     window.addEventListener("resize", handleResize);
     // window.addEventListener("resize", handleResize);
 
     handleResize();
     return () => {
-      handleResize.cancel();
+      // handleResize.cancel();
       window.removeEventListener("resize", handleResize);
       windowRef.current = true;
     };

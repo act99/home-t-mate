@@ -112,9 +112,9 @@ const Home = () => {
   const animatedStory = useScrollFadeIn("right", 4, 0);
   const animatedAboutTitle = useScrollFadeIn("up", 2, 0);
   const animatedHowToTitle = useScrollFadeIn("up", 2, 0);
-  const animatedWhatIs = useScrollFadeIn("up", 5, 0);
-  const animatedGroup1 = useScrollFadeIn("up", 2, 0);
-  const animatedGroup2 = useScrollFadeIn("up", 2, 0);
+  const animatedWhatIs = useScrollFadeIn("right", 3, 0);
+  const animatedGroup1 = useScrollFadeIn("left", 3, 0);
+  const animatedGroup2 = useScrollFadeIn("right", 3, 0);
   React.useEffect(() => {
     dispatch(roomCreators.getMainRoomDB());
   }, []);
