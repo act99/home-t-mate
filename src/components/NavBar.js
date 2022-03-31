@@ -16,13 +16,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import Logo from "../assets/mainlogo.png";
 import "../App.css";
 import styled from "@emotion/styled";
-import {
-  Avatar,
-  Divider,
-  IconButton,
-  ListSubheader,
-  Menu,
-} from "@mui/material";
+import { Avatar, Divider, IconButton, Menu } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
