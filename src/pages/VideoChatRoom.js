@@ -17,7 +17,7 @@ import { actionCreators as subscribersActions } from "../redux/modules/subscribe
 import { sendQuitRoom } from "../shared/SocketFunc";
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
-const VideoChatRoom = () => {
+const VideoChatRoom = (props) => {
   const user = useSelector((state) => state.userReducer.user);
   const nickname = user.nickname;
   const history = useHistory();
@@ -133,6 +133,7 @@ const VideoChatRoom = () => {
         dispatch(subscribersActions.getSubscribers(res.data));
         window.addEventListener("beforeunload", onbeforeunload);
         created();
+        // joinSession();
       })
       .catch((error) => console.log(error.response.message));
     return () => {
@@ -142,153 +143,92 @@ const VideoChatRoom = () => {
     };
   }, []);
 
-  if (width < height) {
-    return (
-      <>
-        <MWrap width={width}>
-          <ChatNav
-            roomName={roomName}
-            roomId={roomId}
-            handleQuit={handleQuit}
-            width={width}
-            height={height}
-          />
-          <MYoutubeTest>
-            <YoutubeVideo
-              ws={ws}
-              token={token}
-              roomId={roomId}
-              workOut={workOut}
-              password={locationState.password}
-              roomName={roomName}
-              host={host}
-              hostImg={hostImg}
-              width={width}
-              height={height}
-            />
-          </MYoutubeTest>
-          <MVideoTest width={width}>
-            <EnterRoom
-              roomId={roomId}
-              nickname={nickname}
-              video={video}
-              audio={audio}
-              password={locationState.password}
-              host={host}
-              myStatus={myStatus}
-              width={width}
-              height={height}
-            />
-          </MVideoTest>
-          <MChattingTest width={width}>
-            <ChatContainer chattingRef={chattingRef} ws={ws} />
-          </MChattingTest>
-        </MWrap>
-      </>
-    );
-  }
+  // if (width < height) {
+  //   return (
+  //     <>
+  //       <MWrap width={width}>
+  //         <ChatNav
+  //           roomName={roomName}
+  //           roomId={roomId}
+  //           handleQuit={handleQuit}
+  //           width={width}
+  //           height={height}
+  //         />
+  //         <MYoutubeTest>
+  //           <YoutubeVideo
+  //             ws={ws}
+  //             token={token}
+  //             roomId={roomId}
+  //             workOut={workOut}
+  //             password={locationState.password}
+  //             roomName={roomName}
+  //             host={host}
+  //             hostImg={hostImg}
 
+  //           />
+  //         </MYoutubeTest>
+  //         <MVideoTest width={width}>
+  //           <EnterRoom
+  //             roomId={roomId}
+  //             nickname={nickname}
+  //             video={video}
+  //             audio={audio}
+  //             password={locationState.password}
+  //             host={host}
+  //             myStatus={myStatus}
+
+  //           />
+  //         </MVideoTest>
+  //         <MChattingTest width={width}>
+  //           <ChatContainer chattingRef={chattingRef} ws={ws} />
+  //         </MChattingTest>
+  //       </MWrap>
+  //     </>
+  //   );
+  // }
   return (
     <>
-      <Wrap>
+      <Wrap width={width} height={height}>
         <ChatNav roomName={roomName} roomId={roomId} handleQuit={handleQuit} />
-        <YoutubeTest height={height}>
-          <YoutubeVideo
-            ws={ws}
-            token={token}
-            roomId={roomId}
-            workOut={workOut}
-            password={locationState.password}
-            roomName={roomName}
-            host={host}
-            hostImg={hostImg}
-          />
-        </YoutubeTest>
-        <VideoTest height={height}>
-          <EnterRoom
-            roomId={roomId}
-            nickname={nickname}
-            video={video}
-            audio={audio}
-            password={locationState.password}
-            host={host}
-            myStatus={myStatus}
-            width={width}
-            height={height}
-          />
-        </VideoTest>
-        <ChattingTest height={height}>
-          <ChatContainer chattingRef={chattingRef} ws={ws} />
-        </ChattingTest>
-        {/* <WrapContents>
-          <YoutubeVideo ws={ws} token={token} roomId={roomId} />
-          <EnterRoom
-            roomId={roomId}
-            nickname={nickname}
-            video={video}
-            audio={audio}
-          />
-          <ChatContainer chattingRef={chattingRef} ws={ws} />
-        </WrapContents> */}
+        <YoutubeVideo
+          ws={ws}
+          token={token}
+          roomId={roomId}
+          workOut={workOut}
+          password={locationState.password}
+          roomName={roomName}
+          host={host}
+          hostImg={hostImg}
+        />
+        <EnterRoom
+          roomId={roomId}
+          nickname={nickname}
+          video={video}
+          audio={audio}
+          password={locationState.password}
+          host={host}
+          myStatus={myStatus}
+          width={width}
+          height={height}
+        />
+        <ChatContainer chattingRef={chattingRef} ws={ws} />
       </Wrap>
     </>
   );
 };
 
 const Wrap = styled.div`
-  position: absolute;
-  width: 100%;
-  background-color: #f9f9f9;
-`;
-
-const MWrap = styled.div`
-  width: ${(props) => props.width}px;
+  ${(props) =>
+    props.width < props.height
+      ? `  width: ${(props) => props.width}px;
   background-color: #f9f9f9;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;`
+      : `position: absolute;
+width: 100%;
+background-color: #f9f9f9;`}
 `;
 
-const MChattingTest = styled.div`
-  width: 100%;
-  height: ${(props) => props.width}px;
-  background-color: #f9f9f9;
-`;
-
-const MYoutubeTest = styled.div`
-  width: 100%;
-  background-color: #f9f9f9;
-`;
-
-const MVideoTest = styled.div`
-  width: ${(props) => props.width}px;
-  height: ${(props) => props.width * 0.4}px;
-  background-color: #f9f9f9;
-  overflow-x: auto;
-  /* background-color: red; */
-`;
-
-const YoutubeTest = styled.div`
-  width: 65%;
-  height: ${(props) => props.height - 56}px;
-  position: absolute;
-  background-color: #f9f9f9;
-`;
-
-const VideoTest = styled.div`
-  width: 15%;
-  height: ${(props) => props.height - 56}px;
-  position: absolute;
-  background-color: #f9f9f9;
-  left: 65%;
-  border-left: solid 1px #e0e0e0;
-`;
-
-const ChattingTest = styled.div`
-  width: 20%;
-  height: ${(props) => props.height - 56}px;
-  position: absolute;
-  background-color: #f9f9f9;
-  left: 80%;
-`;
+const MWrap = styled.div``;
 
 export default VideoChatRoom;

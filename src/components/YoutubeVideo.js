@@ -142,12 +142,102 @@ const YoutubeVideo = (props) => {
   if (width < height) {
     return (
       <>
+        <MYoutubeTest>
+          {isYoutube ? (
+            <ReactPlayer
+              url={url}
+              controls
+              width={`${width}px`}
+              height={`${width * 0.5625}px`}
+              ref={youtubeRef}
+              playing={on}
+              onPlay={handlePlay}
+              onPause={handlePause}
+              onEnded={handleStop}
+            />
+          ) : (
+            <MEmpty width={width}>
+              <img
+                width={width * 0.4 + "px"}
+                alt="yotubeUrl"
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
+              />
+              <MYoutubeEmptyText width={width}>
+                호스트 님은 유튜브 URL을 넣어주세요 :)
+              </MYoutubeEmptyText>
+            </MEmpty>
+          )}
+          <MWrapBottom width={width}>
+            <MBottomTop width={width}>
+              <MLeftTop>
+                <MHostText width={width}>
+                  <h3>방 제목 : </h3>
+                  <h3>
+                    {roomName.length > 12
+                      ? roomName.slice(0, 12) + "..."
+                      : roomName}
+                  </h3>
+                </MHostText>
+                <MHostText width={width}>
+                  <h3>비밀번호 : </h3>
+                  <h3>{password === "" ? "X" : password}</h3>
+                </MHostText>
+                <MHostText width={width}>
+                  <h3>호스트 : </h3>
+                  <Avatar
+                    alt={host}
+                    src={hostImg}
+                    sx={{
+                      width: `${width * 0.07}px`,
+                      height: `${width * 0.07}px`,
+                      mx: 1,
+                    }}
+                  />
+                  <h3>{host}</h3>
+                </MHostText>
+              </MLeftTop>
+              <MRightTop>
+                {workOut ? (
+                  <MWorkOutWrap width={width} src={WorkoutImage}></MWorkOutWrap>
+                ) : (
+                  <MWorkOutWrap src={RestImage} width={width}></MWorkOutWrap>
+                )}
+              </MRightTop>
+            </MBottomTop>
+
+            <MWrapFromStyle width={width}>
+              <MFormBox onSubmit={handleUrlSubmit}>
+                <MUrlInput
+                  type="text"
+                  value={urlIntput.message}
+                  onChange={handleUrlChange}
+                  required
+                  placeholder="유튜브 Url"
+                  dwidth={width}
+                />
+                <MCreateButton type="submit" width={width}>
+                  유튜브 url 제출
+                </MCreateButton>
+              </MFormBox>
+            </MWrapFromStyle>
+          </MWrapBottom>
+        </MYoutubeTest>
+      </>
+    );
+  }
+  return (
+    <>
+      <YoutubeTest height={height}>
         {isYoutube ? (
           <ReactPlayer
             url={url}
             controls
-            width={`${width}px`}
-            height={`${width * 0.5625}px`}
+            width={"100%"}
+            height={`${width * 0.34}px`}
+            // height={"auto"}
+            // width={`${width * 0.7}px`}
+            // height={`${width * 0.525}px`}
+            // height={`${height - 200}px`}
             ref={youtubeRef}
             playing={on}
             onPlay={handlePlay}
@@ -155,58 +245,74 @@ const YoutubeVideo = (props) => {
             onEnded={handleStop}
           />
         ) : (
-          <MEmpty width={width}>
+          <Empty width={width} height={height}>
             <img
-              width={width * 0.4 + "px"}
+              width={width * 0.2 + "px"}
               alt="yotubeUrl"
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
             />
-            <MYoutubeEmptyText width={width}>
+            <YoutubeEmptyText>
               호스트 님은 유튜브 URL을 넣어주세요 :)
-            </MYoutubeEmptyText>
-          </MEmpty>
+            </YoutubeEmptyText>
+          </Empty>
         )}
-        <MWrapBottom width={width}>
-          <MBottomTop width={width}>
-            <MLeftTop>
-              <MHostText width={width}>
+        <WrapBottom width={width}>
+          <BottomTop width={width}>
+            <WrapRoomInfo width={width}>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.01 + "px" }}
+              >
                 <h3>방 제목 : </h3>
                 <h3>
                   {roomName.length > 12
                     ? roomName.slice(0, 12) + "..."
                     : roomName}
                 </h3>
-              </MHostText>
-              <MHostText width={width}>
+              </HostText>
+              <HostText width={width}>
                 <h3>비밀번호 : </h3>
                 <h3>{password === "" ? "X" : password}</h3>
-              </MHostText>
-              <MHostText width={width}>
+              </HostText>
+              <HostText width={width}>
                 <h3>호스트 : </h3>
                 <Avatar
                   alt={host}
                   src={hostImg}
-                  sx={{
-                    width: `${width * 0.07}px`,
-                    height: `${width * 0.07}px`,
-                    mx: 1,
-                  }}
+                  sx={{ width: "1.5vw", height: "1.5vw", mx: 1 }}
                 />
                 <h3>{host}</h3>
-              </MHostText>
-            </MLeftTop>
-            <MRightTop>
-              {workOut ? (
-                <MWorkOutWrap width={width} src={WorkoutImage}></MWorkOutWrap>
-              ) : (
-                <MWorkOutWrap src={RestImage} width={width}></MWorkOutWrap>
-              )}
-            </MRightTop>
-          </MBottomTop>
-
-          <MWrapFromStyle width={width}>
-            <MFormBox onSubmit={handleUrlSubmit}>
-              <MUrlInput
+              </HostText>
+            </WrapRoomInfo>
+            <Banner width={width}>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.01 + "px" }}
+              >
+                <h3>💪 공지 💪</h3>
+              </HostText>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.01 + "px" }}
+              >
+                <h3>
+                  영상 재생 중에는 카메라와 마이크를 설정하실 수 없습니다.{" "}
+                </h3>
+              </HostText>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.005 + "px" }}
+              >
+                <h3>
+                  유튜브 영상을 일시정지 하신 후, 카메라와 마이크를
+                  재설정해주시기 바랍니다.
+                </h3>
+              </HostText>
+            </Banner>
+          </BottomTop>
+          <WrapFromStyle width={width}>
+            <FormBox onSubmit={handleUrlSubmit}>
+              <UrlInput
                 type="text"
                 value={urlIntput.message}
                 onChange={handleUrlChange}
@@ -214,121 +320,45 @@ const YoutubeVideo = (props) => {
                 placeholder="유튜브 Url"
                 dwidth={width}
               />
-              <MCreateButton type="submit" width={width}>
+              <CreateButton type="submit" width={width}>
                 유튜브 url 제출
-              </MCreateButton>
-            </MFormBox>
-          </MWrapFromStyle>
-        </MWrapBottom>
-      </>
-    );
-  }
-  return (
-    <>
-      {isYoutube ? (
-        <ReactPlayer
-          url={url}
-          controls
-          width={"100%"}
-          height={`${width * 0.34}px`}
-          // height={"auto"}
-          // width={`${width * 0.7}px`}
-          // height={`${width * 0.525}px`}
-          // height={`${height - 200}px`}
-          ref={youtubeRef}
-          playing={on}
-          onPlay={handlePlay}
-          onPause={handlePause}
-          onEnded={handleStop}
-        />
-      ) : (
-        <Empty width={width} height={height}>
-          <img
-            width={width * 0.2 + "px"}
-            alt="yotubeUrl"
-            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
-          />
-          <YoutubeEmptyText>
-            호스트 님은 유튜브 URL을 넣어주세요 :)
-          </YoutubeEmptyText>
-        </Empty>
-      )}
-      <WrapBottom width={width}>
-        <BottomTop width={width}>
-          <WrapRoomInfo width={width}>
-            <HostText width={width} style={{ marginTop: width * 0.01 + "px" }}>
-              <h3>방 제목 : </h3>
-              <h3>
-                {roomName.length > 12
-                  ? roomName.slice(0, 12) + "..."
-                  : roomName}
-              </h3>
-            </HostText>
-            <HostText width={width}>
-              <h3>비밀번호 : </h3>
-              <h3>{password === "" ? "X" : password}</h3>
-            </HostText>
-            <HostText width={width}>
-              <h3>호스트 : </h3>
-              <Avatar
-                alt={host}
-                src={hostImg}
-                sx={{ width: "1.5vw", height: "1.5vw", mx: 1 }}
-              />
-              <h3>{host}</h3>
-            </HostText>
-          </WrapRoomInfo>
-          <Banner width={width}>
-            <HostText width={width} style={{ marginTop: width * 0.01 + "px" }}>
-              <h3>💪 공지 💪</h3>
-            </HostText>
-            <HostText width={width} style={{ marginTop: width * 0.01 + "px" }}>
-              <h3>영상 재생 중에는 카메라와 마이크를 설정하실 수 없습니다. </h3>
-            </HostText>
-            <HostText width={width} style={{ marginTop: width * 0.005 + "px" }}>
-              <h3>
-                유튜브 영상을 일시정지 하신 후, 카메라와 마이크를 재설정해주시기
-                바랍니다.
-              </h3>
-            </HostText>
-          </Banner>
-        </BottomTop>
-        <WrapFromStyle width={width}>
-          <FormBox onSubmit={handleUrlSubmit}>
-            <UrlInput
-              type="text"
-              value={urlIntput.message}
-              onChange={handleUrlChange}
-              required
-              placeholder="유튜브 Url"
-              dwidth={width}
-            />
-            <CreateButton type="submit" width={width}>
-              유튜브 url 제출
-            </CreateButton>
-          </FormBox>
-          {workOut ? (
-            <WorkOutWrap width={width} src={WorkoutImage}>
-              {/* <img
+              </CreateButton>
+            </FormBox>
+            {workOut ? (
+              <WorkOutWrap width={width} src={WorkoutImage}>
+                {/* <img
               src={WorkoutImage}
               alt=""
               style={{ width: "160px", height: "60px" }}
             /> */}
-            </WorkOutWrap>
-          ) : (
-            <WorkOutWrap src={RestImage} width={width}>
-              {/* <img
+              </WorkOutWrap>
+            ) : (
+              <WorkOutWrap src={RestImage} width={width}>
+                {/* <img
               src={RestImage}
               alt=""
               style={{ width: "160px", height: "50px" }}
             /> */}
-            </WorkOutWrap>
-          )}
-        </WrapFromStyle>
-      </WrapBottom>
+              </WorkOutWrap>
+            )}
+          </WrapFromStyle>
+        </WrapBottom>
+      </YoutubeTest>
     </>
   );
 };
+
+const YoutubeTest = styled.div`
+  width: 65%;
+  height: ${(props) => props.height - 56}px;
+  position: absolute;
+  background-color: #f9f9f9;
+`;
+
+const MYoutubeTest = styled.div`
+  width: 100%;
+  background-color: #f9f9f9;
+`;
 
 //** 유튜브 안넣었을 때 */
 

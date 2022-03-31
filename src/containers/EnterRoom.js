@@ -6,6 +6,7 @@ import { BodyWrap } from "./VideoContainer/VideoConEle";
 import WebRTCContainer from "./WebRTCContainer";
 import url from "../shared/url";
 import { apis } from "../shared/api";
+import styled from "@emotion/styled";
 // const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
 const OPENVIDU_SERVER_URL = url.OPEN_VIDU;
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -50,8 +51,6 @@ class VideoContainer extends Component {
     }
     if (prevProps.audio !== this.props.audio) {
       this.sendSignalUserAudio(this.props.audio);
-    }
-    if (prevState.subscribers.length !== this.state.subscribers.length) {
     }
   }
 
@@ -226,56 +225,34 @@ class VideoContainer extends Component {
     return (
       <BodyWrap className="container">
         <></>
-        {this.state.session === undefined ? (
-          <div id="join">
-            {/* <div id="join-dialog" className="jumbotron vertical-center">
-              <h1> Join a video session </h1>
-              <form className="form-group" onSubmit={this.joinSession}>
-                <p>
-                  <label>Participant: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="userName"
-                    value={myUserName}
-                    onChange={this.handleChangeUserName}
-                    required
-                  />
-                </p>
-                <p>
-                  <label> Session: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="sessionId"
-                    value={mySessionId}
-                    onChange={this.handleChangeSessionId}
-                    required
-                  />
-                </p>
-                <p className="text-center">
-                  <input
-                    className="btn btn-lg btn-success"
-                    name="commit"
-                    type="submit"
-                    value="JOIN"
-                  />
-                </p>
-              </form>
-            </div> */}
-          </div>
-        ) : null}
+        {this.state.session === undefined ? <div id="join"></div> : null}
 
         {this.state.session !== undefined ? (
-          <WebRTCContainer
-            publisher={this.state.publisher}
-            subscribers={this.state.subscribers}
-            leaveSession={this.leaveSession}
-            session={this.state.session}
-            OV={this.state.OV}
-            mySessionId={this.state.mySessionId}
-            host={this.props.host}
-          />
+          this.props.width < this.props.height ? (
+            <MVideoTest width={this.props.width}>
+              <WebRTCContainer
+                publisher={this.state.publisher}
+                subscribers={this.state.subscribers}
+                leaveSession={this.leaveSession}
+                session={this.state.session}
+                OV={this.state.OV}
+                mySessionId={this.state.mySessionId}
+                host={this.props.host}
+              />
+            </MVideoTest>
+          ) : (
+            <VideoTest height={this.props.height}>
+              <WebRTCContainer
+                publisher={this.state.publisher}
+                subscribers={this.state.subscribers}
+                leaveSession={this.leaveSession}
+                session={this.state.session}
+                OV={this.state.OV}
+                mySessionId={this.state.mySessionId}
+                host={this.props.host}
+              />
+            </VideoTest>
+          )
         ) : null}
       </BodyWrap>
     );
@@ -357,5 +334,22 @@ class VideoContainer extends Component {
     });
   }
 }
+
+const VideoTest = styled.div`
+  width: 15%;
+  height: ${(props) => props.height - 56}px;
+  position: absolute;
+  background-color: #f9f9f9;
+  left: 65%;
+  border-left: solid 1px #e0e0e0;
+`;
+
+const MVideoTest = styled.div`
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.width * 0.4}px;
+  background-color: #f9f9f9;
+  overflow-x: auto;
+  /* background-color: red; */
+`;
 
 export default VideoContainer;

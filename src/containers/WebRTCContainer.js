@@ -20,42 +20,6 @@ const WebRTCContainer = (props) => {
   const size = useWindowSize();
   const { width, height } = size;
   // ** leaveSession 전달용
-  React.useEffect(() => {
-    // return () => {
-    //   leaveSession();
-    // };
-  }, []);
-
-  // if (width < height) {
-  //   return (
-  //     <>
-  //       <MSessionWrap id="session" width={width}>
-  //         {publisher !== undefined ? (
-  //           <UserVideoComponent
-  //             streamManager={publisher}
-  //             host={host}
-  //             OV={OV}
-  //             sessionToken={sessionToken}
-  //             myUserName={myUserName}
-  //             me={true}
-  //             session={session}
-  //           />
-  //         ) : (
-  //           <VideoWrap></VideoWrap>
-  //         )}
-  //         {subscribers.map((sub, i) => (
-  //           <UserVideoComponent
-  //             streamManager={sub}
-  //             key={i}
-  //             host={host}
-  //             me={false}
-  //             session={session}
-  //           />
-  //         ))}
-  //       </MSessionWrap>
-  //     </>
-  //   );
-  // }
 
   return (
     <>
