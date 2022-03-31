@@ -55,7 +55,7 @@ export default function StoryCard(props) {
   const sizewindow = useWindowSize();
   const { width, height } = sizewindow;
 
-  const isMobile = useMediaQuery({ query: "max-width: 640px" });
+  const isMobile = useMediaQuery({ query: "(max-width: 640px)" });
 
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
     return (

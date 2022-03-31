@@ -45,7 +45,7 @@ const WebRTCContainer = (props) => {
           {subscribers.map((sub, i) => (
             <UserVideoComponent
               streamManager={sub}
-              key={i}
+              key={i + JSON.parse(sub.stream.connection.data).clientData}
               host={host}
               me={false}
               session={session}

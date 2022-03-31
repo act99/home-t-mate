@@ -66,6 +66,15 @@ const NavBar = (props) => {
   };
   const routeUrl = useSelector((state) => state.router.location.pathname);
 
+  //스크롤 event
+  const [scrollPosition, setScrollPosition] = React.useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+  React.useEffect(() => {
+    window.addEventListener("scroll", updateScroll);
+  });
+
   // ** 방 만들기 모달
 
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
@@ -113,7 +122,11 @@ const NavBar = (props) => {
         <AppBar
           position="static"
           sx={{
-            backgroundColor: "white",
+            backgroundColor:
+              pathname === "/" && scrollPosition < 500
+                ? "rgba( 255, 255, 255, 0 )"
+                : "white", //배경 투명하게
+            boxShadow: "0px 0px 0px 0px rgba( 255, 255, 255, 0 )", //boxshoadow효과 없애기
             position: "sticky",
             zIndex: 100,
             top: 0,
@@ -252,11 +265,14 @@ const NavBar = (props) => {
     );
   }
   return (
+    //컴퓨터 화면일때
     <ThemeProvider theme={theme}>
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "white",
+          backgroundColor:
+            scrollPosition < 500 ? "rgba( 255, 255, 255, 0 )" : "white", //배경 투명하게
+          boxShadow: "0px 0px 0px 0px rgba( 255, 255, 255, 0 )", //boxshoadow효과 없애기
           position: "sticky",
           zIndex: 100,
           top: 0,
@@ -383,7 +399,7 @@ const LoginButton = styled.button`
   height: 40px;
   border-radius: 10px;
   border: solid 0px black;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   font-size: 16px;
   color: black;
   font-weight: bold;
@@ -398,6 +414,7 @@ const LoginButton = styled.button`
   }
 `;
 
+//방만들기 컴퓨터화면 버튼
 const CreateButton = styled.button`
   display: block;
   /* margin: auto; */
@@ -407,7 +424,7 @@ const CreateButton = styled.button`
   margin-bottom: auto;
   border-radius: 8px;
   border: solid 2px green;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   font-size: 16px;
   color: green;
   font-weight: bold;
@@ -422,6 +439,7 @@ const CreateButton = styled.button`
   }
 `;
 
+//방만들기 모바일화면 버튼
 const MCreateButton = styled.button`
   display: block;
   /* margin: auto; */
@@ -431,7 +449,7 @@ const MCreateButton = styled.button`
   margin-bottom: auto;
   border-radius: 8px;
   border: solid 2px green;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   font-size: 8px;
   color: green;
   font-weight: bold;
@@ -446,13 +464,14 @@ const MCreateButton = styled.button`
   }
 `;
 
+//마이페이지 버튼
 const AvatarButton = styled.button`
   display: block;
   margin: auto;
   width: 56px;
   height: 56px;
   border-radius: 10px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   font-size: 16px;
   color: green;
   font-weight: bold;
