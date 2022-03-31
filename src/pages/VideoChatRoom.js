@@ -95,8 +95,6 @@ const VideoChatRoom = (props) => {
           );
         },
         (error) => {
-          // alert("방 인원이 꽉 찼습니다.");
-          // history.replace("/");
           console.log("서버연결 실패", error);
         }
       );

@@ -107,7 +107,7 @@ const VideoComponent = (props) => {
 
   return (
     <>
-      <VideoWrap height={height}>
+      <VideoWrap height={height} width={width}>
         <NicknameTag height={height}>
           {nickname === host
             ? nickname.length > 5
@@ -195,14 +195,6 @@ const ButtonTag = styled.div`
   font-size: 15px;
   width: 100%;
   height: 50px;
-`;
-
-const NoCamera = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 1300;
-  background-color: black;
 `;
 
 const VideoWrap = styled.div`

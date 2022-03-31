@@ -140,7 +140,7 @@ const ChatContainer = (props) => {
             ) : (
               <></>
             )}
-            <div ref={chattingRef} />
+            {/* <div ref={chattingRef} /> */}
           </List>
           <Divider />
           <Grid container style={{ padding: "10px", height: 72 }}>
