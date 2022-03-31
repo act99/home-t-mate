@@ -20,7 +20,7 @@ const HowtoUse = () => {
             component="div"
             sx={{ fontWeight: "bold", mt: 12, fontFamily: "GmarketSansLight" }}
           >
-            사용 방법
+            이용 방법
           </Typography>
           <br />
           <Typography

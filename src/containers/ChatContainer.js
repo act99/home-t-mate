@@ -89,24 +89,22 @@ const ChatContainer = (props) => {
             {chattingList.length > 0 ? (
               chattingList.map((item, index) =>
                 item.sender === nickname ? (
-                  <>
-                    <div key={index + "" + (item.type + "") + item.message}>
-                      <ListItem>
-                        <Grid container>
-                          <Grid item xs={12}>
-                            <ProfileRight>
-                              {/* <h3>{item.sender}</h3> */}
-                              <h3>나</h3>
-                            </ProfileRight>
-                            <MyText>
-                              <h5>{item.time}</h5>
-                              <h3>{item.message}</h3>
-                            </MyText>
-                          </Grid>
+                  <div key={index + "" + (item.type + "") + item.message}>
+                    <ListItem>
+                      <Grid container>
+                        <Grid item xs={12}>
+                          <ProfileRight>
+                            {/* <h3>{item.sender}</h3> */}
+                            <h3>나</h3>
+                          </ProfileRight>
+                          <MyText>
+                            <h5>{item.time}</h5>
+                            <h3>{item.message}</h3>
+                          </MyText>
                         </Grid>
-                      </ListItem>
-                    </div>
-                  </>
+                      </Grid>
+                    </ListItem>
+                  </div>
                 ) : (
                   <div key={index + "" + (item.type + "") + item.message}>
                     <ListItem>
@@ -142,7 +140,7 @@ const ChatContainer = (props) => {
             ) : (
               <></>
             )}
-            <div ref={chattingRef} />
+            {/* <div ref={chattingRef} /> */}
           </List>
           <Divider />
           <Grid container style={{ padding: "10px", height: 72 }}>

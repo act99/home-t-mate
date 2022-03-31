@@ -13,7 +13,7 @@ import {
 import styled from "@emotion/styled";
 import { AiOutlineLock } from "react-icons/ai";
 import RoomCardModal from "../containers/RoomCardModal";
-import BxSlide from "../assets/bxslide.png";
+import BxSlide from "../assets/bxslidepixa.jpg";
 import { useHistory } from "react-router-dom";
 import HomeImg from "../components/HomeImg";
 import { Text } from "../elements";
@@ -25,7 +25,11 @@ import GroupImage from "../assets/group.png";
 import RunningImage from "../assets/running.png";
 import StretchImage from "../assets/stretch.png";
 import useWindowSize from "../hooks/useWindowSize";
-
+import CreateRoomModal from "../containers/CreateRoomModal";
+import Example from "../assets/example.jpg";
+import Wifi from "../assets/wifi.png";
+import MHomeImg from "../components/MHomeImg";
+import IntroImg from "../assets/introduce.jpg";
 const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -104,6 +108,9 @@ const Home = () => {
     }
   };
 
+  // ** 방 만들기 모달
+  const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
+
   // ** 스크롤 FadeIn
   const animatedItem = useScrollFadeIn("up", 2, 0);
   const animatedRoom = useScrollFadeIn("right", 4, 0);
@@ -112,9 +119,10 @@ const Home = () => {
   const animatedStory = useScrollFadeIn("right", 4, 0);
   const animatedAboutTitle = useScrollFadeIn("up", 2, 0);
   const animatedHowToTitle = useScrollFadeIn("up", 2, 0);
-  const animatedWhatIs = useScrollFadeIn("up", 5, 0);
-  const animatedGroup1 = useScrollFadeIn("up", 2, 0);
-  const animatedGroup2 = useScrollFadeIn("up", 2, 0);
+  const animatedWhatIs = useScrollFadeIn("center", 3, 0);
+  const animatedGroup1 = useScrollFadeIn("center", 3, 0);
+  const animatedGroup2 = useScrollFadeIn("center", 3, 0);
+  const animatedIntro = useScrollFadeIn("center", 4, 0);
   React.useEffect(() => {
     dispatch(roomCreators.getMainRoomDB());
   }, []);
@@ -130,7 +138,7 @@ const Home = () => {
           ></MBxSlideCon>
           <Container sx={{ py: 1, width: "100%" }}>
             <>
-              <div {...animatedItem}>
+              <div>
                 <MMainTitle width={width}>
                   <h3>친구들과 함께하는 화상 홈트레이닝</h3>
                   <h5>오늘은 홈트 친구들이 어떤 운동을 하고 있을까요?</h5>
@@ -157,7 +165,7 @@ const Home = () => {
               </div>
               <Wrap>
                 <Container sx={{ py: 8, width: "100%" }}>
-                  <div {...animatedRoom}>
+                  <div>
                     <MuiGrid container spacing={2}>
                       {roomList.slice(0, 8).map((item, index) => (
                         <MuiGrid
@@ -311,39 +319,41 @@ const Home = () => {
                   setClickCard={setClickCard}
                   data={modalData}
                 />
-                <MMainTitle {...animatedStoryTitle}>
+                <MMainTitle>
                   <h3>함께 만들어나가는 운동 스토리</h3>
                   <h5>오늘은 홈트 친구들이 어떤 스토리를 작성했을까요?</h5>
                 </MMainTitle>
-                <div {...animatedStory}>
-                  <div
+                <div>
+                  <HandleScroll
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      marginTop: "32px",
                     }}
                   >
                     {_post &&
                       _post
                         .slice(0, 5)
                         .map((v, i) => (
-                          <HomeImg key={i} {...v} modal={true}></HomeImg>
+                          <MHomeImg key={i} {...v} modal={true}></MHomeImg>
                         ))}
-                  </div>
-                  <div
+                  </HandleScroll>
+                  <HandleScroll
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      marginTop: "16px",
                     }}
                   >
                     {_post &&
                       _post
                         .slice(5, 10)
                         .map((v, i) => (
-                          <HomeImg key={i} {...v} modal={true}></HomeImg>
+                          <MHomeImg key={i} {...v} modal={true}></MHomeImg>
                         ))}
-                  </div>
+                  </HandleScroll>
                 </div>
                 <div
                   style={{
@@ -364,7 +374,7 @@ const Home = () => {
                   </Text>
                 </div>
                 <div {...animatedAboutTitle}>
-                  <Text F_size="24px" F_align="center" margin_top="240px">
+                  <Text F_size="24px" F_align="center" margin_top="120px">
                     홈트메이트는 무엇인가요?
                   </Text>
                   <Text F_size="12px" F_align="center" margin_top="24px">
@@ -430,11 +440,72 @@ const Home = () => {
   return (
     <>
       <Wrap>
-        <BxSlideCon onClick={() => history.push("/livenow")}>
-          <img alt="" src={BxSlide} width="100%" />
+        <BxSlideCon src={BxSlide} width={width}>
+          <InsideTextDiv width={width}>
+            <h1>
+              대한민국 <span>No.1</span>
+            </h1>
+            <h3>온택트 홈트레이닝 플랫폼</h3>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                // justifyContent: "center",
+                // alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <button
+                onClick={() => {
+                  setCreateRoomOpen(true);
+                }}
+              >
+                방 만들기
+              </button>
+
+              <button id="howtouse" onClick={() => history.push("/howtouse")}>
+                이용 방법
+              </button>
+            </div>
+          </InsideTextDiv>
+
+          {/* <img alt="" src={BxSlide} width="100%" /> */}
         </BxSlideCon>
+        <CreateRoomModal
+          createRoomOpen={createRoomOpen}
+          setCreateRoomOpen={setCreateRoomOpen}
+        />
+
         <Container sx={{ py: 8, width: "100%" }}>
           <>
+            <InviteLiveNow width={width} src={Wifi} {...animatedIntro}>
+              <div id="invite-text">
+                <h1>
+                  친구들과 화상으로 <br />
+                  홈트레이닝을 해보세요.
+                </h1>
+                <h3>
+                  비대면 시대에 접어든 이 시점,
+                  <br /> 친구들 또는 동료들과 만날 기회가 사라지고 있습니다.
+                  <br />
+                  <br />
+                  홈트메이트에서 제공하는 화상채팅기능과
+                  <br /> 실시간 영상 공유 기능으로
+                  <br />
+                  <br />
+                  친구들과 함께 유튜브 영상을 시청하며 <br />
+                  비대면 홈트레이닝을 즐겨보세요.
+                </h3>
+              </div>
+              <div id="invite-image">
+                <img id="wifi" src={Wifi} alt="" />
+                <img src={Example} alt="" />
+              </div>
+            </InviteLiveNow>
+            <DescribeUse width={width}>
+              <img src={IntroImg} alt="" />
+            </DescribeUse>
+
             <div {...animatedItem}>
               <MainTitle>
                 <h3>친구들과 함께하는 화상 홈트레이닝</h3>
@@ -745,8 +816,142 @@ const Home = () => {
 
 const BxSlideCon = styled.div`
   width: 100%;
+  height: ${(props) => props.width * 0.35}px;
+  background-image: url("${(props) => props.src}");
+  background-size: 100% auto;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   margin: 0px;
-  cursor: pointer;
+  position: relative;
+`;
+
+const InsideTextDiv = styled.div`
+  height: 100%;
+  background-color: rgb(0, 0, 0, 0.5);
+  top: 20%;
+  left: 23%;
+  transform: translate(-20%, -20%);
+  position: absolute;
+  color: white;
+  width: ${(props) => props.width * 0.25}px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  h1 {
+    font-size: ${(props) => props.width * 0.018}px;
+    font-family: "GmarketSansMedium";
+    margin: 8px 32px;
+    span {
+      font-family: "GmarketSansMedium";
+      color: greenyellow;
+    }
+  }
+  h3 {
+    font-size: ${(props) => props.width * 0.018}px;
+    font-family: "GmarketSansMedium";
+    margin: 4px 16px 120px 32px;
+  }
+  button {
+    /* margin: auto; */
+    margin: 4px 16px 4px 32px;
+    width: 172px;
+    height: 52px;
+    border-radius: 8px;
+    border: solid 2px greenyellow;
+    background-color: rgb(0, 0, 0, 0);
+    font-size: 16px;
+    color: greenyellow;
+    font-weight: bold;
+    z-index: 13000;
+    /* font-weight: bold; */
+    cursor: pointer;
+    transition: 0.3s;
+    :hover {
+      transition: 0.3s;
+      background-color: greenyellow;
+      color: black;
+    }
+  }
+  #howtouse {
+    /* margin: auto; */
+    margin: 4px 16px;
+    width: 172px;
+    height: 52px;
+    border-radius: 8px;
+    border: solid 2px white;
+    background-color: white;
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    margin-right: 16px;
+    z-index: 13000;
+    /* font-weight: bold; */
+    cursor: pointer;
+    transition: 0.3s;
+    :hover {
+      transition: 0.3s;
+      border: solid 2px greenyellow;
+      background-color: greenyellow;
+      color: black;
+    }
+  }
+`;
+
+const InviteLiveNow = styled.div`
+  width: 100%;
+  height: ${(props) => props.width * 0.35}px;
+  margin: 0px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  #invite-text {
+    width: 32%;
+    height: ${(props) => props.width * 0.35}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    h1 {
+      font-family: "GmarketSansMedium";
+      font-size: ${(props) => props.width * 0.016}px;
+    }
+    h3 {
+      font-family: "GmarketSansLight";
+      font-size: ${(props) => props.width * 0.008}px;
+    }
+  }
+  #invite-image {
+    width: 68%;
+    position: relative;
+    /* background-image: url("${(props) => props.src}");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat; */
+    #wifi {
+      position: absolute;
+      width: 60%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.1;
+    }
+    img {
+      position: absolute;
+      width: 80%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+`;
+
+const DescribeUse = styled.div`
+  width: 100%;
+  img {
+    width: 100%;
+  }
 `;
 
 const MBxSlideCon = styled.div`
@@ -889,6 +1094,7 @@ const MainTitle = styled.div`
     font-family: "GmarketSansMedium";
     margin: 0px;
     margin-bottom: 16px;
+    color: black;
   }
   h5 {
     font-size: 18px;
@@ -1003,6 +1209,12 @@ const ImageGroup2 = styled.div`
   width: 100%;
   margin-top: 80px;
   margin-bottom: 160px;
+`;
+
+const HandleScroll = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
 `;
 
 export default Home;

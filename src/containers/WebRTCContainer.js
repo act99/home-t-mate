@@ -23,49 +23,85 @@ const WebRTCContainer = (props) => {
 
   return (
     <>
-      <SessionWrap id="session">
-        {publisher !== undefined ? (
-          <UserVideoComponent
-            streamManager={publisher}
-            host={host}
-            OV={OV}
-            sessionToken={sessionToken}
-            myUserName={myUserName}
-            me={true}
-            session={session}
-          />
-        ) : (
-          <VideoWrap></VideoWrap>
-        )}
-        {subscribers.map((sub, i) => (
-          <UserVideoComponent
-            streamManager={sub}
-            key={i}
-            host={host}
-            me={false}
-            session={session}
-          />
-        ))}
+      <SessionWrap
+        id="session"
+        direction={width < height ? "row" : "column"}
+        overflow={width < height ? "true" : "false"}
+      >
+        <VideoTest width={width} height={height}>
+          {publisher !== undefined ? (
+            <UserVideoComponent
+              streamManager={publisher}
+              host={host}
+              OV={OV}
+              sessionToken={sessionToken}
+              myUserName={myUserName}
+              me={true}
+              session={session}
+            />
+          ) : (
+            <VideoWrap></VideoWrap>
+          )}
+          {subscribers.map((sub, i) => (
+            <UserVideoComponent
+              streamManager={sub}
+              key={i + JSON.parse(sub.stream.connection.data).clientData}
+              host={host}
+              me={false}
+              session={session}
+            />
+          ))}
+        </VideoTest>
       </SessionWrap>
     </>
   );
 };
 
+const VideoTest = styled.div`
+  ${(props) =>
+    props.width < props.height
+      ? `  width: ${(props) => props.width}px;
+  height: ${(props) => props.width * 0.4}px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;`
+      : `  width: 15%;
+  height: ${(props) => props.height - 56}px;
+  position: absolute;
+  background-color: #f9f9f9;
+  left: 65%;
+  border-left: solid 1px #e0e0e0;`}/* width: 15%;
+  height: ${(props) => props.height - 56}px;
+  position: absolute;
+  background-color: #f9f9f9;
+  left: 65%;
+  border-left: solid 1px #e0e0e0; */
+`;
+
+const MVideoTest = styled.div`
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.width * 0.4}px;
+  background-color: #f9f9f9;
+  overflow-x: auto;
+  /* background-color: red; */
+`;
+
 const SessionWrap = styled.div`
+  /* width: 100%; */
+  /* height: 100%;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: ${(props) => props.direction};
+  ${(props) => (props.overflow === "true" ? ` overflow-x: auto;` : null)} */
+`;
+
+const MSessionWrap = styled.div`
   width: 100%;
   height: 100%;
   background-color: #f9f9f9;
   display: flex;
-  flex-direction: column;
-`;
-
-const MSessionWrap = styled.div`
-  width: ${(props) => props.width};
-  height: 100%;
-  background-color: #f9f9f9;
-  display: flex;
   flex-direction: row;
-  overflow-x: auto;
 `;
 
 const VideoWrap = styled.div`

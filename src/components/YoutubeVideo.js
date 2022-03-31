@@ -204,7 +204,6 @@ const YoutubeVideo = (props) => {
                 )}
               </MRightTop>
             </MBottomTop>
-
             <MWrapFromStyle width={width}>
               <MFormBox onSubmit={handleUrlSubmit}>
                 <MUrlInput
@@ -508,15 +507,15 @@ const MYoutubeEmptyText = styled.h3`
 const MWrapBottom = styled.div`
   display: flex;
   flex-direction: column;
-  height: ${(props) => props.width * 0.5}px;
+  height: ${(props) => props.width * 0.4}px;
   width: ${(props) => props.width * 1}px;
 `;
 
+// ** 여기 건듬
 const MBottomTop = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: ${(props) => props.width}px;
   height: ${(props) => props.width * 0.25}px;
   margin-top: 16px;
 `;
@@ -524,16 +523,19 @@ const MBottomTop = styled.div`
 const MLeftTop = styled.div`
   display: flex;
   flex-direction: column;
+  width: ${(props) => props.width * 0.5}px;
 `;
 
 const MRightTop = styled.div`
   display: flex;
   flex-direction: column;
+  width: ${(props) => props.width * 0.3}px;
 `;
 
 const MWorkOutWrap = styled.div`
-  width: ${(props) => props.width * 0.5 + "px"};
-  height: ${(props) => props.width * 0.25 + "px"};
+  width: ${(props) => props.width * 0.4}px;
+  height: ${(props) => props.width * 0.15}px;
+  margin-top: auto;
   /* margin-bottom: ${(props) => props.width * 0.005 + "px"}; */
   /* background-color: black; */
   background-image: url("${(props) => props.src}");
@@ -558,25 +560,25 @@ const MHostText = styled.div`
 `;
 
 const MWrapFromStyle = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: ${(props) => props.width * 0.2 + "px"};
-  width: ${(props) => props.width + "px"};
+  /* display: flex;
+  flex-direction: row; */
 `;
 const MFormBox = styled.form`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  height: ${(props) => props.width * 0.15}px;
+  width: ${(props) => props.width * 1}px;
 `;
 
 const MUrlInput = styled.input`
-  width: ${(props) => props.dwidth * 0.6 + "px"};
-  height: ${(props) => props.dwidth * 0.08 + "px"};
-  margin-left: ${(props) => props.dwidth * 0.02 + "px"};
-  margin-right: ${(props) => props.dwidth * 0.01 + "px"};
-  padding-left: ${(props) => props.dwidth * 0.014 + "px"};
-  font-size: ${(props) => props.dwidth * 0.03 + "px"};
+  width: ${(props) => props.dwidth * 0.65}px;
+  height: ${(props) => props.dwidth * 0.07}px;
+  margin-left: ${(props) => props.dwidth * 0.02}px;
+  margin-right: ${(props) => props.dwidth * 0.01}px;
+  /* padding-left: ${(props) => props.dwidth * 0.014 + "px"}; */
+  font-size: ${(props) => props.dwidth * 0.03}px;
   border-radius: 10px;
   border: solid 1px green;
   font-family: "GmarketSansLight";
@@ -589,8 +591,8 @@ const MUrlInput = styled.input`
 const MCreateButton = styled.button`
   display: block;
   /* margin: auto; */
-  width: ${(props) => props.width * 0.28 + "px"};
-  height: ${(props) => props.width * 0.08 + "px"};
+  width: ${(props) => props.width * 0.28}px;
+  height: ${(props) => props.width * 0.08}px;
   margin-top: auto;
   margin-bottom: auto;
   border-radius: 10px;
