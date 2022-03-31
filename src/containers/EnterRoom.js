@@ -223,9 +223,22 @@ class VideoContainer extends Component {
     const myUserName = this.state.myUserName;
 
     return (
-      <BodyWrap className="container">
-        <></>
-        {this.state.session === undefined ? <div id="join"></div> : null}
+      <>
+        {this.state.session === undefined ? (
+          <div id="join"></div>
+        ) : (
+          <WebRTCContainer
+            publisher={this.state.publisher}
+            subscribers={this.state.subscribers}
+            leaveSession={this.leaveSession}
+            session={this.state.session}
+            OV={this.state.OV}
+            mySessionId={this.state.mySessionId}
+            host={this.props.host}
+          />
+        )}
+
+        {/* {this.state.session === undefined ? <div id="join"></div> : null}
 
         {this.state.session !== undefined ? (
           this.props.width < this.props.height ? (
@@ -253,8 +266,8 @@ class VideoContainer extends Component {
               />
             </VideoTest>
           )
-        ) : null}
-      </BodyWrap>
+        ) : null} */}
+      </>
     );
   }
 
@@ -334,22 +347,5 @@ class VideoContainer extends Component {
     });
   }
 }
-
-const VideoTest = styled.div`
-  width: 15%;
-  height: ${(props) => props.height - 56}px;
-  position: absolute;
-  background-color: #f9f9f9;
-  left: 65%;
-  border-left: solid 1px #e0e0e0;
-`;
-
-const MVideoTest = styled.div`
-  width: ${(props) => props.width}px;
-  height: ${(props) => props.width * 0.4}px;
-  background-color: #f9f9f9;
-  overflow-x: auto;
-  /* background-color: red; */
-`;
 
 export default VideoContainer;
