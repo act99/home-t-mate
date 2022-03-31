@@ -15,6 +15,7 @@ import { BiImage } from "react-icons/bi";
 import CloseIcon from "@mui/icons-material/Close";
 import { Divider, IconButton } from "@mui/material";
 import useWindowSize from "../hooks/useWindowSize";
+import { useMediaQuery } from "react-responsive";
 
 function Write(props) {
   const dispatch = useDispatch();
@@ -71,6 +72,8 @@ function Write(props) {
   const size = useWindowSize();
   const { width, height } = size;
 
+  const isMobile = useMediaQuery({ query: "(max-width: 1100px)" });
+
   return (
     <>
       <Modal
@@ -88,45 +91,24 @@ function Write(props) {
           <Box sx={style}>
             {_user.is_login ? (
               fileSelected ? (
-                <Grid>
-                  <Grid
-                    is_flex
-                    width={width * 0.7 + "px"}
-                    height={width * 0.4 + "px"}
-                    B_radius="20px"
-                  >
+                isMobile ? (
+                  // width 1100px이하면//////////////////////////////////////
+
+                  <>
                     <Carousel
                       showThumbs={false}
                       infiniteLoop={true}
-                      height={width * 0.4 + "px"}
-                      width={width * 0.4 + "px"}
+                      width="50vmax"
                     >
                       {preview.map((item, index) => (
                         <Img
                           postImg={item}
-                          size={width * 0.4 + "px"}
-                          border="20px"
+                          size="50vmax"
+                          border_radius="20px 20px 0px 0px"
                         />
                       ))}
                     </Carousel>
-
-                    <Grid
-                      width={width * 0.3 + "px"}
-                      height={"100%"}
-                      position="absolute"
-                      top="0px"
-                      right="0px"
-                    >
-                      <Grid is_flex justify_content="flex-start">
-                        <Avatar
-                          alt="Remy Sharp"
-                          src={_user.profileImg ? _user.profileImg : ""}
-                          sx={{ margin: "10px 20px", width: 50, height: 50 }}
-                        />
-                        <Text F_size="20px" F_family="GmarketSansMedium">
-                          {_user.nickname ? _user.nickname : ""}
-                        </Text>
-                      </Grid>
+                    <Grid>
                       <Divider />
                       <TextArea
                         ref={contents}
@@ -137,16 +119,91 @@ function Write(props) {
                         style={{
                           marginTop: "16px",
                           marginLeft: "20px",
-                          height: `${width * 0.2}px`,
+                          height: `${height * 0.15}px`,
                           fontFamily: "GmarketSansLight",
                         }}
                       ></TextArea>
-                      <WriteButton onClick={addPost} width={width}>
+                      <WriteButton
+                        onClick={addPost}
+                        width={width}
+                        height={height}
+                        style={{
+                          minWidth: "100px",
+                          minHeight: "30px",
+                          marginBottom: "5px",
+                        }}
+                      >
                         스토리 작성완료
                       </WriteButton>
                     </Grid>
+                  </>
+                ) : (
+                  // width 1100px이상이면//////////////////////////////////////
+                  <Grid>
+                    <Grid
+                      is_flex
+                      width={width * 0.7 + "px"}
+                      height={width * 0.4 + "px"}
+                      B_radius="20px"
+                    >
+                      <Carousel
+                        showThumbs={false}
+                        infiniteLoop={true}
+                        height={width * 0.4 + "px"}
+                        width={width * 0.4 + "px"}
+                      >
+                        {preview.map((item, index) => (
+                          <Img
+                            postImg={item}
+                            size={width * 0.4 + "px"}
+                            border="20px"
+                          />
+                        ))}
+                      </Carousel>
+
+                      <Grid
+                        width={width * 0.3 + "px"}
+                        height={"100%"}
+                        position="absolute"
+                        top="0px"
+                        right="0px"
+                      >
+                        <Grid is_flex justify_content="flex-start">
+                          <Avatar
+                            alt="Remy Sharp"
+                            src={_user.profileImg ? _user.profileImg : ""}
+                            sx={{ margin: "10px 20px", width: 50, height: 50 }}
+                          />
+                          <Text F_size="20px" F_family="GmarketSansMedium">
+                            {_user.nickname ? _user.nickname : ""}
+                          </Text>
+                        </Grid>
+                        <Divider />
+                        <TextArea
+                          ref={contents}
+                          placeholder="게시글을 작성해주세요"
+                          rows="10"
+                          wrap="hard"
+                          maxLength={600}
+                          style={{
+                            marginTop: "16px",
+                            marginLeft: "20px",
+                            height: `${width * 0.2}px`,
+                            fontFamily: "GmarketSansLight",
+                          }}
+                        ></TextArea>
+                        <WriteButton
+                          onClick={addPost}
+                          width={width}
+                          // height={height}
+                          // style={{ minHeight: "30px" }}
+                        >
+                          스토리 작성완료
+                        </WriteButton>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                </Grid>
+                )
               ) : (
                 <Grid>
                   <Grid
@@ -164,7 +221,6 @@ function Write(props) {
                         <CloseIcon sx={{ height: "100%", fontSize: "40px" }} />
                       </IconButton>
                     </Top>
-                    {/* <ImageIcon style={{ width: "103px", height: "103px" }} /> */}
                     <BiImage size="120" />
                     <Text
                       F_size="20px"
@@ -188,21 +244,6 @@ function Write(props) {
                     >
                       사진 올리기
                     </CreateButton>
-                    {/* <Button
-                      _onClick={() => {
-                       
-                      }}
-                      font_size="20px"
-                      font_color="#587730"
-                      font_weight="700"
-                      B_radius="20px"
-                      border="2px solid #587730"
-                      width="204px"
-                      height="60px"
-                      BG_color="white"
-                    >
-                    
-                    </Button> */}
                     <input
                       ref={fileInput}
                       onChange={selectFile}
@@ -319,7 +360,6 @@ const CreateButton = styled.button`
   /* margin: auto; */
   width: 200px;
   height: 60px;
-
   border-radius: 16px;
   border: solid 2px green;
   background-color: white;

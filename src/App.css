@@ -115,13 +115,15 @@
 
 /* StoryCard. 일정구간이상 글이 작성되면 ...하면서 생략됨 */
 .overFlowText {
-  font-size: 16px;
+  /* font-size: 16px; */
   margin-left: 8px;
-
-  white-space: nowrap; /* 영역 내의 문장이 길 때 자동으로 다음줄로 내려가는 것을 제거 */
-  overflow: hidden; /* 영역의 넘치는 요소를 숨겨줌 */
-  text-overflow: ellipsis; /* 말줄임 적용 */
-  width: 70%;
+  /* white-space: nowrap; 
+  영역 내의 문장이 길 때 자동으로 다음줄로 내려가는 것을 제거
+  overflow: hidden; 
+  영역의 넘치는 요소를 숨겨줌
+  text-overflow: ellipsis; 
+  말줄임 적용 */
+  /* width: 70%; */
 }
 
 /* mypage 내스토리보기에서 글이 2줄이상 넘어가면 ...하면서 생략됨 */

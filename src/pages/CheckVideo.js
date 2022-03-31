@@ -1,11 +1,5 @@
 import styled from "@emotion/styled";
-import { Button, ButtonGroup, Container, IconButton } from "@mui/material";
-import { Box } from "@mui/system";
 import React from "react";
-import VideocamIcon from "@mui/icons-material/Videocam";
-import VideocamOffIcon from "@mui/icons-material/VideocamOff";
-import MicOffIcon from "@mui/icons-material/MicOff";
-import MicIcon from "@mui/icons-material/Mic";
 import { useLocation } from "react-router-dom";
 import { history } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,6 +58,15 @@ const CheckVideo = () => {
       })
       .catch((error) => console.log(error.response));
   };
+  const leaveAPICall = () => {
+    console.log("hi");
+    apis
+      .leaveRoom(roomId)
+      .then((res) => {
+        history.go(0);
+      })
+      .catch((error) => console.log(error));
+  };
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -74,13 +77,14 @@ const CheckVideo = () => {
     }, 1000);
 
     return () => {
-      apis
-        .leaveRoom(roomId)
-        .then((res) => {
-          history.go(0);
-        })
-        .catch((error) => console.log(error));
-      // ** 페이지에서 나갈 시 비디오 죽이기
+      if (history.action === "POP") {
+        leaveAPICall();
+      }
+      // if (window.performance) {
+      //   if (performance.navigation.type === 1) {
+      //   }
+      //   leaveAPICall();
+      // }
     };
   }, []);
 

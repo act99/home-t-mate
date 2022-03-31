@@ -13,6 +13,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import useWindowSize from "../hooks/useWindowSize";
 import { Divider } from "@mui/material";
+import { useMediaQuery } from "react-responsive";
 
 function Edit(props) {
   const dispatch = useDispatch();
@@ -81,6 +82,9 @@ function Edit(props) {
 
   const size = useWindowSize();
   const { width, height } = size;
+
+  const isMobile = useMediaQuery({ query: "(max-width: 1100px)" });
+
   return (
     <>
       <Modal
@@ -96,96 +100,175 @@ function Edit(props) {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Grid>
-              <Grid
-                is_flex
-                width={width * 0.7 + "px"}
-                height={width * 0.4 + "px"}
-                B_radius="20px"
-              >
-                <input
-                  ref={fileInput}
-                  onChange={selectFile}
-                  type="file"
-                  multiple
-                  style={{ display: "none" }}
-                />
+            {isMobile ? (
+              // width 1100px이하면//////////////////////////////////////
+              <Grid>
+                <Grid
+                >
+                  <input
+                    ref={fileInput}
+                    onChange={selectFile}
+                    type="file"
+                    multiple
+                    style={{ display: "none" }}
+                  />
 
-                {preview.length <= 0 ? (
-                  <Carousel
-                    showThumbs={false}
-                    infiniteLoop={true}
-                    height={width * 0.4 + "px"}
-                    width={width * 0.4 + "px"}
-                  >
-                    {photoResponseDto &&
-                      photoResponseDto.map((v, i) => (
+                  {preview.length <= 0 ? (
+                    <Carousel
+                      showThumbs={false}
+                      infiniteLoop={true}
+                      width="50vmax"
+                    >
+                      {photoResponseDto &&
+                        photoResponseDto.map((v, i) => (
+                          <Img
+                            key={i}
+                            size="50vmax"
+                            border_radius="20px 20px 0px 0px"
+                            _onClick={() => {
+                              fileInput.current.click();
+                            }}
+                            postImg={previewImage(v)}
+                          />
+                        ))}
+                    </Carousel>
+                  ) : (
+                    <Carousel
+                      showThumbs={false}
+                      infiniteLoop={true}
+                      width="50vmax"
+                    >
+                      {preview.map((item, index) => (
                         <Img
-                          key={i}
-                          size={width * 0.4 + "px"}
-                          border="20px"
-                          _onClick={() => {
-                            fileInput.current.click();
-                          }}
-                          postImg={previewImage(v)}
+                          cursor="pointer"
+                          key={index}
+                          postImg={item}
+                          size="50vmax"
+                          border_radius="20px 20px 0px 0px"
                         />
                       ))}
-                  </Carousel>
-                ) : (
-                  <Carousel
-                    showThumbs={false}
-                    infiniteLoop={true}
-                    height={width * 0.4 + "px"}
-                    width={width * 0.4 + "px"}
-                  >
-                    {preview.map((item, index) => (
-                      <Img
-                        cursor="pointer"
-                        key={index}
-                        postImg={item}
-                        size={width * 0.4 + "px"}
-                        border="20px"
-                      />
-                    ))}
-                  </Carousel>
-                )}
+                    </Carousel>
+                  )}
 
-                <Grid
-                  width={width * 0.3 + "px"}
-                  position="absolute"
-                  top="0px"
-                  right="0px"
-                >
-                  <Grid is_flex justify_content="flex-start">
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={_user.profileImg ? _user.profileImg : ""}
-                      sx={{ margin: "10px 20px", width: 50, height: 50 }}
-                    />
-                    <Text F_size="20px" F_family="GmarketSansMedium">
-                      {_user.nickname ? _user.nickname : ""}
-                    </Text>
+                  <Grid
+                  >
+                    <Divider />
+                    <TextArea
+                      value={contents}
+                      ref={contentsRef}
+                      rows="10"
+                      wrap="hard"
+                      maxLength={600}
+                      style={{
+                        marginTop: "16px",
+                        marginLeft: "20px",
+                        height: `${height * 0.15}px`,
+                      }}
+                      onChange={(e) => setContents(e.target.value)}
+                    ></TextArea>
+                    <WriteButton onClick={editPost} width={width} height={height} style={{
+                          minWidth: "100px",
+                          minHeight: "30px",
+                          marginBottom: "5px",
+                        }}>
+                      수정완료
+                    </WriteButton>
                   </Grid>
-                  <Divider />
-                  <TextArea
-                    value={contents}
-                    ref={contentsRef}
-                    rows="10"
-                    wrap="hard"
-                    maxLength={600}
-                    style={{
-                      marginTop: "16px",
-                      marginLeft: "20px",
-                      height: `${width * 0.2}px`,
-                    }}
-                    onChange={(e) => setContents(e.target.value)}
-                  ></TextArea>
-                  <WriteButton onClick={editPost} width={width}>
-                    수정완료
-                  </WriteButton>
                 </Grid>
               </Grid>
-            </Grid>
+            ) : (
+              // width 1100px이상이면//////////////////////////////////////
+              <Grid>
+                <Grid
+                  is_flex
+                  width={width * 0.7 + "px"}
+                  height={width * 0.4 + "px"}
+                  B_radius="20px"
+                >
+                  <input
+                    ref={fileInput}
+                    onChange={selectFile}
+                    type="file"
+                    multiple
+                    style={{ display: "none" }}
+                  />
+
+                  {preview.length <= 0 ? (
+                    <Carousel
+                      showThumbs={false}
+                      infiniteLoop={true}
+                      height={width * 0.4 + "px"}
+                      width={width * 0.4 + "px"}
+                    >
+                      {photoResponseDto &&
+                        photoResponseDto.map((v, i) => (
+                          <Img
+                            key={i}
+                            size={width * 0.4 + "px"}
+                            border="20px"
+                            _onClick={() => {
+                              fileInput.current.click();
+                            }}
+                            postImg={previewImage(v)}
+                          />
+                        ))}
+                    </Carousel>
+                  ) : (
+                    <Carousel
+                      showThumbs={false}
+                      infiniteLoop={true}
+                      height={width * 0.4 + "px"}
+                      width={width * 0.4 + "px"}
+                    >
+                      {preview.map((item, index) => (
+                        <Img
+                          cursor="pointer"
+                          key={index}
+                          postImg={item}
+                          size={width * 0.4 + "px"}
+                          border="20px"
+                        />
+                      ))}
+                    </Carousel>
+                  )}
+
+                  <Grid
+                    width={width * 0.3 + "px"}
+                    position="absolute"
+                    top="0px"
+                    right="0px"
+                  >
+                    <Grid is_flex justify_content="flex-start">
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={_user.profileImg ? _user.profileImg : ""}
+                        sx={{ margin: "10px 20px", width: 50, height: 50 }}
+                      />
+                      <Text F_size="20px" F_family="GmarketSansMedium">
+                        {_user.nickname ? _user.nickname : ""}
+                      </Text>
+                    </Grid>
+                    <Divider />
+                    <TextArea
+                      value={contents}
+                      ref={contentsRef}
+                      rows="10"
+                      wrap="hard"
+                      maxLength={600}
+                      style={{
+                        marginTop: "16px",
+                        marginLeft: "20px",
+                        height: `${width * 0.2}px`,
+                      }}
+                      onChange={(e) => setContents(e.target.value)}
+                    ></TextArea>
+                    <WriteButton onClick={editPost} width={width}>
+                      수정완료
+                    </WriteButton>
+                  </Grid>
+                </Grid>
+              </Grid>
+            )}
           </Box>
         </Fade>
       </Modal>

@@ -1,3 +1,4 @@
+//react-responsive라이브러리 사용
 import * as React from "react";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +16,8 @@ import Text from "../elements/Text";
 import { Modal } from "@mui/material";
 import Detail from "./Detail";
 import CloseIcon from "@mui/icons-material/Close";
+import useWindowSize from "../hooks/useWindowSize";
+import { useMediaQuery } from "react-responsive";
 
 export default function StoryCard(props) {
   const classes = storyCard();
@@ -49,34 +52,49 @@ export default function StoryCard(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const sizewindow = useWindowSize();
+  const { width, height } = sizewindow;
+
+  const isMobile = useMediaQuery({ query: "max-width: 640px" });
+
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
     return (
       <div className="mainbox">
-        <Card
-          sx={{ maxWidth: 620, height: 870, margin: "auto" }}
-          className={classes.root}
-        >
+        <Card sx={{ maxWidth: 620, margin: "auto" }} className={classes.root}>
           <Cardheader id={id} username={nickname} userImg={userImg} />
 
           <Carousel
             showThumbs={false}
             infiniteLoop={true}
-            height={size}
-            width={size}
+            // height="100%"
+            // width="100%"
           >
             {photoResponseDto &&
-              photoResponseDto.map((v, i) => (
-                <Img
-                  key={i}
-                  {...v}
-                  size="620px"
-                  commentUserDto={commentUserDto}
-                  likeUserDto={likeUserDto}
-                  likeCount={likeCount}
-                  id={id}
-                  _onClick={handleOpen}
-                />
-              ))}
+              photoResponseDto.map((v, i) =>
+                isMobile ? (
+                  <Img
+                    key={i}
+                    {...v}
+                    size="100vw"
+                    commentUserDto={commentUserDto}
+                    likeUserDto={likeUserDto}
+                    likeCount={likeCount}
+                    id={id}
+                    _onClick={handleOpen}
+                  />
+                ) : (
+                  <Img
+                    key={i}
+                    {...v}
+                    size="620px"
+                    commentUserDto={commentUserDto}
+                    likeUserDto={likeUserDto}
+                    likeCount={likeCount}
+                    id={id}
+                    _onClick={handleOpen}
+                  />
+                )
+              )}
           </Carousel>
 
           <Modal
@@ -112,14 +130,12 @@ export default function StoryCard(props) {
 
           <CardContent sx={{ p: 0, pl: "16px" }}>
             <Grid is_flex>
-              <Text F_color="black" F_size="20px" F_family="GmarketSansMedium">
+              <Text F_color="black" F_size="16px" F_family="GmarketSansMedium">
                 {nickname.length > 6 ? nickname.slice(0, 6) + "..." : nickname}
               </Text>
               <div className="overFlowText">
-                <h3
-                  style={{ fontSize: "16px", fontFamily: "GmarketSansLight" }}
-                >
-                  {content.length > 25 ? content.slice(0, 25) + "..." : content}
+                <h3 style={{ fontSize: "1em", fontFamily: "GmarketSansLight" }}>
+                  {content.length > 20 ? content.slice(0, 20) + "..." : content}
                 </h3>
               </div>
             </Grid>
