@@ -26,7 +26,7 @@ import RunningImage from "../assets/running.png";
 import StretchImage from "../assets/stretch.png";
 import useWindowSize from "../hooks/useWindowSize";
 import CreateRoomModal from "../containers/CreateRoomModal";
-// import Example from "../assets/example.png";
+import Example from "../assets/example.jpg";
 import Wifi from "../assets/wifi.png";
 import MHomeImg from "../components/MHomeImg";
 const Home = () => {
@@ -474,32 +474,34 @@ const Home = () => {
           createRoomOpen={createRoomOpen}
           setCreateRoomOpen={setCreateRoomOpen}
         />
-        <InviteLiveNow width={width} src={Wifi} {...animatedIntro}>
-          <div id="invite-text">
-            <h1>
-              친구들과 화상과 영상으로 <br />
-              홈트레이닝을 해보세요.
-            </h1>
-            <h3>
-              비대면 시대에 접어든 이 시점,
-              <br /> 친구들 또는 동료들과 만날 기회가 사라지고 있습니다. <br />
-              <br />
-              홈트메이트에서 제공하는 화상채팅기능과
-              <br /> 실시간 영상 공유 기능으로
-              <br />
-              <br />
-              친구들과 함께 유튜브 영상을 시청하며 <br />
-              비대면 홈트레이닝을 즐겨보세요.
-            </h3>
-          </div>
-          <div id="invite-image">
-            <img id="wifi" src={Wifi} alt="" />
-            {/* <img src={Example} alt="" /> */}
-          </div>
-        </InviteLiveNow>
+
         {/* <DescribeUse width={width}></DescribeUse> */}
         <Container sx={{ py: 8, width: "100%" }}>
           <>
+            <InviteLiveNow width={width} src={Wifi} {...animatedIntro}>
+              <div id="invite-text">
+                <h1>
+                  친구들과 화상으로 <br />
+                  홈트레이닝을 해보세요.
+                </h1>
+                <h3>
+                  비대면 시대에 접어든 이 시점,
+                  <br /> 친구들 또는 동료들과 만날 기회가 사라지고 있습니다.
+                  <br />
+                  <br />
+                  홈트메이트에서 제공하는 화상채팅기능과
+                  <br /> 실시간 영상 공유 기능으로
+                  <br />
+                  <br />
+                  친구들과 함께 유튜브 영상을 시청하며 <br />
+                  비대면 홈트레이닝을 즐겨보세요.
+                </h3>
+              </div>
+              <div id="invite-image">
+                <img id="wifi" src={Wifi} alt="" />
+                <img src={Example} alt="" />
+              </div>
+            </InviteLiveNow>
             <div {...animatedItem}>
               <MainTitle>
                 <h3>친구들과 함께하는 화상 홈트레이닝</h3>
@@ -894,14 +896,14 @@ const InsideTextDiv = styled.div`
 `;
 
 const InviteLiveNow = styled.div`
-  width: 70%;
+  width: 100%;
   height: ${(props) => props.width * 0.35}px;
   margin: 0px;
   display: flex;
   margin-left: auto;
   margin-right: auto;
   #invite-text {
-    width: 30%;
+    width: 32%;
     height: ${(props) => props.width * 0.35}px;
     display: flex;
     flex-direction: column;
@@ -917,7 +919,7 @@ const InviteLiveNow = styled.div`
     }
   }
   #invite-image {
-    width: 70%;
+    width: 68%;
     position: relative;
     /* background-image: url("${(props) => props.src}");
     background-position: center;
