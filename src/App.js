@@ -27,7 +27,9 @@ import HowtoUse from "./pages/HowtoUse";
 
 const App = () => {
   const dispatch = useDispatch();
-
+  // const beforeunload = () => {
+  //   dispatch(userActions.logout());
+  // };
   React.useEffect(() => {
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
