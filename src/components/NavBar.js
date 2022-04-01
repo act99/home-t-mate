@@ -122,10 +122,11 @@ const NavBar = (props) => {
         <AppBar
           position="static"
           sx={{
-            backgroundColor:
-              pathname === "/" && scrollPosition < 500
-                ? "rgba( 255, 255, 255, 0 )"
-                : "white", //배경 투명하게
+            // backgroundColor:
+            //   pathname === "/" && scrollPosition < 500
+            //     ? "rgba( 255, 255, 255, 0 )"
+            //     : "white", //배경 투명하게
+            backgroundColor: "white",
             boxShadow: "0px 0px 0px 0px rgba( 255, 255, 255, 0 )", //boxshoadow효과 없애기
             position: "sticky",
             zIndex: 100,
@@ -270,8 +271,9 @@ const NavBar = (props) => {
       <AppBar
         position="static"
         sx={{
-          backgroundColor:
-            scrollPosition < 500 ? "rgba( 255, 255, 255, 0 )" : "white", //배경 투명하게
+          // backgroundColor:
+          //   scrollPosition < 500 ? "rgba( 255, 255, 255, 0 )" : "white", //배경 투명하게
+          backgroundColor: "white",
           boxShadow: "0px 0px 0px 0px rgba( 255, 255, 255, 0 )", //boxshoadow효과 없애기
           position: "sticky",
           zIndex: 100,

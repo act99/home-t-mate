@@ -117,6 +117,7 @@ const Home = () => {
   // const animatedItem = useScrollFadeIn("up", 1, 0);
   const animatedStoryTitle = useScrollFadeIn("up", 2, 0);
   const animatedStory = useScrollFadeIn("right", 4, 0);
+  const animatedService = useScrollFadeIn("left", 4, 0);
   const animatedAboutTitle = useScrollFadeIn("up", 2, 0);
   const animatedHowToTitle = useScrollFadeIn("up", 2, 0);
   const animatedWhatIs = useScrollFadeIn("center", 3, 0);
@@ -502,7 +503,8 @@ const Home = () => {
                 <img src={Example} alt="" />
               </div>
             </InviteLiveNow>
-            <DescribeUse width={width}>
+            <DescribeUse width={width} {...animatedService}>
+              <h3>홈트메이트에서 이런 서비스를 이용하실 수 있습니다.</h3>
               <img src={IntroImg} alt="" />
             </DescribeUse>
 
@@ -949,8 +951,16 @@ const InviteLiveNow = styled.div`
 
 const DescribeUse = styled.div`
   width: 100%;
+  text-align: center;
+  margin-top: ${(props) => props.width * 0.08}px;
+  margin-bottom: ${(props) => props.width * 0.08}px;
   img {
     width: 100%;
+  }
+  h3 {
+    margin-bottom: ${(props) => props.width * 0.04}px;
+    font-family: "GmarketSansMedium";
+    font-size: ${(props) => props.width * 0.016}px;
   }
 `;
 
