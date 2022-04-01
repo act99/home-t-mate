@@ -24,33 +24,14 @@ import ReEnterKeyword from "./pages/ReEnterKeyword";
 import ScrollToTop from "./hooks/scrollToTop";
 import { actionCreators as userActions } from "./redux/modules/userReducer";
 import HowtoUse from "./pages/HowtoUse";
-import ReactGA from "react-ga";
-// ReactGA.event({
-//   category: "User",
-//   action: "Created an Account",
-// });
-// ReactGA.exception({
-//   description: "An error ocurred",
-//   fatal: true,
-// });
+
 const App = () => {
   const dispatch = useDispatch();
-  // const beforeunload = () => {
-  //   dispatch(userActions.logout());
-  // };
+
   React.useEffect(() => {
     if (document.cookie) {
       dispatch(userActions.userinfoDB());
     }
-    // if (process.env.NODE_ENV === "production") {
-    //   ReactGA.initialize("G-74NH6GH7QD");
-    //   history.listen((location) => {
-    //     ReactGA.set({ page: location.pathname }); // Update the user's current page
-    //     ReactGA.pageview(location.pathname); // Record a pageview for the given page
-    //   });
-    // } else {
-    // }
-
     // window.addEventListener("unload", beforeunload);
     return () => {
       // window.removeEventListener("unload", beforeunload);
