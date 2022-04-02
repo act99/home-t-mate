@@ -53,7 +53,6 @@ export default function Cardheader(props) {
     <Grid is_flex>
       <CardHeader
         style={{
-          borderTopRightRadius: "20px",
           padding: "0px",
           paddingLeft: "16px",
           height: isMobile? "50px" : `${width * 0.04}px`,

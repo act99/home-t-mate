@@ -100,7 +100,7 @@ export default function StoryCard(props) {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <div>
+            <>
               <Detail
                 id={id}
                 commentUserDto={commentUserDto}
@@ -108,11 +108,11 @@ export default function StoryCard(props) {
               />
               <Grid position="absolute" right="0">
                 <CloseIcon
-                  sx={{ color: "white", fontSize: 40 }}
+                  sx={{ color: "white", fontSize: 40}}
                   onClick={handleClose}
                 />
               </Grid>
-            </div>
+            </>
           </Modal>
 
           {/* id는 post id */}

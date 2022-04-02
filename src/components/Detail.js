@@ -39,7 +39,6 @@ const mobileStyle = {
   maxWidth: "500px",
   minWidth: "280px",
   height: "80%",
-  // minHeight: "557px",
   maxHeight: "725px",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
