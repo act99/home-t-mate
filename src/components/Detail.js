@@ -39,7 +39,7 @@ const mobileStyle = {
   maxWidth: "500px",
   minWidth: "280px",
   height: "80%",
-  minHeight: "557px",
+  // minHeight: "557px",
   maxHeight: "725px",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
@@ -84,7 +84,7 @@ export default function Detail(props) {
       {isMobile ? (
         <>
           {/* 화면 width가 1209px보다 작을때////////////////////////// */}
-          <Grid width="100%" min_height="557px">
+          <Grid width="100%">
             <DetailCardheader
               id={thisPost.id}
               username={thisPost.nickname}
@@ -93,7 +93,7 @@ export default function Detail(props) {
             />
             <div
               className="commentlist"
-              style={{ height:  `${height * 0.62}px`, minHeight:"410px", overflow: "auto", width: "100%"}}
+              style={{ height:  `${height * 0.62}px`, overflow: "auto", width: "100%"}}
             >
               {/* 글 내용 */}
               <Typography

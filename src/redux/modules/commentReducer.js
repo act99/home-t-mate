@@ -64,6 +64,7 @@ const addCommentDB = (postId, comment, user) => {
           nickname: user.nickname,
           comment: comment,
           profileImg: userProfileImg,
+          commentId: response.data.id,
         }; //responsive로 안들어와서 임의로 만들었던거. commentId: response.commentId 이렇게 추가해줘야됨.
         dispatch(addComment(postId, dummyComment));
       })
