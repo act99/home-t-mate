@@ -2,28 +2,18 @@ import React from "react";
 import { Grid, Image } from "../elements";
 import CloseIcon from "@mui/icons-material/Close";
 import { actionCreators as commentActions } from "../redux/modules/commentReducer";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Text } from "../elements";
 import useWindowSize from "../hooks/useWindowSize";
 import { useMediaQuery } from "react-responsive";
 
 export default function CommentContents(props) {
-  console.log("comeent id잘들어오나요", props.commentId)
   const dispatch = useDispatch();
-
-  // React.useEffect(() => {
-  //   return () => {};
-  // }, [props]);
-
   const delComment = () => {
-    dispatch(commentActions.delCommentDB(props.id, (parseInt(props.commentId))));
+    dispatch(commentActions.delCommentDB(props.id, parseInt(props.commentId)));
   };
-
-  const _user = useSelector((state) => state.userReducer.user);
-
   const size = useWindowSize();
   const { width, height } = size;
-
   const isMobile = useMediaQuery({ query: "(max-width: 1209px)" });
 
   return (
@@ -39,12 +29,7 @@ export default function CommentContents(props) {
             padding_left="16px"
             margin="0px 0px 15px 0px"
           >
-            <Grid
-              margin="0px"
-              // height={width * 0.1 + "px"}
-              is_flex
-              justify_content="start"
-            >
+            <Grid margin="0px" is_flex justify_content="start">
               <Image
                 margin="0"
                 shape="circle"

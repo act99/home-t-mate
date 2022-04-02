@@ -39,13 +39,10 @@ export default function StoryCard(props) {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(commentActions.getCommentDB(props.id));
-
-    if (likeUserDto && likeUserDto.length > 0) {
+    if (props.id !== undefined) {
+      dispatch(commentActions.getCommentDB(props.id));
     }
-    if (commentState && commentState.length > 0) {
-    }
-  }, [commentUserDto, likeUserDto]);
+  }, [props.id, dispatch]);
 
   // datail modal open,close
   const [open, setOpen] = React.useState(false);
@@ -174,11 +171,7 @@ export default function StoryCard(props) {
       </div>
     );
   }
-  return (
-    <div>
-      <h3>로딩중</h3>
-    </div>
-  );
+  return <div></div>;
 }
 
 const storyCard = makeStyles({

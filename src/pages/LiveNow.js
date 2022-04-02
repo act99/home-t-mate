@@ -28,7 +28,6 @@ const LiveNow = () => {
   // ** 방 생성 버튼
   const roomList = useSelector((state) => state.roomReducer.room_list);
   const is_loading = useSelector((state) => state.roomReducer.is_loading);
-  const paging = useSelector((state) => state.roomReducer.paging);
   const user = useSelector((state) => state.userReducer.user);
   // ** 모달 생성
   const [clickCard, setClickCard] = React.useState(false);

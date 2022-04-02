@@ -124,7 +124,6 @@ export default handleActions(
         const result = action.payload.room_list.filter(
           (item) => !draft.room_list.find((v) => item.name === v.name)
         );
-        console.log(result);
         draft.room_list = [...draft.room_list, ...result];
         draft.is_loading = false;
         draft.paging = draft.paging + 1;

@@ -9,6 +9,7 @@ import styled from "@emotion/styled";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { useDispatch, useSelector } from "react-redux";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import InfinityPost from "../shared/InfinityPost";
 
 function Story() {
   const dispatch = useDispatch();
@@ -19,14 +20,17 @@ function Story() {
 
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-  const _post = useSelector((state) => state.postReducer.list);
+  const _post = useSelector((state) => state.postReducer);
+  const { list, is_loading } = _post;
+  const handleNext = () => {
+    dispatch(postActions.getPostDB());
+  };
 
   return (
-    <React.Fragment>
-      <Grid margin_top="120px" />
-
-      {_post.map((v, i) => (
-        <Grid key={i} margin_bottom="15px">
+    <InfinityPost callNext={handleNext} loading={is_loading}>
+      <Grid BG_c="#f9f9f9" height="60px" />
+      {list.map((v, i) => (
+        <Grid key={i} padding="15px 0px" BG_c="#f9f9f9">
           <StoryCard key={i} {...v} />
         </Grid>
       ))}
@@ -36,7 +40,7 @@ function Story() {
       </WriteButton>
 
       <Write open={open} handleClose={handleClose}></Write>
-    </React.Fragment>
+    </InfinityPost>
   );
 }
 

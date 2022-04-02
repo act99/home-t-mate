@@ -51,13 +51,10 @@ const mobileStyle = {
 };
 
 export default function Detail(props) {
-
   const dispatch = useDispatch();
   // id={props.id}
 
   const _post = useSelector((state) => state.postReducer.list);
-  const _state = useSelector((state) => state);
-    console.log('state확인용', _state);
   const thisPost = _post.reduce((x, v, i) => (v.id === props.id ? v : x), "");
   const thisPostPhoto = thisPost.photoResponseDto;
 
@@ -93,7 +90,11 @@ export default function Detail(props) {
             />
             <div
               className="commentlist"
-              style={{ height:  `${height * 0.62}px`, overflow: "auto", width: "100%"}}
+              style={{
+                height: `${height * 0.62}px`,
+                overflow: "auto",
+                width: "100%",
+              }}
             >
               {/* 글 내용 */}
               <Typography
@@ -114,10 +115,7 @@ export default function Detail(props) {
 
               {/* 댓글몇개인지 보이기 */}
               <Grid is_flex B_top="1px solid #D3D3D3" margin_bottom="0.5vh">
-                <BsChat
-                  size="1.2em"
-                  style={{ margin: "1vh 10px 17px 16px" }}
-                />
+                <BsChat size="1.2em" style={{ margin: "1vh 10px 17px 16px" }} />
                 <Text F_size="0.7em" margin_bottom="1vh">
                   총 {commentState && commentState.length}개의 댓글
                 </Text>
@@ -140,12 +138,7 @@ export default function Detail(props) {
                   default="default"
                   size="2em"
                 />
-                <Grid
-                  is_flex
-                  position="relative"
-                  left="-40px"
-                  width="100%"
-                >
+                <Grid is_flex position="relative" left="-40px" width="100%">
                   {thisPost.likeUserDto && thisPost.likeUserDto.length > 0 ? (
                     <Text
                       F_size="0.8em"
@@ -208,11 +201,11 @@ export default function Detail(props) {
                 fontFamily="GmarketSansMedium"
                 fontSize="1.1vw"
               >
-                <pre
+                <pre-wrap
                   style={{ fontFamily: "GmarketSansMedium", marginTop: "0px" }}
                 >
                   {thisPost.content}
-                </pre>
+                </pre-wrap>
               </Typography>
 
               {/* 댓글몇개인지 보이기 */}

@@ -26,6 +26,7 @@ export default function CommentBox(props) {
 
   const addComment = () => {
     dispatch(commentActions.addCommentDB(props.id, comment, _user));
+
     setComment("");
   };
 
