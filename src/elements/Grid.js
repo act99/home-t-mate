@@ -73,12 +73,10 @@ const Grid = (props) => {
     B_top_left_radius,
     B_top_right_radius,
     Border,
-
+    BG_c,
     box_shadow,
     box_sizing,
     text_align,
-    BG_c,
-
     is_flex,
     flex_direction,
     justify_content,
@@ -136,7 +134,7 @@ Grid.defaultProps = {
   box_shadow: null,
   box_sizing: true,
 
-  BG_c: false,
+  BG_c: "#ffffff",
 
   Border: false,
   B_bottom_left_radius: false,

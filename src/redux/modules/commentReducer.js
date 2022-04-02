@@ -36,7 +36,6 @@ const getCommentDB = (postId) => {
       .getComment(postId)
       .then((response) => {
         dispatch(setComment(postId, response.data));
-        console.log("getComment res 확인용", response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -46,12 +45,9 @@ const getCommentDB = (postId) => {
 
 const addCommentDB = (postId, comment, user) => {
   return function (dispatch, getState, { history }) {
-    console.log("애드커멘트 유저정보", user);
     apis
       .addComment(postId, comment)
       .then((response) => {
-        console.log('response', response)
-        // https://skifriendbucket.s3.ap-northeast-2.amazonaws.com/static/defalt+user+frofile.png
         let userProfileImg = "";
         if (user.profileImg === null) {
           userProfileImg =
@@ -59,7 +55,6 @@ const addCommentDB = (postId, comment, user) => {
         } else {
           userProfileImg = user.profileImg;
         }
-        console.log(user);
         const dummyComment = {
           nickname: user.nickname,
           comment: comment,
@@ -67,6 +62,7 @@ const addCommentDB = (postId, comment, user) => {
           commentId: response.data.id,
         }; //responsive로 안들어와서 임의로 만들었던거. commentId: response.commentId 이렇게 추가해줘야됨.
         dispatch(addComment(postId, dummyComment));
+        dispatch(postActions.editPostDB);
       })
       .catch((error) => {
         console.log(error);

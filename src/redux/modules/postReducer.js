@@ -10,38 +10,50 @@ const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LIKE_POST = "LIKE_POST";
-const DELETE_MANY_POST = "DELETE_MANY_POST";
+const LOADING = "LOADING";
+const PAGING = "PAGING";
+const NEXT = "NEXT";
 
-const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
+const setPost = createAction(SET_POST, (list) => ({ list }));
 const like = createAction(LIKE_POST, (postId, userId, nickname) => ({
   postId,
   userId,
   nickname,
 }));
+const next = createAction(NEXT, (next) => ({ next }));
+const paging = createAction(PAGING, (paging) => ({ paging }));
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
+
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
-const deleteManyPost = createAction(DELETE_MANY_POST, (posts_id) => ({
-  posts_id,
-}));
-
-// const editPost = createAction(EDIT_POST, (post_id, contents, images) => ({
-//   post_id, contents, images
-// }));
 
 const initialPost = {};
-
 const initialState = {
   list: [{ ...initialPost }],
+  is_loading: false,
+  next: true,
+  paging: 1,
 };
 
 const getPostDB = () => {
   return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    const postList = getState().postReducer.list;
+    if (postList.length === 0) {
+      dispatch(paging(1));
+    }
+    const page = getState().postReducer.paging;
     apis
-      .getPost()
+      .getPost(page, 4)
       .then((res) => {
+        if (res.data.length === 0) {
+          dispatch(next(false));
+        } else {
+          dispatch(next(true));
+        }
         dispatch(setPost(res.data));
       })
-      .catch((error) => {});
+      .catch((error) => console.log(error.response.data));
   };
 };
 
@@ -50,9 +62,12 @@ const addPostDB = (postData) => {
     imageApis
       .addPost(postData)
       .then((res) => {
-        history.go(0);
+        const content = { ...res.data, commentUserDto: [], likeUserDto: [] };
+        dispatch(addPost(content));
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error.response);
+      });
   };
 };
 
@@ -153,7 +168,12 @@ export default handleActions(
   {
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = [...action.payload.post_list];
+        const result = action.payload.list.filter(
+          (item) => !draft.list.find((v) => item.id === v.id)
+        );
+        draft.list = [...draft.list, ...result];
+        draft.is_loading = false;
+        draft.paging = draft.paging + 1;
       }),
 
     [LIKE_POST]: (state, action) =>
@@ -182,11 +202,23 @@ export default handleActions(
           draft.list[index].likeCount += 1;
         }
       }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading;
+      }),
+    [PAGING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.paging = action.payload.paging;
+      }),
+    [NEXT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.next = action.payload.next;
+      }),
 
-    // [ADD_POST]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.list.unshift(action.payload.post);
-    //   }),
+    [ADD_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list.unshift(action.payload.post);
+      }),
 
     // [EDIT_POST]: (state, action) =>
     //   produce(state, (draft) => {
@@ -203,7 +235,6 @@ export default handleActions(
         );
         draft.list.splice(dummyIndex, 1);
       }),
-    [DELETE_MANY_POST]: (state, action) => produce(state, (draft) => {}),
   },
   initialState
 );

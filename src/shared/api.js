@@ -22,7 +22,7 @@ export const apis = {
   kakaoLogin: (code) => api.get(`/user/kakao/callback?code=${code}`),
   getUserInfo: () => api.post(`/chat/user`),
   // ** 영상채팅
-  getRooms: () => api.get(`/chat/rooms`),
+  // getRooms: () => api.get(`/chat/rooms`),
   createRooms: (name, password, content, roomImg) =>
     api.post(`/chat/room`, {
       name: name,
@@ -42,7 +42,7 @@ export const apis = {
   infinityRoom: (page, size) =>
     api.get(`/chat/roomsscroll?page=${page}&size=${size}`),
   // ** 포스트
-  getPost: () => api.get(`/api/posts`),
+  getPost: (page, size) => api.get(`/api/posts?page=${page}&size=${size}`),
   addPost: (contents) => api.post(`/api/posts`, contents),
   editPost: (postId, contents, images) =>
     api.put(`/api/posts/${postId}`, { content: contents, image: images }),
