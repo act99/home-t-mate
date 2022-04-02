@@ -16,7 +16,6 @@ import Text from "../elements/Text";
 import { Modal } from "@mui/material";
 import Detail from "./Detail";
 import CloseIcon from "@mui/icons-material/Close";
-import useWindowSize from "../hooks/useWindowSize";
 import { useMediaQuery } from "react-responsive";
 
 export default function StoryCard(props) {
@@ -25,7 +24,6 @@ export default function StoryCard(props) {
     id,
     nickname,
     userImg,
-    size,
     commentUserDto,
     likeUserDto,
     likeCount,
@@ -49,9 +47,6 @@ export default function StoryCard(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const sizewindow = useWindowSize();
-  const { width, height } = sizewindow;
-
   const isMobile = useMediaQuery({ query: "(max-width: 640px)" });
 
   if (commentUserDto !== undefined && likeUserDto !== undefined) {
@@ -63,8 +58,6 @@ export default function StoryCard(props) {
           <Carousel
             showThumbs={false}
             infiniteLoop={true}
-            // height="100%"
-            // width="100%"
           >
             {photoResponseDto &&
               photoResponseDto.map((v, i) =>
