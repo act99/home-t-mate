@@ -113,7 +113,7 @@ export default function TransitionsModal(props) {
           <Fade in={open}>
             <Box sx={style}>
               <Top>
-                <IconButton onClick={() => handleClose(false)}>
+                <IconButton onClick={() => closeModal()}>
                   <CloseIcon sx={{ height: "100%", fontSize: "40px", mr: 1 }} />
                 </IconButton>
               </Top>
@@ -188,7 +188,7 @@ export default function TransitionsModal(props) {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
-        onClose={handleClose}
+        onClose={closeModal}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -198,7 +198,7 @@ export default function TransitionsModal(props) {
         <Fade in={open}>
           <Box sx={style}>
             <Top>
-              <IconButton onClick={() => handleClose(false)}>
+              <IconButton onClick={() => closeModal()}>
                 <CloseIcon sx={{ height: "100%", fontSize: "40px", mr: 1 }} />
               </IconButton>
             </Top>

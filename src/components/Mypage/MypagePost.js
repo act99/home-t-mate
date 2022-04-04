@@ -33,7 +33,6 @@ function MypagePost(props) {
   const handleDelete = (id) => {
     dispatch(postActions.deletePostDB(id));
   };
-  console.log(props);
   if (props.photoResponseDto) {
     return (
       <Grid margin_top="24px">

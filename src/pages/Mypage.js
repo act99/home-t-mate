@@ -53,11 +53,7 @@ const Mypage = (props) => {
     setOpen(true);
   };
   const user = useSelector((state) => state.userReducer.user);
-  const _post = useSelector((state) => state.postReducer.list);
-  const mypagePost = _post.filter((v, i) =>
-    v.userId === user.id ? true : false
-  );
-  console.log(mypagePost);
+  const mypagePost = useSelector((state) => state.postReducer.list);
   const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
   // ** 프로필 이미지 수정

@@ -1,18 +1,16 @@
 import produce from "immer";
-import { result } from "lodash";
 import { createAction, handleActions } from "redux-actions";
 import { apis } from "../../shared/api";
 import { imageApis } from "../../shared/formApi";
-import { history } from "../store";
 
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
-const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LIKE_POST = "LIKE_POST";
 const LOADING = "LOADING";
 const PAGING = "PAGING";
 const NEXT = "NEXT";
+const SET_MY_POST = "SET_MY_POST";
 
 const setPost = createAction(SET_POST, (list) => ({ list }));
 const like = createAction(LIKE_POST, (postId, userId, nickname) => ({
@@ -20,6 +18,7 @@ const like = createAction(LIKE_POST, (postId, userId, nickname) => ({
   userId,
   nickname,
 }));
+const setMyPost = createAction(SET_MY_POST, (list) => ({ list }));
 const next = createAction(NEXT, (next) => ({ next }));
 const paging = createAction(PAGING, (paging) => ({ paging }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
@@ -60,7 +59,10 @@ const getMyPostDB = () => {
   return function (dispatch, getState, { history }) {
     apis
       .getMyPost()
-      .then((res) => dispatch(setPost(res.data)))
+      .then((res) => {
+        dispatch(setMyPost(res.data));
+        console.log(res.data);
+      })
       .catch((error) => console.log(error.response.data));
   };
 };
@@ -199,15 +201,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
       }),
-
-    // [EDIT_POST]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     let index = draft.list.findIndex(
-    //       (p) => p.id === action.payload.postId
-    //     );
-    //     draft.list[index] = { ...draft.list[index], ...action.payload.post };
-    //   }),
-
+    [SET_MY_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.list;
+      }),
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
         let dummyIndex = draft.list.findIndex(

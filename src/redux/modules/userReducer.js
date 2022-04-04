@@ -41,7 +41,7 @@ const kakaoLoginDB = (code) => {
         setCookie("token", res.headers.authorization);
         dispatch(
           login({
-            userId: res.data.userId,
+            id: res.data.userId,
             token: res.headers.authorization,
             nickname: res.data.userResponseDto.nickname,
             profileImg: res.data.userResponseDto.profileImg,
