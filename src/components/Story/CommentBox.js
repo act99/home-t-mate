@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as commentActions } from "../../redux/modules/commentReducer";
 import { AiOutlineSmile } from "react-icons/ai";
 import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
-
+import { useMediaQuery } from "react-responsive";
 import Grid from "../../elements/Grid";
 import Popover from "@mui/material/Popover";
 
@@ -46,6 +46,8 @@ export default function CommentBox(props) {
       return addComment();
     }
   };
+
+  const isMobile = useMediaQuery({ query: "(max-width: 640px)" });
 
   if (_user.is_login) {
     return (
@@ -109,9 +111,9 @@ export default function CommentBox(props) {
             border="none"
             B_radius="40px"
             width="8vmin"
-            min_width="50px"
+            min_width="60px"
             font_color="#587730"
-            font_size="1.5vmin"
+            font_size={isMobile ? "12px" : "1.5vmin"}
           >
             댓글달기
           </Button>

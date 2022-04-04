@@ -119,7 +119,7 @@ function Write(props) {
                         maxLength={600}
                         style={{
                           marginTop: "16px",
-                          marginLeft: "20px",
+                          marginLeft: "10px",
                           height: `${height * 0.15}px`,
                           fontFamily: "GmarketSansLight",
                         }}
@@ -132,6 +132,7 @@ function Write(props) {
                           minWidth: "100px",
                           minHeight: "30px",
                           marginBottom: "5px",
+                          fontSize: "11px",
                         }}
                       >
                         스토리 작성완료

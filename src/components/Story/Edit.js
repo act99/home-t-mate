@@ -159,7 +159,7 @@ function Edit(props) {
                       maxLength={600}
                       style={{
                         marginTop: "16px",
-                        marginLeft: "20px",
+                        marginLeft: "10px",
                         height: `${height * 0.15}px`,
                       }}
                       onChange={(e) => setContents(e.target.value)}
@@ -172,6 +172,7 @@ function Edit(props) {
                         minWidth: "100px",
                         minHeight: "30px",
                         marginBottom: "5px",
+                        fontSize: "11px",
                       }}
                     >
                       수정완료
