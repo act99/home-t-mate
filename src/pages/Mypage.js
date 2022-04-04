@@ -2,12 +2,11 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import Grid from "../elements/Grid";
 import "react-datetime/css/react-datetime.css";
 import "moment/locale/ko";
 // import React from "react";
-import CalendarModal from "../components/CalendarModal";
-import { Text, Image, Button } from "../elements";
+import CalendarModal from "../components/Mypage/CalendarModal";
+import { Grid, Text } from "../elements";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TabContext from "@mui/lab/TabContext";
@@ -15,15 +14,14 @@ import TabPanel from "@mui/lab/TabPanel";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import "../styles/fullcalendar.css";
-import CreateRoomModal from "../containers/CreateRoomModal";
+import CreateRoomModal from "../containers/LiveNow/CreateRoomModal";
 import { StyledTab, StyledTabs } from "../styles/tabStyle";
 import KakaoShareButton from "../shared/Kakao-shared-btn";
 import { actionCreators as todoActions } from "../redux/modules/todoReducer";
-import ChangeProfileModal from "../containers/ChangeProfileModal";
+import ChangeProfileModal from "../containers/Mypage/ChangeProfileModal";
 import ProfileImage from "../elements/ProfileImage";
-import MypagePost from "../components/MypagePost";
+import MypagePost from "../components/Mypage/MypagePost";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
-import MyChattingRoom from "../containers/MyChattingRoom";
 const Mypage = (props) => {
   const dispatch = useDispatch();
   const todoList = useSelector((state) => state.todoReducer.list);
@@ -54,26 +52,21 @@ const Mypage = (props) => {
     });
     setOpen(true);
   };
-  const [delData, setDelData] = React.useState([]);
-  const deletePostDB = () => {
-    dispatch(postActions.deleteManyPostDB(delData));
-    // window.alert("포스트가 정상적으로 삭제되었습니다.");
-    // window.location.reload();
-  };
   const user = useSelector((state) => state.userReducer.user);
   const _post = useSelector((state) => state.postReducer.list);
   const mypagePost = _post.filter((v, i) =>
     v.userId === user.id ? true : false
   );
+  console.log(mypagePost);
   const { nickname, profileImg } = user;
   const [createRoomOpen, setCreateRoomOpen] = React.useState(false);
   // ** 프로필 이미지 수정
   const [openProfile, setOpenProfile] = React.useState(false);
   React.useEffect(() => {
-    dispatch(postActions.getPostDB());
+    dispatch(postActions.getMyPostDB());
     dispatch(todoActions.getTodoDB());
     return () => {};
-  }, [delData]);
+  }, [dispatch]);
   return (
     <Grid width="1200px" margin="auto">
       <UserContainer>
@@ -249,13 +242,7 @@ const Mypage = (props) => {
               {/* post 목록들 보이기 */}
               {mypagePost &&
                 mypagePost.map((v, i) => (
-                  <MypagePost
-                    key={i}
-                    {...v}
-                    modal={true}
-                    setDelData={setDelData}
-                    delData={delData}
-                  />
+                  <MypagePost key={i} {...v} modal={true} />
                 ))}
             </Grid>
             <Grid></Grid>

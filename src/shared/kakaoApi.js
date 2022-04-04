@@ -1,6 +1,8 @@
 import axios from "axios";
+import { getCookie } from "./Cookie";
 import url from "./url";
 
+const token = getCookie("token");
 const api = axios.create({
   baseURL: url.BASE_URL,
   headers: {
@@ -10,7 +12,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(function (config) {
-  const accessToken = document.cookie.split("=")[1];
+  const accessToken = token;
   config.headers.common["Authorization"] = `${accessToken}`;
   return config;
 });

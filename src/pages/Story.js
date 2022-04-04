@@ -1,9 +1,9 @@
 //react-floating-button사용
 
 import React from "react";
-import StoryCard from "../components/StoryCard";
+import StoryCard from "../components/Story/StoryCard";
 import Grid from "../elements/Grid";
-import Write from "../components/Write";
+import Write from "../components/Story/Write";
 import styled from "@emotion/styled";
 import { actionCreators as postActions } from "../redux/modules/postReducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,7 @@ function Story() {
 
   React.useEffect(() => {
     dispatch(postActions.getPostDB());
-  }, []);
+  }, [dispatch]);
 
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);

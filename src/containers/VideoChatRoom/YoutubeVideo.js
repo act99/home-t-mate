@@ -1,0 +1,615 @@
+import styled from "@emotion/styled";
+import React from "react";
+import { useSelector } from "react-redux";
+import useWindowSize from "../../hooks/useWindowSize";
+import {
+  sendYoutubeOff,
+  sendYoutubeOn,
+  sendYoutubeUrl,
+  sendYoutubeStop,
+} from "../../shared/SocketFunc";
+import ReactPlayer from "react-player";
+import { Avatar } from "@mui/material";
+import RestImage from "../../assets/rest.png";
+import WorkoutImage from "../../assets/workout.png";
+const YoutubeVideo = (props) => {
+  // ** history
+  // ** props 가져오기
+  const { ws, token, roomId, workOut, roomName, password, host, hostImg } =
+    props;
+
+  const size = useWindowSize();
+  const { width, height } = size;
+
+  // ** 회원정보
+  const user = useSelector((state) => state.userReducer.user);
+
+  // ** 유튜브 redux state
+  const youtubeRedux = useSelector((state) => state.youtubeReducer.youtube);
+  const { on, pause, url } = youtubeRedux;
+
+  // ** 윈도우 사이즈 규격
+
+  // ** 유튜브 url 여부 확인
+  function youtube_parser(url) {
+    var regExp =
+      /^https?:\/\/(?:www\.youtube(?:-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*)?vi?=|vi?=|\?(?:.*)?vi?=)([^#?\n<>"']*)/i;
+    var match = url.match(regExp);
+    return match && match[1].length === 11 ? match[1] : false;
+  }
+  // ** 유튜브 url 이 id 로 바뀌 때 state
+
+  // ** 유튜브 url input
+  const [urlIntput, setUrlIntput] = React.useState({
+    type: "YOUTUBEURL",
+    roomId: "",
+    sender: "",
+    message: "",
+  });
+
+  // ** 유튜브 on
+  const [youtubeOn, setYoutubeOn] = React.useState({
+    type: "YOUTUBEON",
+    roomId: "",
+    sender: "",
+    message: true,
+  });
+
+  // ** 유튜브 off
+  const [youtubeOff, setYoutubeOff] = React.useState({
+    type: "YOUTUBEPAUSE",
+    roomId: "",
+    sender: "",
+    message: false,
+  });
+
+  // ** 유튜브 Stop
+  const [youtubeStop, setYoutubeStop] = React.useState({
+    type: "YOUTUBESTOP",
+    roomId: "",
+    sender: "",
+  });
+
+  // ** 유튜브 켜졌는지 꺼졌는지
+  const [isYoutube, setIsYoutube] = React.useState(false);
+
+  // ** 유튜브 상태관리
+
+  // ** url change 핸들러
+  const handleUrlChange = (e) => {
+    setUrlIntput({ ...urlIntput, message: e.target.value });
+  };
+  // ** 유튜브 url websocket
+  const handleUrlSubmit = (e) => {
+    e.preventDefault();
+    if (youtube_parser(urlIntput.message) === false) {
+      alert("올바른 주소를 입력해주세요");
+    } else {
+      sendYoutubeUrl(ws, token, urlIntput);
+      setUrlIntput({ ...urlIntput, message: "" });
+    }
+  };
+  // ** 유튜브 play websocket
+  const handlePlay = () => {
+    sendYoutubeOn(ws, token, youtubeOn);
+    console.log("play");
+  };
+  // ** 유튜브 pause websocket
+  const handlePause = (e) => {
+    console.log("pause");
+    sendYoutubeOff(ws, token, youtubeOff);
+  };
+  const handleStop = () => {
+    sendYoutubeStop(ws, token, youtubeStop);
+    console.log("stop");
+  };
+  // const roomData = useSelector((state) => state.selectedRoomReducer.room);
+  const youtubeRef = React.useRef();
+  // ** 유튜브 on Off controller
+  React.useEffect(() => {
+    if (url !== "") {
+      setIsYoutube(true);
+    } else {
+      setIsYoutube(false);
+    }
+    setUrlIntput({
+      ...urlIntput,
+      roomId: roomId,
+      sender: user.nickname + "Youtube",
+      type: "YOUTUBEURL",
+    });
+    setYoutubeOn({
+      ...youtubeOn,
+      roomId: roomId,
+      sender: user.nickname + "Youtube",
+      type: "YOUTUBEON",
+    });
+    setYoutubeOff({
+      ...youtubeOff,
+      roomId: roomId,
+      sender: user.nickname + "Youtube",
+      type: "YOUTUBEPAUSE",
+    });
+    setYoutubeStop({
+      ...youtubeStop,
+      roomId: roomId,
+      sender: user.nickname + "Youtube",
+      type: "YOUTUBESTOP",
+    });
+    return () => {};
+  }, [on, url]);
+
+  if (width < height) {
+    return (
+      <>
+        <MYoutubeTest>
+          {isYoutube ? (
+            <ReactPlayer
+              url={url}
+              controls
+              width={`${width}px`}
+              height={`${width * 0.5625}px`}
+              ref={youtubeRef}
+              playing={on}
+              onPlay={handlePlay}
+              onPause={handlePause}
+              onEnded={handleStop}
+            />
+          ) : (
+            <MEmpty width={width}>
+              <img
+                width={width * 0.4 + "px"}
+                alt="yotubeUrl"
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
+              />
+              <MYoutubeEmptyText width={width}>
+                호스트 님은 유튜브 URL을 넣어주세요 :)
+              </MYoutubeEmptyText>
+            </MEmpty>
+          )}
+          <MWrapBottom width={width}>
+            <MBottomTop width={width}>
+              <MLeftTop>
+                <MHostText width={width}>
+                  <h3>방 제목 : </h3>
+                  <h3>
+                    {roomName.length > 12
+                      ? roomName.slice(0, 12) + "..."
+                      : roomName}
+                  </h3>
+                </MHostText>
+                <MHostText width={width}>
+                  <h3>비밀번호 : </h3>
+                  <h3>{password === "" ? "X" : password}</h3>
+                </MHostText>
+                <MHostText width={width}>
+                  <h3>호스트 : </h3>
+                  <Avatar
+                    alt={host}
+                    src={hostImg}
+                    sx={{
+                      width: `${width * 0.07}px`,
+                      height: `${width * 0.07}px`,
+                      mx: 1,
+                    }}
+                  />
+                  <h3>{host}</h3>
+                </MHostText>
+              </MLeftTop>
+              <MRightTop>
+                {workOut ? (
+                  <MWorkOutWrap width={width} src={WorkoutImage}></MWorkOutWrap>
+                ) : (
+                  <MWorkOutWrap src={RestImage} width={width}></MWorkOutWrap>
+                )}
+              </MRightTop>
+            </MBottomTop>
+            <MWrapFromStyle width={width}>
+              <MFormBox onSubmit={handleUrlSubmit}>
+                <MUrlInput
+                  type="text"
+                  value={urlIntput.message}
+                  onChange={handleUrlChange}
+                  required
+                  placeholder="유튜브 Url"
+                  dwidth={width}
+                />
+                <MCreateButton type="submit" width={width}>
+                  유튜브 url 제출
+                </MCreateButton>
+              </MFormBox>
+            </MWrapFromStyle>
+          </MWrapBottom>
+        </MYoutubeTest>
+      </>
+    );
+  }
+  return (
+    <>
+      <YoutubeTest height={height}>
+        {isYoutube ? (
+          <ReactPlayer
+            url={url}
+            controls
+            width={"100%"}
+            height={`${width * 0.34}px`}
+            // height={"auto"}
+            // width={`${width * 0.7}px`}
+            // height={`${width * 0.525}px`}
+            // height={`${height - 200}px`}
+            ref={youtubeRef}
+            playing={on}
+            onPlay={handlePlay}
+            onPause={handlePause}
+            onEnded={handleStop}
+          />
+        ) : (
+          <Empty width={width} height={height}>
+            <img
+              width={width * 0.2 + "px"}
+              alt="yotubeUrl"
+              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvDPyd%2Fbtrv5m6rU7r%2FzjPwR6mggq43e6oSpvXRK1%2Fimg.png"
+            />
+            <YoutubeEmptyText>
+              호스트 님은 유튜브 URL을 넣어주세요 :)
+            </YoutubeEmptyText>
+          </Empty>
+        )}
+        <WrapBottom width={width}>
+          <BottomTop width={width}>
+            <WrapRoomInfo width={width}>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.01 + "px" }}
+              >
+                <h3>방 제목 : </h3>
+                <h3>
+                  {roomName.length > 12
+                    ? roomName.slice(0, 12) + "..."
+                    : roomName}
+                </h3>
+              </HostText>
+              <HostText width={width}>
+                <h3>비밀번호 : </h3>
+                <h3>{password === "" ? "X" : password}</h3>
+              </HostText>
+              <HostText width={width}>
+                <h3>호스트 : </h3>
+                <Avatar
+                  alt={host}
+                  src={hostImg}
+                  sx={{ width: "1.5vw", height: "1.5vw", mx: 1 }}
+                />
+                <h3>{host}</h3>
+              </HostText>
+            </WrapRoomInfo>
+            <Banner width={width}>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.01 + "px" }}
+              >
+                <h3>💪 공지 💪</h3>
+              </HostText>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.01 + "px" }}
+              >
+                <h3>
+                  영상 재생 중에는 카메라와 마이크를 설정하실 수 없습니다.{" "}
+                </h3>
+              </HostText>
+              <HostText
+                width={width}
+                style={{ marginTop: width * 0.005 + "px" }}
+              >
+                <h3>
+                  유튜브 영상을 일시정지 하신 후, 카메라와 마이크를
+                  재설정해주시기 바랍니다.
+                </h3>
+              </HostText>
+            </Banner>
+          </BottomTop>
+          <WrapFromStyle width={width}>
+            <FormBox onSubmit={handleUrlSubmit}>
+              <UrlInput
+                type="text"
+                value={urlIntput.message}
+                onChange={handleUrlChange}
+                required
+                placeholder="유튜브 Url"
+                dwidth={width}
+              />
+              <CreateButton type="submit" width={width}>
+                유튜브 url 제출
+              </CreateButton>
+            </FormBox>
+            {workOut ? (
+              <WorkOutWrap width={width} src={WorkoutImage}>
+                {/* <img
+              src={WorkoutImage}
+              alt=""
+              style={{ width: "160px", height: "60px" }}
+            /> */}
+              </WorkOutWrap>
+            ) : (
+              <WorkOutWrap src={RestImage} width={width}>
+                {/* <img
+              src={RestImage}
+              alt=""
+              style={{ width: "160px", height: "50px" }}
+            /> */}
+              </WorkOutWrap>
+            )}
+          </WrapFromStyle>
+        </WrapBottom>
+      </YoutubeTest>
+    </>
+  );
+};
+
+const YoutubeTest = styled.div`
+  width: 65%;
+  height: ${(props) => props.height - 56}px;
+  position: absolute;
+  background-color: #f9f9f9;
+`;
+
+const MYoutubeTest = styled.div`
+  width: 100%;
+  background-color: #f9f9f9;
+`;
+
+//** 유튜브 안넣었을 때 */
+
+const Empty = styled.div`
+  width: 100%;
+  height: ${(props) => props.width * 0.34}px;
+  background-color: aqua;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const YoutubeEmptyText = styled.h3`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+//** 유튜브 안넣었을 때 */
+
+// ** 유튜브 아래
+
+const WrapBottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: ${(props) => props.width * 0.1 + "px"};
+`;
+
+const BottomTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: ${(props) => props.width * 0.8 + "px"};
+  height: ${(props) => props.width * 0.06 + "px"};
+`;
+
+const WrapRoomInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: ${(props) => props.width * 0.2 + "px"};
+  height: ${(props) => props.width * 0.06 + "px"};
+`;
+
+const Banner = styled.div`
+  width: ${(props) => props.width * 0.44 + "px"};
+  height: ${(props) => props.width * 0.06 + "px"};
+  /* background-color: beige; */
+`;
+
+const WrapFromStyle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: ${(props) => props.width * 0.04 + "px"};
+`;
+const FormBox = styled.form`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const UrlInput = styled.input`
+  width: ${(props) => props.dwidth * 0.28 + "px"};
+  height: ${(props) => props.dwidth * 0.02 + "px"};
+  margin-left: ${(props) => props.dwidth * 0.02 + "px"};
+  margin-right: ${(props) => props.dwidth * 0.005 + "px"};
+  padding-left: ${(props) => props.dwidth * 0.007 + "px"};
+  font-size: ${(props) => props.dwidth * 0.007 + "px"};
+  border-radius: 10px;
+  border: solid 1px green;
+  font-family: "GmarketSansLight";
+  :focus {
+    outline: solid 1px green;
+    border: solid 1px green;
+  }
+`;
+
+const WorkOutWrap = styled.div`
+  width: ${(props) => props.width * 0.08 + "px"};
+  height: ${(props) => props.width * 0.04 + "px"};
+  margin-right: ${(props) => props.width * 0.01 + "px"};
+  /* margin-bottom: ${(props) => props.width * 0.005 + "px"}; */
+  /* background-color: black; */
+  background-image: url("${(props) => props.src}");
+  background-size: 80% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+const HostText = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: ${(props) => props.width * 0.005 + "px"};
+  margin-left: ${(props) => props.width * 0.02 + "px"};
+  margin-bottom: ${(props) => props.width * 0.003 + "px"};
+  align-items: center;
+  h3 {
+    margin: 0px;
+    font-size: ${(props) => props.width * 0.008 + "px"};
+    font-family: "GmarketSansLight";
+  }
+`;
+
+const CreateButton = styled.button`
+  display: block;
+  /* margin: auto; */
+  width: ${(props) => props.width * 0.08 + "px"};
+  height: ${(props) => props.width * 0.02 + "px"};
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 10px;
+  border: solid 1px green;
+  background-color: white;
+  font-size: ${(props) => props.width * 0.008 + "px"};
+  color: green;
+  font-weight: bold;
+  margin-right: 16px;
+  font-family: "GmarketSansLight";
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
+
+// ** 모바일
+const MEmpty = styled.div`
+  width: 100%;
+  height: ${(props) => props.width * 0.5625}px;
+  background-color: aqua;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const MYoutubeEmptyText = styled.h3`
+  font-size: ${(props) => props.width * 0.02}px;
+  font-weight: bold;
+  font-family: "GmarketSansMedium";
+`;
+
+const MWrapBottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: ${(props) => props.width * 0.4}px;
+  width: ${(props) => props.width * 1}px;
+`;
+
+// ** 여기 건듬
+const MBottomTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: ${(props) => props.width * 0.25}px;
+  margin-top: 16px;
+`;
+
+const MLeftTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: ${(props) => props.width * 0.5}px;
+`;
+
+const MRightTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: ${(props) => props.width * 0.3}px;
+`;
+
+const MWorkOutWrap = styled.div`
+  width: ${(props) => props.width * 0.4}px;
+  height: ${(props) => props.width * 0.15}px;
+  margin-top: auto;
+  /* margin-bottom: ${(props) => props.width * 0.005 + "px"}; */
+  /* background-color: black; */
+  background-image: url("${(props) => props.src}");
+  background-size: 80% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+const MHostText = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: ${(props) => props.width * 0.005}px;
+  margin-left: ${(props) => props.width * 0.02}px;
+  margin-bottom: ${(props) => props.width * 0.003}px;
+  height: ${(props) => props.width * 0.07}px;
+  align-items: center;
+  h3 {
+    margin: 0px;
+    font-size: ${(props) => props.width * 0.032}px;
+    font-family: "GmarketSansLight";
+  }
+`;
+
+const MWrapFromStyle = styled.div`
+  /* display: flex;
+  flex-direction: row; */
+`;
+const MFormBox = styled.form`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: ${(props) => props.width * 0.15}px;
+  width: ${(props) => props.width * 1}px;
+`;
+
+const MUrlInput = styled.input`
+  width: ${(props) => props.dwidth * 0.65}px;
+  height: ${(props) => props.dwidth * 0.07}px;
+  margin-left: ${(props) => props.dwidth * 0.02}px;
+  margin-right: ${(props) => props.dwidth * 0.01}px;
+  /* padding-left: ${(props) => props.dwidth * 0.014 + "px"}; */
+  font-size: ${(props) => props.dwidth * 0.03}px;
+  border-radius: 10px;
+  border: solid 1px green;
+  font-family: "GmarketSansLight";
+  :focus {
+    outline: solid 1px green;
+    border: solid 1px green;
+  }
+`;
+
+const MCreateButton = styled.button`
+  display: block;
+  /* margin: auto; */
+  width: ${(props) => props.width * 0.28}px;
+  height: ${(props) => props.width * 0.08}px;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 10px;
+  border: solid 1px green;
+  background-color: white;
+  font-size: ${(props) => props.width * 0.03 + "px"};
+  color: green;
+  font-weight: bold;
+  margin-right: 16px;
+  font-family: "GmarketSansLight";
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transition: 0.3s;
+    background-color: green;
+    color: white;
+  }
+`;
+
+export default YoutubeVideo;

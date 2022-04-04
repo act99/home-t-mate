@@ -1,15 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { actionCreators as roomCreators } from "../redux/modules/roomReducer";
 import { Container, Grid } from "@mui/material";
 import styled from "@emotion/styled";
 
 import { BsSearch } from "react-icons/bs";
-import NoSearchedRoom from "../containers/NoSearchedRoom";
+import NoSearchedRoom from "../containers/LiveNow/NoSearchedRoom";
 import { useHistory } from "react-router-dom";
 const ReEnterKeyword = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
   // ** 방 생성 버튼
 
   // ** 검색기능 구현

@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import styled from "@emotion/styled";
 import { AiOutlineLock } from "react-icons/ai";
-import RoomCardModal from "../containers/RoomCardModal";
+import RoomCardModal from "../containers/LiveNow/RoomCardModal";
 import { BsSearch } from "react-icons/bs";
-import NoSearchedRoom from "../containers/NoSearchedRoom";
+import NoSearchedRoom from "../containers/LiveNow/NoSearchedRoom";
 import { useLocation, useHistory } from "react-router-dom";
 const SearchingLiveNow = () => {
   const history = useHistory();

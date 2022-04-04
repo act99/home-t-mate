@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import React from "react";
-import ChatContainer from "../containers/ChatContainer";
-import YoutubeVideo from "../components/YoutubeVideo";
+import ChatContainer from "../containers/VideoChatRoom/ChatContainer";
+import YoutubeVideo from "../containers/VideoChatRoom/YoutubeVideo";
 import useWindowSize from "../hooks/useWindowSize";
-import EnterRoom from "../containers/EnterRoom";
+import EnterRoom from "../containers/VideoChatRoom/EnterRoom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import SockJS from "sockjs-client";
@@ -12,11 +12,12 @@ import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chatReducer";
 import { actionCreators as youtubeActions } from "../redux/modules/youtubeReducer";
 import { apis } from "../shared/api";
-import ChatNav from "../containers/ChatNav";
+import ChatNav from "../containers/VideoChatRoom/ChatNav";
 import { actionCreators as subscribersActions } from "../redux/modules/subscriberReducer";
 import { sendQuitRoom } from "../shared/SocketFunc";
-const tokenCheck = document.cookie;
-const token = tokenCheck.split("=")[1];
+import { getCookie } from "../shared/Cookie";
+
+const token = getCookie("token");
 const VideoChatRoom = (props) => {
   const user = useSelector((state) => state.userReducer.user);
   const nickname = user.nickname;

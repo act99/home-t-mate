@@ -27,9 +27,8 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 
-const initialPost = {};
 const initialState = {
-  list: [{ ...initialPost }],
+  list: [],
   is_loading: false,
   next: true,
   paging: 1,
@@ -53,6 +52,15 @@ const getPostDB = () => {
         }
         dispatch(setPost(res.data));
       })
+      .catch((error) => console.log(error.response.data));
+  };
+};
+
+const getMyPostDB = () => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .getMyPost()
+      .then((res) => dispatch(setPost(res.data)))
       .catch((error) => console.log(error.response.data));
   };
 };
@@ -136,34 +144,6 @@ const deleteManyPostDB = (postId) => {
   };
 };
 
-// const addPostDB = (contents) => {
-//   let postContent = {
-//     ...initialPost,
-//     id: contents.id,
-//     imgUrl: contents.imgUrl,
-//     title: contents.title,
-//     contents: contents.contents,
-//     username: contents.username,
-//     nickname: contents.nickname,
-//     userImgUrl: contents.userImgUrl,
-//     createdAt: contents.createdAt,
-//     modifiedAt: contents.modifiedAt,
-//   };
-//   return function (dispatch, getState, { history }) {
-//     apis
-//       .addPost(postContent)
-//       .then((res) => {
-//         dispatch(addPost(postContent));
-//         history.replace("/");
-//       })
-//       .catch((error) => {
-//         alert("저장에 실패했습니다. 네트워크 상태를 확인해주세요.");
-//       });
-//   };
-// };
-
-//액션에 필요한 추가 데이터는 payload라는 이름을 사용함
-
 export default handleActions(
   {
     [SET_POST]: (state, action) =>
@@ -246,6 +226,7 @@ const actionCreators = {
   editPostDB,
   likePostDB,
   deleteManyPostDB,
+  getMyPostDB,
 };
 
 export { actionCreators };
