@@ -23,8 +23,8 @@ const WebRTCContainer = (props) => {
     <>
       <SessionWrap
         id="session"
-        direction={width < height ? "row" : "column"}
-        overflow={width < height ? "true" : "false"}
+        // direction={width < height ? "row" : "column"}
+        // overflow={width < height ? "true" : "false"}
       >
         <VideoTest width={width} height={height}>
           {publisher !== undefined ? (
@@ -58,8 +58,8 @@ const WebRTCContainer = (props) => {
 const VideoTest = styled.div`
   ${(props) =>
     props.width < props.height
-      ? `  width: ${(props) => props.width}px;
-  height: ${(props) => props.width * 0.4}px;
+      ? `  width: ${props.width * 0.95}px;
+  height: ${props.width * 0.3}px;
   background-color: #f9f9f9;
   display: flex;
   flex-direction: row;

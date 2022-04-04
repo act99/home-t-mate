@@ -142,54 +142,12 @@ const VideoChatRoom = (props) => {
     };
   }, []);
 
-  // if (width < height) {
-  //   return (
-  //     <>
-  //       <MWrap width={width}>
-  //         <ChatNav
-  //           roomName={roomName}
-  //           roomId={roomId}
-  //           handleQuit={handleQuit}
-  //           width={width}
-  //           height={height}
-  //         />
-  //         <MYoutubeTest>
-  //           <YoutubeVideo
-  //             ws={ws}
-  //             token={token}
-  //             roomId={roomId}
-  //             workOut={workOut}
-  //             password={locationState.password}
-  //             roomName={roomName}
-  //             host={host}
-  //             hostImg={hostImg}
-
-  //           />
-  //         </MYoutubeTest>
-  //         <MVideoTest width={width}>
-  //           <EnterRoom
-  //             roomId={roomId}
-  //             nickname={nickname}
-  //             video={video}
-  //             audio={audio}
-  //             password={locationState.password}
-  //             host={host}
-  //             myStatus={myStatus}
-
-  //           />
-  //         </MVideoTest>
-  //         <MChattingTest width={width}>
-  //           <ChatContainer chattingRef={chattingRef} ws={ws} />
-  //         </MChattingTest>
-  //       </MWrap>
-  //     </>
-  //   );
-  // }
   return (
     <>
       <Wrap width={width} height={height}>
         <ChatNav roomName={roomName} roomId={roomId} handleQuit={handleQuit} />
         <YoutubeVideo
+          chattingRef={chattingRef}
           ws={ws}
           token={token}
           roomId={roomId}
