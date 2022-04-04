@@ -82,7 +82,6 @@ const deleteTodoDB = (postId) => {
       .deleteTodo(postId)
       .then((res) => {
         dispatch(deleteTodo(postId));
-        alert("게시글이 삭제되었습니다.");
       })
       .catch((error) => {
         console.log(error);
