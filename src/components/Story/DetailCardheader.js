@@ -129,7 +129,7 @@ export default function Cardheader(props) {
           </>
         }
       />
-      <Text margin_left="20px" F_size="0.9vmax" F_color="#757575">
+      <Text margin_left="20px" F_size={isMobile ? "0.7rem" : "0.9vmax"} F_color="#757575">
         {isMobile ? time : time + "에 작성됨"}
       </Text>
     </Grid>
