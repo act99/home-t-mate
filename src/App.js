@@ -5,40 +5,24 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "./redux/store";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import KakaoOauth from "./components/KakaoOauth";
+import KakaoOauth from "./components/common/KakaoOauth";
 import LiveNow from "./pages/LiveNow";
-import { useDispatch, useSelector } from "react-redux";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/common/NavBar";
 import NotFound from "./pages/NotFound";
 import Mypage from "./pages/Mypage";
-import styled from "@emotion/styled";
 import Story from "./pages/Story";
 import VideoChatRoom from "./pages/VideoChatRoom";
 import CheckVideo from "./pages/CheckVideo";
 import Logout from "./pages/Logout";
-import Footer from "./components/Footer";
+import Footer from "./components/common/Footer";
 import TermsOfUse from "./pages/TermsOfUse";
 import Privacy from "./pages/Privacy";
 import SearchingLiveNow from "./pages/SearchingLiveNow";
 import ReEnterKeyword from "./pages/ReEnterKeyword";
 import ScrollToTop from "./hooks/scrollToTop";
-import { actionCreators as userActions } from "./redux/modules/userReducer";
 import HowtoUse from "./pages/HowtoUse";
 
 const App = () => {
-  const dispatch = useDispatch();
-  // const beforeunload = () => {
-  //   dispatch(userActions.logout());
-  // };
-  React.useEffect(() => {
-    if (document.cookie) {
-      dispatch(userActions.userinfoDB());
-    }
-    // window.addEventListener("unload", beforeunload);
-    return () => {
-      // window.removeEventListener("unload", beforeunload);
-    };
-  }, []);
   return (
     <>
       <div className="App">
@@ -76,20 +60,5 @@ const App = () => {
     </>
   );
 };
-const WrapMedium = styled.div`
-  margin: auto;
-  width: 1200px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const WrapWide = styled.div`
-  margin: auto;
-  width: 100vw;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+
 export default App;

@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import styled from "@emotion/styled";
 import { AiOutlineLock } from "react-icons/ai";
-import RoomCardModal from "../containers/RoomCardModal";
+import RoomCardModal from "../containers/LiveNow/RoomCardModal";
 import { BsSearch } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import InfinityScroll from "../shared/InfinityScroll";

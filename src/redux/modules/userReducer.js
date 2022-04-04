@@ -22,16 +22,16 @@ export const initialState = {
   },
 };
 
-const userinfoDB = () => {
-  return function (dispatch, getState, { history }) {
-    apis
-      .getUserInfo()
-      .then((res) => {
-        dispatch(login({ ...res.data, is_login: true }));
-      })
-      .catch((error) => console.log(error));
-  };
-};
+// const userinfoDB = () => {
+//   return function (dispatch, getState, { history }) {
+//     apis
+//       .getUserInfo()
+//       .then((res) => {
+//         dispatch(login({ ...res.data, is_login: true }));
+//       })
+//       .catch((error) => console.log(error));
+//   };
+// };
 
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
@@ -39,6 +39,17 @@ const kakaoLoginDB = (code) => {
       .kakaoLogin(code)
       .then((res) => {
         setCookie("token", res.headers.authorization);
+        dispatch(
+          login({
+            id: res.data.userId,
+            token: res.headers.authorization,
+            nickname: res.data.userResponseDto.nickname,
+            profileImg: res.data.userResponseDto.profileImg,
+            username: res.data.userResponseDto.username,
+          })
+        );
+
+        // console.log(res.data);
         history.replace("/");
         history.go(0);
       })
@@ -83,7 +94,7 @@ const actionCreators = {
   login,
   kakaoLoginDB,
   logout,
-  userinfoDB,
+  // userinfoDB,
 };
 
 export { actionCreators };

@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import styled from "@emotion/styled";
 import { AiOutlineLock } from "react-icons/ai";
-import RoomCardModal from "../containers/RoomCardModal";
+import RoomCardModal from "../containers/LiveNow/RoomCardModal";
 import BxSlide from "../assets/bxslidepixa.jpg";
 import { useHistory } from "react-router-dom";
-import HomeImg from "../components/HomeImg";
+import HomeImg from "../components/common/HomeImg";
 import { Text } from "../elements";
 import { BsSearch } from "react-icons/bs";
 import useScrollFadeIn from "../hooks/useScrollFadeIn";
@@ -25,10 +25,10 @@ import GroupImage from "../assets/group.png";
 import RunningImage from "../assets/running.png";
 import StretchImage from "../assets/stretch.png";
 import useWindowSize from "../hooks/useWindowSize";
-import CreateRoomModal from "../containers/CreateRoomModal";
+import CreateRoomModal from "../containers/LiveNow/CreateRoomModal";
 import Example from "../assets/example.jpg";
 import Wifi from "../assets/wifi.png";
-import MHomeImg from "../components/MHomeImg";
+import MHomeImg from "../components/common/MHomeImg";
 import IntroImg from "../assets/introduce.png";
 const Home = () => {
   const history = useHistory();
@@ -113,11 +113,11 @@ const Home = () => {
 
   // ** 스크롤 FadeIn
   const animatedItem = useScrollFadeIn("up", 2, 0);
-  const animatedRoom = useScrollFadeIn("right", 4, 0);
+  const animatedRoom = useScrollFadeIn("up", 4, 0);
   // const animatedItem = useScrollFadeIn("up", 1, 0);
   const animatedStoryTitle = useScrollFadeIn("up", 2, 0);
-  const animatedStory = useScrollFadeIn("right", 4, 0);
-  const animatedService = useScrollFadeIn("left", 4, 0);
+  const animatedStory = useScrollFadeIn("up", 4, 0);
+  const animatedService = useScrollFadeIn("up", 4, 0);
   const animatedAboutTitle = useScrollFadeIn("up", 2, 0);
   const animatedHowToTitle = useScrollFadeIn("up", 2, 0);
   const animatedWhatIs = useScrollFadeIn("center", 3, 0);
