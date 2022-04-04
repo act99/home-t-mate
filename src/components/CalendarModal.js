@@ -153,7 +153,7 @@ export default function TransitionsModal(props) {
               </Row>
               <Row>
                 <WrapDate>
-                  <h3>운동 종료일</h3>
+                  <h3>운동 시간</h3>
                   <TextField
                     id="time"
                     type="time"
@@ -210,52 +210,70 @@ export default function TransitionsModal(props) {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Grid margin_bottom="10px">
-              <label>할일</label>
+            <Top>
+              <IconButton onClick={() => handleClose(false)}>
+                <CloseIcon sx={{ height: "100%", fontSize: "40px", mr: 1 }} />
+              </IconButton>
+            </Top>
+            <Row>
+              <WrapDate>
+                <h3>운동 시작 날짜</h3>
+                <DatePicker
+                  dateFormat="yyyy년 MM월 dd일"
+                  locale={ko}
+                  selected={changeStart}
+                  onChange={(date) => setChangeStart(date)}
+                />
+              </WrapDate>
+              <WrapDate>
+                {" "}
+                <h3>운동 종료일</h3>
+                <DatePicker
+                  dateFormat="yyyy년 MM월 dd일"
+                  locale={ko}
+                  selected={changeEnd}
+                  onChange={(date) => setChangeEnd(date)}
+                />
+              </WrapDate>
+            </Row>
+            <Row>
+              <WrapDate>
+                <h3>운동 시간</h3>
+                <TextField
+                  id="time"
+                  type="time"
+                  defaultValue={changeTime}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    step: 300, // 5 min
+                  }}
+                  sx={{
+                    width: 250,
+                    height: 56,
+                    border: "solid 1px",
+                    borderRadius: "4px",
+                  }}
+                  onChange={(e) => setChangeTime(e.currentTarget.value)}
+                />
+              </WrapDate>
+            </Row>
+            <TodoWrap>
+              <h3 style={{ margin: "0px" }}>이 날의 할 일</h3>
               <br></br>
-              <input
+              <TextAreaStyle
                 required
                 type="text"
-                placeholder="오늘의 운동 목표는?"
+                placeholder="이 날의 운동 목표는?"
                 value={changeTitle}
                 onChange={(e) => setChangeTitle(e.target.value)}
               />
+            </TodoWrap>
+            <Grid is_flex padding="10px">
+              <CreateButton onClick={editClickHandler}>수정하기</CreateButton>
+              <CreateButton onClick={deleteClickHandler} style={{marginLeft:"20px"}}>삭제하기</CreateButton>
             </Grid>
-
-            <Grid margin_bottom="10px">
-              <label>운동 시작일</label>
-              <DatePicker
-                locale={ko}
-                selected={changeStart}
-                onChange={(date) => setChangeStart(date)}
-              />
-            </Grid>
-            <Grid margin_bottom="10px">
-              <TextField
-                id="time"
-                type="time"
-                defaultValue={changeTime}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputProps={{
-                  step: 300,
-                }}
-                sx={{ width: 150 }}
-                onChange={(e) => setChangeTime(e.currentTarget.value)}
-              />
-            </Grid>
-            <Grid margin_bottom="10px">
-              <label>운동 종료일</label>
-              <DatePicker
-                locale={ko}
-                selected={changeEnd}
-                onChange={(date) => setChangeEnd(date)}
-              />
-            </Grid>
-
-            <button onClick={editClickHandler}>수정하기</button>
-            <button onClick={deleteClickHandler}>삭제하기</button>
           </Box>
         </Fade>
       </Modal>
