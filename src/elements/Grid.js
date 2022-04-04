@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { stubFalse } from "lodash";
 
 const Grid = (props) => {
   //Border category
@@ -134,7 +135,7 @@ Grid.defaultProps = {
   box_shadow: null,
   box_sizing: true,
 
-  BG_c: "#ffffff",
+  BG_c: false,
 
   Border: false,
   B_bottom_left_radius: false,
