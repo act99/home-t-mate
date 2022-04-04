@@ -110,7 +110,7 @@ function Write(props) {
                       ))}
                     </Carousel>
                     <Grid>
-                      <Divider />
+                      {/* <Divider /> */}
                       <TextArea
                         ref={contents}
                         placeholder="게시글을 작성해주세요"

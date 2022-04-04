@@ -27,20 +27,23 @@ function Story() {
   };
 
   return (
-    <InfinityPost callNext={handleNext} loading={is_loading}>
+    <>
       <Grid BG_c="#f9f9f9" height="60px" />
-      {list.map((v, i) => (
-        <Grid key={i} padding="15px 0px" BG_c="#f9f9f9">
-          <StoryCard key={i} {...v} />
-        </Grid>
-      ))}
+
+      <InfinityPost callNext={handleNext} loading={is_loading}>
+        {list.map((v, i) => (
+          <Grid key={i} padding="15px 0px" BG_c="#f9f9f9">
+            <StoryCard key={i} {...v} />
+          </Grid>
+        ))}
+      </InfinityPost>
 
       <WriteButton onClick={() => setOpen(true)}>
         <AddCircleIcon style={{ fontSize: "56px" }} />
       </WriteButton>
 
       <Write open={open} handleClose={handleClose}></Write>
-    </InfinityPost>
+    </>
   );
 }
 
