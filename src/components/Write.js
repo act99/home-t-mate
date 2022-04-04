@@ -100,13 +100,12 @@ function Write(props) {
                       width="50vmax"
                     >
                       {preview.map((item, index) => (
-                        <div key={index + item}>
-                          <Img
-                            postImg={item}
-                            size="50vmax"
-                            border_radius="20px 20px 0px 0px"
-                          />
-                        </div>
+                        <Img
+                          key={index + item}
+                          postImg={item}
+                          size="50vmax"
+                          border_radius="20px 20px 0px 0px"
+                        />
                       ))}
                     </Carousel>
                     <Grid>
@@ -154,13 +153,12 @@ function Write(props) {
                         width={width * 0.4 + "px"}
                       >
                         {preview.map((item, index) => (
-                          <div key={item + index}>
-                            <Img
-                              postImg={item}
-                              size={width * 0.4 + "px"}
-                              border="20px"
-                            />
-                          </div>
+                          <Img
+                            key={item + index}
+                            postImg={item}
+                            size={width * 0.4 + "px"}
+                            border="20px"
+                          />
                         ))}
                       </Carousel>
 
