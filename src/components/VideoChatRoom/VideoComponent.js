@@ -105,6 +105,78 @@ const VideoComponent = (props) => {
     return <VideoWrap></VideoWrap>;
   }
 
+  if (width < height) {
+    return (
+      <>
+        <MVideoWrap height={height} width={width}>
+          <NicknameTag height={height}>
+            {nickname === host
+              ? nickname.length > 5
+                ? "👑" + nickname.slice(0, 5) + "..."
+                : "👑" + nickname
+              : nickname.length > 7
+              ? nickname.slice(0, 7) + "..."
+              : nickname}
+          </NicknameTag>
+          {me === true ? (
+            youtubeReducer.on === true ? (
+              <></>
+            ) : (
+              <>
+                <ButtonTag id="buttondiv">
+                  <IconButton onClick={handleVideo}>
+                    {vid === true ? (
+                      <VideocamIcon sx={{ color: "white" }} />
+                    ) : (
+                      <VideocamOffIcon sx={{ color: "red" }} />
+                    )}
+                  </IconButton>
+                  <IconButton onClick={handleMic}>
+                    {mic === true ? (
+                      <MicIcon sx={{ color: "white" }} />
+                    ) : (
+                      <MicOffIcon sx={{ color: "red" }} />
+                    )}
+                  </IconButton>
+                </ButtonTag>
+              </>
+            )
+          ) : (
+            <ButtonTag id="buttondiv">
+              <IconButton onClick={handleVideo}>
+                {vid === true ? (
+                  <VideocamIcon sx={{ color: "white" }} />
+                ) : (
+                  <VideocamOffIcon sx={{ color: "red" }} />
+                )}
+              </IconButton>
+              <IconButton onClick={handleMic}>
+                {mic === true ? (
+                  <MicIcon sx={{ color: "white" }} />
+                ) : (
+                  <MicOffIcon sx={{ color: "red" }} />
+                )}
+              </IconButton>
+            </ButtonTag>
+          )}
+          <video autoPlay={true} ref={videoRef} muted={!mic} hidden={!vid} />
+          <div
+            style={{
+              width: "160px",
+              height: "120px",
+              postion: "absolute",
+              top: "0px",
+              left: "0px",
+              backgroundColor: "black",
+              zIndex: 13000,
+              borderRadius: "12px",
+            }}
+          ></div>
+        </MVideoWrap>
+      </>
+    );
+  }
+
   return (
     <>
       <VideoWrap height={height} width={width}>
@@ -204,6 +276,8 @@ const VideoWrap = styled.div`
   justify-content: center;
   margin: 4px auto;
   video {
+    width: ${(props) => (((props.height - 56) / 5 / 1.11) * 4) / 3}px;
+    height: ${(props) => (props.height - 56) / 5 / 1.11}px;
     position: absolute;
     transition: 0.2s;
     border-radius: 12px;
@@ -214,6 +288,50 @@ const VideoWrap = styled.div`
   }
   :hover {
     video {
+      width: ${(props) => (((props.height - 56) / 5 / 1.11) * 4) / 3}px;
+      height: ${(props) => (props.height - 56) / 5 / 1.11}px;
+      position: absolute;
+      transition: filter 0.2s;
+      filter: brightness(40%);
+      margin: 4px auto;
+    }
+    #buttondiv {
+      transition: filter 0.2s;
+      display: flex !important;
+      position: absolute;
+      top: 65%;
+      left: 50%;
+      transform: translate(-50%, -0%);
+      z-index: 1;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      /* background-color: green; */
+    }
+  }
+`;
+
+const MVideoWrap = styled.div`
+  width: 160px;
+  height: 120px;
+  position: relative;
+  justify-content: center;
+  margin: 0px 4px;
+  video {
+    width: 160px;
+    height: 120px;
+    position: absolute;
+    transition: 0.2s;
+    border-radius: 12px;
+  }
+  #buttondiv {
+    display: none !important;
+    transition: 0.2s;
+  }
+  :hover {
+    video {
+      width: 160px;
+      height: 120px;
       position: absolute;
       transition: filter 0.2s;
       filter: brightness(40%);

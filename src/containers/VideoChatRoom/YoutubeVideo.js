@@ -15,8 +15,17 @@ import WorkoutImage from "../../assets/workout.png";
 const YoutubeVideo = (props) => {
   // ** history
   // ** props 가져오기
-  const { ws, token, roomId, workOut, roomName, password, host, hostImg } =
-    props;
+  const {
+    ws,
+    token,
+    roomId,
+    workOut,
+    roomName,
+    password,
+    host,
+    hostImg,
+    chattingRef,
+  } = props;
 
   const size = useWindowSize();
   const { width, height } = size;
@@ -143,6 +152,7 @@ const YoutubeVideo = (props) => {
     return (
       <>
         <MYoutubeTest>
+          <div ref={chattingRef} />
           {isYoutube ? (
             <ReactPlayer
               url={url}
@@ -508,14 +518,14 @@ const MWrapBottom = styled.div`
   display: flex;
   flex-direction: column;
   height: ${(props) => props.width * 0.4}px;
-  width: ${(props) => props.width * 1}px;
+  width: ${(props) => props.width * 0.9}px;
 `;
 
 // ** 여기 건듬
 const MBottomTop = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: ${(props) => props.width * 0.25}px;
   margin-top: 16px;
 `;
@@ -533,7 +543,7 @@ const MRightTop = styled.div`
 `;
 
 const MWorkOutWrap = styled.div`
-  width: ${(props) => props.width * 0.4}px;
+  width: ${(props) => props.width * 0.3}px;
   height: ${(props) => props.width * 0.15}px;
   margin-top: auto;
   /* margin-bottom: ${(props) => props.width * 0.005 + "px"}; */
@@ -569,11 +579,11 @@ const MFormBox = styled.form`
   justify-content: space-between;
   align-items: center;
   height: ${(props) => props.width * 0.15}px;
-  width: ${(props) => props.width * 1}px;
+  width: ${(props) => props.width * 0.8}px;
 `;
 
 const MUrlInput = styled.input`
-  width: ${(props) => props.dwidth * 0.65}px;
+  width: ${(props) => props.dwidth * 0.6}px;
   height: ${(props) => props.dwidth * 0.07}px;
   margin-left: ${(props) => props.dwidth * 0.02}px;
   margin-right: ${(props) => props.dwidth * 0.01}px;
@@ -591,7 +601,7 @@ const MUrlInput = styled.input`
 const MCreateButton = styled.button`
   display: block;
   /* margin: auto; */
-  width: ${(props) => props.width * 0.28}px;
+  width: ${(props) => props.width * 0.25}px;
   height: ${(props) => props.width * 0.08}px;
   margin-top: auto;
   margin-bottom: auto;
