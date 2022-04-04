@@ -9,10 +9,7 @@ import { imageApis } from "../../shared/formApi";
 import { ProfileStyle } from "../../styles/profileImg";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/userReducer";
-import CloseIcon from "@mui/icons-material/Close";
-import { IconButton } from "@mui/material";
 import { Grid, Text } from "../../elements";
-import { border } from "@mui/system";
 
 const ChangeProfileModal = (props) => {
   const { openProfile, setOpenProfile, profileImg } = props;
@@ -74,12 +71,12 @@ const ChangeProfileModal = (props) => {
               _onClick={handleClose}
               cursor="pointer"
               F_size="16px"
-              F_family="SuncheonR"
+              F_family="GmarketSansLight"
               F_color="white"
             >
               취소
             </Text>
-            <Text F_size="16px" F_family="SuncheonR" F_color="white">
+            <Text F_size="16px" F_family="GmarketSansLight" F_color="white">
               이미지 수정
             </Text>
             <button
@@ -93,7 +90,7 @@ const ChangeProfileModal = (props) => {
               <p
                 style={{
                   fontSize: "16px",
-                  fontFamily: "SuncheonR",
+                  fontFamily: "GmarketSansLight",
                   color: "white",
                 }}
               >
@@ -119,7 +116,7 @@ const ChangeProfileModal = (props) => {
                 F_size="16px"
                 F_align="center"
                 margin_bottom="90px"
-                F_family="SuncheonB"
+                F_family="GmarketSansLight"
               >
                 이미지를 넣어주세요.
               </Text>
@@ -128,7 +125,7 @@ const ChangeProfileModal = (props) => {
                 F_size="16px"
                 F_align="center"
                 margin_bottom="90px"
-                F_family="SuncheonB"
+                F_family="GmarketSansLight"
               >
                 이미지가 등록되었어요.
               </Text>
