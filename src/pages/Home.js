@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/roomReducer";
+import { actionCreators as postActions } from "../redux/modules/postReducer";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import {
   Avatar,
@@ -126,6 +127,7 @@ const Home = () => {
   const animatedIntro = useScrollFadeIn("center", 4, 0);
   React.useEffect(() => {
     dispatch(roomCreators.getMainRoomDB());
+    dispatch(postActions.getPostDB());
   }, []);
 
   if (width < height) {
