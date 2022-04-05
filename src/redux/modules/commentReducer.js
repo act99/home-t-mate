@@ -36,6 +36,7 @@ const getCommentDB = (postId) => {
       .getComment(postId)
       .then((response) => {
         dispatch(setComment(postId, response.data));
+        console.log('getcomment res',response);
       })
       .catch((error) => {
         console.log(error);
