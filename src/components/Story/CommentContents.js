@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Image } from "../../elements";
 import CloseIcon from "@mui/icons-material/Close";
 import { actionCreators as commentActions } from "../../redux/modules/commentReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Text } from "../../elements";
 import useWindowSize from "../../hooks/useWindowSize";
 import { useMediaQuery } from "react-responsive";
@@ -12,6 +12,7 @@ export default function CommentContents(props) {
   const delComment = () => {
     dispatch(commentActions.delCommentDB(props.id, parseInt(props.commentId)));
   };
+  const _user = useSelector((state) => state.userReducer.user.id);
   const size = useWindowSize();
   const { width, height } = size;
   const isMobile = useMediaQuery({ query: "(max-width: 1209px)" });
@@ -46,16 +47,22 @@ export default function CommentContents(props) {
                   </b>
                   {props.comment}
                 </Text>
-                <CloseIcon
-                  sx={{
-                    color: "#757575",
-                    fontSize: "10px",
-                    cursor: "pointer",
-                    marginTop: "8px",
-                    marginRight: "1vw",
-                  }}
-                  onClick={delComment}
-                />
+                
+                {/* 댓글작성자만 x표시 보이게하기 */}
+                {props.userId === _user ? (
+                  <CloseIcon
+                    sx={{
+                      color: "#757575",
+                      fontSize: "10px",
+                      cursor: "pointer",
+                      marginTop: "8px",
+                      marginRight: "1vw",
+                    }}
+                    onClick={delComment}
+                  />
+                ) : (
+                  ""
+                )}
               </Grid>
             </Grid>
           </Grid>
