@@ -42,7 +42,7 @@ const getPostDB = () => {
     }
     const page = getState().postReducer.paging;
     apis
-      .getPost(page, 4)
+      .getPost(page, 5)
       .then((res) => {
         if (res.data.length === 0) {
           dispatch(next(false));
