@@ -102,15 +102,21 @@ export default function CommentContents(props) {
                   </b>
                   {props.comment}
                 </Text>
-                <CloseIcon
-                  sx={{
-                    color: "#757575",
-                    fontSize: "1.4vmin",
-                    cursor: "pointer",
-                    marginTop: "8px",
-                  }}
-                  onClick={delComment}
-                />
+                {/* 댓글작성자만 x표시 보이게하기 */}
+                {props.userId === _user ? (
+                  <CloseIcon
+                    sx={{
+                      color: "#757575",
+                      fontSize: "10px",
+                      cursor: "pointer",
+                      marginTop: "8px",
+                      marginRight: "1vw",
+                    }}
+                    onClick={delComment}
+                  />
+                ) : (
+                  ""
+                )}
               </Grid>
             </Grid>
           </Grid>
