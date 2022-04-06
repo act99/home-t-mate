@@ -48,6 +48,7 @@ const addCommentDB = (postId, comment, user) => {
     apis
       .addComment(postId, comment)
       .then((response) => {
+        console.log(response.data);
         let userProfileImg = "";
         if (user.profileImg === null) {
           userProfileImg =
@@ -60,6 +61,7 @@ const addCommentDB = (postId, comment, user) => {
           comment: comment,
           profileImg: userProfileImg,
           commentId: response.data.id,
+          userId: response.data.userId,
         }; //responsive로 안들어와서 임의로 만들었던거. commentId: response.commentId 이렇게 추가해줘야됨.
         dispatch(addComment(postId, dummyComment));
         dispatch(postActions.editPostDB);
