@@ -59,7 +59,7 @@ const VideoTest = styled.div`
   ${(props) =>
     props.width < props.height
       ? `  width: ${props.width * 0.95}px;
-  height: ${props.width * 0.3}px;
+  height: 160px;
   background-color: #f9f9f9;
   display: flex;
   flex-direction: row;

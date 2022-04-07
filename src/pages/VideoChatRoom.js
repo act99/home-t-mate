@@ -82,9 +82,11 @@ const VideoChatRoom = (props) => {
                 dispatch(youtubeActions.youtubeUrl(recv.message));
                 setWorkOut(true);
               } else if (recv.type === "YOUTUBEON") {
+                setWorkOut(true);
                 dispatch(youtubeActions.youtubeOn(true));
               } else if (recv.type === "YOUTUBEPAUSE") {
                 dispatch(youtubeActions.youtubeOn(false));
+                setWorkOut(false);
               } else if (recv.type === "YOUTUBESTOP") {
                 setWorkOut(false);
               } else if (recv.type === "QUIT") {
