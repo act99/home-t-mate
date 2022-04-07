@@ -5,7 +5,7 @@ import "../../App.css";
 import WebRTCContainer from "./WebRTCContainer";
 import url from "../../shared/url";
 const OPENVIDU_SERVER_URL = url.OPEN_VIDU;
-const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_OPEN_VIDU_SECRET;
 
 class VideoContainer extends Component {
   constructor(props) {
