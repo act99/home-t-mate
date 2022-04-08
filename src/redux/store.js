@@ -17,6 +17,9 @@ import sessionReducer from "./modules/sessionReducer";
 import subscriberReducer from "./modules/subscriberReducer";
 import commentReducer from "./modules/commentReducer";
 import selectedRoomReducer from "./modules/selectedRoomReducer";
+import { helloSaga } from "./modules/sagas";
+import createSagaMiddleware from "redux-saga";
+
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
@@ -57,8 +60,12 @@ const persistConfig = {
     // "userReducer",
   ],
 };
+const sagaMiddleware = createSagaMiddleware();
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-const middlewares = [thunk.withExtraArgument({ history: history })];
+const middlewares = [
+  thunk.withExtraArgument({ history: history }),
+  sagaMiddleware,
+];
 const env = process.env.NODE_ENV;
 if (env === "development") {
   const { logger } = require("redux-logger");
@@ -78,6 +85,7 @@ const configureStore = () => {
     persistedReducer,
     composeEnhancers(applyMiddleware(...middlewares))
   );
+  sagaMiddleware.run(helloSaga);
   let persistor = persistStore(store);
   return { store, persistor };
 };
