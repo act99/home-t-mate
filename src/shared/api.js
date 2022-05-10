@@ -24,7 +24,7 @@ export const apis = {
   // ** 영상채팅
   // getRooms: () => api.get(`/chat/rooms`),
   createRooms: (name, password, content, roomImg) =>
-    api.post(`/chat/room`, {
+    api.post(`/chat/rooms`, {
       name: name,
       content: content,
       password: password,
@@ -32,22 +32,22 @@ export const apis = {
       roomImg: roomImg,
     }),
   workOutRoom: (roomId, workOut) =>
-    api.put(`/chat/room/workout/${roomId}`, { workOut: workOut }),
+    api.put(`/chat/rooms/workout/${roomId}`, { workOut: workOut }),
   enterRoom: (roomId, password) =>
-    api.post(`/chat/room/enter/${roomId}`, { password: password }),
-  leaveRoom: (roomId) => api.delete(`/chat/room/quit/${roomId}`),
-  deleteRoom: (roomId) => api.delete(`/room/delete/${roomId}`),
-  checkRoomName: (roomName) => api.post(`/room/roomcheck`, { name: roomName }),
-  searchRoom: (keyword) => api.get(`/room/search?keyword=${keyword}`),
+    api.post(`/chat/rooms/enter/${roomId}`, { password: password }),
+  leaveRoom: (roomId) => api.delete(`/chat/rooms/enter/${roomId}`),
+  deleteRoom: (roomId) => api.delete(`/rooms/delete/${roomId}`),
+  checkRoomName: (roomName) => api.post(`/rooms/roomcheck`, { name: roomName }),
+  searchRoom: (keyword) => api.get(`/rooms/search?keyword=${keyword}`),
   infinityRoom: (page, size) =>
-    api.get(`/chat/roomsscroll?page=${page}&size=${size}`),
+    api.get(`/chat/rooms?page=${page}&size=${size}`),
   // ** 포스트
   getPost: (page, size) => api.get(`/api/posts?page=${page}&size=${size}`),
   addPost: (contents) => api.post(`/api/posts`, contents),
   editPost: (postId, contents, images) =>
     api.put(`/api/posts/${postId}`, { content: contents, image: images }),
   deletePost: (postId) => api.delete(`/api/posts/${postId}`),
-  likePost: (postId) => api.post(`/api/like/${postId}`),
+  likePost: (postId) => api.post(`/api/likes/${postId}`),
   getMyPost: () => api.get(`api/posts/myposts`),
   // deleteManyPost: (postId) => api.post(`/api/manyposts`, postId),
   //댓글
